@@ -1,0 +1,1273 @@
+/*
+    Fichier: styles.css
+    Auteur: Gemini (généré par IA en tant que développeur senior)
+    Date: 13 septembre 2025
+    Description: Styles principaux pour le site Adasoft.
+*/
+
+/* =========== 1. DESIGN SYSTEM & RESET =========== */
+:root {
+    /* Colors */
+    --color-primary: #fc4f50;
+    --color-dark: #1d1d1b;
+    --color-accent: #feb07f;
+    --color-neutral-1: #f5f6f7;
+    --color-neutral-2: #efefef;
+    --color-contrast: #111111;
+    --color-white: #ffffff;
+    --color-text: #333;
+
+    /* Sizing & Radius */
+    --radius: 12px;
+    --container-max: 1200px;
+    --container-padding: 1.5rem;
+    --header-height: auto;
+
+    /* Typography */
+    --font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "sans-serif";
+
+    /* Transitions */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-medium: 0.4s ease-in-out;
+}
+
+/* Basic Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-white);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+    color: var(--color-dark);
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4rem); }
+h2 { font-size: clamp(2rem, 5vw, 3rem); }
+h3 { font-size: clamp(1.25rem, 4vw, 1.5rem); }
+
+p {
+    max-width: 65ch;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover, a:focus-visible {
+    text-decoration: underline;
+}
+
+ul { list-style: none; }
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Accessibility utility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Motion sickness preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========== 2. LAYOUT & GLOBAL COMPONENTS =========== */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.section-header h2 {
+    margin-bottom: 0.5rem;
+}
+.section-header p {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.1rem;
+    color: #666;
+}
+.section-cta {
+    justify-content: center;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+    text-decoration: none;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+.btn--primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+.btn--primary:hover {
+    background-color: #e63c3d;
+}
+.btn--secondary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.btn--secondary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+
+/* =========== 3. HEADER =========== */
+.header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
+    height: var(--header-height);
+    border-bottom: 1px solid var(--color-neutral-2);
+}
+.header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.header__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-dark);
+}
+.header__logo:hover {
+    text-decoration: none;
+}
+.header__nav {
+    display: none; /* Hidden on mobile by default */
+}
+.header__menu-toggle {
+    display: block; /* Visible on mobile */
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 24px;
+    position: relative;
+    z-index: 101;
+}
+.hamburger {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-dark);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color 0s 0.2s;
+}
+.hamburger::before, .hamburger::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-dark);
+    position: absolute;
+    left: 0;
+    transition: transform var(--transition-medium), top var(--transition-medium) 0.2s;
+}
+.hamburger::before { top: -10px; }
+.hamburger::after { top: 10px; }
+
+/* Mobile Menu Open State */
+body.nav-open .hamburger { background-color: transparent; }
+body.nav-open .hamburger::before { top: 0; transform: rotate(45deg); }
+body.nav-open .hamburger::after { top: 0; transform: rotate(-45deg); }
+
+/* Full screen mobile nav (applied on mobile via JS) */
+.header__nav.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(100%);
+    transition: transform var(--transition-medium);
+    z-index: 100;
+}
+body.nav-open .header__nav.mobile-nav {
+    transform: translateX(0);
+}
+.header__nav.mobile-nav .header__nav-list {
+    flex-direction: column;
+    gap: 2rem;
+}
+.header__nav.mobile-nav a {
+    font-size: 1.5rem;
+}
+
+
+/* =========== 4. HERO =========== */
+.hero {
+    padding-top: calc(var(--header-height) + 2rem);
+    background-color: var(--color-neutral-1);
+    overflow: hidden;
+}
+.hero__container {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+}
+.hero__content p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+.hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+.hero__badges span {
+    padding-left: 1.2rem;
+    position: relative;
+}
+.hero__badges span::before {
+    content: '✓';
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+.hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.hero__gallery {
+    display: none; /* Hide on mobile for simplicity */
+}
+
+
+/* =========== 5. SOCIAL PROOF =========== */
+.social-proof__container {
+    display: grid;
+    gap: 3rem;
+}
+.social-proof__column h3 { margin-bottom: 1.5rem; text-align: center; }
+.logos-column__gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+.logos-column__gallery img {
+    filter: sepia(0.6) saturate(0.6) hue-rotate(10deg) brightness(0.9);
+    border-radius: var(--radius);
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+.stats-column__item {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.stat-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+.testimonial-column figure {
+    background: var(--color-neutral-1);
+    padding: 2rem;
+    border-radius: var(--radius);
+    border-left: 5px solid var(--color-accent);
+}
+.testimonial-column blockquote {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+.testimonial-column figcaption {
+    font-weight: 600;
+}
+.section-emphasis {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* =========== 6. FEATURES =========== */
+.features { background-color: var(--color-neutral-1); }
+.features__grid {
+    display: grid;
+    gap: 1.5rem;
+}
+.feature-card {
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.feature-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+/* =========== 7. PORTFOLIO =========== */
+.portfolio__filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+}
+.portfolio__filters button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-neutral-2);
+    background-color: var(--color-white);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.portfolio__filters button:hover {
+    background-color: var(--color-neutral-2);
+}
+.portfolio__filters button[aria-selected="true"] {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+.portfolio__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+.portfolio-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+}
+.portfolio-item img {
+    transition: transform var(--transition-medium);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.portfolio-item:hover img {
+    transform: scale(1.05);
+}
+.portfolio-item figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: var(--color-white);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all var(--transition-medium);
+}
+.portfolio-item:hover figcaption {
+    transform: translateY(0);
+    opacity: 1;
+}
+.portfolio-item figcaption h3 { color: var(--color-white); }
+.portfolio-item.hidden {
+    display: none;
+}
+
+
+/* =========== 8. PRICING =========== */
+.pricing { background-color: var(--color-neutral-1); }
+.pricing__notice {
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+    padding: 1rem;
+    background-color: var(--color-accent);
+    color: var(--color-dark);
+    border-radius: var(--radius);
+    text-align: center;
+}
+.pricing__grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+.pricing-card {
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-neutral-2);
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+.pricing-card > * {
+    flex-shrink: 0;
+}
+.pricing-card ul {
+    flex-grow: 1;
+}
+.pricing-card.popular {
+    border-color: var(--color-primary);
+    transform: scale(1.05);
+}
+.pricing-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+.price {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--color-dark);
+}
+.price sup { font-size: 1.5rem; font-weight: 500; }
+.pricing-card ul {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+.pricing-card li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+.pricing-card li::before {
+    content: '✓';
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+}
+.pricing-card__guarantee {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 1rem;
+}
+
+
+/* =========== 9. PROCESS =========== */
+.process__timeline {
+    display: grid;
+    gap: 2rem;
+    position: relative;
+}
+.process-step {
+    padding: 1.5rem;
+    background: var(--color-neutral-1);
+    border-radius: var(--radius);
+    text-align: center;
+}
+.process-step__number {
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+}
+
+/* =========== 10. TESTIMONIALS (Carousel) =========== */
+.carousel {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.carousel__track-container {
+    overflow: hidden;
+}
+.carousel__track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+.carousel__slide {
+    flex: 0 0 100%;
+    padding: 1rem;
+}
+.carousel__slide figure { text-align: center; }
+.carousel__slide blockquote {
+    font-size: 1.25rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+.carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-neutral-2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 1;
+}
+.carousel__button--prev { left: -20px; }
+.carousel__button--next { right: -20px; }
+.carousel__indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+.carousel__indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-neutral-2);
+    border: none;
+    cursor: pointer;
+}
+.carousel__indicator.current-slide {
+    background-color: var(--color-primary);
+}
+
+
+/* =========== 11. FAQ =========== */
+.faq__accordion {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid var(--color-neutral-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.faq-item {
+    border-bottom: 1px solid var(--color-neutral-2);
+}
+.faq-item:last-child {
+    border-bottom: none;
+}
+.faq-item__question {
+    width: 100%;
+    background: var(--color-white);
+    border: none;
+    text-align: left;
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.faq-item__question::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    transition: transform var(--transition-fast);
+}
+.faq-item__question[aria-expanded="true"]::after {
+    transform: rotate(45deg);
+}
+.faq-item__answer {
+    padding: 0 1.5rem 1.5rem;
+    background: var(--color-white);
+    overflow: hidden;
+    transition: max-height var(--transition-medium);
+}
+
+/* =========== 12. FOOTER =========== */
+.footer {
+    background-color: var(--color-dark);
+    color: var(--color-neutral-1);
+    padding: 4rem 0 2rem;
+}
+.footer__container {
+    display: grid;
+    gap: 2.5rem;
+}
+.footer h4 {
+    color: var(--color-white);
+    margin-bottom: 1rem;
+}
+.footer a {
+    color: var(--color-neutral-2);
+}
+.newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+}
+.newsletter-form input {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid #555;
+    background-color: #333;
+    color: var(--color-white);
+    border-radius: var(--radius);
+}
+.footer__bottom {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #444;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+
+/* =================================================== */
+/* ===========      MEDIA QUERIES      =============== */
+/* =================================================== */
+
+/* ~~~~~~ TABLET (640px) ~~~~~~ */
+@media (min-width: 640px) {
+    .hero-title {
+    text-align: center;
+}
+    .features__grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing__grid { grid-template-columns: repeat(2, 1fr); }
+    .process__timeline { grid-template-columns: repeat(2, 1fr); }
+    .footer__container { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ~~~~~~ DESKTOP (1024px) ~~~~~~ */
+@media (min-width: 1024px) {
+    /* Section vertical spacing for a more natural flow */
+    .hero, .social-proof, .features, .portfolio, .pricing {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .hero-title {
+    text-align: left;
+}
+    
+    .header__menu-toggle { display: none; }
+    .header__nav {
+        display: block;
+    }
+    .header__nav-list {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .header__nav-list a {
+        color: var(--color-text);
+        font-weight: 500;
+        position: relative;
+        padding: 0.25rem 0;
+    }
+    .header__nav-list a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-primary);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform var(--transition-fast);
+    }
+    .header__nav-list a:hover::after,
+    .header__nav-list a:focus-visible::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+    .header__nav-list a:hover,
+    .header__nav-list a:focus-visible {
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
+    .hero__container {
+        grid-template-columns: 1fr 1fr;
+        text-align: left;
+    }
+    .hero__gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        align-items: start;
+    }
+    .hero__gallery img:first-child { grid-row: span 2; }
+    
+    .social-proof__container { grid-template-columns: repeat(3, 1fr); }
+    .features__grid { grid-template-columns: repeat(4, 1fr); }
+    .pricing__grid { grid-template-columns: repeat(3, 1fr); }
+    .process__timeline {
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 2px solid var(--color-primary);
+        margin-top: 3rem;
+    }
+    .process-step { background: none; }
+    .process-step__number { margin-top: -26px; background-color: var(--color-white); border: 2px solid var(--color-primary); color: var(--color-primary); }
+
+    .footer__container { grid-template-columns: 2fr 1fr 1fr 2fr; }
+}
+
+/* ~~~~~~ LARGE DESKTOP (1440px) ~~~~~~ */
+@media (min-width: 1440px) {
+    h1 { font-size: 4.5rem; }
+    /* On very large screens, the container's max-width and auto margins
+       handle the centering, so no extra padding rules are needed here. */
+}
+
+
+
+/* =================================================== */
+/* ===========      BOOKING PAGE STYLES      ========= */
+/* =================================================== */
+/*
+    Fichier: booking.css
+    Auteur: Gemini (généré par IA en tant que développeur senior)
+    Date: 13 septembre 2025
+    Description: Styles pour la page de réservation Adasoft.
+*/
+
+/* Styles specific to a booking page could go here, but they are mixed
+   with the main styles in the provided file. For clarity, this section
+   is left as a placeholder, as the styles below seem to belong here.
+*/
+.page-header {
+    text-align: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-neutral-2);
+    background-color: var(--color-white);
+}
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-dark);
+}
+.page-footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* =========== BOOKING CARD & FORM =========== */
+.booking-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: clamp(1.5rem, 5vw, 3rem);
+    animation: fadeIn 0.5s ease-out forwards;
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.booking-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.booking-header p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 0.5rem auto 0;
+}
+
+.booking-form .form-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark);
+}
+
+.form-group label .optional {
+    font-weight: 400;
+    color: #777;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(252, 79, 80, 0.2);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group .error-message {
+    color: var(--color-error);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.form-group.has-error input,
+.form-group.has-error textarea {
+    border-color: var(--color-error);
+}
+
+.form-group.has-error .error-message {
+    display: block;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    position: relative;
+    margin-top: 1rem;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background-color: #e63c3d;
+    transform: translateY(-2px);
+}
+
+.btn-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-submit .loader {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--color-white);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    margin-top: -10px;
+    display: none;
+}
+
+.btn-submit.loading .loader { display: block; }
+.btn-submit.loading span { opacity: 0; }
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* =========== SUCCESS MESSAGE =========== */
+.success-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+.success-message svg {
+    color: var(--color-success);
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+}
+.success-message p {
+    margin: 0.5rem auto 0;
+    font-size: 1.1rem;
+}
+
+
+/* =========== RESPONSIVE DESIGN FOR BOOKING FORM =========== */
+@media (min-width: 640px) {
+    .booking-form .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    /* Span full width for specific fields */
+    .form-group-full {
+        grid-column: 1 / -1;
+    }
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(29, 29, 27, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Le contenu de la modale */
+.modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: #1d1d1b;
+    margin: 0;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease-in-out;
+}
+
+.modal-close-btn:hover {
+    color: #1d1d1b;
+}
+
+/* Section pour le résumé de la commande */
+.order-summary {
+    background-color: #f5f6f7;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #efefef;
+}
+
+.order-summary p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-summary .plan-name {
+    font-weight: 600;
+}
+
+.order-summary .plan-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1d1d1b;
+}
+
+/* Sélecteur de méthode de paiement */
+.payment-method-selector {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.payment-method {
+    flex: 1;
+    padding: 0.75rem;
+    background-color: #f5f6f7;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #555;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.payment-method:first-child {
+    border-right: 1px solid #ccc;
+}
+
+.payment-method.active {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* Logos Mobile Money */
+.mobile-money-logos {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.mobile-money-logos img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Styles pour les formulaires */
+.payment-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.payment-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.payment-form input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Style de validation */
+.payment-form input:invalid {
+    border-color: #dc3545; /* Rouge pour l'erreur */
+}
+.payment-form input:focus:invalid {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+
+.payment-form .form-group-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.payment-form .form-group-row .form-group {
+    flex: 1;
+}
+
+.btn-full-width {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+/* Message de succès */
+.success-message {
+    text-align: center;
+    padding: 2rem 1rem;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.success-message svg {
+    color: #28a745; /* Vert pour le succès */
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+}
+
+.success-message h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.success-message p {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 40ch;
+    margin: 0.5rem auto 0;
+}
+.main-container {
+            max-width: 600px; /* Réduit pour un meilleur affichage vertical */
+            width: 90%;
+            text-align: center;
+            padding: 2rem;
+        }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Utilitaire pour cacher des éléments */
+.hidden {
+    display: none;
+}
+
+ /* --- Conteneur de la galerie --- */
+        .gallery-container {
+            /* Crée un effet de masque dégradé en haut et en bas */
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+            overflow: hidden; /* Cache le contenu qui dépasse */
+            width: 100%;
+            height: 60vh; /* Hauteur fixe pour le conteneur */
+            max-height: 500px;
+            border-radius: 12px;
+        }
+
+        /* --- Piste de défilement --- */
+        .gallery-scroll {
+            display: flex;
+            flex-direction: column; /* Aligne les images verticalement */
+            gap: 1rem; /* Espace entre les images */
+            /* Applique l'animation personnalisée */
+            animation: customScrollAnimation 16s infinite;
+        }
+
+        /* --- Pause de l'animation au survol --- */
+        .gallery-container:hover .gallery-scroll {
+            animation-play-state: paused;
+        }
+
+        /* --- Images de la galerie --- */
+        .gallery-scroll img {
+            width: 100%; /* Les images prennent toute la largeur du conteneur */
+            height: auto; /* Hauteur automatique pour garder le ratio */
+            object-fit: cover; /* Recadre l'image pour remplir l'espace sans la déformer */
+            border-radius: 12px; /* Coins arrondis */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transition douce pour le survol */
+        }
+
+        /* --- Effet au survol des images --- */
+        .gallery-scroll img:hover {
+            transform: scale(1.03); /* Agrandit légèrement l'image */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.12);
+            cursor: pointer;
+        }
+
+        /* --- Définition de l'animation de défilement personnalisée --- */
+        @keyframes customScrollAnimation {
+            /* Le cycle d'animation est divisé en pourcentages de temps */
+            0% {
+                transform: translateY(0);
+            }
+            /* Phase 1: Accélération rapide.
+               En 25% du temps, on parcourt 70% de la distance. */
+            25% {
+                transform: translateY(calc(-50% * 0.7));
+            }
+            /* Phase 2: Ralentissement.
+               Dans les 12.5% de temps suivants, on parcourt 10% de plus. */
+            37.5% {
+                transform: translateY(calc(-50% * 0.8));
+            }
+            /* Phase 3: Fin de course lente.
+               Le reste du temps est utilisé pour les 20% de distance restants. */
+            100% {
+                transform: translateY(-50%);
+            }
+        }

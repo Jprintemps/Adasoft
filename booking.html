@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- 
+        Fichier: booking.html
+        Auteur: Gemini (généré par IA en tant que développeur senior)
+        Date: 12 septembre 2025
+        Description: Structure HTML pour la page de réservation.
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Réservez votre Appel Stratégique | Adasoft</title>
+    <meta name="description" content="Planifiez votre session de stratégie de marque gratuite de 30 minutes avec nos experts. Discutons de vos objectifs et de la manière dont Adasoft peut vous aider à les atteindre.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="header">
+    <div class="container header__container">
+      <a href="index.html" class="header__logo" aria-label="Adasoft - Page d'accueil">
+        <img src="./src/assets/Logo.svg" alt="Logo Adasoft" loading="lazy" style="width: 120px; height: auto; display: block;">
+      </a>
+      <nav class="header__nav" aria-label="Navigation principale">
+        <ul class="header__nav-list">
+          <li><a href="index.html#portfolio">Portfolio</a></li>
+          <li><a href="index.html#pricing">Tarifs</a></li>
+          <li><a href="index.html#process">Notre méthode</a></li>
+          <li><a href="index.html#testimonials">Témoignages</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="index.html#pricing" class="btn btn--primary">Tarifs</a>
+      </div>
+    </div>
+  </header>
+
+    <main>
+        <div class="container">
+            <div id="booking-container" class="booking-card">
+                
+                <div class="booking-header">
+                    <h1>Réservez votre appel stratégique gratuit</h1>
+                    <p>Planifiez votre session de 30 minutes pour discuter de l'avenir de votre marque, sans engagement.</p>
+                </div>
+
+                <form id="booking-form" class="booking-form" novalidate>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Nom complet</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                            <div class="error-message">Ce champ est requis.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Adresse e-mail</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message">Veuillez entrer une adresse e-mail valide.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp">Numéro WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="+243 (000) 000-000" required>
+                            <div class="error-message">Veuillez inclure l'indicatif du pays (ex : +243).</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Nom de l'entreprise <span class="optional">(Optionnel)</span></label>
+                            <input type="text" id="company" name="company">
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="projectInfo">Parlez-nous de votre projet</label>
+                            <textarea id="projectInfo" name="projectInfo" placeholder="Quels sont vos objectifs ? Quelle est votre audience cible ? Avez-vous une identité de marque existante ?" required></textarea>
+                            <div class="error-message">Veuillez fournir quelques détails sur votre projet.</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button type="submit" id="submit-btn" class="btn-submit">
+                            <span>Planifier mon appel gratuit</span>
+                            <div class="loader"></div>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__column">
+        <h4>Adasoft</h4>
+        <p>Nous créons des marques inoubliables.</p>
+      </div>
+      <div class="footer__column">
+        <h4>Explorer</h4>
+        <ul>
+          <li><a href="index.html#portfolio">Portfolio</a></li>
+          <li><a href="index.html#pricing">Tarifs</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="#">Conditions d'utilisation</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h4>Newsletter</h4>
+        <form class="newsletter-form">
+          <label for="newsletter-email" class="visually-hidden">Votre adresse e-mail</label>
+          <input type="email" id="newsletter-email" placeholder="Votre e-mail..." required>
+          <button type="submit" class="btn btn--primary">S'inscrire</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>&copy; 2025 Adasoft. Tous droits réservés.</p>
+      <div class="footer__socials">
+        <!-- Inline SVGs for social icons -->
+        <a href="#" aria-label="LinkedIn"><svg><!-- icon --></svg></a>
+        <a href="#" aria-label="Twitter"><svg><!-- icon --></svg></a>
+      </div>
+    </div>
+  </footer>
+
+    <!-- JavaScript -->
+    <script src="scripts.js" defer></script>
+
+</body>
+</html>
+
