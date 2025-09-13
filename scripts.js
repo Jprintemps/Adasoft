@@ -605,3 +605,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 galleryScroll.appendChild(clone);
             });
         });
+ // JavaScript for scroll animations
+        document.addEventListener("DOMContentLoaded", function() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll_why');
+
+            // Use IntersectionObserver if available for better performance
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        // When element comes into view
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible_why');
+                            // Stop observing it after animation
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1 // Trigger when 10% of the element is visible
+                });
+
+                animatedElements.forEach(element => {
+                    observer.observe(element);
+                });
+            } else {
+                // Fallback for older browsers
+                animatedElements.forEach(element => {
+                    element.classList.add('is-visible_why');
+                });
+            }
+        });
