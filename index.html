@@ -1,622 +1,462 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adasoft | Branding & Design de Logo d'Exception</title>
-    <meta
-      name="description"
-      content="Adasoft crée des identités de marque et logos uniques pour les entreprises ambitieuses. Design par de vrais humains, livré en 48h. Satisfaction garantie."
-    />
-    <link rel="icon" type="image/webp" href="./src/img/logo-title.webp">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="scripts.js" defer></script>
-  </head>
-  <body>
-    <header class="header">
-      <div class="container header__container">
-        <a href="#" class="header__logo" aria-label="Adasoft - Page d'accueil">
-          <img
-            src="./src/assets/Logo.svg"
-            alt="Logo Adasoft"
-            loading="lazy"
-            style="width: 120px; height: auto; display: block"
-          />
-        </a>
-        <nav class="header__nav" aria-label="Navigation principale">
-          <ul class="header__nav-list">
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#pricing">Tarifs</a></li>
-            <li><a href="#process">Notre méthode</a></li>
-            <li><a href="#testimonials">Témoignages</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </nav>
-        <div class="header__actions">
-          <a href="#pricing" class="btn btn--primary">Tarifs -></a>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adasoft | Branding & Design de Logo d'Exception</title>
+  <meta name="description"
+    content="Adasoft crée des identités de marque et logos uniques pour les entreprises ambitieuses. Design par de vrais humains, livré en 48h. Satisfaction garantie." />
+  <link rel="icon" type="image/webp" href="./src/img/logo-title.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="scripts.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header__container">
+      <a href="#" class="header__logo" aria-label="Adasoft - Page d'accueil">
+        <img src="./src/assets/Logo.svg" alt="Logo Adasoft" loading="lazy"
+          style="width: 120px; height: auto; display: block" />
+      </a>
+      <nav class="header__nav" aria-label="Navigation principale">
+        <ul class="header__nav-list">
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#pricing">Tarifs</a></li>
+          <li><a href="#process">Notre méthode</a></li>
+          <li><a href="#testimonials">Témoignages</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="#pricing" class="btn btn--primary">Tarifs -></a>
       </div>
-       <!-- La barre de progression -->
-    </header>
-     <div class="_top-progress-container">
-        <div class="_top-progress-bar" id="myBar"></div>
     </div>
-    <main>
-      <section class="hero" id="hero" aria-labelledby="hero-title">
-        <div class="container hero__container">
-          <div class="hero__content">
-            <h1 class="hero-title" id="hero-title">
-              Votre branding complet, créé sur mésure, dès 80&nbsp;$
-            </h1>
-            <p>
-              Nous créons des logos et des marques uniques, pour les entreprises
-              ambitieuses qui veulent aller vite et voir grand.
-            </p>
-            <div class="hero__badges">
-              <span>Unique et professionnel</span>
-              <span>Livré en 48 heures</span>
-              <span>Branding 100% personnalisé</span>
-              <span>Garantie satisfait ou remboursé</span>
-            </div>
-            <div class="hero__cta">
-              <a
-                href="#pricing"
-                class="btn btn--primary"
-                aria-label="Voir nos tarifs de branding"
-                >Voir les tarifs</a
-              >
-              <a href="/booking.html" class="btn btn--secondary"
-                >Planifier un appel stratégique gratuit</a
-              >
-            </div>
-          </div>
-          <div class="hero__gallery">
-            <img
-              src="./src/img/1.webp"
-              alt="Exemple de projet de branding 1"
-              loading="lazy"
-            />
-            <div class="gallery-container">
-              <div class="gallery-scroll" id="gallery-scroll">
-                <img
-                  src="./src/img/3.webp"
-                  alt="Exemple de projet de branding 2"
-                  loading="lazy"
-                />
-                <img
-                  src="./src/img/4.webp"
-                  alt="Exemple de projet de branding 3"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="social-proof" aria-labelledby="social-proof-title">
-        <h2 id="social-proof-title" class="visually-hidden">
-          Preuve Sociale et Confiance
-        </h2>
-        <div class="container social-proof__container">
-          <div class="social-proof__column logos-column">
-            <h3>Nos créations récentes</h3>
-            <div class="logos-column__gallery">
-              <img
-                src="./src/img/8.webp"
-                alt="Logo créé pour un client"
-                loading="lazy"
-              />
-              <img
-                src="./src/img/9.webp"
-                alt="Logo créé pour un client"
-                loading="lazy"
-              />
-              <img
-                src="./src/img/10.webp"
-                alt="Logo créé pour un client"
-                loading="lazy"
-              />
-              <img
-                src="./src/img/11.webp"
-                alt="Logo créé pour un client"
-                loading="lazy"
-              />
-            </div>
-          </div>
-          <div class="social-proof__column stats-column">
-            <h3>Reconnu à l’international</h3>
-            <div class="stats-column__item">
-              <strong class="stat-number" data-target="+25">0</strong>
-              <span>clients satisfaits</span>
-            </div>
-            <div class="stats-column__item">
-              <strong class="stat-number" data-target="4">0</strong>
-              <span>pays desservis</span>
-            </div>
-            <div class="stats-column__item">
-              <strong class="stat-number" data-target="4.8" data-decimal="true"
-                >0</strong
-              >
-              <span>/5 note moyenne</span>
-            </div>
-          </div>
-          <div class="social-proof__column testimonial-column">
-            <h3>Ils nous font confiance</h3>
-            <figure>
-              <blockquote>
-                "Travailler avec Adasoft a changé la donne. Leur équipe n'a pas
-                seulement livré un logo, elle a créé une identité de marque
-                complète qui reflète parfaitement notre vision. Le processus
-                était fluide, rapide, et le résultat a dépassé toutes nos
-                attentes."
-              </blockquote>
-              <figcaption>
-                — Rama Bonheur, CEO d'Imani Corp<br />
-                <small>RDCongo</small>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-        <div class="container">
-          <p class="section-emphasis">
-            Attirez des prospects et gagnez une
-            <strong>crédibilité incontestable</strong> dans votre secteur
+    <!-- La barre de progression -->
+  </header>
+  <div class="_top-progress-container">
+    <div class="_top-progress-bar" id="myBar"></div>
+  </div>
+  <main>
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="container hero__container">
+        <div class="hero__content">
+          <h1 class="hero-title" id="hero-title">
+            Votre branding complet, créé sur mésure, dès 80&nbsp;$
+          </h1>
+          <p>
+            Nous créons des logos et des marques uniques, pour les entreprises
+            ambitieuses qui veulent aller vite et voir grand.
           </p>
-        </div>
-      </section>
-      <section class="features" aria-labelledby="features-title">
-        <div class="container">
-          <div class="section-header">
-            <h2 id="features-title">
-              Soyez l'entreprise à laquelle les clients font confiance,
-              instantanément
-            </h2>
+          <div class="hero__badges">
+            <span>Unique et professionnel</span>
+            <span>Livré en 48 heures</span>
+            <span>Branding 100% personnalisé</span>
+            <span>Garantie satisfait ou remboursé</span>
           </div>
-          <div class="features__grid">
-            <article class="feature-card">
-              <h3>1. Devenez inoubliable</h3>
-              <p>
-                Nous créons des identités de marque qui inspirent confiance,
-                favorisent l'engagement et laissent une impression durable à
-                votre audience.
-              </p>
-            </article>
-            <article class="feature-card">
-              <h3>2. Une image de grande entreprise</h3>
-              <p>
-                Apparaissez professionnel et percutant sur tous les supports et
-                plateformes.
-              </p>
-            </article>
-            <article class="feature-card">
-              <h3>3. Design intemporel</h3>
-              <p>
-                Nous concevons des marques qui traversent le temps et vous
-                assurent une réussite durable.
-              </p>
-            </article>
-            <article class="feature-card">
-              <h3>4. Adapté à votre marché</h3>
-              <p>
-                Nos créations sont basées sur des études de marché, pour séduire
-                directement votre cible.
-              </p>
-            </article>
-          </div>
-          <div class="section-cta">
-            <a href="#pricing" class="btn btn--primary">Voir nos forfaits -></a>
+          <div class="hero__cta">
+            <a href="#pricing" class="btn btn--primary" aria-label="Voir nos tarifs de branding">Voir les tarifs</a>
+            <a href="/booking.html" class="btn btn--secondary">Planifier un appel stratégique gratuit</a>
           </div>
         </div>
-      </section>
-      <section
-        class="portfolio"
-        id="portfolio"
-        aria-labelledby="portfolio-title"
-      >
-        <div class="container">
-          <div class="section-header">
-            <h2 id="portfolio-title">Notre Portfolio</h2>
-            <p>Découvrez quelques-uns de nos derniers projets...</p>
-          </div>
-          <div
-            class="portfolio__filters"
-            role="tablist"
-            aria-label="Filtrer le portfolio par catégorie"
-          >
-            <button role="tab" aria-selected="true" data-filter="all">
-              À la une
-            </button>
-            <button role="tab" aria-selected="false" data-filter="ecommerce">
-              E-commerce
-            </button>
-            <button role="tab" aria-selected="false" data-filter="agency">
-              Agence
-            </button>
-            <button role="tab" aria-selected="false" data-filter="ai">
-              Startup IA
-            </button>
-            <button role="tab" aria-selected="false" data-filter="saas">
-              SAAS
-            </button>
-            <button role="tab" aria-selected="false" data-filter="consulting">
-              Conseil
-            </button>
-            <button role="tab" aria-selected="false" data-filter="beauty">
-              Beauté
-            </button>
-          </div>
-          <div class="portfolio__grid">
-            <figure class="portfolio-item" data-category="ai">
-              <img
-                src="./src/img/1.webp"
-                alt="Projet de branding pour une startup IA"
-                loading="lazy"
-              />
-              <figcaption>
-                <h3>Hapsoft</h3>
-                <p>Startup IA and Gestion</p>
-              </figcaption>
-            </figure>
-            <figure class="portfolio-item" data-category="agency">
-              <img
-                src="./src/img/2.webp"
-                alt="Projet de branding pour une startup IA"
-                loading="lazy"
-              />
-              <figcaption>
-                <h3>Hoprity Décor</h3>
-                <p>Agence de décoration</p>
-              </figcaption>
-            </figure>
-            <figure class="portfolio-item" data-category="saas">
-              <img
-                src="./src/img/3.webp"
-                alt="Projet de branding pour une startup IA"
-                loading="lazy"
-              />
-              <figcaption>
-                <h3>Kev T</h3>
-                <p>Technologie</p>
-              </figcaption>
-            </figure>
-            <figure class="portfolio-item" data-category="agency">
-              <img
-                src="./src/img/4.webp"
-                alt="Projet de branding pour une startup IA"
-                loading="lazy"
-              />
-              <figcaption>
-                <h3>Agence Créative</h3>
-                <p>Agence</p>
-              </figcaption>
-            </figure>
-            <figure class="portfolio-item" data-category="agency">
-              <img
-                src="./src/img/6.webp"
-                alt="Projet de branding pour une startup IA"
-                loading="lazy"
-              />
-              <figcaption>
-                <h3>Agence Créative</h3>
-                <p>Agence</p>
-              </figcaption>
-            </figure>
-            <figure class="portfolio-item" data-category="beauty">
-              <img
-                src="./src/img/7.webp"
-                alt="Projet de branding pour une startup IA"
-                loading="lazy"
-              />
-              <figcaption>
-                <h3>Luxe Beauté</h3>
-                <p>Beauté</p>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-      <section class="pricing" id="pricing" aria-labelledby="pricing-title">
-        <div class="container">
-          <div class="section-header">
-            <h2 id="pricing-title">
-              Tarifs simples. Retour sur investissement infini.
-            </h2>
-          </div>
-          <div class="pricing__grid">
-            <div class="pricing-card">
-              <h3>Basique</h3>
-              <div class="price"><sup>$</sup>80</div>
-              <ul>
-                <li>1 Concept de logo inclu</li>
-                <li>Transparence du logo</li>
-                <li>2 révisions incluses</li>
-                <li>Fichier Vectoriel/source</li>
-                <li>Livraison en 2 jours</li>
-                <li><s>Palette de couleur</s></li>
-                <li><s>Typographie de marque</s></li>
-                <li><s>Maquette 3D</s></li>
-                <li><s>Conception de papeterie</s></li>
-                <li><s>Analyse concurentielle de la marque</s></li>
-                <li><s>Image et style graphique</s></li>
-                <li><s>Ton de voix</s></li>
-                <li><s>Garantie de marque</s></li>
-              </ul>
-              <button
-                class="btn btn--secondary openModalBtn"
-                data-plan="Basique"
-                data-price="80"
-              >
-                Commander maintenant
-              </button>
-              <p class="pricing-card__guarantee">
-                Garantie satisfait ou remboursé à 100%
-              </p>
-            </div>
-            <div class="pricing-card popular">
-              <h3>Premium</h3>
-              <div class="price"><sup>$</sup>150</div>
-              <ul>
-                <li><b>Concepts de logo inclu(au total)</b></li>
-                <li><b>Completer les directives de la marque</b></li>
-                <li>Palettes de couleurs</li>
-                <li>Typographie de marque</li>
-                <li>kit de médias sociaux</li>
-                <li>Maquettes 3D</li>
-                <li>Conceptions de papeterie(Carte de visite)</li>
-                <li>Images et styles graphiques</li>
-                <li>Directives d'utilisation du logo</li>
-                <li><b>Livraison en 2 jours</b></li>
-                <li><b>Révision illimiées pour affiner le concept que vous avez choisi.</b></li>
-              </ul>
-              <button
-                class="btn btn--primary openModalBtn"
-                data-plan="Premium"
-                data-price="150"
-              >
-                Commander maintenant
-              </button>
-              <p class="pricing-card__guarantee">
-                Garantie satisfait ou remboursé à 100%
-              </p>
-            </div>
-            <div class="pricing-card">
-              <h3>Système de marque complet</h3>
-              <div class="price"><sup>$</sup>320</div>
-              <ul>
-                <li><b>Stratégie d’angle marketing</b></li>
-                <li><b>Déclaration de vision de la marque</b></li>
-                <li><b>Ton de voix de la marque</b></li>
-                <li>10 créations pour les médias sociaux</li>
-                <li>Conception complète du compte LinkedIn</li>
-                <li>Conception du marketing par courriel</li>
-                <li>5 bannières publicitaires Google</li>
-                <li>Emballage et merchandising</li>
-                <li>Modèles, icônes, actifs de marque d’interface utilisateur</li>
-                <li><b>Livraison en 5 jours</b></li>
-                <li><b>Révisions illimitées pour affiner le concept que vous avez choisi.</b></li>
-              </ul>
-              <button
-                class="btn btn--secondary openModalBtn"
-                data-plan="Système de marque complet"
-                data-price="320"
-              >
-                Commander maintenant
-              </button>
-              <p class="pricing-card__guarantee">
-                Garantie satisfait ou remboursé à 100%
-              </p>
-            </div>
-          </div>
-          <div class="section-cta">
-            Votre réussite est notre priorité. Notre politique de remboursement
-            est simple : si vous n'êtes pas satisfait, nous travaillons jusqu'à
-            ce que vous le soyez, ou nous vous remboursons.
-          </div>
-        </div>
-      </section>
-      <div
-        id="paymentModal"
-        class="modal-overlay"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 id="modal-title" class="modal-title">Finaliser la commande</h2>
-            <button
-              id="closeModalBtn"
-              class="modal-close-btn"
-              aria-label="Fermer la fenêtre modale"
-            >
-              &times;
-            </button>
-          </div>
-          <div class="modal-body">
-            <div id="modal-payment-content">
-              <div id="modal-summary" class="order-summary"></div>
-              <div class="payment-method-selector">
-                <button
-                  id="selectCard"
-                  class="payment-method active"
-                  type="button"
-                >
-                  Carte Bancaire
-                </button>
-                <button id="selectMobile" class="payment-method" type="button">
-                  Mobile Money
-                </button>
-              </div>
-              <form id="card-payment-form" class="payment-form">
-                <div class="form-group">
-                  <label for="card-holder-name">Nom sur la carte</label>
-                  <input
-                    type="text"
-                    id="card-holder-name"
-                    placeholder="Elon musk"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="card-number">Numéro de carte</label>
-                  <input
-                    type="text"
-                    id="card-number"
-                    placeholder="0000 0000 0000 0000"
-                    required
-                    minlength="16"
-                    maxlength="19"
-                  />
-                </div>
-                <div class="form-group-row">
-                  <div class="form-group">
-                    <label for="expiry-date">Date d'expiration</label>
-                    <input
-                      type="text"
-                      id="expiry-date"
-                      placeholder="MM/AA"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="cvc">CVC</label>
-                    <input
-                      type="text"
-                      id="cvc"
-                      placeholder="123"
-                      required
-                      minlength="3"
-                      maxlength="4"
-                    />
-                  </div>
-                </div>
-              </form>
-              <form id="mobile-money-form" class="payment-form hidden">
-                <div class="mobile-money-logos">
-                  <img src="./src/img/orange.webp" alt="Orange Money" />
-                  <img src="./src/img/airtel.webp" alt="Airtel Money" />
-                  <img src="./src/img/mpesa.webp" alt="M-Pesa" />
-                </div>
-                <div class="form-group">
-                  <label for="phone-number">Numéro de téléphone</label>
-                  <input
-                    type="tel"
-                    id="phone-number"
-                    placeholder="Ex: 0812345678"
-                    required
-                  />
-                </div>
-              </form>
-              <button
-                type="submit"
-                id="modal-submit-btn"
-                class="btn btn--primary btn-full-width"
-              >
-                Payer
-              </button>
-            </div>
-            <div id="modal-success-message" class="success-message hidden">
+        <div class="hero__gallery">
+          <img src="./src/img/1.webp" alt="Exemple de projet de branding 1" loading="lazy" />
+          <div class="gallery-container">
+            <div class="gallery-scroll" id="gallery-scroll">
+              <img src="./src/img/3.webp" alt="Exemple de projet de branding 2" loading="lazy" />
+              <img src="./src/img/4.webp" alt="Exemple de projet de branding 3" loading="lazy" />
             </div>
           </div>
         </div>
       </div>
-      <section
-        class="testimonials"
-        id="testimonials"
-        aria-labelledby="testimonials-title"
-      >
-        <div class="container">
-          <div class="section-header">
-            <h2 id="testimonials-title">Ce que disent nos clients</h2>
-          </div>
-          <div
-            class="carousel"
-            aria-roledescription="carousel"
-            aria-label="Témoignages de clients"
-          >
-            <div class="carousel__track-container">
-              <ul class="carousel__track">
-                <li
-                  class="carousel__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                >
-                  <figure>
-                    <blockquote>
-                      "Créativité et professionnalisme exceptionnels. Adasoft a
-                      transformé notre marque."
-                    </blockquote>
-                    <figcaption>— Kevin T., Fondateur de Kev T</figcaption>
-                  </figure>
-                </li>
-                <li
-                  class="carousel__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                >
-                  <figure>
-                    <blockquote>
-                      "Le délai le plus rapide que j'ai vu pour une telle
-                      qualité. Je recommande vivement."
-                    </blockquote>
-                    <figcaption>
-                      — Alex ., PDG de Parts Cars Business
-                    </figcaption>
-                  </figure>
-                </li>
-                <li
-                  class="carousel__slide"
-                  role="group"
-                  aria-roledescription="slide"
-                >
-                  <figure>
-                    <blockquote>
-                      "Un vrai partenaire collaboratif. Ils ont écouté et livré
-                      au-delà de nos attentes."
-                    </blockquote>
-                    <figcaption>— HMN., Propriétaire de HMN Record</figcaption>
-                  </figure>
-                </li>
-              </ul>
-            </div>
-            <div class="carousel__nav">
-              <button
-                class="carousel__button carousel__button--prev"
-                aria-label="Témoignage précédent"
-              >
-                &lt;
-              </button>
-              <button
-                class="carousel__button carousel__button--next"
-                aria-label="Témoignage suivant"
-              >
-                &gt;
-              </button>
-            </div>
-            <div class="carousel__indicators"></div>
+    </section>
+    <section class="social-proof" aria-labelledby="social-proof-title">
+      <h2 id="social-proof-title" class="visually-hidden">
+        Preuve Sociale et Confiance
+      </h2>
+      <div class="container social-proof__container">
+        <div class="social-proof__column logos-column">
+          <h3>Nos créations récentes</h3>
+          <div class="logos-column__gallery">
+            <img src="./src/img/8.webp" alt="Logo créé pour un client" loading="lazy" />
+            <img src="./src/img/9.webp" alt="Logo créé pour un client" loading="lazy" />
+            <img src="./src/img/10.webp" alt="Logo créé pour un client" loading="lazy" />
+            <img src="./src/img/11.webp" alt="Logo créé pour un client" loading="lazy" />
           </div>
         </div>
-      </section>
-      <section class="container center">
+        <div class="social-proof__column stats-column">
+          <h3>Reconnu à l’international</h3>
+          <div class="stats-column__item">
+            <strong class="stat-number" data-target="+25">0</strong>
+            <span>clients satisfaits</span>
+          </div>
+          <div class="stats-column__item">
+            <strong class="stat-number" data-target="4">0</strong>
+            <span>pays desservis</span>
+          </div>
+          <div class="stats-column__item">
+            <strong class="stat-number" data-target="4.8" data-decimal="true">0</strong>
+            <span>/5 note moyenne</span>
+          </div>
+        </div>
+        <div class="social-proof__column testimonial-column">
+          <h3>Ils nous font confiance</h3>
+          <figure>
+            <blockquote>
+              "Travailler avec Adasoft a changé la donne. Leur équipe n'a pas
+              seulement livré un logo, elle a créé une identité de marque
+              complète qui reflète parfaitement notre vision. Le processus
+              était fluide, rapide, et le résultat a dépassé toutes nos
+              attentes."
+            </blockquote>
+            <figcaption>
+              — Rama Bonheur, CEO d'Imani Corp<br />
+              <small>RDCongo</small>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="container">
+        <p class="section-emphasis">
+          Attirez des prospects et gagnez une
+          <strong>crédibilité incontestable</strong> dans votre secteur
+        </p>
+      </div>
+    </section>
+    <section class="features" aria-labelledby="features-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="features-title">
+            Soyez l'entreprise à laquelle les clients font confiance,
+            instantanément
+          </h2>
+        </div>
+        <div class="features__grid">
+          <article class="feature-card">
+            <h3>1. Devenez inoubliable</h3>
+            <p>
+              Nous créons des identités de marque qui inspirent confiance,
+              favorisent l'engagement et laissent une impression durable à
+              votre audience.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>2. Une image de grande entreprise</h3>
+            <p>
+              Apparaissez professionnel et percutant sur tous les supports et
+              plateformes.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>3. Design intemporel</h3>
+            <p>
+              Nous concevons des marques qui traversent le temps et vous
+              assurent une réussite durable.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>4. Adapté à votre marché</h3>
+            <p>
+              Nos créations sont basées sur des études de marché, pour séduire
+              directement votre cible.
+            </p>
+          </article>
+        </div>
+        <div class="section-cta">
+          <a href="#pricing" class="btn btn--primary">Voir nos forfaits -></a>
+        </div>
+      </div>
+    </section>
+    <section class="portfolio" id="portfolio" aria-labelledby="portfolio-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="portfolio-title">Notre Portfolio</h2>
+          <p>Découvrez quelques-uns de nos derniers projets...</p>
+        </div>
+        <div class="portfolio__filters" role="tablist" aria-label="Filtrer le portfolio par catégorie">
+          <button role="tab" aria-selected="true" data-filter="all">
+            À la une
+          </button>
+          <button role="tab" aria-selected="false" data-filter="ecommerce">
+            E-commerce
+          </button>
+          <button role="tab" aria-selected="false" data-filter="agency">
+            Agence
+          </button>
+          <button role="tab" aria-selected="false" data-filter="ai">
+            Startup IA
+          </button>
+          <button role="tab" aria-selected="false" data-filter="saas">
+            SAAS
+          </button>
+          <button role="tab" aria-selected="false" data-filter="consulting">
+            Conseil
+          </button>
+          <button role="tab" aria-selected="false" data-filter="beauty">
+            Beauté
+          </button>
+        </div>
+        <div class="portfolio__grid">
+          <figure class="portfolio-item" data-category="ai">
+            <img src="./src/img/1.webp" alt="Projet de branding pour une startup IA" loading="lazy" />
+            <figcaption>
+              <h3>Hapsoft</h3>
+              <p>Startup IA and Gestion</p>
+            </figcaption>
+          </figure>
+          <figure class="portfolio-item" data-category="agency">
+            <img src="./src/img/2.webp" alt="Projet de branding pour une startup IA" loading="lazy" />
+            <figcaption>
+              <h3>Hoprity Décor</h3>
+              <p>Agence de décoration</p>
+            </figcaption>
+          </figure>
+          <figure class="portfolio-item" data-category="saas">
+            <img src="./src/img/3.webp" alt="Projet de branding pour une startup IA" loading="lazy" />
+            <figcaption>
+              <h3>Kev T</h3>
+              <p>Technologie</p>
+            </figcaption>
+          </figure>
+          <figure class="portfolio-item" data-category="agency">
+            <img src="./src/img/4.webp" alt="Projet de branding pour une startup IA" loading="lazy" />
+            <figcaption>
+              <h3>Agence Créative</h3>
+              <p>Agence</p>
+            </figcaption>
+          </figure>
+          <figure class="portfolio-item" data-category="agency">
+            <img src="./src/img/6.webp" alt="Projet de branding pour une startup IA" loading="lazy" />
+            <figcaption>
+              <h3>Agence Créative</h3>
+              <p>Agence</p>
+            </figcaption>
+          </figure>
+          <figure class="portfolio-item" data-category="beauty">
+            <img src="./src/img/7.webp" alt="Projet de branding pour une startup IA" loading="lazy" />
+            <figcaption>
+              <h3>Luxe Beauté</h3>
+              <p>Beauté</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="pricing-title">
+            Tarifs simples. Retour sur investissement infini.
+          </h2>
+        </div>
+        <div class="pricing__grid">
+          <div class="pricing-card">
+            <h3>Basique</h3>
+            <div class="price"><sup>$</sup>80</div>
+            <ul>
+              <li>1 Concept de logo inclu</li>
+              <li>Transparence du logo</li>
+              <li>2 révisions incluses</li>
+              <li>Fichier Vectoriel/source</li>
+              <li>Livraison en 2 jours</li>
+              <li><s>Palette de couleur</s></li>
+              <li><s>Typographie de marque</s></li>
+              <li><s>Maquette 3D</s></li>
+              <li><s>Conception de papeterie</s></li>
+              <li><s>Analyse concurentielle de la marque</s></li>
+              <li><s>Image et style graphique</s></li>
+              <li><s>Ton de voix</s></li>
+              <li><s>Garantie de marque</s></li>
+            </ul>
+            <button class="btn btn--secondary openModalBtn" data-plan="Basique" data-price="80">
+              Commander maintenant
+            </button>
+            <p class="pricing-card__guarantee">
+              Garantie satisfait ou remboursé à 100%
+            </p>
+          </div>
+          <div class="pricing-card popular">
+            <h3>Premium</h3>
+            <div class="price"><sup>$</sup>150</div>
+            <ul>
+              <li><b>Concepts de logo inclu(au total)</b></li>
+              <li><b>Completer les directives de la marque</b></li>
+              <li>Palettes de couleurs</li>
+              <li>Typographie de marque</li>
+              <li>kit de médias sociaux</li>
+              <li>Maquettes 3D</li>
+              <li>Conceptions de papeterie(Carte de visite)</li>
+              <li>Images et styles graphiques</li>
+              <li>Directives d'utilisation du logo</li>
+              <li><b>Livraison en 2 jours</b></li>
+              <li><b>Révision illimiées pour affiner le concept que vous avez choisi.</b></li>
+            </ul>
+            <button class="btn btn--primary openModalBtn" data-plan="Premium" data-price="150">
+              Commander maintenant
+            </button>
+            <p class="pricing-card__guarantee">
+              Garantie satisfait ou remboursé à 100%
+            </p>
+          </div>
+          <div class="pricing-card">
+            <h3>Système de marque complet</h3>
+            <div class="price"><sup>$</sup>320</div>
+            <ul>
+              <li><b>Stratégie d’angle marketing</b></li>
+              <li><b>Déclaration de vision de la marque</b></li>
+              <li><b>Ton de voix de la marque</b></li>
+              <li>10 créations pour les médias sociaux</li>
+              <li>Conception complète du compte LinkedIn</li>
+              <li>Conception du marketing par courriel</li>
+              <li>5 bannières publicitaires Google</li>
+              <li>Emballage et merchandising</li>
+              <li>Modèles, icônes, actifs de marque d’interface utilisateur</li>
+              <li><b>Livraison en 5 jours</b></li>
+              <li><b>Révisions illimitées pour affiner le concept que vous avez choisi.</b></li>
+            </ul>
+            <button class="btn btn--secondary openModalBtn" data-plan="Système de marque complet" data-price="320">
+              Commander maintenant
+            </button>
+            <p class="pricing-card__guarantee">
+              Garantie satisfait ou remboursé à 100%
+            </p>
+          </div>
+        </div>
+        <div class="section-cta">
+          Votre réussite est notre priorité. Notre politique de remboursement
+          est simple : si vous n'êtes pas satisfait, nous travaillons jusqu'à
+          ce que vous le soyez, ou nous vous remboursons.
+        </div>
+      </div>
+    </section>
+    <div id="paymentModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modal-title" class="modal-title">Finaliser la commande</h2>
+          <button id="closeModalBtn" class="modal-close-btn" aria-label="Fermer la fenêtre modale">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="modal-payment-content">
+            <div id="modal-summary" class="order-summary"></div>
+            <div class="payment-method-selector">
+              <button id="selectCard" class="payment-method active" type="button">
+                Carte Bancaire
+              </button>
+              <button id="selectMobile" class="payment-method" type="button">
+                Mobile Money
+              </button>
+            </div>
+            <form id="card-payment-form" class="payment-form">
+              <div class="form-group">
+                <label for="card-holder-name">Nom sur la carte</label>
+                <input type="text" id="card-holder-name" placeholder="Elon musk" required />
+              </div>
+              <div class="form-group">
+                <label for="card-number">Numéro de carte</label>
+                <input type="text" id="card-number" placeholder="0000 0000 0000 0000" required minlength="16"
+                  maxlength="19" />
+              </div>
+              <div class="form-group-row">
+                <div class="form-group">
+                  <label for="expiry-date">Date d'expiration</label>
+                  <input type="text" id="expiry-date" placeholder="MM/AA" required />
+                </div>
+                <div class="form-group">
+                  <label for="cvc">CVC</label>
+                  <input type="text" id="cvc" placeholder="123" required minlength="3" maxlength="4" />
+                </div>
+              </div>
+            </form>
+            <form id="mobile-money-form" class="payment-form hidden">
+              <div class="mobile-money-logos">
+                <img src="./src/img/orange.webp" alt="Orange Money" />
+                <img src="./src/img/airtel.webp" alt="Airtel Money" />
+                <img src="./src/img/mpesa.webp" alt="M-Pesa" />
+              </div>
+              <div class="form-group">
+                <label for="phone-number">Numéro de téléphone</label>
+                <input type="tel" id="phone-number" placeholder="Ex: 0812345678" required />
+              </div>
+            </form>
+            <button type="submit" id="modal-submit-btn" class="btn btn--primary btn-full-width">
+              Payer
+            </button>
+          </div>
+          <div id="modal-success-message" class="success-message hidden">
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="testimonials" id="testimonials" aria-labelledby="testimonials-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="testimonials-title">Ce que disent nos clients</h2>
+        </div>
+        <div class="carousel" aria-roledescription="carousel" aria-label="Témoignages de clients">
+          <div class="carousel__track-container">
+            <ul class="carousel__track">
+              <li class="carousel__slide" role="group" aria-roledescription="slide">
+                <figure>
+                  <blockquote>
+                    "Créativité et professionnalisme exceptionnels. Adasoft a
+                    transformé notre marque."
+                  </blockquote>
+                  <figcaption>— Kevin T., Fondateur de Kev T</figcaption>
+                </figure>
+              </li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide">
+                <figure>
+                  <blockquote>
+                    "Le délai le plus rapide que j'ai vu pour une telle
+                    qualité. Je recommande vivement."
+                  </blockquote>
+                  <figcaption>
+                    — Alex ., PDG de Parts Cars Business
+                  </figcaption>
+                </figure>
+              </li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide">
+                <figure>
+                  <blockquote>
+                    "Un vrai partenaire collaboratif. Ils ont écouté et livré
+                    au-delà de nos attentes."
+                  </blockquote>
+                  <figcaption>— HMN., Propriétaire de HMN Record</figcaption>
+                </figure>
+              </li>
+            </ul>
+          </div>
+          <div class="carousel__nav">
+            <button class="carousel__button carousel__button--prev" aria-label="Témoignage précédent">
+              &lt;
+            </button>
+            <button class="carousel__button carousel__button--next" aria-label="Témoignage suivant">
+              &gt;
+            </button>
+          </div>
+          <div class="carousel__indicators"></div>
+        </div>
+      </div>
+    </section>
+    <section class="container center">
       <div class="section-header_why">
-            <h2 class="animate-on-scroll_why section-title_why">
-                Économiser sur ton logo, c’est ruiner ta crédibilité.
-            </h2>
-        </div>
+        <h2 class="animate-on-scroll_why section-title_why">
+          Économiser sur ton logo, c’est ruiner ta crédibilité.
+        </h2>
+      </div>
       <div id="video-player" class="video-wrapper">
-      
-        
+
+
         <!-- Barre supérieure de la fenêtre macOS -->
         <div class="macos-bar">
-            <div class="macos-dot dot-red"></div>
-            <div class="macos-dot dot-yellow"></div>
-            <div class="macos-dot dot-green"></div>
+          <div class="macos-dot dot-red"></div>
+          <div class="macos-dot dot-yellow"></div>
+          <div class="macos-dot dot-green"></div>
         </div>
 
         <!-- Élément vidéo -->
@@ -624,305 +464,357 @@
 
         <!-- Superposition des contrôles -->
         <div class="controls-overlay">
-            <div class="controls-panel">
-                <!-- Barre de progression -->
-                <div class="progress-container">
-                    <span id="current-time" class="time-display">00:00</span>
-                    <input id="progress-bar" type="range" min="0" max="100" value="0">
-                    <span id="total-duration" class="time-display">00:00</span>
-                </div>
-
-                <!-- Contrôles principaux -->
-                <div class="main-controls">
-                    <!-- Section gauche (pour l'équilibre) -->
-                    <div class="controls-section left"></div>
-
-                    <!-- Section centrale (contrôles de lecture) -->
-                    <div class="controls-section center">
-                        <button id="rewind-btn" class="control-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon></svg>
-                        </button>
-                        <button id="play-pause-btn" class="control-button">
-                            <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                            <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="hidden"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                        </button>
-                        <button id="forward-btn" class="control-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"></polygon><polygon points="2 19 11 12 2 5 2 19"></polygon></svg>
-                        </button>
-                    </div>
-
-                    <!-- Section droite (volume, plein écran) -->
-                    <div class="controls-section right">
-                        <div class="volume-controls-group">
-                             <button id="volume-btn" class="control-button">
-                                <svg id="volume-high-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                <svg id="volume-muted-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-                            </button>
-                            <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="1">
-                        </div>
-                       
-                        <button id="fullscreen-btn" class="control-button">
-                            <svg id="fullscreen-open-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-                            <svg id="fullscreen-close-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
-                        </button>
-                    </div>
-                </div>
+          <div class="controls-panel">
+            <!-- Barre de progression -->
+            <div class="progress-container">
+              <span id="current-time" class="time-display">00:00</span>
+              <input id="progress-bar" type="range" min="0" max="100" value="0">
+              <span id="total-duration" class="time-display">00:00</span>
             </div>
+
+            <!-- Contrôles principaux -->
+            <div class="main-controls">
+              <!-- Section gauche (pour l'équilibre) -->
+              <div class="controls-section left"></div>
+
+              <!-- Section centrale (contrôles de lecture) -->
+              <div class="controls-section center">
+                <button id="rewind-btn" class="control-button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 19 2 12 11 5 11 19"></polygon>
+                    <polygon points="22 19 13 12 22 5 22 19"></polygon>
+                  </svg>
+                </button>
+                <button id="play-pause-btn" class="control-button">
+                  <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                    fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round" class="hidden">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                  </svg>
+                </button>
+                <button id="forward-btn" class="control-button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 19 22 12 13 5 13 19"></polygon>
+                    <polygon points="2 19 11 12 2 5 2 19"></polygon>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Section droite (volume, plein écran) -->
+              <div class="controls-section right">
+                <div class="volume-controls-group">
+                  <button id="volume-btn" class="control-button">
+                    <svg id="volume-high-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="volume-muted-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" class="hidden">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                      <line x1="23" y1="9" x2="17" y2="15"></line>
+                      <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                  </button>
+                  <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="1">
+                </div>
+
+                <button id="fullscreen-btn" class="control-button">
+                  <svg id="fullscreen-open-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+                    </path>
+                  </svg>
+                  <svg id="fullscreen-close-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="hidden">
+                    <path
+                      d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    </div></section>
+      </div>
+    </section>
     <div class="animate-on-scroll_why delay-4_why button-wrapper_why">
-            <a href="#pricing" class="cta-button_why">
-                <span>Consultez nos forfaits</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 10" fill="none" class="arrow-icon_why">
-                    <path d="M13.7266 5.37891L10.2266 8.87891C9.89844 9.23438 9.32422 9.23438 8.99609 8.87891C8.64062 8.55078 8.64062 7.97656 8.99609 7.64844L10.9922 5.625H0.875C0.382812 5.625 0 5.24219 0 4.75C0 4.23047 0.382812 3.875 0.875 3.875H10.9922L8.99609 1.87891C8.64062 1.55078 8.64062 0.976562 8.99609 0.648438C9.32422 0.292969 9.89844 0.292969 10.2266 0.648438L13.7266 4.14844C14.082 4.47656 14.082 5.05078 13.7266 5.37891Z" fill="currentColor"></path>
-                </svg>
-            </a>
-        </div>
-      <section>
-        <div class="container_why">
+      <a href="#pricing" class="cta-button_why">
+        <span>Consultez nos forfaits</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 10" fill="none"
+          class="arrow-icon_why">
+          <path
+            d="M13.7266 5.37891L10.2266 8.87891C9.89844 9.23438 9.32422 9.23438 8.99609 8.87891C8.64062 8.55078 8.64062 7.97656 8.99609 7.64844L10.9922 5.625H0.875C0.382812 5.625 0 5.24219 0 4.75C0 4.23047 0.382812 3.875 0.875 3.875H10.9922L8.99609 1.87891C8.64062 1.55078 8.64062 0.976562 8.99609 0.648438C9.32422 0.292969 9.89844 0.292969 10.2266 0.648438L13.7266 4.14844C14.082 4.47656 14.082 5.05078 13.7266 5.37891Z"
+            fill="currentColor"></path>
+        </svg>
+      </a>
+    </div>
+    <section>
+      <div class="container_why">
         <div class="section-header_why">
-            <h2 class="animate-on-scroll_why section-title_why">
-                Pourquoi investir dans un design professionnel&nbsp;?
-            </h2>
+          <h2 class="animate-on-scroll_why section-title_why">
+            Pourquoi investir dans un design professionnel&nbsp;?
+          </h2>
         </div>
         <div class="cards-grid_why">
-            <div class="animate-on-scroll_why delay-1_why card-item_why">
-                <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg" alt="Fond dégradé" class="card-background_why">
-                <div class="card-content_why">
-                    <h3 class="card-title_why">Si vous utilisez l’IA ou des générateurs automatiques</h3>
-                    <div class="features-list_why">
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg" alt="Icône X">
-                            <span>Votre logo n’est pas protégé légalement : vous n’avez donc aucune vraie marque</span>
-                        </div>
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg" alt="Icône X">
-                            <span>La qualité est médiocre, vos clients perçoivent un manque de sérieux et vos concurrents prennent l’avantage.</span>
-                        </div>
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg" alt="Icône X">
-                            <span>vous gaspillez du temps précieux au lieu de le consacrer à la croissance de votre business.</span>
-                        </div>
-                    </div>
+          <div class="animate-on-scroll_why delay-1_why card-item_why">
+            <img loading="lazy"
+              src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg"
+              alt="Fond dégradé" class="card-background_why">
+            <div class="card-content_why">
+              <h3 class="card-title_why">Si vous utilisez l’IA ou des générateurs automatiques</h3>
+              <div class="features-list_why">
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
+                    alt="Icône X">
+                  <span>Votre logo n’est pas protégé légalement : vous n’avez donc aucune vraie marque</span>
                 </div>
-            </div>
-            <div class="animate-on-scroll_why delay-2_why card-item_why">
-                <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg" alt="Fond dégradé" class="card-background_why">
-                <div class="card-content_why">
-                    <h3 class="card-title_why">Si vous passez par d’autres freelances ou agences</h3>
-                    <div class="features-list_why">
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg" alt="Icône X">
-                            <span>Les agences sont souvent trop chères et peu transparentes</span>
-                        </div>
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg" alt="Icône X">
-                            <span>Les freelances manquent parfois de fiabilité et la communication devient compliquée</span>
-                        </div>
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg" alt="Icône X">
-                            <span>Les délais s’éternisent : des semaines pour un résultat souvent décevant</span>
-                        </div>
-                    </div>
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
+                    alt="Icône X">
+                  <span>La qualité est médiocre, vos clients perçoivent un manque de sérieux et vos concurrents prennent
+                    l’avantage.</span>
                 </div>
-            </div>
-            <div class="animate-on-scroll_why delay-3_why card-item_why highlighted_why">
-                 <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8020_blue%20gradient%20bg.svg" alt="Fond dégradé bleu" class="card-background_why">
-                <div class="card-content_why">
-                    <h3 class="card-title_why">Avec Adasoft</h3>
-                    <div class="features-list_why">
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg" alt="Icône coche">
-                            <span>Une identité visuelle forte et moderne, conçue pour le monde numérique</span>
-                        </div>
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg" alt="Icône coche">
-                            <span>Un processus collaboratif et transparent, pour un résultat livré en 48h.</span>
-                        </div>
-                        <div class="feature-item_why">
-                            <img loading="lazy" src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg" alt="Icône coche">
-                            <span>Un investissement stratégique pour une croissance durable et une reconnaissance accrue.</span>
-                        </div>
-                    </div>
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
+                    alt="Icône X">
+                  <span>vous gaspillez du temps précieux au lieu de le consacrer à la croissance de votre
+                    business.</span>
                 </div>
+              </div>
             </div>
+          </div>
+          <div class="animate-on-scroll_why delay-2_why card-item_why">
+            <img loading="lazy"
+              src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg"
+              alt="Fond dégradé" class="card-background_why">
+            <div class="card-content_why">
+              <h3 class="card-title_why">Si vous passez par d’autres freelances ou agences</h3>
+              <div class="features-list_why">
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
+                    alt="Icône X">
+                  <span>Les agences sont souvent trop chères et peu transparentes</span>
+                </div>
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
+                    alt="Icône X">
+                  <span>Les freelances manquent parfois de fiabilité et la communication devient compliquée</span>
+                </div>
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
+                    alt="Icône X">
+                  <span>Les délais s’éternisent : des semaines pour un résultat souvent décevant</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="animate-on-scroll_why delay-3_why card-item_why highlighted_why">
+            <img loading="lazy"
+              src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8020_blue%20gradient%20bg.svg"
+              alt="Fond dégradé bleu" class="card-background_why">
+            <div class="card-content_why">
+              <h3 class="card-title_why">Avec Adasoft</h3>
+              <div class="features-list_why">
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg"
+                    alt="Icône coche">
+                  <span>Une identité visuelle forte et moderne, conçue pour le monde numérique</span>
+                </div>
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg"
+                    alt="Icône coche">
+                  <span>Un processus collaboratif et transparent, pour un résultat livré en 48h.</span>
+                </div>
+                <div class="feature-item_why">
+                  <img loading="lazy"
+                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg"
+                    alt="Icône coche">
+                  <span>Un investissement stratégique pour une croissance durable et une reconnaissance accrue.</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="animate-on-scroll_why delay-4_why button-wrapper_why">
-            <a href="#pricing" class="cta-button_why">
-                <span>Consultez nos forfaits</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 10" fill="none" class="arrow-icon_why">
-                    <path d="M13.7266 5.37891L10.2266 8.87891C9.89844 9.23438 9.32422 9.23438 8.99609 8.87891C8.64062 8.55078 8.64062 7.97656 8.99609 7.64844L10.9922 5.625H0.875C0.382812 5.625 0 5.24219 0 4.75C0 4.23047 0.382812 3.875 0.875 3.875H10.9922L8.99609 1.87891C8.64062 1.55078 8.64062 0.976562 8.99609 0.648438C9.32422 0.292969 9.89844 0.292969 10.2266 0.648438L13.7266 4.14844C14.082 4.47656 14.082 5.05078 13.7266 5.37891Z" fill="currentColor"></path>
-                </svg>
-            </a>
+          <a href="#pricing" class="cta-button_why">
+            <span>Consultez nos forfaits</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 10" fill="none"
+              class="arrow-icon_why">
+              <path
+                d="M13.7266 5.37891L10.2266 8.87891C9.89844 9.23438 9.32422 9.23438 8.99609 8.87891C8.64062 8.55078 8.64062 7.97656 8.99609 7.64844L10.9922 5.625H0.875C0.382812 5.625 0 5.24219 0 4.75C0 4.23047 0.382812 3.875 0.875 3.875H10.9922L8.99609 1.87891C8.64062 1.55078 8.64062 0.976562 8.99609 0.648438C9.32422 0.292969 9.89844 0.292969 10.2266 0.648438L13.7266 4.14844C14.082 4.47656 14.082 5.05078 13.7266 5.37891Z"
+                fill="currentColor"></path>
+            </svg>
+          </a>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
     </div>
-    
-      <section class="process" id="process" aria-labelledby="process-title">
-        <div class="container">
-          <div class="section-header">
-            <h2 id="process-title">Notre méthode de design</h2>
+
+    <section class="process" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="process-title">Notre méthode de design</h2>
+        </div>
+        <div class="process__timeline">
+          <div class="process-step">
+            <div class="process-step__number">1</div>
+            <h3>Découverte</h3>
+            <p>
+              Nous commençons par explorer votre vision, votre audience et vos
+              objectifs.
+            </p>
           </div>
-          <div class="process__timeline">
-            <div class="process-step">
-              <div class="process-step__number">1</div>
-              <h3>Découverte</h3>
-              <p>
-                Nous commençons par explorer votre vision, votre audience et vos
-                objectifs.
-              </p>
-            </div>
-            <div class="process-step">
-              <div class="process-step__number">2</div>
-              <h3>Recherche</h3>
-              <p>
-                Nous analysons votre marché et vos concurrents pour trouver
-                votre position unique.
-              </p>
-            </div>
-            <div class="process-step">
-              <div class="process-step__number">3</div>
-              <h3>Design</h3>
-              <p>
-                Nos créatifs élaborent des concepts initiaux et les affinent
-                selon vos retours.
-              </p>
-            </div>
-            <div class="process-step">
-              <div class="process-step__number">4</div>
-              <h3>Livraison</h3>
-              <p>
-                Vous recevez un pack de marque complet, prêt à être lancé et à
-                impressionner.
-              </p>
-            </div>
+          <div class="process-step">
+            <div class="process-step__number">2</div>
+            <h3>Recherche</h3>
+            <p>
+              Nous analysons votre marché et vos concurrents pour trouver
+              votre position unique.
+            </p>
           </div>
-        </div>
-      </section>
-      <section class="faq" id="faq" aria-labelledby="faq-title">
-        <div class="container">
-          <div class="section-header">
-            <h2 id="faq-title">Questions fréquentes</h2>
+          <div class="process-step">
+            <div class="process-step__number">3</div>
+            <h3>Design</h3>
+            <p>
+              Nos créatifs élaborent des concepts initiaux et les affinent
+              selon vos retours.
+            </p>
           </div>
-          <div class="faq__accordion">
-            <div class="faq-item">
-              <button
-                class="faq-item__question"
-                aria-expanded="false"
-                aria-controls="faq-answer-1"
-              >
-                Que comprend le pack branding ?
-              </button>
-              <div class="faq-item__answer" id="faq-answer-1" hidden>
-                <p>
-                  Vous recevez tout ce qu'il faut pour lancer votre marque :
-                  fichiers logo haute résolution (PNG, SVG, etc.), guide de
-                  style complet (couleurs, typographies), images pour les
-                  réseaux sociaux, et plus selon l'offre choisie.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button
-                class="faq-item__question"
-                aria-expanded="false"
-                aria-controls="faq-answer-2"
-              >
-                Combien de temps dure le processus ?
-              </button>
-              <div class="faq-item__answer" id="faq-answer-2" hidden>
-                <p>
-                  Notre délai standard est de 48h pour les premiers concepts. La
-                  durée totale dépend des retours et révisions, mais nous sommes
-                  réputés pour notre rapidité et efficacité.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button
-                class="faq-item__question"
-                aria-expanded="false"
-                aria-controls="faq-answer-3"
-              >
-                Et si le design ne me plaît pas ?
-              </button>
-              <div class="faq-item__answer" id="faq-answer-3" hidden>
-                <p>
-                  Votre satisfaction est notre priorité. Nous proposons des
-                  révisions selon l'offre. Si vous n'êtes toujours pas
-                  satisfait, nous appliquons notre garantie 100% remboursé.
-                </p>
-              </div>
-            </div>
-            <div class="faq-item">
-              <button
-                class="faq-item__question"
-                aria-expanded="false"
-                aria-controls="faq-answer-4"
-              >
-                Est-ce que je possède les droits sur le design ?
-              </button>
-              <div class="faq-item__answer" id="faq-answer-4" hidden>
-                <p>
-                  Bien sûr. Après paiement final, vous obtenez la pleine
-                  propriété et les droits d'auteur sur tous les éléments créés
-                  pour vous.
-                </p>
-              </div>
-            </div>
+          <div class="process-step">
+            <div class="process-step__number">4</div>
+            <h3>Livraison</h3>
+            <p>
+              Vous recevez un pack de marque complet, prêt à être lancé et à
+              impressionner.
+            </p>
           </div>
-        </div>
-      </section>
-    </main>
-    <footer class="footer">
-      <div class="container footer__container">
-        <div class="footer__column">
-          <h4>Adasoft</h4>
-          <p>Nous créons des marques inoubliables.</p>
-        </div>
-        <div class="footer__column">
-          <h4>Explorer</h4>
-          <ul>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#pricing">Tarifs</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </div>
-        <div class="footer__column">
-          <h4>Légal</h4>
-          <ul>
-            <li><a href="#">Conditions d'utilisation</a></li>
-            <li><a href="#">Politique de confidentialité</a></li>
-          </ul>
-        </div>
-        <div class="footer__column">
-          <h4>Newsletter</h4>
-          <form class="newsletter-form">
-            <label for="newsletter-email" class="visually-hidden"
-              >Votre adresse e-mail</label
-            >
-            <input
-              type="email"
-              id="newsletter-email"
-              placeholder="Votre e-mail..."
-              required
-            />
-            <button type="submit" class="btn btn--primary">S'inscrire</button>
-          </form>
         </div>
       </div>
-      <div class="container footer__bottom">
-        <p>&copy; 2025 Adasoft. Tous droits réservés.</p>
-        <div class="footer__socials">
-          <a href="#" aria-label="LinkedIn"
-            ><svg></svg></a
-          >
-          <a href="#" aria-label="Twitter"
-            ><svg></svg></a
-          >
+    </section>
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="faq-title">Questions fréquentes</h2>
+        </div>
+        <div class="faq__accordion">
+          <div class="faq-item">
+            <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-1">
+              Que comprend le pack branding ?
+            </button>
+            <div class="faq-item__answer" id="faq-answer-1" hidden>
+              <p>
+                Vous recevez tout ce qu'il faut pour lancer votre marque :
+                fichiers logo haute résolution (PNG, SVG, etc.), guide de
+                style complet (couleurs, typographies), images pour les
+                réseaux sociaux, et plus selon l'offre choisie.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-2">
+              Combien de temps dure le processus ?
+            </button>
+            <div class="faq-item__answer" id="faq-answer-2" hidden>
+              <p>
+                Notre délai standard est de 48h pour les premiers concepts. La
+                durée totale dépend des retours et révisions, mais nous sommes
+                réputés pour notre rapidité et efficacité.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-3">
+              Et si le design ne me plaît pas ?
+            </button>
+            <div class="faq-item__answer" id="faq-answer-3" hidden>
+              <p>
+                Votre satisfaction est notre priorité. Nous proposons des
+                révisions selon l'offre. Si vous n'êtes toujours pas
+                satisfait, nous appliquons notre garantie 100% remboursé.
+              </p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-4">
+              Est-ce que je possède les droits sur le design ?
+            </button>
+            <div class="faq-item__answer" id="faq-answer-4" hidden>
+              <p>
+                Bien sûr. Après paiement final, vous obtenez la pleine
+                propriété et les droits d'auteur sur tous les éléments créés
+                pour vous.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </footer>
-  </body>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__column">
+        <h4>Adasoft</h4>
+        <p>Nous créons des marques inoubliables.</p>
+      </div>
+      <div class="footer__column">
+        <h4>Explorer</h4>
+        <ul>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#pricing">Tarifs</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="#">Conditions d'utilisation</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h4>Newsletter</h4>
+        <form class="newsletter-form">
+          <label for="newsletter-email" class="visually-hidden">Votre adresse e-mail</label>
+          <input type="email" id="newsletter-email" placeholder="Votre e-mail..." required />
+          <button type="submit" class="btn btn--primary">S'inscrire</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>&copy; 2025 Adasoft. Tous droits réservés.</p>
+      <div class="footer__socials">
+        <a href="#" aria-label="LinkedIn"><svg></svg></a>
+        <a href="#" aria-label="Twitter"><svg></svg></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+
 </html>

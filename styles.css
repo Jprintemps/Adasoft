@@ -9,8 +9,8 @@
 :root {
     /* Colors */
     --color-primary: #fc4f50;
-    --color-dark: #1d1d1b;
-    --color-accent: #feb07f;
+    --color-dark: #1d0e0e;
+    --color-accent: #feb080;
     --color-neutral-1: #e1e4e7;
     --color-neutral-2: #efefef;
     --color-contrast: #111111;
@@ -211,7 +211,6 @@ section {
     -webkit-backdrop-filter: blur(10px);
     z-index: 100;
     height: var(--header-height);
-    border-bottom: 1px solid var(--color-neutral-2);
 }
 .header__container {
     display: flex;
@@ -1662,7 +1661,9 @@ input[type="range"]::-webkit-slider-runnable-track {
 ._top-progress-container {
     width: 100%;
     height: 8px; /* Vous pouvez ajuster la hauteur */
-    background: #e0e0e0;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: fixed;
     top: var(--header-height); /* S'aligne sous votre header */
     left: 0;
@@ -1672,8 +1673,12 @@ input[type="range"]::-webkit-slider-runnable-track {
 /* La barre de progression elle-même */
 ._top-progress-bar {
     height: 100%; /* Prend toute la hauteur de son conteneur */
-    background: linear-gradient(to right, #4c51bf, var(--color-primary));
+    background: linear-gradient(to right, var(--color-primary), var(--color-accent));
     width: 0%;
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
     transition: width 0.1s linear;
-    opacity: 50%;
+    mask-image: linear-gradient(to right, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, black 10%, black 90%, transparent);
+    
 }
