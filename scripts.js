@@ -634,3 +634,144 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
+// Sélection des éléments du DOM
+const videoPlayer = document.getElementById('video-player');
+const video = document.getElementById('main-video');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playIcon = document.getElementById('play-icon');
+const pauseIcon = document.getElementById('pause-icon');
+const rewindBtn = document.getElementById('rewind-btn');
+const forwardBtn = document.getElementById('forward-btn');
+const progressBar = document.getElementById('progress-bar');
+const currentTimeEl = document.getElementById('current-time');
+const totalDurationEl = document.getElementById('total-duration');
+const volumeBtn = document.getElementById('volume-btn');
+const volumeHighIcon = document.getElementById('volume-high-icon');
+const volumeMutedIcon = document.getElementById('volume-muted-icon');
+const volumeSlider = document.getElementById('volume-slider');
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+const fullscreenOpenIcon = document.getElementById('fullscreen-open-icon');
+const fullscreenCloseIcon = document.getElementById('fullscreen-close-icon');
+
+// --- Fonctions Utilitaires ---
+
+function formatTime(time) {
+    if (isNaN(time)) return "00:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function togglePlayPauseIcon() {
+    if (video.paused) {
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+    } else {
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+    }
+}
+
+function updateVolumeIcon() {
+    if (video.muted || video.volume === 0) {
+        volumeHighIcon.classList.add('hidden');
+        volumeMutedIcon.classList.remove('hidden');
+    } else {
+        volumeHighIcon.classList.remove('hidden');
+        volumeMutedIcon.classList.add('hidden');
+    }
+}
+
+// --- Logique du lecteur ---
+
+function togglePlay() {
+    if (video.paused) {
+        video.play();
+    } else {
+        video.pause();
+    }
+}
+
+function updateProgress() {
+    const progress = (video.currentTime / video.duration) * 100;
+    progressBar.value = progress;
+    progressBar.style.background = `linear-gradient(to right, var(--progress-thumb) ${progress}%, var(--progress-track) ${progress}%)`;
+    currentTimeEl.textContent = formatTime(video.currentTime);
+}
+
+function setProgress(e) {
+    const newTime = (e.target.value / 100) * video.duration;
+    video.currentTime = newTime;
+}
+
+function skip(duration) {
+    video.currentTime += duration;
+}
+
+function setVolume(e) {
+    video.volume = e.target.value;
+    video.muted = e.target.value == 0;
+    updateVolumeIcon();
+}
+
+function toggleMute() {
+    video.muted = !video.muted;
+    if (video.muted) {
+        volumeSlider.setAttribute('data-volume-before-mute', volumeSlider.value);
+        volumeSlider.value = 0;
+    } else {
+        volumeSlider.value = volumeSlider.getAttribute('data-volume-before-mute') || 1;
+    }
+    video.volume = volumeSlider.value;
+    updateVolumeIcon();
+}
+
+function toggleFullscreen() {
+     if (!document.fullscreenElement) {
+        videoPlayer.requestFullscreen().catch(err => {
+            console.error(`Erreur lors du passage en plein écran : ${err.message} (${err.name})`);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+// --- Écouteurs d'événements ---
+
+video.addEventListener('loadedmetadata', () => {
+    totalDurationEl.textContent = formatTime(video.duration);
+    updateProgress(); // Mettre à jour la couleur initiale
+});
+
+video.addEventListener('click', togglePlay);
+playPauseBtn.addEventListener('click', togglePlay);
+video.addEventListener('play', togglePlayPauseIcon);
+video.addEventListener('pause', togglePlayPauseIcon);
+video.addEventListener('timeupdate', updateProgress);
+
+progressBar.addEventListener('input', setProgress);
+
+rewindBtn.addEventListener('click', () => skip(-10));
+forwardBtn.addEventListener('click', () => skip(10));
+
+volumeBtn.addEventListener('click', toggleMute);
+volumeSlider.addEventListener('input', setVolume);
+
+fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+document.addEventListener('fullscreenchange', () => {
+    const isFullscreen = !!document.fullscreenElement;
+    fullscreenOpenIcon.classList.toggle('hidden', isFullscreen);
+    fullscreenCloseIcon.classList.toggle('hidden', !isFullscreen);
+});
+
+// Appliquer un style initial au slider de volume
+function updateVolumeSliderBg() {
+    const volume = volumeSlider.value * 100;
+    volumeSlider.style.background = `linear-gradient(to right, var(--volume-thumb) ${volume}%, var(--volume-track-hover) ${volume}%)`;
+}
+volumeSlider.addEventListener('input', updateVolumeSliderBg);
+
+// Initialisation
+updateVolumeSliderBg();
+updateVolumeIcon();
