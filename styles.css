@@ -1,11 +1,3 @@
-/*
-    Fichier: styles.css
-    Auteur: Gemini (généré par IA en tant que développeur senior)
-    Date: 13 septembre 2025
-    Description: Styles principaux pour le site Adasoft.
-*/
-
-/* =========== 1. DESIGN SYSTEM & RESET =========== */
 :root {
     /* Colors */
     --color-primary: #fc4f50;
@@ -172,7 +164,7 @@ section {
     padding: 0.75rem 1.75rem;
     border-radius: var(--radius_btn);
     font-weight: 600;
-    font-size: 0.90rem;
+    font-size: 0.80rem;
     text-align: center;
     border: 2px solid transparent;
     cursor: pointer;
@@ -312,6 +304,7 @@ body.nav-open .header__nav.mobile-nav {
     align-items: center;
 }
 .hero__content p {
+    margin-top: 1.5rem;
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
 }
@@ -713,13 +706,29 @@ body.nav-open .header__nav.mobile-nav {
 
 /* ~~~~~~ TABLET (640px) ~~~~~~ */
 @media (min-width: 640px) {
-    .hero-title {
-    text-align: center;
-}
     .features__grid { grid-template-columns: repeat(2, 1fr); }
     .pricing__grid { grid-template-columns: repeat(2, 1fr); }
     .process__timeline { grid-template-columns: repeat(2, 1fr); }
     .footer__container { grid-template-columns: repeat(2, 1fr); }
+    .booking-form .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .hero_title{
+        text-align: center;
+    }
+    /* Span full width for specific fields */
+    .form-group-full {
+        grid-column: 1 / -1;
+    }
+    .container_why {
+                padding: 6rem 1.5rem;
+            }
+    .section-title_why {
+                font-size: 3rem;
+            }
+            .hero_title, .hero__content {
+    text-align: center;
+}
 }
 
 /* ~~~~~~ DESKTOP (1024px) ~~~~~~ */
@@ -732,7 +741,7 @@ body.nav-open .header__nav.mobile-nav {
         flex-direction: column;
         justify-content: center;
     }
-    .hero-title {
+    .hero_title, .hero__content {
     text-align: left;
 }
     
@@ -806,23 +815,6 @@ body.nav-open .header__nav.mobile-nav {
     /* On very large screens, the container's max-width and auto margins
        handle the centering, so no extra padding rules are needed here. */
 }
-
-
-
-/* =================================================== */
-/* ===========      BOOKING PAGE STYLES      ========= */
-/* =================================================== */
-/*
-    Fichier: booking.css
-    Auteur: Gemini (généré par IA en tant que développeur senior)
-    Date: 13 septembre 2025
-    Description: Styles pour la page de réservation Adasoft.
-*/
-
-/* Styles specific to a booking page could go here, but they are mixed
-   with the main styles in the provided file. For clarity, this section
-   is left as a placeholder, as the styles below seem to belong here.
-*/
 .page-header {
     text-align: center;
     padding: 1rem 0;
@@ -995,15 +987,6 @@ body.nav-open .header__nav.mobile-nav {
 
 
 /* =========== RESPONSIVE DESIGN FOR BOOKING FORM =========== */
-@media (min-width: 640px) {
-    .booking-form .form-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    /* Span full width for specific fields */
-    .form-group-full {
-        grid-column: 1 / -1;
-    }
-}
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1300,11 +1283,6 @@ body.nav-open .header__nav.mobile-nav {
             padding: 4rem 1rem;
         }
 
-        @media (min-width: 640px) {
-            .container_why {
-                padding: 6rem 1.5rem;
-            }
-        }
         
         /* Header */
         .section-header_why {
@@ -1319,13 +1297,7 @@ body.nav-open .header__nav.mobile-nav {
             letter-spacing: -0.025em;
             margin: 0;
         }
-        
-        @media (min-width: 640px) {
-            .section-title_why {
-                font-size: 3rem;
-            }
-        }
-        
+             
         /* Cards Grid */
         .cards-grid_why {
             display: grid;
