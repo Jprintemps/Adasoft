@@ -1631,7 +1631,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 /* Conteneur de la barre de progression */
 ._top-progress-container {
-    width: 100%;
+    width: 100vw;
     height: 8px; /* Vous pouvez ajuster la hauteur */
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
@@ -1653,6 +1653,9 @@ input[type="range"]::-webkit-slider-runnable-track {
     mask-image: linear-gradient(to right, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, black 10%, black 90%, transparent);
     
+}
+.price_bg{
+    opacity: 40%;
 }
 /* Conteneur pour la grille de carrés */
         #checkerboard-background {
