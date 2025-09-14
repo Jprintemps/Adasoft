@@ -849,3 +849,69 @@ function updateProgressBar() {
 window.addEventListener("scroll", updateProgressBar);
 // On écoute aussi le redimensionnement, au cas où la hauteur de la page change
 window.addEventListener("resize", updateProgressBar);
+ const background = document.getElementById('checkerboard-background');
+        const squareSize = 50; // Taille de chaque carré en pixels
+
+        let columns = 0;
+        let rows = 0;
+        let squares = [];
+
+        // Fonction pour créer la grille de carrés
+        const createGrid = () => {
+            // Vide le conteneur avant de recréer la grille
+            background.innerHTML = '';
+            squares = [];
+
+            // 1. Mesure la hauteur totale du contenu de la page
+            const pageHeight = document.documentElement.scrollHeight;
+
+            // 2. Crée une variable CSS (--page-height) et lui assigne la hauteur mesurée
+            // Cette variable est maintenant disponible pour toutes les règles CSS.
+            document.documentElement.style.setProperty('--page-height', `${pageHeight}px`);
+
+            // Calcule le nombre de colonnes et de rangées
+            columns = Math.floor(window.innerWidth / squareSize);
+            rows = Math.floor(pageHeight / squareSize); // Utilise la hauteur totale de la page
+
+            // Met à jour les propriétés de la grille CSS
+            background.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+            background.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+            const totalSquares = columns * rows;
+
+            // Crée et ajoute chaque carré à la grille
+            for (let i = 0; i < totalSquares; i++) {
+                const square = document.createElement('div');
+                square.classList.add('square');
+                background.appendChild(square);
+                squares.push(square);
+            }
+        };
+
+        // Fonction pour allumer et éteindre un carré au hasard
+        const animateSquares = () => {
+            // Choisit un index de carré au hasard
+            const randomIndex = Math.floor(Math.random() * squares.length);
+            const randomSquare = squares[randomIndex];
+            
+            // S'assure que le carré existe bien
+            if (randomSquare) {
+                // Ajoute la classe 'lit' pour commencer l'animation
+                randomSquare.classList.add('lit');
+
+                // Définit un délai aléatoire (entre 2 et 5 secondes) avant d'éteindre le carré
+                const timeoutDuration = Math.random() * 3000 + 2000;
+                setTimeout(() => {
+                    randomSquare.classList.remove('lit');
+                }, timeoutDuration);
+            }
+        };
+
+        // Crée la grille initiale au chargement de la page
+        createGrid();
+
+        // Recrée la grille si la fenêtre est redimensionnée (pour le responsive)
+        window.addEventListener('resize', createGrid);
+
+        // Lance l'animation à intervalle régulier (toutes les 100 millisecondes)
+        setInterval(animateSquares, 100);
