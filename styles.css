@@ -4,6 +4,7 @@
     --color-dark: #1d0e0e;
     --color-accent: #feb080;
     --color-neutral-1: #e1e4e7;
+    --color-neutral-0: #e1e4e779;
     --color-neutral-2: #efefef;
     --color-contrast: #111111;
     --color-white: #ffffff;
@@ -305,7 +306,7 @@ body.nav-open .header__nav.mobile-nav {
 /* =========== 4. HERO =========== */
 .hero {
     padding-top: calc(var(--header-height) + 2rem);
-    background-color: var(--color-neutral-1);
+    background-color: var(--color-neutral-0);
     overflow: hidden;
 }
 .hero__container {
@@ -714,6 +715,35 @@ body.nav-open .header__nav.mobile-nav {
 /* ===========      MEDIA QUERIES      =============== */
 /* =================================================== */
 
+/* version mobile first */
+@media (min-width: 240px) {
+    :root {
+    --transition-fast: 0.1s ease-in-out;
+    --transition-medium: 0.2s ease-in-out;
+  }
+  .reveal-on-scroll {
+    transition-duration: 0.3s;
+  }
+  .portfolio-item {
+    transition-duration: 0.2s;
+  }
+  .carousel__track {
+    transition-duration: 0.25s;
+  }
+    .features__grid { grid-template-columns: repeat(1, 1fr); }
+    .pricing__grid { grid-template-columns: repeat(1, 1fr); }
+    .process__timeline { grid-template-columns: repeat(1, 1fr); }
+    .footer__container { grid-template-columns: repeat(1, 1fr); }
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        align-items: center;
+
+    }
+    .hero__container {
+        padding-top: 10%;
+    
+}
 /* ~~~~~~ TABLET (640px) ~~~~~~ */
 @media (min-width: 640px) {
     .features__grid { grid-template-columns: repeat(2, 1fr); }
@@ -722,6 +752,9 @@ body.nav-open .header__nav.mobile-nav {
     .footer__container { grid-template-columns: repeat(2, 1fr); }
     .booking-form .form-grid {
         grid-template-columns: 1fr 1fr;
+    }
+    .hero {
+        padding-top: calc(var(--header-height) + 12rem);
     }
     .hero_title{
         text-align: center;
@@ -1316,6 +1349,9 @@ body.nav-open .header__nav.mobile-nav {
         }
         
         @media (min-width: 768px) {
+            .hero {
+                padding-top: calc(var(--header-height) + 6rem);
+            }
             .cards-grid_why {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1642,7 +1678,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 /* Conteneur de la barre de progression */
 ._top-progress-container {
     width: 100vw;
-    height: 8px; /* Vous pouvez ajuster la hauteur */
+    height: 6px; /* Vous pouvez ajuster la hauteur */
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
