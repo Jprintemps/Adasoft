@@ -509,17 +509,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileForm = document.getElementById("mobile-money-form");
 
   // --- Boutons d'ouverture ---
-const openModalBtns = document.querySelectorAll(".openModalBtn");
+  const openModalBtns = document.querySelectorAll(".openModalBtn");
 
   // Vérifie que les éléments de base existent
-if (!modalOverlay || !closeModalBtn || openModalBtns.length === 0) {
+  if (!modalOverlay || !closeModalBtn || openModalBtns.length === 0) {
     console.error("Éléments de la modale manquants. Vérifiez les IDs.");
     return;
   }
-let currentPlan = {
+  
+  // Variable pour stocker les informations du plan sélectionné
+  let currentPlan = {
     plan: "",
     price: 0,
   };
+
   // --- Fonctions de gestion de la vue ---
 
   const resetModalView = () => {
@@ -553,7 +556,7 @@ let currentPlan = {
     setTimeout(resetModalView, 300);
   };
 
-const updateModalContent = (plan, price) => {
+  const updateModalContent = (plan, price) => {
     currentPlan = { plan, price }; // Stocker les infos du plan
     modalTitle.textContent = `Commander : ${plan}`;
     modalSummary.innerHTML = `
@@ -564,10 +567,9 @@ const updateModalContent = (plan, price) => {
         `;
     modalSubmitBtn.textContent = `Payer $${price}`;
   };
+  
   const showSuccessMessage = () => {
-    
-    const cardHolderInput = cardForm.querySelector("#card-holder-name");
-    const clientName = cardHolderInput.value.split(" ")[0] || "Client"; // Prénom ou "Client" par défaut
+    const clientName = "Client"; 
 
     modalSuccessMessage.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -576,19 +578,18 @@ const updateModalContent = (plan, price) => {
             </svg>
             <h2>Merci, ${clientName} !</h2>
             <p>Votre commande a été traitée avec succès.</p>
-            <p>Une confirmation a été envoyée à votre adresse e-mail.</p>
+            <p>Une confirmation sera envoyée à votre adresse e-mail.</p>
         `;
 
     modalPaymentContent.classList.add("hidden");
     modalSuccessMessage.classList.remove("hidden");
   };
 
-  // --- Logique de validation et de soumission ---
+  // --- Logique de soumission CINETPAY ---
   modalSubmitBtn.addEventListener("click", async () => {
-    // --- NOUVELLE LOGIQUE D'INTÉGRATION CINETPAY ---
-
-    // 1. Récupérer l'URL de votre back-end (à remplir après le déploiement)
-    const BACKEND_URL = "https://adasoft.vercel.app/api/initier-paiement";
+    
+    // 1. URL de votre back-end (notez la nouvelle route /create-payment)
+    const BACKEND_URL = "https://adasoft.vercel.app/create-payment";
 
     // 2. Changer l'état du bouton pour le chargement
     modalSubmitBtn.disabled = true;
@@ -597,11 +598,12 @@ const updateModalContent = (plan, price) => {
     // 3. Préparer les données pour le back-end
     const paymentDetails = {
       amount: currentPlan.price,
+      currency: 'USD', // Assurez-vous que la devise est correcte
       description: `Paiement pour le forfait ${currentPlan.plan}`,
     };
 
     try {
-      // 4. Appeler votre back-end
+      // 4. Appeler votre back-end pour obtenir le token
       const response = await fetch(BACKEND_URL, {
         method: 'POST',
         headers: {
@@ -613,20 +615,50 @@ const updateModalContent = (plan, price) => {
       const data = await response.json();
 
       if (response.ok) {
-        // 5. Si tout est bon, rediriger vers CinetPay
-        window.location.href = data.payment_url;
+        // 5. Utiliser le token pour ouvrir le widget de paiement CinetPay
+        CinetPay.getCheckout({
+          transaction_id: Math.floor(Math.random() * 100000000).toString(),
+          amount: currentPlan.price,
+          currency: 'USD',
+          channels: 'ALL',
+          description: `Paiement pour le forfait ${currentPlan.plan}`,
+          // La transaction se termine ici
+          notify_url: "https://adasoft.vercel.app/notify",
+          // Redirection après paiement
+          return_url: "https://votre-site-frontend.com/merci.html",
+          //
+          payment_token: data.payment_token // Le token reçu de votre serveur
+        });
+
+        CinetPay.on('payment_pending', (data) => {
+          console.log('Payment pending:', data);
+          alert("Paiement en attente. Veuillez suivre les instructions sur votre téléphone.");
+        });
+
+        CinetPay.on('payment_success', (data) => {
+          console.log('Payment success:', data);
+          showSuccessMessage();
+        });
+
+        CinetPay.on('error', (err) => {
+          console.error('CinetPay Error:', err);
+          alert("Une erreur est survenue lors du paiement. Veuillez réessayer.");
+          resetModalView();
+        });
+
       } else {
         // 6. Gérer les erreurs venant du back-end
-        alert(`Erreur: ${data.error}`);
-        resetModalView(); // Réinitialiser la modale
+        alert(`Erreur: ${data.error || 'Une erreur inconnue est survenue.'}`);
+        resetModalView();
       }
     } catch (error) {
       // 7. Gérer les erreurs de connexion au back-end
       console.error("Erreur de connexion au serveur:", error);
       alert("Impossible de contacter le serveur de paiement. Veuillez réessayer.");
-      resetModalView(); // Réinitialiser la modale
+      resetModalView();
     }
   });
+
 
   // --- Logique du sélecteur de paiement ---
   selectCardBtn.addEventListener("click", () => {
@@ -973,3 +1005,4 @@ window.addEventListener("resize", updateProgressBar);
 
         // Lance l'animation à intervalle régulier (toutes les 100 millisecondes)
         setInterval(animateSquares, 100);
+
