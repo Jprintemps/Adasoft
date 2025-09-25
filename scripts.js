@@ -509,14 +509,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileForm = document.getElementById("mobile-money-form");
 
   // --- Boutons d'ouverture ---
-  const openModalBtns = document.querySelectorAll(".openModalBtn");
+const openModalBtns = document.querySelectorAll(".openModalBtn");
 
   // Vérifie que les éléments de base existent
-  if (!modalOverlay || !closeModalBtn || openModalBtns.length === 0) {
+if (!modalOverlay || !closeModalBtn || openModalBtns.length === 0) {
     console.error("Éléments de la modale manquants. Vérifiez les IDs.");
     return;
   }
-
+let currentPlan = {
+    plan: "",
+    price: 0,
+  };
   // --- Fonctions de gestion de la vue ---
 
   const resetModalView = () => {
@@ -526,6 +529,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Réinitialise les formulaires
     cardForm.reset();
     mobileForm.reset();
+    // Réactive le bouton de paiement
+    modalSubmitBtn.disabled = false;
+    modalSubmitBtn.textContent = `Payer $${currentPlan.price}`;
   };
 
   const openModal = () => {
@@ -547,7 +553,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(resetModalView, 300);
   };
 
-  const updateModalContent = (plan, price) => {
+const updateModalContent = (plan, price) => {
+    currentPlan = { plan, price }; // Stocker les infos du plan
     modalTitle.textContent = `Commander : ${plan}`;
     modalSummary.innerHTML = `
             <p>
@@ -557,8 +564,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     modalSubmitBtn.textContent = `Payer $${price}`;
   };
-
   const showSuccessMessage = () => {
+    
     const cardHolderInput = cardForm.querySelector("#card-holder-name");
     const clientName = cardHolderInput.value.split(" ")[0] || "Client"; // Prénom ou "Client" par défaut
 
@@ -577,21 +584,47 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- Logique de validation et de soumission ---
-  modalSubmitBtn.addEventListener("click", () => {
-    // Détermine quel formulaire est actif
-    const activeForm = selectCardBtn.classList.contains("active")
-      ? cardForm
-      : mobileForm;
+  modalSubmitBtn.addEventListener("click", async () => {
+    // --- NOUVELLE LOGIQUE D'INTÉGRATION CINETPAY ---
 
-    // Vérifie la validité du formulaire actif
-    if (activeForm.checkValidity()) {
-      // Si tout est valide, simule un paiement et affiche le succès
-      console.log("Formulaire valide, traitement du paiement...");
-      showSuccessMessage();
-    } else {
-      // Si invalide, déclenche le rapport de validité du navigateur pour afficher les messages
-      activeForm.reportValidity();
-      console.log("Formulaire invalide.");
+    // 1. Récupérer l'URL de votre back-end (à remplir après le déploiement)
+    const BACKEND_URL = "https://adasoft.vercel.app/api/initier-paiement";
+
+    // 2. Changer l'état du bouton pour le chargement
+    modalSubmitBtn.disabled = true;
+    modalSubmitBtn.textContent = "Chargement...";
+
+    // 3. Préparer les données pour le back-end
+    const paymentDetails = {
+      amount: currentPlan.price,
+      description: `Paiement pour le forfait ${currentPlan.plan}`,
+    };
+
+    try {
+      // 4. Appeler votre back-end
+      const response = await fetch(BACKEND_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(paymentDetails)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // 5. Si tout est bon, rediriger vers CinetPay
+        window.location.href = data.payment_url;
+      } else {
+        // 6. Gérer les erreurs venant du back-end
+        alert(`Erreur: ${data.error}`);
+        resetModalView(); // Réinitialiser la modale
+      }
+    } catch (error) {
+      // 7. Gérer les erreurs de connexion au back-end
+      console.error("Erreur de connexion au serveur:", error);
+      alert("Impossible de contacter le serveur de paiement. Veuillez réessayer.");
+      resetModalView(); // Réinitialiser la modale
     }
   });
 
