@@ -491,17 +491,25 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
   };
 });
-  const initPaymentModal = () => {
-    const modalOverlay = document.getElementById("paymentModal");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-    const modalTitle = document.getElementById("modal-title");
-    const modalSummary = document.getElementById("modal-summary");
-    const modalSubmitBtn = document.getElementById("modal-submit-btn");
-    const modalPaymentContent = document.getElementById("modal-payment-content");
-    const modalSuccessMessage = document.getElementById("modal-success-message");
-    const openModalBtns = document.querySelectorAll(".openModalBtn");
+document.addEventListener("DOMContentLoaded", () => {
+  // (Unused prefersReducedMotion and initMobileNav removed to fix linter errors)
 
-    if (!modalOverlay) return;
+  // --- [CONSERVEZ TOUTES VOS AUTRES FONCTIONS JS ICI] ---
+  // initLazyLoad, initStatsCounter, initPortfolioFilter, initFaqAccordion,
+  // initCarousel, etc. Tout votre code existant doit rester.
+
+
+  // --- LOGIQUE DE LA MODALE DE PAIEMENT (MISE À JOUR) ---
+  const modalOverlay = document.getElementById("paymentModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const modalTitle = document.getElementById("modal-title");
+  const modalSummary = document.getElementById("modal-summary");
+  const modalSubmitBtn = document.getElementById("modal-submit-btn");
+  const modalPaymentContent = document.getElementById("modal-payment-content");
+  const modalSuccessMessage = document.getElementById("modal-success-message");
+  const openModalBtns = document.querySelectorAll(".openModalBtn");
+
+      if (!modalOverlay) return;
     
     let currentPlan = { plan: "", price: 0 };
 
@@ -555,14 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error(`Le serveur a répondu avec une erreur: ${errorText || response.statusText}`);
         }
         
-        let data;
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          data = await response.json();
-        } else {
-          const text = await response.text();
-          throw new Error(`Réponse inattendue du serveur: ${text.substring(0, 200)}`);
-        }
+        const data = await response.json();
 
         if (data.payment_url) {
           // Redirect to CinetPay payment page
@@ -591,7 +592,11 @@ document.addEventListener("DOMContentLoaded", () => {
     closeModalBtn.addEventListener("click", closeModal);
     modalOverlay.addEventListener("click", e => e.target === modalOverlay && closeModal());
     document.addEventListener("keydown", e => e.key === "Escape" && modalOverlay.classList.contains("active") && closeModal());
-  };
+
+  // --- [INITIALISEZ TOUTES VOS AUTRES FONCTIONS ICI] ---
+  // initMobileNav();
+  // ... etc.
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const galleryScroll = document.getElementById("gallery-scroll");
@@ -899,3 +904,4 @@ window.addEventListener("resize", updateProgressBar);
 
         // Lance l'animation à intervalle régulier (toutes les 100 millisecondes)
         setInterval(animateSquares, 100);
+
