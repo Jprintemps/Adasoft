@@ -1,82 +1,114 @@
-
 <?php
-phpinfo();
+/**
+ * Fichier: initiate-payment.php
+ * Rôle: Endpoint API pour démarrer une transaction de paiement avec CinetPay.
+ * Reçoit les données du frontend, les valide, et renvoie un lien de paiement.
+ * Auteur: Développeur Senior (revu et corrigé)
+ * Date: 26 septembre 2025
+ */
+
+// --- EN-TÊTES ET CONFIGURATION ---
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *'); // Pour le développement, à restreindre en production.
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 
-$config = require __DIR__ . '/config.php';
-$input = json_decode(file_get_contents('php://input'), true);
-
-if (!$input) {
-    http_response_code(400);
-    echo json_encode(['message' => 'Données JSON invalides.']);
-    exit;
+// Gérer les requêtes preflight OPTIONS pour CORS
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
 }
 
-// Validation des champs requis par la documentation pour l'initiation
-$required_fields = ['amount', 'currency', 'description', 'customer_name', 'customer_surname', 'customer_email'];
-foreach ($required_fields as $field) {
-    if (empty($input[$field])) {
-        http_response_code(400);
-        echo json_encode(['message' => "Le champ requis '$field' est manquant."]);
-        exit;
+// --- LOGIQUE DE L'API ---
+try {
+    // S'assurer que la requête est de type POST
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception('Méthode non autorisée. Seules les requêtes POST sont acceptées.', 405);
     }
-}
+    
+    // Récupérer les clés depuis les variables d'environnement (méthode sécurisée pour Vercel)
+    $apiKey = getenv('CINETPAY_API_KEY');
+    $siteId = getenv('CINETPAY_SITE_ID');
+    $baseUrl = getenv('APP_BASE_URL'); // URL de votre site (ex: https://adasoft.vercel.app)
 
-// Génération d'un ID de transaction unique comme suggéré
-$transaction_id = 'ADASOFT-' . date("YmdHis") . '-' . bin2hex(random_bytes(2));
+    if (!$apiKey || !$siteId || !$baseUrl) {
+        throw new Exception("Variables d'environnement manquantes sur le serveur.", 500);
+    }
 
-// Préparation des données conformément à la documentation
-$paymentData = [
-    'apikey'            => $config['apikey'],
-    'site_id'           => $config['site_id'],
-    'transaction_id'    => $transaction_id,
-    'amount'            => (int)$input['amount'],
-    'currency'          => $input['currency'],
-    'description'       => $input['description'],
-    'notify_url'        => $config['app_base_url'] . '/api/notify.php',
-    'return_url'        => $config['app_base_url'] . '/api/return.php',
-    'channels'          => 'ALL',
-    'customer_name'     => $input['customer_name'],
-    'customer_surname'  => $input['customer_surname'],
-    'customer_email'    => $input['customer_email'],
-    // Vous pouvez ajouter d'autres champs ici si nécessaire (metadata, etc.)
-];
+    // Récupérer et décoder les données JSON envoyées par le frontend
+    $json_data = file_get_contents('php://input');
+    $data = json_decode($json_data, true);
 
-// Appel à l'API CinetPay avec cURL
-$curl = curl_init();
-curl_setopt_array($curl, [
-    CURLOPT_URL => $config['base_url'] . '/payment',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => json_encode($paymentData),
-    CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
-]);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception('Données JSON invalides.', 400);
+    }
 
-$response = curl_exec($curl);
-$err = curl_error($curl);
-$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-curl_close($curl);
+    // Valider les données reçues
+    $required_fields = ['amount', 'currency', 'description', 'customer_name', 'customer_surname'];
+    foreach ($required_fields as $field) {
+        if (empty($data[$field])) {
+            throw new Exception("Le champ '$field' est manquant ou vide.", 400);
+        }
+    }
 
-if ($err) {
-    http_response_code(500);
-    echo json_encode(['message' => 'Erreur de communication avec le service de paiement.', 'details' => $err]);
-    exit;
-}
+    // Préparer les données pour l'API CinetPay
+    $transaction_id = "ADASOFT-" . time() . rand(1000, 9999);
+    $notify_url = rtrim($baseUrl, '/') . '/api/notify.php';
+    $return_url = rtrim($baseUrl, '/') . '/api/return.php';
 
-$responseData = json_decode($response, true);
+    $payment_data = [
+        "apikey" => $apiKey,
+        "site_id" => (int)$siteId,
+        "transaction_id" => $transaction_id,
+        "amount" => (int)$data['amount'],
+        "currency" => $data['currency'],
+        "description" => $data['description'],
+        "customer_name" => $data['customer_name'],
+        "customer_surname" => $data['customer_surname'],
+        "notify_url" => $notify_url,
+        "return_url" => $return_url,
+        "channels" => "ALL",
+    ];
 
-// Traitement de la réponse de CinetPay
-if ($http_code === 200 && isset($responseData['code']) && $responseData['code'] == '201') {
-    http_response_code(200);
-    echo json_encode([
-        'payment_token' => $responseData['data']['payment_token'],
-        'transaction_id' => $transaction_id
+    // Utiliser cURL pour communiquer avec l'API CinetPay
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+        CURLOPT_URL => "https://api-checkout.cinetpay.com/v2/payment",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 45,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => json_encode($payment_data),
+        CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
     ]);
-} else {
-    http_response_code(502); // Bad Gateway, car le service externe a renvoyé une erreur
-    echo json_encode([
-        'message' => 'Le service de paiement a refusé la transaction.',
-        'details' => $responseData['message'] ?? 'Raison inconnue.'
-    ]);
-}
 
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+
+    if ($err) {
+        throw new Exception("Erreur cURL: " . $err, 500);
+    }
+
+    $response_data = json_decode($response, true);
+    
+    // Gérer la réponse de CinetPay
+    if ($http_code == 200 && isset($response_data['code']) && $response_data['code'] == '201') {
+        // Succès : Le lien de paiement a été généré
+        http_response_code(200);
+        echo json_encode(['payment_url' => $response_data['data']['payment_url']]);
+    } else {
+        // Échec : L'API CinetPay a renvoyé une erreur
+        throw new Exception($response_data['message'] ?? 'Erreur inconnue de CinetPay.', 500);
+    }
+
+} catch (Exception $e) {
+    // Gérer toutes les erreurs de manière centralisée
+    $errorCode = $e->getCode() >= 400 ? $e->getCode() : 500;
+    http_response_code($errorCode);
+    // Logger l'erreur sur Vercel pour le débogage
+    error_log("API Error in initiate-payment.php: " . $e->getMessage());
+    echo json_encode(['message' => $e->getMessage()]);
+}
