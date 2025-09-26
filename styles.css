@@ -1890,3 +1890,128 @@ input[type="range"]::-webkit-slider-runnable-track {
         .hidden {
             display: none;
         }
+    modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(29, 29, 27, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: #1d1d1b;
+    margin: 0;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease-in-out;
+}
+
+.modal-close-btn:hover {
+    color: #1d1d1b;
+}
+
+.order-summary {
+    background-color: #f5f6f7;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #efefef;
+}
+
+.order-summary p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-summary .plan-name {
+    font-weight: 600;
+}
+
+.order-summary .plan-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1d1d1b;
+}
+
+.btn-full-width {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.success-message {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.success-message svg {
+    color: #28a745;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+}
+
+.success-message h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.success-message p {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 40ch;
+    margin: 0.5rem auto 0;
+}
+
+.hidden {
+    display: none;
+}

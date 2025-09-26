@@ -1,0 +1,17 @@
+Dépendances Node.js
+Ce dossier peut contenir des milliers de fichiers et ne doit jamais être envoyé.
+Il est automatiquement recréé lors du déploiement.
+node_modules/
+
+Fichiers d'environnement
+Contient vos clés secrètes et informations sensibles.
+C'est le fichier le plus important à ignorer pour la sécurité.
+.env
+
+Fichiers de log
+Les logs sont utiles pour le débogage local mais n'ont pas leur place dans le dépôt.
+*.log
+
+Fichiers de configuration spécifiques à certains éditeurs de code
+.vscode/
+.idea/

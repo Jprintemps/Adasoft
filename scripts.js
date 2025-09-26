@@ -501,50 +501,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalSubmitBtn = document.getElementById("modal-submit-btn");
   const modalPaymentContent = document.getElementById("modal-payment-content");
   const modalSuccessMessage = document.getElementById("modal-success-message");
-
-  // --- Éléments de paiement ---
-  const selectCardBtn = document.getElementById("selectCard");
-  const selectMobileBtn = document.getElementById("selectMobile");
-  const cardForm = document.getElementById("card-payment-form");
-  const mobileForm = document.getElementById("mobile-money-form");
-
-  // --- Boutons d'ouverture ---
   const openModalBtns = document.querySelectorAll(".openModalBtn");
 
-  // Vérifie que les éléments de base existent
   if (!modalOverlay || !closeModalBtn || openModalBtns.length === 0) {
     console.error("Éléments de la modale manquants. Vérifiez les IDs.");
     return;
   }
   
-  // Variable pour stocker les informations du plan sélectionné
   let currentPlan = {
     plan: "",
     price: 0,
   };
 
-  // --- Fonctions de gestion de la vue ---
-
   const resetModalView = () => {
-    // Affiche le contenu de paiement et cache le message de succès
     modalPaymentContent.classList.remove("hidden");
     modalSuccessMessage.classList.add("hidden");
-    // Réinitialise les formulaires
-    cardForm.reset();
-    mobileForm.reset();
-    // Réactive le bouton de paiement
     modalSubmitBtn.disabled = false;
-    modalSubmitBtn.textContent = `Payer $${currentPlan.price}`;
+    modalSubmitBtn.textContent = `Payer ${currentPlan.price}$`;
   };
 
   const openModal = () => {
     resetModalView();
-    // Réinitialiser à la vue par défaut (Carte Bancaire)
-    selectCardBtn.classList.add("active");
-    selectMobileBtn.classList.remove("active");
-    cardForm.classList.remove("hidden");
-    mobileForm.classList.add("hidden");
-
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
   };
@@ -552,132 +529,82 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModal = () => {
     modalOverlay.classList.remove("active");
     document.body.style.overflow = "";
-    // Petite temporisation pour que l'animation de fermeture se termine avant de réinitialiser
     setTimeout(resetModalView, 300);
   };
 
   const updateModalContent = (plan, price) => {
-    currentPlan = { plan, price }; // Stocker les infos du plan
+    currentPlan = { plan, price };
     modalTitle.textContent = `Commander : ${plan}`;
     modalSummary.innerHTML = `
-            <p>
-                <span class="plan-name">${plan}</span>
-                <span class="plan-price">$${price}</span>
-            </p>
-        `;
-    modalSubmitBtn.textContent = `Payer $${price}`;
+      <p>
+          <span class="plan-name">${plan}</span>
+          <span class="plan-price">${price}$</span>
+      </p>`;
+    modalSubmitBtn.textContent = `Payer ${price}$`;
   };
   
   const showSuccessMessage = () => {
-    const clientName = "Client"; 
-
     modalSuccessMessage.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            <h2>Merci, ${clientName} !</h2>
-            <p>Votre commande a été traitée avec succès.</p>
-            <p>Une confirmation sera envoyée à votre adresse e-mail.</p>
-        `;
-
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <h2>Merci !</h2>
+      <p>Votre commande a été traitée avec succès.</p>
+      <p>Une confirmation sera envoyée à votre adresse e-mail.</p>`;
     modalPaymentContent.classList.add("hidden");
     modalSuccessMessage.classList.remove("hidden");
   };
 
-  // --- Logique de soumission CINETPAY ---
   modalSubmitBtn.addEventListener("click", async () => {
-    
-    // 1. URL de votre back-end (notez la nouvelle route /create-payment)
-    const BACKEND_URL = "https://adasoft.vercel.app/create-payment";
-
-    // 2. Changer l'état du bouton pour le chargement
+    const BACKEND_URL = "/api/payment/initiate";
     modalSubmitBtn.disabled = true;
     modalSubmitBtn.textContent = "Chargement...";
 
-    // 3. Préparer les données pour le back-end
     const paymentDetails = {
       amount: currentPlan.price,
-      currency: 'USD', // Assurez-vous que la devise est correcte
+      currency: 'USD',
       description: `Paiement pour le forfait ${currentPlan.plan}`,
     };
 
     try {
-      // 4. Appeler votre back-end pour obtenir le token
       const response = await fetch(BACKEND_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(paymentDetails)
       });
-
       const data = await response.json();
 
       if (response.ok) {
-        // 5. Utiliser le token pour ouvrir le widget de paiement CinetPay
         CinetPay.getCheckout({
-          transaction_id: Math.floor(Math.random() * 100000000).toString(),
+          transaction_id: data.transaction_id,
           amount: currentPlan.price,
           currency: 'USD',
           channels: 'ALL',
           description: `Paiement pour le forfait ${currentPlan.plan}`,
-          // La transaction se termine ici
-          notify_url: "https://adasoft.vercel.app/notify",
-          // Redirection après paiement
-          return_url: "https://votre-site-frontend.com/merci.html",
-          //
-          payment_token: data.payment_token // Le token reçu de votre serveur
+          payment_token: data.payment_token
         });
 
-        CinetPay.on('payment_pending', (data) => {
-          console.log('Payment pending:', data);
-          alert("Paiement en attente. Veuillez suivre les instructions sur votre téléphone.");
-        });
-
-        CinetPay.on('payment_success', (data) => {
-          console.log('Payment success:', data);
-          showSuccessMessage();
-        });
-
+        CinetPay.on('payment_pending', () => alert("Paiement en attente."));
+        CinetPay.on('payment_success', () => showSuccessMessage());
         CinetPay.on('error', (err) => {
           console.error('CinetPay Error:', err);
-          alert("Une erreur est survenue lors du paiement. Veuillez réessayer.");
+          alert("Une erreur est survenue. Veuillez réessayer.");
           resetModalView();
         });
 
       } else {
-        // 6. Gérer les erreurs venant du back-end
-        alert(`Erreur: ${data.error || 'Une erreur inconnue est survenue.'}`);
+        alert(`Erreur: ${data.message || 'Une erreur est survenue.'}`);
         resetModalView();
       }
     } catch (error) {
-      // 7. Gérer les erreurs de connexion au back-end
       console.error("Erreur de connexion au serveur:", error);
-      alert("Impossible de contacter le serveur de paiement. Veuillez réessayer.");
+      alert("Impossible de contacter le serveur. Veuillez réessayer.");
       resetModalView();
     }
   });
 
-
-  // --- Logique du sélecteur de paiement ---
-  selectCardBtn.addEventListener("click", () => {
-    selectCardBtn.classList.add("active");
-    selectMobileBtn.classList.remove("active");
-    cardForm.classList.remove("hidden");
-    mobileForm.classList.add("hidden");
-  });
-
-  selectMobileBtn.addEventListener("click", () => {
-    selectMobileBtn.classList.add("active");
-    selectCardBtn.classList.remove("active");
-    mobileForm.classList.remove("hidden");
-    cardForm.classList.add("hidden");
-  });
-
-  // --- Ajout des écouteurs d'événements ---
-
-  openModalBtns.forEach((button) => {
+  openModalBtns.forEach(button => {
     button.addEventListener("click", () => {
       const plan = button.dataset.plan;
       const price = button.dataset.price;
@@ -687,16 +614,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   closeModalBtn.addEventListener("click", closeModal);
-  modalOverlay.addEventListener("click", (event) => {
-    if (event.target === modalOverlay) {
-      closeModal();
-    }
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modalOverlay.classList.contains("active")) {
-      closeModal();
-    }
-  });
+  modalOverlay.addEventListener("click", e => e.target === modalOverlay && closeModal());
+  document.addEventListener("keydown", e => e.key === "Escape" && modalOverlay.classList.contains("active") && closeModal());
 });
 
 document.addEventListener("DOMContentLoaded", () => {
