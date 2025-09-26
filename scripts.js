@@ -543,12 +543,16 @@ document.addEventListener("DOMContentLoaded", () => {
       modalSubmitBtn.textContent = "Chargement...";
 
       // FIX: Define paymentDetails object before using it.
+
+      const nameInput = document.getElementById('card-holder-name');
+      const customerName = (nameInput ? nameInput.value : '') || 'Client';
+
       const paymentDetails = {
         amount: currentPlan.price,
         currency: 'USD',
         description: `Paiement pour le forfait ${currentPlan.plan}`,
-        customer_name: document.getElementById('card-holder-name').value || 'Client',
-        customer_surname: 'Adasoft' // You can add a surname field if needed
+        customer_name: customerName,
+        customer_surname: 'Adasoft'
       };
 
       try {
