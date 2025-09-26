@@ -15,3 +15,7 @@ Les logs sont utiles pour le débogage local mais n'ont pas leur place dans le d
 Fichiers de configuration spécifiques à certains éditeurs de code
 .vscode/
 .idea/
+
+node_modules
+    package.json
+    package-lock.json
