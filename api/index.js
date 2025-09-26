@@ -55,4 +55,15 @@ app.post('/api/payment/notify', (req, res) => {
 });
 
 // Export de l'app pour Vercel
+
+require('dotenv').config();
+const express = require('express');
+const paymentRoutes = require('./routes/paymentRoutes');
+// Middleware pour parser le JSON
+app.use(express.json());
+
+// Indiquer à Express d'utiliser le routeur pour les URLs /api/payment/*
+app.use('/api/payment', paymentRoutes);
+
+// Exporter l'application pour que Vercel puisse l'utiliser
 module.exports = app;
