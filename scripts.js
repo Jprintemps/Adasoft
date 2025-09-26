@@ -598,8 +598,8 @@ document.addEventListener("DOMContentLoaded", () => {
         resetModalView();
       }
     } catch (error) {
-      console.error("Erreur de connexion au serveur:", error);
-      alert("Impossible de contacter le serveur. Veuillez réessayer.");
+      console.error('Fetch Error:', error);
+      alert("Impossible de contacter le serveur. Veuillez réessayer plus tard.");
       resetModalView();
     }
   });
