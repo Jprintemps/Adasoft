@@ -491,119 +491,100 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
   };
 });
-document.addEventListener("DOMContentLoaded", () => {
-  // (Unused prefersReducedMotion and initMobileNav removed to fix linter errors)
+  const initPaymentModal = () => {
+    const modalOverlay = document.getElementById("paymentModal");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modalTitle = document.getElementById("modal-title");
+    const modalSummary = document.getElementById("modal-summary");
+    const modalSubmitBtn = document.getElementById("modal-submit-btn");
+    const modalPaymentContent = document.getElementById("modal-payment-content");
+    const modalSuccessMessage = document.getElementById("modal-success-message");
+    const openModalBtns = document.querySelectorAll(".openModalBtn");
 
-  // --- [CONSERVEZ TOUTES VOS AUTRES FONCTIONS JS ICI] ---
-  // initLazyLoad, initStatsCounter, initPortfolioFilter, initFaqAccordion,
-  // initCarousel, etc. Tout votre code existant doit rester.
+    if (!modalOverlay) return;
+    
+    let currentPlan = { plan: "", price: 0 };
 
+    const resetModalView = () => {
+      modalPaymentContent.classList.remove("hidden");
+      modalSuccessMessage.classList.add("hidden");
+      modalSubmitBtn.disabled = false;
+      modalSubmitBtn.textContent = `Payer ${currentPlan.price}$`;
+    };
 
-  // --- LOGIQUE DE LA MODALE DE PAIEMENT (MISE À JOUR) ---
-  const modalOverlay = document.getElementById("paymentModal");
-  const closeModalBtn = document.getElementById("closeModalBtn");
-  const modalTitle = document.getElementById("modal-title");
-  const modalSummary = document.getElementById("modal-summary");
-  const modalSubmitBtn = document.getElementById("modal-submit-btn");
-  const modalPaymentContent = document.getElementById("modal-payment-content");
-  const modalSuccessMessage = document.getElementById("modal-success-message");
-  const openModalBtns = document.querySelectorAll(".openModalBtn");
+    const openModal = () => {
+      modalOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    };
 
-  if (!modalOverlay || !closeModalBtn || openModalBtns.length === 0) {
-    console.error("Éléments de la modale manquants. Vérifiez les IDs.");
-    return;
-  }
+    const closeModal = () => {
+      modalOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    };
 
-  let currentPlan = {
-    plan: "",
-    price: 0,
-  };
+    const updateModalContent = (plan, price) => {
+      currentPlan = { plan, price };
+      modalTitle.textContent = `Commander : ${plan}`;
+      modalSummary.innerHTML = `<p><span class="plan-name">${plan}</span><span class="plan-price">${price}$</span></p>`;
+      modalSubmitBtn.textContent = `Payer ${price}$`;
+    };
 
-  const resetModalView = () => {
-    modalPaymentContent.classList.remove("hidden");
-    modalSuccessMessage.classList.add("hidden");
-    modalSubmitBtn.disabled = false;
-    modalSubmitBtn.textContent = `Payer ${currentPlan.price}$`;
-  };
+    modalSubmitBtn.addEventListener("click", async () => {
+      const BACKEND_URL = "/api/initiate-payment.php";
+      modalSubmitBtn.disabled = true;
+      modalSubmitBtn.textContent = "Chargement...";
 
-  const openModal = () => {
-    resetModalView();
-    modalOverlay.classList.add("active");
-    document.body.style.overflow = "hidden";
-  };
+      // FIX: Define paymentDetails object before using it.
+      const paymentDetails = {
+        amount: currentPlan.price,
+        currency: 'USD',
+        description: `Paiement pour le forfait ${currentPlan.plan}`,
+        customer_name: document.getElementById('card-holder-name').value || 'Client',
+        customer_surname: 'Adasoft' // You can add a surname field if needed
+      };
 
-  const closeModal = () => {
-    modalOverlay.classList.remove("active");
-    document.body.style.overflow = "";
-    setTimeout(resetModalView, 300);
-  };
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(paymentDetails)
+        });
 
-  const updateModalContent = (plan, price) => {
-    currentPlan = { plan, price };
-    modalTitle.textContent = `Commander : ${plan}`;
-    modalSummary.innerHTML = `
-      <p>
-          <span class="plan-name">${plan}</span>
-          <span class="plan-price">${price}$</span>
-      </p>`;
-    modalSubmitBtn.textContent = `Payer ${price}$`;
-  };
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Le serveur a répondu avec une erreur: ${errorText || response.statusText}`);
+        }
+        
+        const data = await response.json();
 
-  // La fonction showSuccessMessage n'est plus directement utilisée
-  // car l'utilisateur est redirigé. Elle est conservée au cas où.
-  const showSuccessMessage = () => {
-     // ...
-  };
+        if (data.payment_url) {
+          // Redirect to CinetPay payment page
+          window.location.href = data.payment_url;
+        } else {
+          alert(`Erreur: ${data.message || 'Lien de paiement non reçu.'}`);
+          resetModalView();
+        }
 
-  modalSubmitBtn.addEventListener("click", async () => {
-    // MODIFICATION 1: L'URL pointe vers votre nouveau script PHP.
-    const BACKEND_URL = "/api/index.php";
-    modalSubmitBtn.disabled = true;
-    modalSubmitBtn.textContent = "Préparation du paiement...";
-  // (Unused showSuccessMessage removed to fix linter errors)
-
-    try {
-      const response = await fetch(BACKEND_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(paymentDetails)
-      });
-      
-      const data = await response.json();
-
-      if (response.ok && data.payment_url) {
-        // MODIFICATION 2: Redirection vers la page de paiement CinetPay.
-        window.location.href = data.payment_url;
-      } else {
-        // Gérer les erreurs renvoyées par le script PHP
-        alert(`Erreur: ${data.message || 'Une erreur inattendue est survenue.'}`);
+      } catch (error) {
+        console.error("Fetch Error:", error);
+        alert(`Impossible de contacter le serveur. Erreur: ${error.message}`);
         resetModalView();
       }
-    } catch (error) {
-      console.error("Fetch Error:", error);
-      alert("Impossible de contacter le serveur. Veuillez vérifier votre connexion et réessayer.");
-      resetModalView();
-    }
-  });
-
-  openModalBtns.forEach(button => {
-    button.addEventListener("click", () => {
-      const plan = button.dataset.plan;
-      const price = button.dataset.price;
-      updateModalContent(plan, price);
-      openModal();
     });
-  });
 
-  closeModalBtn.addEventListener("click", closeModal);
-  modalOverlay.addEventListener("click", e => e.target === modalOverlay && closeModal());
-  document.addEventListener("keydown", e => e.key === "Escape" && modalOverlay.classList.contains("active") && closeModal());
+    openModalBtns.forEach(button => {
+      button.addEventListener("click", () => {
+        const plan = button.dataset.plan;
+        const price = button.dataset.price;
+        updateModalContent(plan, price);
+        openModal();
+      });
+    });
 
-  
-  // --- [INITIALISEZ TOUTES VOS AUTRES FONCTIONS ICI] ---
-  // initMobileNav();
-  // ... etc.
-});
+    closeModalBtn.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", e => e.target === modalOverlay && closeModal());
+    document.addEventListener("keydown", e => e.key === "Escape" && modalOverlay.classList.contains("active") && closeModal());
+  };
 
 document.addEventListener("DOMContentLoaded", () => {
   const galleryScroll = document.getElementById("gallery-scroll");
@@ -912,3 +893,9 @@ window.addEventListener("resize", updateProgressBar);
         // Lance l'animation à intervalle régulier (toutes les 100 millisecondes)
         setInterval(animateSquares, 100);
 
+ initMobileNav();
+  initStatsCounter();
+  initPortfolioFilter();
+  initFaqAccordion();
+  initCarousel();
+  initPaymentModal();
