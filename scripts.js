@@ -538,7 +538,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     modalSubmitBtn.addEventListener("click", async () => {
-      const BACKEND_URL = "/api/initiate-payment.php";
+      const BACKEND_URL = "/api/index.php";
       modalSubmitBtn.disabled = true;
       modalSubmitBtn.textContent = "Chargement...";
 
