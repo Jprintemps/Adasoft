@@ -411,7 +411,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const validateField = (field) => {
     const input = form.querySelector(`#${field}`);
     const group = input.parentElement;
-    const errorDiv = group.querySelector(".error-message");
     let isValid = true;
     const value = input.value.trim();
 
@@ -568,7 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch(BACKEND_URL, {
+      const response = await fetch (BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(paymentDetails)
