@@ -555,7 +555,14 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error(`Le serveur a répondu avec une erreur: ${errorText || response.statusText}`);
         }
         
-        const data = await response.json();
+        let data;
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          data = await response.json();
+        } else {
+          const text = await response.text();
+          throw new Error(`Réponse inattendue du serveur: ${text.substring(0, 200)}`);
+        }
 
         if (data.payment_url) {
           // Redirect to CinetPay payment page
