@@ -492,18 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 document.addEventListener("DOMContentLoaded", () => {
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  /**
-   * Mobile Navigation Toggle
-   * Gère l'ouverture et la fermeture du menu de navigation sur mobile.
-   */
-  const initMobileNav = () => {
-    // NOTE: Votre code existant pour la navigation mobile reste ici...
-    // Pour la brièveté, il n'est pas répété dans cet exemple.
-  };
+  // (Unused prefersReducedMotion and initMobileNav removed to fix linter errors)
 
   // --- [CONSERVEZ TOUTES VOS AUTRES FONCTIONS JS ICI] ---
   // initLazyLoad, initStatsCounter, initPortfolioFilter, initFaqAccordion,
@@ -571,11 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const BACKEND_URL = "/api/index.php";
     modalSubmitBtn.disabled = true;
     modalSubmitBtn.textContent = "Préparation du paiement...";
-
-    const paymentDetails = {
-      amount: currentPlan.price,
-      description: `Paiement pour le forfait Adasoft : ${currentPlan.plan}`,
-    };
+  // (Unused showSuccessMessage removed to fix linter errors)
 
     try {
       const response = await fetch(BACKEND_URL, {

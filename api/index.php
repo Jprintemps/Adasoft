@@ -1,7 +1,4 @@
 
-// Fichier: api/initiate-payment.php
-// Rôle: Correspond à l'étape 3 de la documentation ("Préparation et affichage du guichet").
-// Reçoit la demande du formulaire, la valide, et demande un token de paiement à CinetPay.
 <?php
 phpinfo();
 header('Content-Type: application/json');
