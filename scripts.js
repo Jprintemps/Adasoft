@@ -899,10 +899,3 @@ window.addEventListener("resize", updateProgressBar);
 
         // Lance l'animation à intervalle régulier (toutes les 100 millisecondes)
         setInterval(animateSquares, 100);
-
- initMobileNav();
-  initStatsCounter();
-  initPortfolioFilter();
-  initFaqAccordion();
-  initCarousel();
-  initPaymentModal();
