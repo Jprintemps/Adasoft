@@ -588,7 +588,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok && data.payment_url) {
         // MODIFICATION 2: Redirection vers la page de paiement CinetPay.
-        // C'est la méthode décrite dans la documentation que vous avez fournie.
         window.location.href = data.payment_url;
       } else {
         // Gérer les erreurs renvoyées par le script PHP
