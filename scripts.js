@@ -568,7 +568,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modalSubmitBtn.addEventListener("click", async () => {
     // MODIFICATION 1: L'URL pointe vers votre nouveau script PHP.
-    const BACKEND_URL = "/api/initiate-payment.php";
+    const BACKEND_URL = "/api/index.php";
     modalSubmitBtn.disabled = true;
     modalSubmitBtn.textContent = "Préparation du paiement...";
 
