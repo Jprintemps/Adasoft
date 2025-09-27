@@ -11,7 +11,6 @@ include('commande.php');
 // La class gère la table "Commande"( A titre d'exemple)
 $commande = new Commande();
 try {
-    // Corrigé : 'valider' a été remplacé par 'valide' pour correspondre au nom du bouton du formulaire
     if(isset($_POST['valide']))
     {
         $customer_name = $_POST['customer_name'];
@@ -19,6 +18,15 @@ try {
         $description = $_POST['description'];
         $amount = $_POST['amount'];
         $currency = $_POST['currency'];
+
+        // On combine l'indicatif et le numéro local
+        $customer_phone_prefix = $_POST['customer_phone_prefix'];
+        $customer_phone_number_local = $_POST['customer_phone_number_local'];
+        $customer_phone_number = $customer_phone_prefix . $customer_phone_number_local;
+
+        // On récupère le code ISO du pays depuis le champ caché
+        $customer_country = $_POST['customer_country'];
+
 
         //transaction id
         $id_transaction = date("YmdHis"); // or $id_transaction = Cinetpay::generateTransId()
@@ -29,10 +37,12 @@ try {
         $site_id = $marchand["site_id"];
 
         //notify url
-        $notify_url = $commande->getCurrentUrl().'cinetpay-sdk-php/notify/notify.php';
+        $notify_url = $commande->getCurrentUrl().'api/notify/notify.php';
         //return url
-        $return_url = $commande->getCurrentUrl().'cinetpay-sdk-php/return/return.php';
-        $channels = "ALL";
+        $return_url = $commande->getCurrentUrl().'api/return/return.php';
+        
+        // On spécifie MOBILE_MONEY comme seul canal de paiement
+        $channels = "MOBILE_MONEY";
         
         /*information supplémentaire que vous voulez afficher
          sur la facture de CinetPay(Supporte trois variables 
@@ -45,7 +55,7 @@ try {
 
         //
         $formData = array(
-             "transaction_id"=> $id_transaction,
+            "transaction_id"=> $id_transaction,
             "amount"=> $amount,
             "currency"=> $currency,
             "customer_surname"=> $customer_name,
@@ -55,14 +65,10 @@ try {
             "return_url" => $return_url,
             "channels" => $channels,
             "invoice_data" => $invoice_data,
-            //pour afficher le paiement par carte de credit
-            "customer_email" => "", //l'email du client
-            "customer_phone_number" => "", //Le numéro de téléphone du client
-            "customer_address" => "", //l'adresse du client
-            "customer_city" => "", // ville du client
-            "customer_country" => "",//Le pays du client, la valeur à envoyer est le code ISO du pays (code à deux chiffre) ex : CI, BF, US, CA, FR
-            "customer_state" => "", //L’état dans de la quel se trouve le client. Cette valeur est obligatoire si le client se trouve au États Unis d’Amérique (US) ou au Canada (CA)
-            "customer_zip_code" => "" //Le code postal du client 
+            // Le numéro de téléphone complet est envoyé ici
+            "customer_phone_number" => $customer_phone_number,
+            // Le code ISO du pays est maintenant inclus
+            "customer_country" => $customer_country
         );
         // enregistrer la transaction dans votre base de donnée
         /* $commande->create(); */
@@ -79,6 +85,9 @@ try {
             //redirection vers l'url de paiement
             header('Location:'.$url);
 
+        } else {
+            // Gérer l'erreur si la génération du lien échoue
+            echo "Erreur lors de la génération du lien de paiement : " . $result['message'] . (isset($result['description']) ? ' - ' . $result['description'] : '');
         }
     }
     else{
