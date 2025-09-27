@@ -24,8 +24,8 @@ try {
         $customer_phone_number_local = $_POST['customer_phone_number_local'];
         $customer_phone_number = $customer_phone_prefix . $customer_phone_number_local;
 
-        // On récupère le code ISO du pays depuis le champ caché
-        $customer_country = $_POST['customer_country'];
+        // On récupère le code ISO du pays depuis le champ caché, avec une valeur par défaut
+        $customer_country = $_POST['customer_country'] ?? '';
 
 
         //transaction id
@@ -96,3 +96,4 @@ try {
 } catch (Exception $e) {
     echo $e->getMessage();
 }
+
