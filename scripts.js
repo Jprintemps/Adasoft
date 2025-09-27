@@ -536,54 +536,6 @@ document.addEventListener("DOMContentLoaded", () => {
       modalSummary.innerHTML = `<p><span class="plan-name">${plan}</span><span class="plan-price">${price}$</span></p>`;
       modalSubmitBtn.textContent = `Payer ${price}$`;
     };
-
-    modalSubmitBtn.addEventListener("click", async () => {
-      const BACKEND_URL = "/api/index.php";
-      modalSubmitBtn.disabled = true;
-      modalSubmitBtn.textContent = "Chargement...";
-
-      // FIX: Define paymentDetails object before using it.
-
-      const nameInput = document.getElementById('card-holder-name');
-      const customerName = (nameInput ? nameInput.value : '') || 'Client';
-
-      const paymentDetails = {
-        amount: currentPlan.price,
-        currency: 'USD',
-        description: `Paiement pour le forfait ${currentPlan.plan}`,
-        customer_name: customerName,
-        customer_surname: 'Adasoft'
-      };
-
-      try {
-        const response = await fetch(BACKEND_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(paymentDetails)
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Le serveur a répondu avec une erreur: ${errorText || response.statusText}`);
-        }
-        
-        const data = await response.json();
-
-        if (data.payment_url) {
-          // Redirect to CinetPay payment page
-          window.location.href = data.payment_url;
-        } else {
-          alert(`Erreur: ${data.message || 'Lien de paiement non reçu.'}`);
-          resetModalView();
-        }
-
-      } catch (error) {
-        console.error("Fetch Error:", error);
-        alert(`Impossible de contacter le serveur. Erreur: ${error.message}`);
-        resetModalView();
-      }
-    });
-
     openModalBtns.forEach(button => {
       button.addEventListener("click", () => {
         const plan = button.dataset.plan;
