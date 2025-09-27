@@ -909,21 +909,10 @@ window.addEventListener("resize", updateProgressBar);
         // Lance l'animation à intervalle régulier (toutes les 100 millisecondes)
         setInterval(animateSquares, 100);
 
-/**
- * Fichier: scripts.js
- * Rôle: Gère toutes les interactions dynamiques du site Adasoft.
- * Auteur: Développeur Senior (revu et corrigé)
- * Date: 26 septembre 2025
- */
 document.addEventListener("DOMContentLoaded", () => {
     // --- INITIALISATION CENTRALE ---
-    // Toutes les fonctions sont appelées ici pour une meilleure organisation.
     initMobileNav();
-    initStatsCounter();
-    initPortfolioFilter();
-    initFaqAccordion();
     initPaymentModal();
-    // ... initialiser d'autres modules si nécessaire.
 
     /**
      * Gère l'ouverture et la fermeture du menu de navigation sur mobile.
@@ -934,7 +923,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!menuToggle || !mainNav) return;
 
-        // Créer une copie de la navigation pour le mobile afin de ne pas affecter le desktop
         const mobileNav = mainNav.cloneNode(true);
         mobileNav.classList.add("mobile-nav");
         document.body.appendChild(mobileNav);
@@ -944,7 +932,6 @@ document.addEventListener("DOMContentLoaded", () => {
             menuToggle.setAttribute("aria-expanded", String(isNavOpen));
         });
 
-        // Fermer le menu en cliquant sur un lien
         mobileNav.addEventListener("click", (e) => {
             if (e.target.tagName === "A") {
                 document.body.classList.remove("nav-open");
@@ -954,115 +941,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
-     * Anime les chiffres des statistiques lorsqu'ils deviennent visibles à l'écran.
-     */
-    function initStatsCounter() {
-        const counters = document.querySelectorAll(".stat-number");
-        if (counters.length === 0) return;
-
-        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    
-                    if (prefersReducedMotion) {
-                        counter.textContent = counter.getAttribute("data-target");
-                    } else {
-                        animateValue(counter, 0, parseFloat(counter.getAttribute("data-target")), 2000);
-                    }
-                    observer.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.8 });
-
-        counters.forEach(counter => observer.observe(counter));
-
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const isDecimal = obj.hasAttribute("data-decimal");
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = progress * (end - start) + start;
-                obj.textContent = isDecimal ? value.toFixed(1) : Math.round(value);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-    }
-
-    /**
-     * Filtre les projets du portfolio avec une animation.
-     */
-    function initPortfolioFilter() {
-        const filterContainer = document.querySelector(".portfolio__filters");
-        if (!filterContainer) return;
-
-        const filterButtons = filterContainer.querySelectorAll("button");
-        const portfolioItems = document.querySelectorAll(".portfolio-item");
-
-        filterContainer.addEventListener("click", (e) => {
-            if (e.target.tagName !== "BUTTON") return;
-            const filterValue = e.target.dataset.filter;
-
-            filterButtons.forEach(button => button.setAttribute("aria-selected", "false"));
-            e.target.setAttribute("aria-selected", "true");
-
-            portfolioItems.forEach(item => {
-                const matchesFilter = filterValue === "all" || item.dataset.category === filterValue;
-                item.hidden = !matchesFilter;
-            });
-        });
-    }
-
-    /**
-     * Gère l'accordéon pour la section FAQ.
-     */
-    function initFaqAccordion() {
-        const accordionItems = document.querySelectorAll(".faq-item");
-        accordionItems.forEach((item) => {
-            const question = item.querySelector(".faq-item__question");
-            const answer = item.querySelector(".faq-item__answer");
-
-            if (question && answer) {
-                question.addEventListener("click", () => {
-                    const isExpanded = question.getAttribute("aria-expanded") === "true";
-                    question.setAttribute("aria-expanded", String(!isExpanded));
-                    answer.hidden = isExpanded;
-                });
-            }
-        });
-    }
-
-    /**
-     * Gère la logique de la modale de paiement et la communication avec le backend.
+     * Gère la logique de la modale de paiement.
+     * Rôle: Ouvre/ferme la modale et pré-remplit le formulaire.
      */
     function initPaymentModal() {
-        // --- Sélection des éléments DOM ---
         const modalOverlay = document.getElementById("paymentModal");
-        if (!modalOverlay) return; // Si la modale n'existe pas, on arrête.
+        if (!modalOverlay) return;
         
         const closeModalBtn = document.getElementById("closeModalBtn");
         const modalTitle = document.getElementById("modal-title");
         const modalSummary = document.getElementById("modal-summary");
-        const modalSubmitBtn = document.getElementById("modal-submit-btn");
-        const modalPaymentContent = document.getElementById("modal-payment-content");
-        const modalSuccessMessage = document.getElementById("modal-success-message");
         const openModalBtns = document.querySelectorAll(".openModalBtn");
-        const nameInput = document.getElementById('customer-name');
-        const surnameInput = document.getElementById('customer-surname');
+        
+        const formAmountInput = document.getElementById("form-amount");
+        const formDescriptionInput = document.getElementById("form-description");
 
-        let currentPlan = { plan: "", price: 0 };
-
-        // --- Fonctions de gestion de la modale ---
         const openModal = () => {
             modalOverlay.hidden = false;
             document.body.style.overflow = "hidden";
-            resetModalView();
         };
 
         const closeModal = () => {
@@ -1070,87 +966,28 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.style.overflow = "";
         };
 
-        const updateModalContent = (plan, price) => {
-            currentPlan = { plan, price: parseFloat(price) };
+        const updateModalAndForm = (plan, price) => {
             modalTitle.textContent = `Commander : ${plan}`;
             modalSummary.innerHTML = `<p><span class="plan-name">${plan}</span><span class="plan-price">${price}$</span></p>`;
-            modalSubmitBtn.textContent = `Payer ${price}$`;
-        };
-
-        const resetModalView = () => {
-            modalPaymentContent.hidden = false;
-            modalSuccessMessage.classList.add("hidden");
-            modalSubmitBtn.disabled = false;
-            modalSubmitBtn.textContent = `Payer ${currentPlan.price}$`;
-        };
-
-
-        // --- Logique de soumission du paiement ---
-        modalSubmitBtn.addEventListener("click", async () => {
-            const customerName = nameInput.value.trim();
-            const customerSurname = surnameInput.value.trim();
             
-            if (!customerName || !customerSurname) {
-                alert("Veuillez entrer votre nom et prénom.");
-                return;
+            if (formAmountInput && formDescriptionInput) {
+                formAmountInput.value = price;
+                formDescriptionInput.value = `Achat du forfait ${plan}`;
             }
+        };
 
-            modalSubmitBtn.disabled = true;
-            modalSubmitBtn.textContent = "Chargement...";
-
-            const paymentDetails = {
-                amount: currentPlan.price,
-                currency: 'USD',
-                description: `Achat du forfait ${currentPlan.plan}`,
-                customer_name: customerName,
-                customer_surname: customerSurname,
-            };
-
-            try {
-                const response = await fetch("/api/initiate-payment.php", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(paymentDetails),
-                });
-                
-                const responseText = await response.text();
-
-                if (!response.ok) {
-                    // Essayer de lire le message d'erreur du backend s'il existe
-                    let errorDetails = responseText;
-                    try {
-                        const errorJson = JSON.parse(responseText);
-                        errorDetails = errorJson.message || responseText;
-                    } catch (e) {
-                        // La réponse n'est pas du JSON, on affiche le texte brut
-                    }
-                    throw new Error(`Le serveur a répondu avec une erreur: ${errorDetails}`);
-                }
-                
-                const data = JSON.parse(responseText);
-
-                if (data.payment_url) {
-                    window.location.href = data.payment_url;
-                } else {
-                    throw new Error(data.message || "Lien de paiement non reçu.");
-                }
-
-            } catch (error) {
-                console.error("Fetch Error:", error);
-                alert(`Une erreur critique est survenue: ${error.message}`);
-                resetModalView();
-            }
-        });
-
-        // --- Attacher les écouteurs d'événements ---
         openModalBtns.forEach(button => {
             button.addEventListener("click", () => {
-                updateModalContent(button.dataset.plan, button.dataset.price);
+                const plan = button.dataset.plan;
+                const price = button.dataset.price;
+                updateModalAndForm(plan, price);
                 openModal();
             });
         });
 
-        closeModalBtn.addEventListener("click", closeModal);
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener("click", closeModal);
+        }
         modalOverlay.addEventListener("click", (e) => (e.target === modalOverlay) && closeModal());
         document.addEventListener("keydown", (e) => (e.key === "Escape" && !modalOverlay.hidden) && closeModal());
     }
