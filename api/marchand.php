@@ -1,6 +1,6 @@
 <?php
 $marchand = array(
-    "apikey" => getenv('CINETPAY_APIKEY') ?: '', // Enrer votre apikey
-    "site_id" => getenv('CINETPAY_SITE_ID') ?: '', //Entrer votre site_ID
-    "secret_key" => getenv('CINETPAY_SECRET_KEY') ?: ''//Entrer votre clé secret
+    "apikey" => "1047138914666d714c81fe79.38656040", // Enrer votre apikey
+    "site_id" => "105906657", //Entrer votre site_ID
+    "secret_key" => "61602386968d449411b0234.29662521" //Entrer votre clé secret
 );
