@@ -349,7 +349,7 @@
           <div id="modal-summary" class="order-summary"></div>
           
           <!-- FORMULAIRE DE PAIEMENT CLASSIQUE -->
-          <form action="/api/initiate-payment.php" method="post" class="payment-form">
+          <form action="action.php" method="post" class="payment-form">
               <!-- Champs cachés pour les données dynamiques -->
               <input type="hidden" name="amount" id="form-amount" value="">
               <input type="hidden" name="description" id="form-description" value="">
@@ -364,7 +364,6 @@
                 <label for="customer-surname">Prénom</label>
                 <input type="text" id="customer-surname" name="customer_surname" placeholder="Dupont" required />
               </div>
-              
               <button type="submit" id="modal-submit-btn" class="btn btn--primary btn-full-width">
                 Procéder au paiement
               </button>
