@@ -338,39 +338,52 @@
     </section>
   <div id="paymentModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
     <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modal-title" class="modal-title">Finaliser la commande</h2>
-        <button id="closeModalBtn" class="modal-close-btn" aria-label="Fermer la fenêtre modale">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="modal-payment-content">
-          <div id="modal-summary" class="order-summary"></div>
-          
-          <!-- FORMULAIRE DE PAIEMENT CLASSIQUE -->
-          <form action="./api/index.php" method="post" class="payment-form">
-              <!-- Champs cachés pour les données dynamiques -->
-              <input type="hidden" name="amount" id="form-amount" value="">
-              <input type="hidden" name="description" id="form-description" value="">
-              <input type="hidden" name="currency" value="CDF">
-
-              <!-- Champs visibles pour l'utilisateur -->
-              <div class="form-group">
-                <label for="customer-name">Nom</label>
-                <input type="text" id="customer-name" name="customer_name" placeholder="Jean" required />
-              </div>
-              <div class="form-group">
-                <label for="customer-surname">Prénom</label>
-                <input type="text" id="customer-surname" name="customer_surname" placeholder="Dupont" required />
-              </div>
-              <button type="submit" id="modal-submit-btn" name="valider" class="btn btn--primary btn-full-width">
-                Procéder au paiement
-              </button>
-          </form>
-
+        <div class="modal-header">
+            <h2 id="modal-title" class="modal-title">Finaliser la commande</h2>
+            <button id="closeModalBtn" class="modal-close-btn" aria-label="Fermer la fenêtre modale">
+                &times;
+            </button>
         </div>
-      </div>
+        <div class="modal-body">
+            <div id="modal-payment-content">
+                <div id="modal-summary" class="order-summary"></div>
+
+                <!-- FORMULAIRE DE PAIEMENT CLASSIQUE -->
+                <form action="./api/index.php" method="post" class="payment-form">
+                    
+                    <div class="form-group">
+                        <label for="customer-name">Nom</label>
+                        <input type="text" id="customer-name" name="customer_name" value="Ilunga" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customer-surname">Prénom</label>
+                        <input type="text" id="customer-surname" name="customer_surname" value="Jeremie" required />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="form-amount">Montant</label>
+                      <input type="number" name="amount" id="form-amount" value="80" required readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currency">Devise</label>
+                        <input name="currency" id="currency" value="USD" required readonly>
+  
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-description">Description</label>
+                        <input type="text" name="description" id="form-description" value="Achat sdk" required readonly >
+                    </div>
+
+                    <button type="submit" id="modal-submit-btn" name="valide" class="btn btn--primary btn-full-width">
+                        Valider
+                    </button>
+                </form>
+
+            </div>
+        </div>
     </div>
   </div>
 
