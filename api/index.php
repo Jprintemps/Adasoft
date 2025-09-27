@@ -47,7 +47,7 @@ try {
 
     //
     $formData = array(
-        "transaction_id"=> $id_transaction,
+         "transaction_id"=> $id_transaction,
         "amount"=> $amount,
         "currency"=> $currency,
         "customer_surname"=> $customer_name,
