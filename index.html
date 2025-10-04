@@ -348,69 +348,79 @@
                     </div>
                 </section>
                 <section id="quote-configurator" style="">
-        <div class="container">
-            <div class="section-header">
-                <h2>Configurez votre offre et obtenez un devis</h2>
-                <p>Choisissez les services dont vous avez besoin pour voir une estimation en temps réel.</p>
-            </div>
-            <div class="quote-configurator__grid">
-                <div id="configurator-form" class="configurator-form">
-                    <h3>1. Choisissez vos services</h3>
-                    <div>
-                        <div class="service-option">
-                            <input type="checkbox" name="service" value="150" data-name="Logo & Identité Visuelle" id="service1">
-                            <label for="service1" style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                <span class="name">Logo & Identité Visuelle</span>
-                                <span class="price">150 $</span>
-                            </label>
+                    <div class="container">
+                        <div class="section-header">
+                            <h2>Configurez votre offre et obtenez un devis</h2>
+                            <p>Choisissez les services dont vous avez besoin pour voir une estimation en temps réel.</p>
                         </div>
-                        <div class="service-option">
-                           <input type="checkbox" name="service" value="50" data-name="5 Affiches" id="service2">
-                            <label for="service2" style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                <span class="name">Affiches publicitaires (5 Affiches)</span>
-                                <span class="price">50 $</span>
-                            </label>
-                        </div>
-                         <div class="service-option">
-                            <input type="checkbox" name="service" value="450" data-name="Site vitrine" id="service3">
-                             <label for="service3" style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                <span class="name">Site vitrine</span>
-                                <span class="price">450 $</span>
-                            </label>
-                        </div>
-                        <div class="service-option">
-                            <input type="checkbox" name="service" value="200" data-name="Kit Réseaux Sociaux" id="service4">
-                             <label for="service4" style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                <span class="name">Kit Réseaux Sociaux</span>
-                                <span class="price">200 $</span>
-                            </label>
+                        <div class="quote-configurator__grid">
+                            <div id="configurator-form" class="configurator-form">
+                                <h3>1. Choisissez vos services</h3>
+                                <div>
+                                    <div class="service-option">
+                                        <input type="checkbox" name="service" value="150"
+                                            data-name="Logo & Identité Visuelle" id="service1">
+                                        <label for="service1"
+                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
+                                            <span class="name">Logo & Identité Visuelle</span>
+                                            <span class="price">150 $</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-option">
+                                        <input type="checkbox" name="service" value="50" data-name="5 Affiches"
+                                            id="service2">
+                                        <label for="service2"
+                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
+                                            <span class="name">Affiches publicitaires (5 Affiches)</span>
+                                            <span class="price">50 $</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-option">
+                                        <input type="checkbox" name="service" value="450" data-name="Site vitrine"
+                                            id="service3">
+                                        <label for="service3"
+                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
+                                            <span class="name">Site vitrine</span>
+                                            <span class="price">450 $</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-option">
+                                        <input type="checkbox" name="service" value="200"
+                                            data-name="Kit Réseaux Sociaux" id="service4">
+                                        <label for="service4"
+                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
+                                            <span class="name">Kit Réseaux Sociaux</span>
+                                            <span class="price">200 $</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quote-summary-card">
+                                <h3>Votre devis estimatif</h3>
+                                <div id="quote-summary">
+                                    <p>Sélectionnez des services pour commencer.</p>
+                                </div>
+                                <div style="border-top: 1px solid var(--color-accent); padding-top: 1rem;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: center; font-size: 1.5rem; font-weight: 700;">
+                                        <span>Total:</span>
+                                        <span id="quote-total">0 $</span>
+                                    </div>
+                                </div>
+
+                                <button id="generate-description" class="btn">
+                                    Obtenir une description de projet
+                                </button>
+                                <div id="ai-description-output" class="hidden"></div>
+                                <button id="proceed-to-checkout" class="btn btn--primary" disabled>
+                                    Procéder au paiement
+                                </button>
+                            </div>
+                            <a href="#booking" class="btn btn--secondary">Planifier un appel pour une offre
+                                personnalisée</a>
                         </div>
                     </div>
-                </div>
-                <div class="quote-summary-card">
-                    <h3>Votre devis estimatif</h3>
-                    <div id="quote-summary">
-                        <p>Sélectionnez des services pour commencer.</p>
-                    </div>
-                    <div style="border-top: 1px solid var(--color-accent); padding-top: 1rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.5rem; font-weight: 700;">
-                            <span>Total:</span>
-                            <span id="quote-total">0 $</span>
-                        </div>
-                    </div>
-                    
-                     <button id="generate-description" class="btn">
-                        Obtenir une description de projet
-                    </button>
-                    <div id="ai-description-output" class="hidden"></div>
-                    <button id="proceed-to-checkout" class="btn btn--primary" disabled>
-                        Procéder au paiement
-                    </button>
-                </div>
-                <a href="#booking" class="btn btn--secondary">Planifier un appel pour une offre personnalisée</a>
-            </div>
-        </div>
-    </section>
+                </section>
                 <div id="paymentModal" class="modal-overlay" role="dialog" aria-modal="true"
                     aria-labelledby="modal-title" hidden>
                     <div class="modal-content">
@@ -736,51 +746,228 @@
             </div>
         </section>
         <section id="booking">
-        <div class="container">
-            <div class="section-header">
-                <h2>Prêt à discuter de votre projet ?</h2>
-                <p>Planifiez un appel stratégique gratuit de 30 minutes directement dans mon agenda.</p>
-            </div>
-            <div class="booking-card">
-                <div id="booking-step-1" class="booking-step">
-                    <div style="flex: 1;">
-                        <h3 style="color: var(--color-dark); margin-bottom: 1rem;">Sélectionnez une date</h3>
-                        <div id="calendar">
-                            <div class="calendar-header">
-                                <button id="prev-month">◀</button>
-                                <h4 id="month-year"></h4>
-                                <button id="next-month">▶</button>
+            <div class="container">
+                <div class="section-header">
+                    <h2>Prêt à discuter de votre projet ?</h2>
+                    <p>Planifiez un appel stratégique gratuit de 30 minutes directement dans mon agenda.</p>
+                </div>
+                <div class="booking-card">
+                    <div id="booking-step-1" class="booking-step">
+                        <div style="flex: 1;">
+                            <h3 style="color: var(--color-dark); margin-bottom: 1rem;">Sélectionnez une date</h3>
+                            <div id="calendar">
+                                <div class="calendar-header">
+                                    <button id="prev-month">◀</button>
+                                    <h4 id="month-year"></h4>
+                                    <button id="next-month">▶</button>
+                                </div>
+                                <div id="calendar-days"></div>
+                                <div id="calendar-dates"></div>
                             </div>
-                            <div id="calendar-days"></div>
-                            <div id="calendar-dates"></div>
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="color: var(--color-dark); margin-bottom: 1rem;">Choisissez un créneau</h3>
+                            <div id="slots-container" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <p style="color: #666;">Veuillez d'abord sélectionner une date.</p>
+                            </div>
                         </div>
                     </div>
-                    <div style="flex: 1;">
-                        <h3 style="color: var(--color-dark); margin-bottom: 1rem;">Choisissez un créneau</h3>
-                        <div id="slots-container" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <p style="color: #666;">Veuillez d'abord sélectionner une date.</p>
-                        </div>
+                    <div id="booking-step-2" class="booking-step hidden">
+                        <h3>Confirmez votre appel stratégique</h3>
+                        <p id="booking-summary"></p>
+                        <form id="booking-form">
+                            <input type="text" name="name" placeholder="Votre nom complet" required>
+                            <input type="email" name="email" placeholder="Votre adresse email" required>
+                            <textarea name="project" rows="3"
+                                placeholder="Parlez-nous brièvement de votre projet (optionnel)"></textarea>
+                            <button type="submit" class="btn btn--primary">Confirmer le rendez-vous</button>
+                            <button type="button" id="back-to-slots">Modifier le créneau</button>
+                        </form>
                     </div>
-                </div>
-                <div id="booking-step-2" class="booking-step hidden">
-                    <h3>Confirmez votre appel stratégique</h3>
-                    <p id="booking-summary"></p>
-                    <form id="booking-form">
-                        <input type="text" name="name" placeholder="Votre nom complet" required>
-                        <input type="email" name="email" placeholder="Votre adresse email" required>
-                        <textarea name="project" rows="3" placeholder="Parlez-nous brièvement de votre projet (optionnel)"></textarea>
-                        <button type="submit" class="btn btn--primary">Confirmer le rendez-vous</button>
-                        <button type="button" id="back-to-slots">Modifier le créneau</button>
-                    </form>
-                </div>
-                <div id="booking-step-3" class="booking-step hidden">
-                    <h3>C'est confirmé !</h3>
-                    <p>Merci ! Votre appel stratégique est bien réservé.</p>
-                    <p>Un email de confirmation avec tous les détails vous sera envoyé (simulation).</p>
+                    <div id="booking-step-3" class="booking-step hidden">
+                        <h3>C'est confirmé !</h3>
+                        <p>Merci ! Votre appel stratégique est bien réservé.</p>
+                        <p>Un email de confirmation avec tous les détails vous sera envoyé (simulation).</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <section class="ai-workshop" id="ai-branding-workshop">
+            <div class="container ai-workshop__container">
+                <div class="section-header">
+                    <h2>Mercia IA Tools</h2>
+                    <p>Utilises mes outils intelligents pour affiner ta stratégie de marque.</p>
+                </div>
+                <div>
+                    <div class="ai-workshop__tabs">
+                        <button data-tab="copywriting" class="ai-tab">Copywriting</button>
+                        <button data-tab="voice" class="ai-tab">Voix</button>
+                        <button data-tab="palette" class="ai-tab">Palette</button>
+                        <button data-tab="logo" class="ai-tab">Visualisation Logo</button>
+                        <button data-tab="social" class="ai-tab">Post Média Social</button>
+                        <button data-tab="slogan" class="ai-tab active">Slogans</button>
+                    </div>
+                    <div>
+                        <div id="tab-copywriting" class="ai-tab-content hidden">
+                            <p>Générez des textes percutants pour vos ventes ou vos événements.</p>
+                            <div
+                                style="max-width: 42rem; margin: auto; display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                                <div>
+                                    <label for="copy-objective-select">Objectif du texte :</label>
+                                    <select id="copy-objective-select">
+                                        <option value="Vente">Générer un texte de vente</option>
+                                        <option value="Événement">Promouvoir un événement</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="copy-product-input" id="copy-product-label">Produit/Service :</label>
+                                    <input id="copy-product-input" type="text" placeholder="Ex: coaching en nutrition">
+                                </div>
+                                <div>
+                                    <label for="copy-target-input">Cible :</label>
+                                    <input id="copy-target-input" type="text"
+                                        placeholder="Ex: femmes 25-40 ans actives">
+                                </div>
+                                <div>
+                                    <label for="copy-benefit-input" id="copy-benefit-label">Bénéfice principal :</label>
+                                    <input id="copy-benefit-input" type="text" placeholder="Ex: perdre 5kg en 2 mois">
+                                </div>
+                                <div>
+                                    <label for="copy-tone-select">Ton souhaité :</label>
+                                    <select id="copy-tone-select">
+                                        <option value="Professionnel">Professionnel</option>
+                                        <option value="Amical">Amical & Fun</option>
+                                        <option value="Inspirant">Inspirant</option>
+                                        <option value="Rassurant">Rassurant</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="copy-format-select">Format de sortie :</label>
+                                    <select id="copy-format-select">
+                                        <option value="Page d'accueil">Page d'accueil</option>
+                                        <option value="Publicité Facebook">Publicité Facebook</option>
+                                        <option value="Post Instagram">Post Instagram</option>
+                                        <option value="Flyer">Flyer</option>
+                                    </select>
+                                </div>
+                                <button id="copywriting-btn" class="btn btn--primary" style="width: 100%;">Générer les
+                                    textes</button>
+                                <div id="copywriting-output" class="ai-workshop__output">
+                                    <p style="color: #888;">Vos textes apparaîtront ici...</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="tab-voice" class="ai-tab-content hidden">
+                            <p>Collez un texte pour que Mercia IA analyse votre "ton de voix" actuel.</p>
+                            <div style="max-width: 32rem; margin: auto;">
+                                <textarea id="voice-input" rows="4" placeholder="Collez votre texte ici..."
+                                    style="margin-bottom: 1rem;"></textarea>
+                                <button id="voice-btn" class="btn btn--primary" style="width: 100%;">Analyser ma
+                                    voix</button>
+                                <div id="voice-output" class="ai-workshop__output">
+                                    <p style="color: #888;">Votre analyse apparaîtra ici...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-palette" class="ai-tab-content hidden">
+                            <p>Décrivez l'ambiance de votre marque pour générer une identité visuelle.</p>
+                            <div style="max-width: 32rem; margin: auto;">
+                                <textarea id="palette-input" rows="4"
+                                    placeholder="Ex: cosmétiques naturels, luxueux, minimaliste..."
+                                    style="margin-bottom: 1rem;"></textarea>
+                                <button id="palette-btn" class="btn btn--primary" style="width: 100%;">Générer
+                                    l'identité</button>
+                                <div id="palette-output" class="ai-workshop__output">
+                                    <p style="color: #888;">Votre identité visuelle apparaîtra ici...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-logo" class="ai-tab-content hidden">
+                            <p>Décrivez votre marque, obtenez des concepts, puis générez des aperçus visuels.</p>
+                            <div style="max-width: 42rem; margin: auto;">
+                                <textarea id="logo-input" rows="4"
+                                    placeholder="Ex: Une marque de vêtements de sport, dynamique, urbaine et technologique..."
+                                    style="margin-bottom: 1rem;"></textarea>
+                                <button id="logo-btn" class="btn btn--primary" style="width: 100%;"> Imaginer les
+                                    concepts</button>
+                                <div id="logo-output" class="ai-workshop__output">
+                                    <p style="color: #888;">Vos concepts de logo apparaîtront ici...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-social" class="ai-tab-content hidden">
+                            <p>Générez un post complet pour les réseaux sociaux avec texte et image.</p>
+                            <div style="max-width: 42rem; margin: auto;">
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="social-platform">Plateforme :</label>
+                                    <select id="social-platform">
+                                        <option value="LinkedIn">LinkedIn (Professionnel)</option>
+                                        <option value="Instagram">Instagram (Visuel & engageant)</option>
+                                        <option value="Twitter">X / Twitter (Court & percutant)</option>
+                                    </select>
+                                </div>
+                                <textarea id="social-post-input" rows="4"
+                                    placeholder="Sujet du post (ex: Lancement de notre nouvelle collection éco-responsable)"
+                                    style="margin-bottom: 1rem;"></textarea>
+                                <button id="social-post-btn" class="btn btn--primary" style="width: 100%;"> Générer le
+                                    Post</button>
+                                <div id="social-post-output" class="ai-workshop__output">
+                                    <p style="color: #888;">Votre post et sa suggestion d'image apparaîtront ici...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-slogan" class="ai-tab-content">
+                            <p>Décrivez votre entreprise et laissez Mercia IA créer des slogans percutants.</p>
+                            <div
+                                style="display:flex; gap: 0.5rem; max-width: 32rem; margin: auto; margin-bottom: 1rem;">
+                                <input id="slogan-input" type="text" placeholder="Ex: café artisanal à Paris">
+                                <button id="slogan-btn" class="btn btn--primary">Générer</button>
+                            </div>
+                            <div id="slogan-output" class="ai-workshop__output" style="max-width: 32rem; margin: auto;">
+                                <p style="color: #888;">Vos slogans apparaîtront ici...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="blog" style="background-color: var(--color-neutral-2);">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Ressources & Guides pour Entrepreneurs</h2>
+                    <p>Des conseils pratiques pour construire une marque qui se démarque.</p>
+                </div>
+                <div class="blog__grid">
+                    <div class="blog-card">
+                        <img src="https://placehold.co/600x400/e1e4e7/333?text=Logo+Erreurs" alt="Article image">
+                        <div class="blog-card__content">
+                            <h3>Les 5 erreurs à éviter quand vous créez votre logo</h3>
+                            <p>Un logo raté peut coûter cher. Découvrez les pièges courants et comment les éviter.</p>
+                            <a href="#">Lire l'article &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <img src="https://placehold.co/600x400/e1e4e7/333?text=Branding+Pro" alt="Article image">
+                        <div class="blog-card__content">
+                            <h3>Pourquoi un branding pro multiplie vos ventes</h3>
+                            <p>Le design n'est pas qu'une question d'esthétique. C'est un levier de croissance puissant.
+                            </p>
+                            <a href="#">Lire l'article &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <img src="https://placehold.co/600x400/e1e4e7/333?text=Checklist" alt="Article image">
+                        <div class="blog-card__content">
+                            <h3>Checklist : Votre marque est-elle prête pour 2025 ?</h3>
+                            <p>Évaluez la force de votre identité de marque avec notre checklist complète.</p>
+                            <a href="#">Lire l'article &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="faq" id="faq" aria-labelledby="faq-title">
             <div class="container">
                 <div class="section-header">
@@ -800,7 +987,7 @@
                             </p>
                         </div>
                     </div>
-   
+
                     <div class="faq-item">
                         <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-2">
                             Combien de temps dure le processus ?
@@ -840,191 +1027,41 @@
                 </div>
             </div>
         </section>
-                         <section id="blog" style="background-color: var(--color-neutral-2);">
-        <div class="container">
-            <div class="section-header">
-                <h2>Ressources & Guides pour Entrepreneurs</h2>
-                <p>Des conseils pratiques pour construire une marque qui se démarque.</p>
-            </div>
-            <div class="blog__grid">
-                <div class="blog-card">
-                    <img src="https://placehold.co/600x400/e1e4e7/333?text=Logo+Erreurs" alt="Article image">
-                    <div class="blog-card__content">
-                        <h3>Les 5 erreurs à éviter quand vous créez votre logo</h3>
-                        <p>Un logo raté peut coûter cher. Découvrez les pièges courants et comment les éviter.</p>
-                        <a href="#">Lire l'article &rarr;</a>
-                    </div>
-                </div>
-                 <div class="blog-card">
-                    <img src="https://placehold.co/600x400/e1e4e7/333?text=Branding+Pro" alt="Article image">
-                    <div class="blog-card__content">
-                        <h3>Pourquoi un branding pro multiplie vos ventes</h3>
-                        <p>Le design n'est pas qu'une question d'esthétique. C'est un levier de croissance puissant.</p>
-                        <a href="#">Lire l'article &rarr;</a>
-                    </div>
-                </div>
-                 <div class="blog-card">
-                    <img src="https://placehold.co/600x400/e1e4e7/333?text=Checklist" alt="Article image">
-                    <div class="blog-card__content">
-                        <h3>Checklist : Votre marque est-elle prête pour 2025 ?</h3>
-                        <p>Évaluez la force de votre identité de marque avec notre checklist complète.</p>
-                        <a href="#">Lire l'article &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-        <section class="ai-workshop" id="ai-branding-workshop">
-      <div class="container ai-workshop__container">
-            <div class="section-header">
-                <h2>Mercia IA Tools</h2>
-                <p>Utilises mes outils intelligents pour affiner ta stratégie de marque.</p>
-            </div>
-            <div>
-                <div class="ai-workshop__tabs">
-                    <button data-tab="copywriting" class="ai-tab">Copywriting</button>
-                    <button data-tab="voice" class="ai-tab">Voix</button>
-                    <button data-tab="palette" class="ai-tab">Palette</button>
-                    <button data-tab="logo" class="ai-tab">Visualisation Logo</button>
-                    <button data-tab="social" class="ai-tab">Post Média Social</button>               
-                    <button data-tab="slogan" class="ai-tab active">Slogans</button>
-                </div>
-                <div>
-                    <div id="tab-copywriting" class="ai-tab-content hidden">
-                        <p>Générez des textes percutants pour vos ventes ou vos événements.</p>
-                        <div style="max-width: 42rem; margin: auto; display: grid; grid-template-columns: 1fr; gap: 1rem;">
-                            <div>
-                                <label for="copy-objective-select">Objectif du texte :</label>
-                                <select id="copy-objective-select">
-                                    <option value="Vente">Générer un texte de vente</option>
-                                    <option value="Événement">Promouvoir un événement</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="copy-product-input" id="copy-product-label">Produit/Service :</label>
-                                <input id="copy-product-input" type="text" placeholder="Ex: coaching en nutrition">
-                            </div>
-                            <div>
-                                <label for="copy-target-input">Cible :</label>
-                                <input id="copy-target-input" type="text" placeholder="Ex: femmes 25-40 ans actives">
-                            </div>
-                            <div>
-                                <label for="copy-benefit-input" id="copy-benefit-label">Bénéfice principal :</label>
-                                <input id="copy-benefit-input" type="text" placeholder="Ex: perdre 5kg en 2 mois">
-                            </div>
-                            <div>
-                                <label for="copy-tone-select">Ton souhaité :</label>
-                                <select id="copy-tone-select">
-                                    <option value="Professionnel">Professionnel</option>
-                                    <option value="Amical">Amical & Fun</option>
-                                    <option value="Inspirant">Inspirant</option>
-                                    <option value="Rassurant">Rassurant</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="copy-format-select">Format de sortie :</label>
-                                <select id="copy-format-select">
-                                    <option value="Page d'accueil">Page d'accueil</option>
-                                    <option value="Publicité Facebook">Publicité Facebook</option>
-                                    <option value="Post Instagram">Post Instagram</option>
-                                    <option value="Flyer">Flyer</option>
-                                </select>
-                            </div>
-                            <button id="copywriting-btn" class="btn btn--primary" style="width: 100%;">Générer les textes</button>
-                            <div id="copywriting-output" class="ai-workshop__output">
-                                 <p style="color: #888;">Vos textes apparaîtront ici...</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                    <div id="tab-voice" class="ai-tab-content hidden">
-                         <p>Collez un texte pour que Mercia IA analyse votre "ton de voix" actuel.</p>
-                        <div style="max-width: 32rem; margin: auto;">
-                             <textarea id="voice-input" rows="4" placeholder="Collez votre texte ici..." style="margin-bottom: 1rem;"></textarea>
-                            <button id="voice-btn" class="btn btn--primary" style="width: 100%;">Analyser ma voix</button>
-                            <div id="voice-output" class="ai-workshop__output">
-                                 <p style="color: #888;">Votre analyse apparaîtra ici...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-palette" class="ai-tab-content hidden">
-                         <p>Décrivez l'ambiance de votre marque pour générer une identité visuelle.</p>
-                        <div style="max-width: 32rem; margin: auto;">
-                             <textarea id="palette-input" rows="4" placeholder="Ex: cosmétiques naturels, luxueux, minimaliste..." style="margin-bottom: 1rem;"></textarea>
-                            <button id="palette-btn" class="btn btn--primary" style="width: 100%;">Générer l'identité</button>
-                            <div id="palette-output" class="ai-workshop__output">
-                                 <p style="color: #888;">Votre identité visuelle apparaîtra ici...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-logo" class="ai-tab-content hidden">
-                         <p>Décrivez votre marque, obtenez des concepts, puis générez des aperçus visuels.</p>
-                        <div style="max-width: 42rem; margin: auto;">
-                             <textarea id="logo-input" rows="4" placeholder="Ex: Une marque de vêtements de sport, dynamique, urbaine et technologique..." style="margin-bottom: 1rem;"></textarea>
-                            <button id="logo-btn" class="btn btn--primary" style="width: 100%;"> Imaginer les concepts</button>
-                            <div id="logo-output" class="ai-workshop__output">
-                                 <p style="color: #888;">Vos concepts de logo apparaîtront ici...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-social" class="ai-tab-content hidden">
-                        <p>Générez un post complet pour les réseaux sociaux avec texte et image.</p>
-                        <div style="max-width: 42rem; margin: auto;">
-                            <div style="margin-bottom: 1rem;">
-                                <label for="social-platform">Plateforme :</label>
-                                <select id="social-platform">
-                                    <option value="LinkedIn">LinkedIn (Professionnel)</option>
-                                    <option value="Instagram">Instagram (Visuel & engageant)</option>
-                                    <option value="Twitter">X / Twitter (Court & percutant)</option>
-                                </select>
-                            </div>
-                             <textarea id="social-post-input" rows="4" placeholder="Sujet du post (ex: Lancement de notre nouvelle collection éco-responsable)" style="margin-bottom: 1rem;"></textarea>
-                            <button id="social-post-btn" class="btn btn--primary" style="width: 100%;"> Générer le Post</button>
-                            <div id="social-post-output" class="ai-workshop__output">
-                                 <p style="color: #888;">Votre post et sa suggestion d'image apparaîtront ici...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-slogan" class="ai-tab-content">
-                         <p>Décrivez votre entreprise et laissez Mercia IA créer des slogans percutants.</p>
-                        <div style="display:flex; gap: 0.5rem; max-width: 32rem; margin: auto; margin-bottom: 1rem;">
-                            <input id="slogan-input" type="text" placeholder="Ex: café artisanal à Paris">
-                            <button id="slogan-btn" class="btn btn--primary">Générer</button>
-                        </div>
-                        <div id="slogan-output" class="ai-workshop__output" style="max-width: 32rem; margin: auto;">
-                            <p style="color: #888;">Vos slogans apparaîtront ici...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
         </main>
         <div id="chatbot-container">
-      <button id="chat-toggle">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.08-3.239A8.962 8.962 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.416 11.584A6.962 6.962 0 004 10c0-2.667 2.686-5 6-5s6 2.333 6 5-2.686 5-6 5c-1.282 0-2.47-.402-3.416-1.084l-.584-.392L6.382 15l.392-.584-.16-.232z" clip-rule="evenodd" /></svg>
-      </button>
-      <div id="chat-window" class="hidden">
-           <div class="chat-header">
-              <h3 class="chat-name">Mercia IA</h3>
-              <p style="font-size: 0.75rem;">Je suis là pour éclairer vos choix créatifs.</p>
-          </div>
-          <div id="chat-history">
-              <div class="chat-message ai">
-                  <span class="bubble">Bonjour ! Prêt·e à booster votre image ? Dites-moi ce que je peux faire pour vous.</span>
-              </div>
-          </div>
-          <div class="chat-form-container">
-              <form id="chat-form">
-                  <input id="chat-input" type="text" placeholder="Tapez votre message..." required>
-                  <button type="submit">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width: 1.25rem; height: 1.25rem;"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>
-                  </button>
-              </form>
-          </div>
-      </div>
-  </div>
+            <button id="chat-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.08-3.239A8.962 8.962 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.416 11.584A6.962 6.962 0 004 10c0-2.667 2.686-5 6-5s6 2.333 6 5-2.686 5-6 5c-1.282 0-2.47-.402-3.416-1.084l-.584-.392L6.382 15l.392-.584-.16-.232z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+            <div id="chat-window" class="hidden">
+                <div class="chat-header">
+                    <h3 class="chat-name">Mercia IA</h3>
+                    <p style="font-size: 0.75rem;">Je suis là pour éclairer vos choix créatifs.</p>
+                </div>
+                <div id="chat-history">
+                    <div class="chat-message ai">
+                        <span class="bubble">Bonjour ! Prêt·e à booster votre image ? Dites-moi ce que je peux faire
+                            pour vous.</span>
+                    </div>
+                </div>
+                <div class="chat-form-container">
+                    <form id="chat-form">
+                        <input id="chat-input" type="text" placeholder="Tapez votre message..." required>
+                        <button type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                style="width: 1.25rem; height: 1.25rem;">
+                                <path
+                                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div>
     </div>
