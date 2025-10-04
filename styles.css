@@ -2769,7 +2769,21 @@
             max-width: 64rem;
             margin: auto;
         }
-
+        .booking-container{
+            
+            flex-direction: column;
+            align-items: center;
+        }
+        .contact-whatsapp{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .contact-whatsapp_head{
+            margin-bottom: 0.5rem;
+        }
         .ai-workshop__tabs {
             justify-content: center;
             display: flex;

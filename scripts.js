@@ -398,7 +398,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const submitBtn = document.getElementById("submit-btn");
-  const bookingContainer = document.getElementById("booking-container");
 
   // --- Field Validation Logic ---
   const fields = {
