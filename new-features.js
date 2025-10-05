@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
               summaryHtml += '</ul>';
               generateDescBtn.disabled = false;
           } else {
-              summaryHtml = '<p style="color: var(--color-white);">Sélectionnez des services pour commencer.</p>';
+              summaryHtml = '<p style="color: var(--color-text);">Sélectionnez des services pour commencer.</p>';
               generateDescBtn.disabled = true;
               aiDescOutput.classList.add('hidden');
           }
@@ -437,10 +437,14 @@ Génère les éléments suivants en utilisant des marqueurs clairs :
             html += `<h4>${title}</h4>`;
             html += '<ul>';
             lines.forEach(line => {
-                html += `<li>${line.replace(/^- /, '').replace(/\* /, '')}</li>`;
-            });
-            html += '</ul>';
+        // 1. On retire les symboles de Markdown en début de ligne (- ou * )
+            let cleanLine = line.replace(/^- /, '').replace(/^\* /, '');
+        // 2. On transforme **gras** en <strong>gras</strong>
+            cleanLine = cleanLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html += `<li>${cleanLine}</li>`;
+           });
         });
+
         outputDiv.innerHTML = html;
       }
 
@@ -562,8 +566,9 @@ Génère les éléments suivants en utilisant des marqueurs clairs :
           const typingIndicator = appendMessage('...', 'ai', true);
           const systemInstruction = "Tu es un assistant virtuel pour Adasoft, une agence de design spécialisée en branding et création de logo. Ton but est de répondre aux questions des visiteurs de manière amicale, concise et professionnelle. Les services incluent le design de logo, l'identité visuelle, la création de sites web. Les tarifs commencent à 80$. Le processus de design se fait en 4 étapes : Découverte, Recherche, Design, Livraison. Pousse subtilement l'utilisateur à prendre rendez-vous ou à demander un devis pour des questions complexes.";
           const aiResponse = await callGemini(userMessage, systemInstruction);
+          const aiResponsePure = aiResponse.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
           typingIndicator.remove();
-          appendMessage(aiResponse, 'ai');
+          appendMessage(aiResponsePure, 'ai');
         });
       }
 
@@ -574,7 +579,7 @@ Génère les éléments suivants en utilisant des marqueurs clairs :
         msgBubble.innerHTML = isTyping ? '<div class="loader" style="width:20px; height:20px; border-width: 2px;"></div>' : text;
         msgWrapper.appendChild(msgBubble); 
         chatHistory.appendChild(msgWrapper);
-        chatHistory.scrollTop = chatHistory.scrollHeight;
+        chatHistory.scrollTop = chatHistory.scrollHeight; 
         return msgWrapper;
       }
     });

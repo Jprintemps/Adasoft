@@ -512,13 +512,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let currentPlan = { plan: "", price: 0 };
 
-    const resetModalView = () => {
-      modalPaymentContent.classList.remove("hidden");
-      modalSuccessMessage.classList.add("hidden");
-      modalSubmitBtn.disabled = false;
-      modalSubmitBtn.textContent = `Payer ${currentPlan.price}$`;
-    };
-
     const openModal = () => {
       modalOverlay.classList.add("active");
       document.body.style.overflow = "hidden";
@@ -943,3 +936,4 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("keydown", (e) => (e.key === "Escape" && !modalOverlay.hidden) && closeModal());
     }
 });
+

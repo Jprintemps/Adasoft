@@ -7,6 +7,7 @@
     <title>Adasoft | Branding & Design de Logo d'Exception</title>
     <meta name="description"
         content="Adasoft crée des identités de marque et logos uniques pour les entreprises ambitieuses. Design par de vrais humains, livré en 48h. Satisfaction garantie." />
+    <script src="/dark-detector.js" defer></script>
     <link rel="icon" type="image/webp" href="./src/img/logo-title.webp">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,20 +21,22 @@
     <header class="header">
         <div class="container header__container">
             <a href="#" class="header__logo" aria-label="Adasoft - Page d'accueil">
-                <img src="./src/assets/Logo.svg" alt="Logo Adasoft" loading="lazy"
+                <img id="logoAdasoft" src="./src/assets/Logo.svg" alt="Logo Adasoft" loading="lazy"
                     style="width: 120px; height: auto; display: block" />
             </a>
             <nav class="header__nav" aria-label="Navigation principale">
                 <ul class="header__nav-list">
                     <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#pricing">Tarifs</a></li>
+                    <li><a href="#quote-configurator">Devis</a></li>
                     <li><a href="#process">Notre méthode</a></li>
+                    <li><a href="#ai-branding-workshop">Mercia IA</a></li>
                     <li><a href="#testimonials">Témoignages</a></li>
                     <li><a href="#faq">FAQ</a></li>
                 </ul>
             </nav>
             <div class="header__actions">
-                <a href="#pricing" class="btn btn--primary">Tarifs -></a>
+                <a href="#ai-branding-workshop" class="btn btn--primary">Mercia IA -></a>
             </div>
         </div>
         <!-- La barre de progression -->
@@ -125,7 +128,7 @@
                             </figure>
                         </div>
                     </div>
-                    <div class="container">
+                    <div class="container container--narrow">
                         <p class="section-emphasis">
                             Attirez des prospects et gagnez une
                             <strong>crédibilité incontestable</strong> dans votre secteur
@@ -347,7 +350,7 @@
                         </div>
                     </div>
                 </section>
-                <section id="quote-configurator" style="">
+                <section id="quote-configurator">
                     <div class="container">
                         <div class="section-header">
                             <h2>Configurez votre offre et obtenez un devis</h2>
@@ -398,7 +401,6 @@
                             <div class="quote-summary-card">
                                 <h3>Votre devis estimatif</h3>
                                 <div id="quote-summary">
-                                    <p>Sélectionnez des services pour commencer.</p>
                                 </div>
                                 <div style="border-top: 1px solid var(--color-accent); padding-top: 1rem;">
                                     <div
@@ -752,26 +754,36 @@
                     <p>Planifiez un appel stratégique gratuit de 30 minutes directement dans mon agenda.</p>
                 </div>
                 <div class="booking-container">
-<!-- Début de widget en ligne Calendly -->
-<div class="calendly-inline-widget" data-url="https://calendly.com/adasoftdesign/appel-strategique-de" style="min-width:320px;height:700px;"></div>
-<section class="contact-whatsapp">
-                    <h3 class="contact-whatsapp_head">Contactez-nous sur WhatsApp</h3>
-                    <a href="https://wa.me/243995342102" target="_blank" rel="noopener" class="btn btn--whatsapp" style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: #25D366; color: #fff; border-radius: 4px; padding: 0.75rem 1.5rem; font-weight: 600; text-decoration: none;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.029-.967-.272-.099-.471-.148-.67.15-.198.297-.767.967-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.205-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.075-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.205 5.077 4.384.711.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.075-.124-.272-.198-.57-.347zm-5.421 7.617h-.001a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982 1-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.455 4.437-9.891 9.893-9.891 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.991c-.002 5.455-4.438 9.891-9.893 9.891zm8.413-18.306A11.815 11.815 0 0012.05 0C5.495 0 .05 5.445.048 12c0 2.118.553 4.199 1.602 6.032L0 24l6.118-1.637A11.93 11.93 0 0012.051 24c6.554 0 11.999-5.445 12-12 .001-3.197-1.247-6.207-3.536-8.589z"/>
-                        </svg>
-                        WhatsApp
-                    </a>
-                </section>
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-<!-- Fin de widget en ligne Calendly -->
-            </div>
+                    <!-- Début de widget en ligne Calendly -->
+                    <div class="calendly-inline-widget"
+                        data-url="https://calendly.com/adasoftdesign/appel-strategique-de"
+                        style="min-width:320px;height:700px;"></div>
+                    <section class="contact-whatsapp">
+                        <h3 class="contact-whatsapp_head">Contactez-nous sur WhatsApp</h3>
+                        <a href="https://wa.me/243995342102" target="_blank" rel="noopener" class="btn btn--whatsapp"
+                            style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: #25D366; color: #fff; border-radius: 4px; padding: 0.75rem 1.5rem; font-weight: 600; text-decoration: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.029-.967-.272-.099-.471-.148-.67.15-.198.297-.767.967-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.205-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.075-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.205 5.077 4.384.711.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.075-.124-.272-.198-.57-.347zm-5.421 7.617h-.001a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982 1-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.455 4.437-9.891 9.893-9.891 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.991c-.002 5.455-4.438 9.891-9.893 9.891zm8.413-18.306A11.815 11.815 0 0012.05 0C5.495 0 .05 5.445.048 12c0 2.118.553 4.199 1.602 6.032L0 24l6.118-1.637A11.93 11.93 0 0012.051 24c6.554 0 11.999-5.445 12-12 .001-3.197-1.247-6.207-3.536-8.589z" />
+                            </svg>
+                            WhatsApp
+                        </a>
+
+                        <h3>Scannez-moi</h3>
+                        <img src="/src/assets/WhatsApp contact.svg" alt="contactez-nous sur WhatsApp"
+                            class="contact-whatsapp_image">
+                    </section>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
+                        async></script>
+                    <!-- Fin de widget en ligne Calendly -->
+                </div>
             </div>
         </section>
         <section class="ai-workshop" id="ai-branding-workshop">
             <div class="container ai-workshop__container">
                 <div class="section-header">
-                    <h2>Mercia IA Tools</h2>
+                    <h2>Mercia IA</h2>
                     <p>Utilises mes outils intelligents pour affiner ta stratégie de marque.</p>
                 </div>
                 <div>
@@ -783,7 +795,7 @@
                         <button data-tab="social" class="ai-tab">Post Média Social</button>
                         <button data-tab="slogan" class="ai-tab active">Slogans</button>
                     </div>
-                    <div>
+                    <div class="ai-content">
                         <div id="tab-copywriting" class="ai-tab-content hidden">
                             <p>Générez des textes percutants pour vos ventes ou vos événements.</p>
                             <div
@@ -917,29 +929,69 @@
                 </div>
                 <div class="blog__grid">
                     <div class="blog-card">
-                        <img src="https://placehold.co/600x400/e1e4e7/333?text=Logo+Erreurs" alt="Article image">
+                        <img src="/src/img/les5erreurs.png" alt="Article image">
                         <div class="blog-card__content">
                             <h3>Les 5 erreurs à éviter quand vous créez votre logo</h3>
                             <p>Un logo raté peut coûter cher. Découvrez les pièges courants et comment les éviter.</p>
-                            <a href="#">Lire l'article &rarr;</a>
+                            <a href="#modal-article-1" class="blog-read-link" data-modal="modal-article-1">Lire l'article &rarr;</a>
                         </div>
                     </div>
                     <div class="blog-card">
-                        <img src="https://placehold.co/600x400/e1e4e7/333?text=Branding+Pro" alt="Article image">
+                        <img src="/src/img/branding.png" alt="Article image">
                         <div class="blog-card__content">
                             <h3>Pourquoi un branding pro multiplie vos ventes</h3>
-                            <p>Le design n'est pas qu'une question d'esthétique. C'est un levier de croissance puissant.
-                            </p>
-                            <a href="#">Lire l'article &rarr;</a>
+                            <p>Le design n'est pas qu'une question d'esthétique. C'est un levier de croissance puissant.</p>
+                            <a href="#modal-article-2" class="blog-read-link" data-modal="modal-article-2">Lire l'article &rarr;</a>
                         </div>
                     </div>
                     <div class="blog-card">
-                        <img src="https://placehold.co/600x400/e1e4e7/333?text=Checklist" alt="Article image">
+                        <img src="/src/img/marque.png" alt="Article image">
                         <div class="blog-card__content">
-                            <h3>Checklist : Votre marque est-elle prête pour 2025 ?</h3>
+                            <h3>Checklist : Votre marque est-elle prête pour 2026 ?</h3>
                             <p>Évaluez la force de votre identité de marque avec notre checklist complète.</p>
-                            <a href="#">Lire l'article &rarr;</a>
+                            <a href="#modal-article-3" class="blog-read-link" data-modal="modal-article-3">Lire l'article &rarr;</a>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Modales pour chaque article -->
+                <div id="modal-article-1" class="blog-modal" aria-modal="true" role="dialog" hidden>
+                    <div class="blog-modal__content">
+                        <button class="blog-modal__close" aria-label="Fermer">&times;</button>
+                        <h2>Les 5 erreurs à éviter quand vous créez votre logo</h2>
+                        <p>
+                            1. Copier un logo existant<br>
+                            2. Utiliser trop de couleurs<br>
+                            3. Choisir une police illisible<br>
+                            4. Négliger la version monochrome<br>
+                            5. Oublier la simplicité<br><br>
+                            Un bon logo doit être unique, lisible et fonctionnel sur tous les supports. Évitez ces pièges pour garantir la crédibilité de votre marque.
+                        </p>
+                    </div>
+                </div>
+                <div id="modal-article-2" class="blog-modal" aria-modal="true" role="dialog" hidden>
+                    <div class="blog-modal__content">
+                        <button class="blog-modal__close" aria-label="Fermer">&times;</button>
+                        <h2>Pourquoi un branding pro multiplie vos ventes</h2>
+                        <p>
+                            Un branding professionnel inspire confiance, attire l’attention et facilite la mémorisation. Il crée une expérience cohérente qui fidélise vos clients et augmente la valeur perçue de vos produits ou services.
+                        </p>
+                    </div>
+                </div>
+                <div id="modal-article-3" class="blog-modal" aria-modal="true" role="dialog" hidden>
+                    <div class="blog-modal__content">
+                        <button class="blog-modal__close" aria-label="Fermer">&times;</button>
+                        <h2>Checklist : Votre marque est-elle prête pour 2026 ?</h2>
+                        <ul>
+                            <li>Logo moderne et adaptable</li>
+                            <li>Palette de couleurs cohérente</li>
+                            <li>Typographie distinctive</li>
+                            <li>Présence digitale optimisée</li>
+                            <li>Message de marque clair</li>
+                        </ul>
+                        <p>
+                            Passez en revue ces points pour assurer la force et la pertinence de votre marque dans les années à venir.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1027,7 +1079,7 @@
                 <div class="chat-form-container">
                     <form id="chat-form">
                         <input id="chat-input" type="text" placeholder="Tapez votre message..." required>
-                        <button type="submit">
+                        <button class="chat-bot-submit" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 style="width: 1.25rem; height: 1.25rem;">
                                 <path
