@@ -108,7 +108,22 @@ document.addEventListener('DOMContentLoaded', function () {
           generateDescBtn.disabled = true;
           const prompt = `En tant qu'expert en branding, rédige une brève description de projet (2-3 phrases percutantes) pour un client qui a sélectionné les services suivants : ${selectedServices.join(', ')}. Mets en avant la valeur ajoutée et l'impact attendu. Le ton doit être professionnel, confiant et inspirant.`;
           const description = await callGemini(prompt);
-          aiDescOutput.innerHTML = `<p>${description.replace(/\n/g, '<br>')}</p>`;
+          // Format et filtre la réponse ligne par ligne
+          const lines = description.split('\n').map(l => l.trim()).filter(l => l !== '');
+          if (lines.length === 0) {
+            aiDescOutput.innerHTML = '<p>Impossible de générer une description. Veuillez réessayer.</p>';
+          } else {
+            let html = '<ul>';
+            lines.forEach(line => {
+              // 1. On retire les symboles de Markdown en début de ligne (- ou * )
+              let cleanLine = line.replace(/^- /, '').replace(/^\* /, '');
+              // 2. On transforme **gras** en <strong>gras</strong>
+              cleanLine = cleanLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+              html += `<li>${cleanLine}</li>`;
+            });
+            html += '</ul>';
+            aiDescOutput.innerHTML = html;
+          }
           generateDescBtn.disabled = false;
         });
 

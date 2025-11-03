@@ -578,8 +578,11 @@ body.nav-open .header__nav.mobile-nav {
 }
 
 .hero__gallery {
-    display: none;
-    /* Hide on mobile for simplicity */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
 }
 
 
