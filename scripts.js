@@ -764,29 +764,65 @@ document.addEventListener("DOMContentLoaded", () => {
             updateVolumeIcon();
             togglePlayPauseIcon();
         });
+// On met en cache l'élément de la barre de progression pour ne pas
+// avoir à le rechercher dans le DOM à chaque événement de scroll.
+const progressBar = document.getElementById("myBar");
+
+// Une variable pour "verrouiller" l'animation et éviter les calculs inutiles.
+// 'false' signifie que nous sommes prêts à demander une nouvelle mise à jour.
+let ticking = false;
+
+/**
+ * La fonction qui effectue réellement la mise à jour du style.
+ */
 function updateProgressBar() {
-  // 'scrollTop' est la distance défilée depuis le haut
-  // 'scrollHeight' est la hauteur totale du contenu
-  // 'clientHeight' est la hauteur visible de la fenêtre
-  const scrollTop =
-    document.documentElement.scrollTop || document.body.scrollTop;
-  const scrollHeight =
+  // 'window.scrollY' est la manière moderne et simple d'obtenir le défilement vertical
+  const scrollTop = window.scrollY;
+
+  // Calcule la hauteur totale "scrollable" (hauteur totale moins hauteur visible)
+  const scrollableHeight =
     document.documentElement.scrollHeight -
     document.documentElement.clientHeight;
 
-  // On calcule le pourcentage de défilement
-  // On s'assure que scrollHeight n'est pas 0 pour éviter une division par zéro
-  const scrolled = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  // Calcule le pourcentage de défilement
+  // On s'assure que scrollableHeight n'est pas 0 pour éviter une division par zéro
+  const scrolled =
+    scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
 
-  // On met à jour la largeur de la barre de progression
-  document.getElementById("myBar").style.width = scrolled + "%";
+  // On vérifie si la barre existe avant de tenter de la modifier
+  if (progressBar) {
+    progressBar.style.width = scrolled + "%";
+  }
+
+  // On libère le verrou : la mise à jour est faite, on est prêt pour la prochaine.
+  ticking = false;
 }
 
-// On écoute l'événement 'scroll' sur la fenêtre
-window.addEventListener("scroll", updateProgressBar);
-// On écoute aussi le redimensionnement, au cas où la hauteur de la page change
-window.addEventListener("resize", updateProgressBar);
- const background = document.getElementById('checkerboard-background');
+/**
+ * La fonction qui écoute l'événement 'scroll'.
+ * Elle ne fait que demander une frame d'animation si nécessaire.
+ */
+function onScroll() {
+  // Si 'ticking' est 'false' (donc, si aucune mise à jour n'est déjà en attente)
+  if (!ticking) {
+    // On demande au navigateur d'exécuter 'updateProgressBar'
+    // au prochain moment disponible pour une animation.
+    window.requestAnimationFrame(updateProgressBar);
+
+    // On passe le verrou à 'true' pour ne pas demander
+    // 50 mises à jour si l'utilisateur scrolle très vite.
+    ticking = true;
+  }
+}
+
+// On attache notre fonction 'onScroll' à l'événement de défilement de la fenêtre.
+window.addEventListener("scroll", onScroll);
+
+// Optionnel : Exécuter une première fois au chargement au cas où
+// la page ne serait pas chargée tout en haut.
+document.addEventListener("DOMContentLoaded", onScroll);
+
+const background = document.getElementById('checkerboard-background');
         const squareSize = 50; // Taille de chaque carré en pixels
 
         let columns = 0;
@@ -937,3 +973,388 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+        const btnAbos = document.getElementById('btn-abos');
+        const btnCarte = document.getElementById('btn-carte');
+        const pricingAbos = document.getElementById('pricing-abos');
+        const pricingCarte = document.getElementById('pricing-carte');
+
+        // ID pour le lien "À la carte" dans la section Persona
+        const linkCarte = document.getElementById('tarifs-carte-link'); // ID mis à jour
+
+        function showAbos() {
+            // Gérer les boutons (logique CSS personnalisée)
+            btnAbos.classList.add('btn-active');
+            btnCarte.classList.remove('btn-active');
+            
+            // Gérer les sections de prix
+            pricingAbos.classList.remove('hidden');
+            pricingCarte.classList.add('hidden');
+        }
+
+        function showCarte() {
+            // Gérer les boutons (logique CSS personnalisée)
+            btnCarte.classList.add('btn-active');
+            btnAbos.classList.remove('btn-active');
+            
+            // Gérer les sections de prix
+            pricingCarte.classList.remove('hidden');
+            pricingAbos.classList.add('hidden');
+        }
+
+        btnAbos.addEventListener('click', showAbos);
+        btnCarte.addEventListener('click', showCarte);
+        
+        // Gérer le lien "Voir les services à la carte"
+        if (linkCarte) {
+            linkCarte.addEventListener('click', (e) => {
+                e.preventDefault(); // Empêche le saut d'ancre
+                showCarte();
+                // Scroll vers la section des tarifs
+                document.getElementById('tarifs').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+ document.addEventListener('DOMContentLoaded', () => {
+            const openTriggers = document.querySelectorAll('[data-modal]');
+            const closeTriggers = document.querySelectorAll('.blog-modal__close');
+            const modals = document.querySelectorAll('.blog-modal');
+
+            let lastFocusedElement; // Pour l'accessibilité
+
+            // Fonction pour ouvrir une modale
+            const openModal = (modal) => {
+                if (!modal) return;
+
+                lastFocusedElement = document.activeElement; // Sauvegarde de l'élément actif
+                modal.removeAttribute('hidden');
+
+                // Force un reflow (réinitialisation) pour que la transition CSS s'applique
+                void modal.offsetWidth;
+
+                document.body.classList.add('modal-open');
+                modal.classList.add('is-open');
+
+                // Met le focus sur le bouton de fermeture (bon pour l'a11y)
+                // Rendue plus robuste pour éviter les erreurs
+                const closeButton = modal.querySelector('.blog-modal__close');
+                if (closeButton) {
+                    try {
+                        closeButton.focus();
+                    } catch (e) {
+                        console.warn("Impossible de mettre le focus sur le bouton de fermeture.", e);
+                    }
+                }
+            };
+
+            // Fonction pour fermer une modale
+            const closeModal = (modal) => {
+                if (!modal) return;
+
+                modal.classList.remove('is-open');
+                document.body.classList.remove('modal-open');
+
+                // Attend la fin de l'animation de fondu avant de cacher
+                modal.addEventListener('transitionend', (e) => {
+                    // S'assure qu'on écoute la bonne transition (celle de l'opacité)
+                    if (e.propertyName === 'opacity') {
+                        modal.setAttribute('hidden', 'true');
+                    }
+                }, { once: true }); // 'once: true' s'assure que l'écouteur est retiré après usage
+
+                // Redonne le focus à l'élément qui a ouvert la modale
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
+            };
+
+            // 1. Ouvre la modale au clic sur le lien "Lire l'article"
+            openTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (event) => {
+                    event.preventDefault(); // Empêche le # d'aller dans l'URL
+                    const modalId = trigger.dataset.modal;
+                    const modalToOpen = document.getElementById(modalId);
+                    openModal(modalToOpen);
+                });
+            });
+
+            // 2. Ferme la modale au clic sur le bouton (X)
+            closeTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalToClose = trigger.closest('.blog-modal');
+                    closeModal(modalToClose);
+                });
+            });
+
+            // 3. Ferme la modale au clic sur l'overlay (le fond)
+            modals.forEach(modal => {
+                modal.addEventListener('click', (event) => {
+                    // Si l'élément cliqué est la modale elle-même (le fond)
+                    // et non son contenu (.blog-modal__content)
+                    if (event.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+            });
+
+            // 4. Ferme la modale active avec la touche "Escape" (Accessibilité)
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    const openModal = document.querySelector('.blog-modal.is-open');
+                    if (openModal) {
+                        closeModal(openModal);
+                    }
+                }
+            });
+
+            // 5. Piège le focus à l'intérieur de la modale (Accessibilité Pro)
+            document.addEventListener('keydown', (event) => {
+                if (event.key !== 'Tab') return;
+
+                const openModal = document.querySelector('.blog-modal.is-open');
+                if (!openModal) return;
+
+                const focusableElements = openModal.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+
+                if (focusableElements.length === 0) return;
+
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (event.shiftKey) { // Shift + Tab
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        event.preventDefault();
+                    }
+                } else { // Tab
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        event.preventDefault();
+                    }
+                }
+            });
+
+        });
+// --- LOGIQUE POUR LES MODALS ---
+
+        // Sélection des modals
+        const modalAppel = document.getElementById('modal-appel');
+        const modalAbo = document.getElementById('modal-abo');
+        const modalCarte = document.getElementById('modal-carte');
+
+        // Sélection des boutons d'ouverture
+        const modalAppelTriggers = document.querySelectorAll('.open-modal-appel');
+        const modalAboTriggers = document.querySelectorAll('.open-modal-abo');
+        const modalCarteTriggers = document.querySelectorAll('.open-modal-carte');
+
+        // Sélection des boutons de fermeture
+        const closeButtons = document.querySelectorAll('.modal-close');
+
+        // Fonction pour ouvrir un modal
+        function openModal(modal) {
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        // Fonction pour fermer un modal
+        function closeModal(modal) {
+            if (modal) {
+                modal.classList.remove('active');
+                // Réinitialiser le formulaire en cachant le succès et montrant le form
+                const form = modal.querySelector('.modal-form');
+                const successMsg = modal.querySelector('.form-success');
+                if (form && successMsg) {
+                    form.style.display = 'block';
+                    successMsg.classList.remove('active');
+                }
+            }
+        }
+
+        // Attacher les écouteurs aux boutons d'ouverture
+        modalAppelTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(modalAppel);
+            });
+        });
+
+        modalAboTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const offer = trigger.getAttribute('data-offer');
+                // Pré-remplir le champ caché et le message de succès
+                document.getElementById('abo-offer').value = offer;
+                document.getElementById('abo-success-offer').textContent = offer;
+                openModal(modalAbo);
+            });
+        });
+
+        modalCarteTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const service = trigger.getAttribute('data-service');
+                // Pré-remplir le champ caché et le message de succès
+                document.getElementById('carte-service').value = service;
+                document.getElementById('carte-success-service').textContent = service;
+                openModal(modalCarte);
+            });
+        });
+
+        // Attacher les écouteurs aux boutons de fermeture
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modalId = button.getAttribute('data-modal-id');
+                closeModal(document.getElementById(modalId));
+            });
+        });
+
+        // Fermer le modal en cliquant sur l'overlay
+        [modalAppel, modalAbo, modalCarte].forEach(modal => {
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) { // Si on clique sur l'overlay lui-même
+                        closeModal(modal);
+                    }
+                });
+            }
+        });
+
+        // Gérer la soumission des formulaires
+        document.querySelectorAll('.modal-form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault(); // Empêche l'envoi réel
+                
+                // Cacher le formulaire
+                form.style.display = 'none';
+
+                // Afficher le message de succès
+                const successMsg = form.parentElement.querySelector('.form-success');
+                if (successMsg) {
+                    successMsg.classList.add('active');
+                }
+
+                // Ici, vous enverriez les données à un serveur
+                // Pour la démo, nous affichons juste le succès
+                console.log('Formulaire soumis (simulation)');
+            });
+        });
+document.addEventListener("DOMContentLoaded", () => {
+    // Votre numéro de téléphone au format international, sans le '+'
+    const phoneNumber = "243995342102";
+
+    /**
+     * Fonction d'aide pour ouvrir WhatsApp et afficher le succès
+     * @param {string} message - Le message formaté à envoyer
+     * @param {HTMLElement} formElement - L'élément <form> qui a été soumis
+     */
+    function openWhatsApp(message, formElement) {
+        // Encode le message pour l'URL
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        
+        // Ouvre WhatsApp dans un nouvel onglet
+        // L'utilisateur devra appuyer sur "Envoyer"
+        window.open(whatsappURL, "_blank");
+
+        // Affiche le message de succès et cache le formulaire
+        formElement.style.display = "none";
+        const modalContent = formElement.closest(".modal-content");
+        if (modalContent) {
+            const successDiv = modalContent.querySelector(".form-success");
+            if (successDiv) {
+                successDiv.style.display = "block";
+            }
+        }
+    }
+
+    // --- Formulaire 1: Appel Stratégique (#modal-appel) ---
+    const formAppel = document.querySelector("#modal-appel .modal-form");
+    if (formAppel) {
+        formAppel.addEventListener("submit", (e) => {
+            e.preventDefault(); // Empêche la page de se recharger
+            
+            // Récupérer les valeurs du formulaire
+            const nom = document.getElementById("appel-nom").value;
+            const email = document.getElementById("appel-email").value;
+            const number = document.getElementById("appel-number").value;
+            const entreprise = document.getElementById("appel-entreprise").value;
+            const defi = document.getElementById("appel-defi").value;
+
+            // Formater le message pour WhatsApp
+            const message = `*Nouvelle demande d'appel stratégique:*\n\n` +
+                          `*Nom:* ${nom}\n` +
+                          `*Email:* ${email}\n` +
+                          `*Numéro:* ${number}\n` +
+                          `*Entreprise:* ${entreprise}\n` +
+                          `*Défi:* ${defi}`;
+            
+            openWhatsApp(message, formAppel);
+        });
+    }
+
+    // --- Formulaire 2: Commande Abonnement (#modal-abo) ---
+    const formAbo = document.querySelector("#modal-abo .modal-form");
+    if (formAbo) {
+        formAbo.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            // Récupérer les valeurs
+            const nom = document.getElementById("abo-nom").value;
+            const email = document.getElementById("abo-email").value;
+            const numero = document.getElementById("abo-numero").value;
+            const entreprise = document.getElementById("abo-entreprise").value;
+            const besoins = document.getElementById("abo-besoins").value;
+            const offer = document.getElementById("abo-offer").value; // Champ caché
+
+            // Mettre à jour le message de succès avec le nom de l'offre (bonus)
+            const successOffer = document.getElementById("abo-success-offer");
+            if (successOffer) successOffer.textContent = offer;
+
+            // Formater le message
+            const message = `*Nouvelle commande d'abonnement:*\n\n` +
+                          `*Offre:* ${offer}\n` +
+                          `*Nom:* ${nom}\n` +
+                          `*Email:* ${email}\n` +
+                          `*Numéro WhatsApp:* ${numero}\n` +
+                          `*Entreprise:* ${entreprise}\n` +
+                          `*Besoins:* ${besoins}`;
+
+            openWhatsApp(message, formAbo);
+        });
+    }
+
+    // --- Formulaire 3: Commande à la Carte (#modal-carte) ---
+    const formCarte = document.querySelector("#modal-carte .modal-form");
+    if (formCarte) {
+        formCarte.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            // Récupérer les valeurs
+            const nom = document.getElementById("carte-nom").value;
+            const email = document.getElementById("carte-email").value;
+            
+            // ATTENTION: Votre HTML utilise id="number" pour le numéro WhatsApp.
+            // Si vous le corrigez en id="carte-num" (pour correspondre au <label>),
+            // changez la ligne ci-dessous pour getElementById("carte-num").
+            const num = document.getElementById("number").value; 
+            
+            const brief = document.getElementById("carte-brief").value;
+            const service = document.getElementById("carte-service").value; // Champ caché
+
+            // Mettre à jour le message de succès avec le nom du service (bonus)
+            const successService = document.getElementById("carte-success-service");
+            if (successService) successService.textContent = service;
+
+            // Formater le message
+            const message = `*Nouvelle commande à la carte:*\n\n` +
+                          `*Service:* ${service}\n` +
+                          `*Nom:* ${nom}\n` +
+                          `*Email:* ${email}\n` +
+                          `*Numéro WhatsApp:* ${num}\n` +
+                          `*Brief:* ${brief}`;
+            
+            openWhatsApp(message, formCarte);
+        });
+    }
+});

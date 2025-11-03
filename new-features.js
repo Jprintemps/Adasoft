@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
       // --- Gemini API Integration ---
-      const apiKey = "AIzaSyCQ_FzPsoDakD13QBnMgEtoPrnV2nbEjIA"; // This will be provided by the runtime environment
+      const apiKey = "AIzaSyBbWv28nJXm3lQqDpiguc5Ph6-C3sFtba8"; // This will be provided by the runtime environment
 
       async function callGemini(prompt, systemInstruction = "") {
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
