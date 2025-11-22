@@ -1,1306 +1,1363 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adasoft | Branding & Design de Logo d'Exception</title>
-    <meta name="description"
-        content="Adasoft crée des identités de marque et logos uniques pour les entreprises ambitieuses. Design par de vrais humains, livré en 48h. Satisfaction garantie." />
-    <script src="/dark-detector.js" defer></script>
-    <link rel="icon" type="image/webp" href="./src/img/logo-title.webp">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="scripts.js" defer></script>
-    <script src="new-features.js" defer></script>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdaSoft - Solutions Digitales & Créatives</title>
+    <meta name="description" content="Transformez votre vision en réalité digitale avec AdaSoft. Design, Web et Marketing.">
+    
+    <!-- Polices Modernes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,600,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        /* --- 1. VARIABLES & RESET --- */
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338ca;
+            --secondary: #EC4899;
+            --dark: #0F172A;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --bg-color: #f0f4f8;
+            --white: #ffffff;
+            
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Clash Display', sans-serif;
+            
+            --container-width: 1200px;
+            --radius-card: 24px;
+            --radius-btn: 50px;
+            
+            --shadow-clay: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff;
+            --shadow-float: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- 2. LAYOUT UTILITIES (MOBILE FIRST) --- */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        @media (min-width: 768px) { .container { max-width: 750px; } }
+        @media (min-width: 992px) { .container { max-width: 970px; } }
+        @media (min-width: 1200px) { .container { max-width: var(--container-width); } }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; } 
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .gap-1 { gap: 0.5rem; }
+        .gap-2 { gap: 1rem; }
+        .gap-4 { gap: 2rem; }
+        .text-center { text-align: center; }
+        .hidden { display: none !important; }
+
+        .hidden-mobile { display: none; } 
+        .mobile-only { display: block; }
+
+        @media (min-width: 992px) {
+            .hidden-mobile { display: flex; }
+            .mobile-only { display: none; }
+            .md-row { flex-direction: row; }
+        }
+
+        /* --- 3. COMPONENTS --- */
+        
+        .clay-card {
+            background: var(--bg-color);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-clay);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden; 
+        }
+
+        /* Carousel Styles (Old Portfolio) */
+        .carousel-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .slide-hidden-right { transform: translateX(100%); z-index: 1; }
+        .slide-active { transform: translateX(0); z-index: 2; }
+        .slide-exit-left { transform: translateX(-100%); z-index: 1; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-btn);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            width: 100%;
+        }
+        @media (min-width: 768px) { .btn { width: auto; padding: 0.8rem 2rem; } }
+
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: var(--white) !important; /* Force white text */
+            box-shadow: 5px 5px 15px #c5c9ce, -5px -5px 15px #ffffff;
+            border: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px); /* Slight lift instead of color change */
+            box-shadow: 6px 6px 18px #c5c9ce, -6px -6px 18px #ffffff;
+        }
+        .btn-primary:active { transform: scale(0.98); }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            border: 2px solid #e2e8f0;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+        @media (min-width: 768px) { .btn-outline { margin-top: 0; } }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- 4. TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            color: var(--dark);
+            line-height: 1.1;
+        }
+        
+        /* Responsive Typography Adjustments */
+        h1 { font-size: 2.2rem; } /* Default mobile */
+        
+        @media (min-width: 480px) { h1 { font-size: 2.8rem; } }
+        @media (min-width: 768px) { h1 { font-size: 3.5rem; } }
+        @media (min-width: 992px) { h1 { font-size: 4.5rem; } }
+
+        .text-gradient {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* --- 5. ANIMATIONS --- */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 7s ease-in-out 2s infinite; }
+        .animate-float-slow { animation: float 8s ease-in-out 1s infinite; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- 6. SECTIONS --- */
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .nav-content {
+            height: 70px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; font-weight: 700; font-size: 1.2rem; font-family: var(--font-display); cursor: pointer; }
+        .logo img { height: 32px; margin-right: 8px; }
+        
+        .nav-links a { margin-left: 2rem; font-weight: 500; font-size: 0.95rem; }
+        
+        /* FIX: Change color on hover ONLY if it's NOT a button */
+        .nav-links a:not(.btn):hover { color: var(--primary); }
+
+        /* Mobile Toggle */
+        .mobile-toggle { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.4rem; 
+            cursor: pointer; 
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+        }
+        
+        #mobile-menu {
+            position: fixed; top: 70px; left: 0; width: 100%; 
+            background: rgba(255,255,255,0.98); backdrop-filter: blur(15px);
+            padding: 1.5rem; 
+            display: none; flex-direction: column; gap: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease; opacity: 0;
+        }
+        #mobile-menu.active { display: flex; transform: translateY(0); opacity: 1; }
+        
+        #mobile-menu a { 
+            font-size: 1.1rem; font-weight: 600; color: var(--dark); 
+            padding: 0.8rem; border-radius: 12px;
+            transition: background 0.2s;
+        }
+        #mobile-menu a:hover { background: #f1f5f9; color: var(--primary); }
+        #mobile-menu .btn { margin-top: 0.5rem; }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 100px; /* Compact mobile padding */
+            padding-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        @media (min-width: 992px) { .hero { padding-top: 180px; padding-bottom: 100px; } }
+
+        .hero-bg-blob {
+            position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.5; z-index: -1;
+        }
+        .blob-1 { top: -5%; right: -10%; width: 200px; height: 200px; background: #a5b4fc; mix-blend-mode: multiply; }
+        @media (min-width: 768px) { .blob-1 { width: 300px; height: 300px; } }
+        
+        .blob-2 { top: 20%; left: -20%; width: 200px; height: 200px; background: #f9a8d4; mix-blend-mode: multiply; }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        @media(min-width: 992px) { 
+            .hero-grid { grid-template-columns: 1.2fr 0.8fr; gap: 4rem; } 
+        }
+
+        .hero-text { text-align: center; }
+        @media(min-width: 992px) { .hero-text { text-align: left; } }
+
+        .hero-text p { font-size: 1.05rem; margin-bottom: 2rem; max-width: 100%; color: var(--text-light); margin-left: auto; margin-right: auto; }
+        @media(min-width: 992px) { .hero-text p { max-width: 500px; margin-left: 0; margin-right: 0; font-size: 1.1rem; } }
+
+        .social-proof { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 2rem; justify-content: center; }
+        @media(min-width: 992px) { .social-proof { flex-direction: row; justify-content: flex-start; } }
+        
+        .avatars { display: flex; }
+        .avatars img { width: 36px; height: 36px; border-radius: 50%; border: 2px solid white; margin-left: -10px; }
+        .avatars img:first-child { margin-left: 0; }
+
+        /* --- HERO VISUAL & 3D CARD DECK --- */
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            margin-top: 10px;
+            perspective: 1200px; /* Perspective for 3D */
+            z-index: 10;
+        }
+        @media(min-width: 992px) {
+            .hero-visual {
+                height: 500px;
+                display: flex; align-items: center; justify-content: center;
+                margin-top: 0;
+            }
+        }
+
+        /* 3D Deck Container */
+        .hero-deck {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            transform-style: preserve-3d;
+            cursor: pointer; /* Interaction hint */
+        }
+        @media(min-width: 768px) { .hero-deck { aspect-ratio: 16/9; } }
+        @media(min-width: 992px) { .hero-deck { height: 100%; width: 100%; aspect-ratio: auto; } }
+
+        /* Individual Cards in the Deck */
+        .card-3d {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
+            /* Claymorphism style inside */
+            background-color: var(--bg-color);
+            box-shadow: var(--shadow-clay);
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: transform, opacity, z-index;
+        }
+        
+        .card-3d img {
+            width: 100%; height: 100%; object-fit: cover; pointer-events: none;
+        }
+
+        /* 3D Card States */
+        /* Pos 0: Front */
+        .card-pos-0 {
+            z-index: 3;
+            transform: translateX(0) scale(1) translateZ(0);
+            opacity: 1;
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.1), -20px -20px 60px rgba(255,255,255,0.5);
+        }
+        
+        /* Interactive Hover State for Front Card */
+        /* Note: We avoid transform on hover to not conflict with the JS shuffle transition */
+        .hero-deck:hover .card-pos-0 {
+            box-shadow: 25px 25px 70px rgba(79, 70, 229, 0.15), -20px -20px 60px rgba(255,255,255,0.6);
+        }
+
+        /* Pos 1: Behind */
+        .card-pos-1 {
+            z-index: 2;
+            transform: translateX(40px) scale(0.92) translateZ(-40px);
+            opacity: 0.7;
+            filter: brightness(0.9);
+        }
+
+        /* Pos 2: Further Behind */
+        .card-pos-2 {
+            z-index: 1;
+            transform: translateX(80px) scale(0.84) translateZ(-80px);
+            opacity: 0.4;
+            filter: brightness(0.8);
+        }
+
+        /* Exit Animation */
+        .card-out {
+            z-index: 4;
+            transform: translateX(-120%) rotateY(-25deg) scale(1.1);
+            opacity: 0;
+        }
+        
+        /* --- UPDATED FLOATING CARDS (3 CARDS) --- */
+        .float-card {
+            position: absolute;
+            padding: 0.7rem 1.1rem;
+            border-radius: 18px;
+            display: flex; align-items: center; gap: 0.8rem;
+            min-width: 150px;
+            z-index: 20; 
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .float-card:hover {
+            transform: scale(1.05) !important; /* Slight zoom on hover */
+            z-index: 25;
+        }
+
+        .float-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .float-val { font-weight: 800; color: #1e293b; font-size: 1.1rem; line-height: 1.2; }
+
+        .icon-box { background: #dcfce7; color: #16a34a; padding: 8px; border-radius: 12px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; font-size: 1.1rem; }
+        .icon-box.blue { background: #dbeafe; color: #2563eb; }
+        .icon-box.purple { background: #f3e8ff; color: #9333ea; }
+
+        /* Positioning - Mobile Default */
+        .pos-1 { bottom: -25px; right: 10px; z-index: 22; }
+        .pos-2 { top: -20px; left: 10px; z-index: 21; }
+        .pos-3 { bottom: 35%; left: -10px; z-index: 23; display: none; } /* Hidden on very small screens */
+
+        @media(min-width: 500px) { .pos-3 { display: flex; } }
+
+        /* Positioning - Desktop */
+        @media(min-width: 992px) {
+            .float-card { background: rgba(255, 255, 255, 0.75); } /* More glass effect on desktop */
+            
+            .pos-1 { bottom: 40px; left: -50px; right: auto; top: auto; }
+            .pos-2 { top: 60px; right: -60px; left: auto; bottom: auto; }
+            .pos-3 { bottom: 120px; right: -40px; left: auto; top: auto; }
+        }
+
+        /* Other Sections */
+        .section-problem { padding: 60px 0; background: var(--white); text-align: center; }
+        .problem-logos { 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2.5rem; 
+            opacity: 1; filter: grayscale(100%); 
+        }
+        .problem-logos img { height: 30px; object-fit: contain; }
+        @media(min-width: 768px) { .problem-logos img { height: 40px; } }
+
+        .section-bento { padding: 80px 0; background: #f0f4f8; }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        @media(min-width: 768px) {
+            .bento-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 300px; }
+            .col-span-2 { grid-column: span 2; }
+            .row-span-2 { grid-row: span 2; }
+        }
+
+        .bento-item {
+            padding: 1.5rem;
+            display: flex; flex-direction: column;
+            overflow: hidden; position: relative;
+            min-height: 250px;
+        }
+        @media(min-width: 768px) { .bento-item { padding: 2rem; } }
+
+        .bento-icon {
+            width: 45px; height: 45px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem; margin-bottom: 1rem;
+            background: var(--white); color: var(--primary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .bento-img { position: absolute; transition: transform 0.5s ease; }
+
+        .section-portfolio { padding: 60px 0; overflow: hidden; }
+        .scroll-container {
+            display: flex; gap: 1.5rem; overflow-x: auto;
+            padding: 10px 20px 30px 20px; margin: 0 -20px;
+            -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory;
+        }
+        .scroll-container::-webkit-scrollbar { display: none; }
+        .project-card { min-width: 85vw; padding: 1rem; border-radius: 20px; scroll-snap-align: center; }
+        @media(min-width: 600px) { .project-card { min-width: 350px; } }
+        .project-img { width: 100%; height: 200px; border-radius: 16px; object-fit: cover; margin-bottom: 1rem; }
+
+        /* --- PRICING SECTION (CUSTOM) --- */
+        .pricing { padding: 80px 0; background: var(--bg-color); }
+        .section-header { text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-header h2 { margin-bottom: 1rem; font-size: 2.2rem; }
+        .section-header div { color: var(--text-light); font-size: 1.1rem; }
+
+        /* Toggle */
+        .toggle-wrapper { display: flex; justify-content: center; margin-bottom: 3rem; }
+        .toggle-container {
+            background: rgba(255,255,255,0.5);
+            padding: 5px;
+            border-radius: 50px;
+            display: flex;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+        .toggle-container button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .toggle-container button.btn-active {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .hidden-desktop{
+            display: block;
+        }
+        @media (min-width: 1024px) {
+            .hidden-desktop{
+                display: none !important;
+                visibility: hidden;
+                height: 0;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                pointer-events: none;
+            }
+        }
+
+        /* Pricing Grid */
+        .pricing__grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media(min-width: 768px) {
+            .pricing__grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
+        }
+
+        /* Pricing Card */
+        .pricing-card {
+            background: var(--bg-color);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-clay);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .pricing-card:hover { transform: translateY(-5px); z-index: 2; }
+        
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+            transform: scale(1.02);
+        }
+        @media(min-width: 768px) { .pricing-card.popular { transform: scale(1.05); z-index: 5; } }
+
+        .pricing-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark); font-family: var(--font-main); font-weight: 800; }
+        
+        .price { font-size: 3.5rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem; font-family: var(--font-display); }
+        .price sup { font-size: 1.5rem; top: -1em; }
+        .price .abonnement { font-size: 1rem; color: var(--text-light); font-weight: 500; }
+        
+        .pricing-card ul { margin-bottom: 2rem; text-align: left; }
+        .pricing-card li { margin-bottom: 0.8rem; color: var(--text-light); display: flex; align-items: center; font-size: 0.95rem; }
+        .pricing-card li::before {
+            content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            color: var(--primary); margin-right: 10px; font-size: 0.9rem;
+        }
+        
+        .pricing-card__guarantee { margin-top: 1rem; font-size: 0.75rem; color: var(--text-light); opacity: 0.8; }
+
+        /* Fiverr Style Grid (Services) */
+        .pricing__grid--fiverr {
+            grid-template-columns: 1fr;
+        }
+        @media(min-width: 768px) {
+            .pricing__grid--fiverr { grid-template-columns: 1fr 1fr; }
+        }
+
+        .fiverr-gig {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease;
+            height: 100%;
+        }
+        .fiverr-gig:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        .fiverr-gig img { width: 100%; height: 220px; object-fit: cover; }
+        .fiverr-gig-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .fiverr-gig h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; font-family: var(--font-main); }
+        .fiverr-gig .description { font-size: 0.9rem; color: var(--text-light); margin-bottom: 1.5rem; flex-grow: 1; }
+        
+        .fiverr-gig-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid #f1f5f9; padding-top: 1rem;
+        }
+        .fiverr-gig-price .label { display: block; font-size: 0.7rem; color: var(--text-light); font-weight: 700; }
+        .fiverr-gig-price .amount { font-size: 1.4rem; font-weight: 800; color: var(--dark); }
+
+        .section-cta { text-align: center; max-width: 600px; margin: 3rem auto 0; color: var(--text-light); font-style: italic; font-size: 0.9rem; }
+
+        /* FAQ & Other */
+        .section-faq { padding: 60px 0; background: var(--white); }
+        .faq-container { width: 100%; max-width: 800px; margin: 0 auto; }
+        .faq-item { margin-bottom: 1rem; padding: 1.25rem; cursor: pointer; }
+        .faq-summary { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1rem; text-align: left; }
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; color: var(--text-light); line-height: 1.6; font-size: 0.95rem; }
+        .faq-item.open .faq-content { max-height: 300px; margin-top: 1rem; }
+        .faq-icon { min-width: 20px; text-align: right; transition: transform 0.3s ease; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+
+        footer { background: var(--dark); color: var(--white); padding: 60px 0 30px; position: relative; }
+        .footer-content { max-width: 800px; margin: 0 auto; text-align: center; }
+        .footer-cta { margin-top: 2rem; margin-bottom: 3rem; }
+        .footer-bottom { 
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; 
+            display: flex; flex-direction: column; gap: 1.5rem; align-items: center;
+            font-size: 0.9rem; color: #94a3b8; 
+        }
+        @media(min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; gap: 0; } }
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px);
+            z-index: 2000; display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+
+        .modal-container {
+            background: var(--bg-color); /* Assurez-vous que cette variable est définie ou remplacez par #f0f4f8 */
+            width: 90%; max-width: 500px;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff; /* Style Clay */
+            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-overlay.active .modal-container { transform: scale(1); }
+
+        .modal-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: transparent; border: none; font-size: 1.5rem;
+            color: #64748b; cursor: pointer;
+        }
+
+        .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #0F172A; font-size: 0.9rem; }
+
+        .form-input, .form-textarea {
+            width: 100%; padding: 0.8rem 1rem;
+            border-radius: 12px; border: 1px solid #e2e8f0;
+            background: #ffffff; font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none; border-color: #4F46E5; /* Couleur primaire */
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-textarea { resize: vertical; min-height: 100px; }
+
+    </style>
+</head>
 <body>
-    <header class="header">
-        <div class="container header__container">
-            <a href="#" class="header__logo" aria-label="Adasoft - Page d'accueil">
-                <img id="logoAdasoft" src="./src/assets/Logo.svg" alt="Logo Adasoft" loading="lazy"
-                    style="width: 120px; height: auto; display: block" />
-            </a>
-            <nav class="header__nav" aria-label="Navigation principale">
-                <ul class="header__nav-list">
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#pricing">Tarifs</a></li>
-                    <li><a href="#quote-configurator">Devis</a></li>
-                    <li><a href="#process">Notre méthode</a></li>
-                    <li><a href="#ai-branding-workshop">Mercia IA</a></li>
-                    <li><a href="#testimonials">Témoignages</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
-            </nav>
-            <div class="header__actions">
-                <a href="#pricing" class="btn btn--primary">Voir l'offre-></a>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <div class="logo" onclick="window.scrollTo(0,0)">
+                <img src="src/assets/Logo.svg" alt="AdaSoft Logo">
+            </div>
+            
+            <div class="nav-links hidden-mobile">
+                <a href="#solutions">Solutions</a>
+                <a href="#portfolio">Réalisations</a>
+                <a href="#pricing">Tarifs</a>
+                <a href="#faq">Questions</a>
+                <a href="https://wa.me/243995342102" class="btn btn-primary" style="margin-left: 2rem; padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+                    CONTACTER
+                </a>
+            </div>
+
+            <div class="mobile-toggle hidden-desktop" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
             </div>
         </div>
-        <!-- La barre de progression -->
-    </header>
-    <div id="checkerboard-background"></div>
-    <div class="page_container">
-        <div>
-            <div class="_top-progress-container">
-                <div class="_top-progress-bar" id="myBar"></div>
-            </div>
-            <main>
-                <section class="hero" id="hero" aria-labelledby="hero-title">
-                    <div class="container hero__container">
-                        <div class="hero__content">
-                            <h1 class="hero_title" id="hero-title">
-                                Vos affiches pros, sur mesure,dès <span class="price-tag">1,67&nbsp;$</span> !
-                            </h1>
-                            <p>
-                                Valable uniquement avec l'offre Premium,
-                                Nous gérons 100% de votre production de contenu (images et vidéos) afin
-                                que vous puissiez enfin vous concentrer sur ce qui rapporte vraiment.
-                            </p>
-                            <div class="hero__cta">
-                                <a href="#pricing" class="btn btn--primary"
-                                    aria-label="Voir nos tarifs de branding">Voir l'offre</a>
-                                <a href="#booking" class="btn btn--secondary">Planifier un appel stratégique 
-                                    gratuit</a>
-                            </div>
-                        </div>
-                        <div class="hero__gallery">
-                            <div class="gallery-container">
-                                <img src="./src/img/Pub 3.webp" alt="Exemple de projet de branding 1" loading="lazy" />
-                                <img src="./src/img/Marketing.webp" alt="Exemple de projet de branding 1"
-                                    loading="lazy" />
-                            </div>
-                            <div class="gallery-container">
-                                <div class="gallery-scroll" id="gallery-scroll">
-                                    <img src="./src/img/Juste une pub.webp" alt="Exemple de projet de branding 2"
-                                        loading="lazy" />
-                                    <img src="./src/img/Logo Pro VS debutant.webp" alt="Exemple de projet de branding 3"
-                                        loading="lazy" />
-                                    <img src="./src/img/Faites Exploser vos ventes grace a des design pro.webp"
-                                        alt="Exemple de projet de branding 3" loading="lazy" />
-                                    <img src="./src/img/Une Bonne Presentation de Produit peut faire toutes la difference sur vos ventes by happy people Graphic Studio.webp"
-                                        alt="Exemple de projet de branding 3" loading="lazy" />
-                                    <img src="./src/img/visibilite.webp" alt="Exemple de projet de branding 3"
-                                        loading="lazy" />
-                                    <img src="./src/img/New year.webp" alt="Exemple de projet de branding 3"
-                                        loading="lazy" />
-                                    <img src="./src/img/promo (2).webp" alt="Exemple de projet de branding 3"
-                                        loading="lazy" />
-                                    <img src="./src/img/Poster.webp" alt="Exemple de projet de branding 3"
-                                        loading="lazy" />
-                                    <img src="./src/img/Rebranding.webp" alt="Exemple de projet de branding 3"
-                                        loading="lazy" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="container_why">
-                        <div class="section-header_why">
-                            <h2 class="animate-on-scroll_why section-title_why">
-                                Conçu pour ceux qui bâtissent sans effort
-                            </h2>
-                        </div>
-                        <div class="cards-grid_why">
-                            <div class="animate-on-scroll_why delay-3_why card-item_why highlighted_why">
-                                <img loading="lazy"
-                                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8020_blue%20gradient%20bg.svg"
-                                    alt="Fond dégradé bleu" class="card-background_why">
-                                <div class="card-content_why">
-                                    <h3 class="card-title_why">Pour le Solopreneur & Créateur</h3>
-                                    <div class="features-list_why">
-                                        <div class="feature-item_why">
-                                            <span>(Coachs, Infopreneurs, E-commerçants): Votre métier, c'est de vendre, pas de designer.<span class="facture-bold-text">Libérez 10h/mois</span> pour 70$ et
-                                    concentrez-vous sur votre Ikigai. Nous gérons votre vitrine.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="animate-on-scroll_why delay-1_why card-item_why">
-                                <img loading="lazy"
-                                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg"
-                                    alt="Fond dégradé" class="card-background_why">
-                                <div class="card-content_why">
-                                    <h3 class="card-title_why">Pour le Community Manager
-                                    </h3>
-                                    <div class="features-list_why">
-                                        <div class="feature-item_why">
-                                            <span>(La Cible "Revendeur"): 
-                                    Augmentez vos marges. <span class="facture-bold-text">Facturez 400$</span> à votre client, <span class="facture-bold-text">payez-nous 70$</span> pour la
-                                    production. Devenez plus scalable et rentable en nous utilisant en marque blanche.
-                                 </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="animate-on-scroll_why delay-2_why card-item_why">
-                                <img loading="lazy"
-                                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg"
-                                    alt="Fond dégradé" class="card-background_why">
-                                <div class="card-content_why">
-                                    <h3 class="card-title_why">Pour le Lancement Rapide</h3>
-                                    <div class="features-list_why">
-                                        <div class="feature-item_why">
-                                            <span>(Artistes, Événements, TPE)
-                                    Besoin d'une cover d'album pro, d'un flyer ou d'un logo pour démarrer ?
-                                    <span class="facture-bold-text">Obtenez un résultat professionnel</span> sans "casser la banque"</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="animate-on-scroll_why delay-4_why button-wrapper_why">
-                            <a href="#pricing" class="cta-button_why">
-                                <span>Consultez nos forfaits</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 10"
-                                    fill="none" class="arrow-icon_why">
-                                    <path
-                                        d="M13.7266 5.37891L10.2266 8.87891C9.89844 9.23438 9.32422 9.23438 8.99609 8.87891C8.64062 8.55078 8.64062 7.97656 8.99609 7.64844L10.9922 5.625H0.875C0.382812 5.625 0 5.24219 0 4.75C0 4.23047 0.382812 3.875 0.875 3.875H10.9922L8.99609 1.87891C8.64062 1.55078 8.64062 0.976562 8.99609 0.648438C9.32422 0.292969 9.89844 0.292969 10.2266 0.648438L13.7266 4.14844C14.082 4.47656 14.082 5.05078 13.7266 5.37891Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-                <section class="social-proof" aria-labelledby="social-proof-title">
-                    <h2 id="social-proof-title" class="visually-hidden">
-                        Preuve Sociale et Confiance
-                    </h2>
-                    <div class="container social-proof__container">
-                        <div class="social-proof__column logos-column">
-                            <h3>Nos créations récentes</h3>
-                            <div class="logos-column__gallery">
-                                <img src="./src/img/8.webp" alt="Logo créé pour un client" loading="lazy" />
-                                <img src="./src/img/9.webp" alt="Logo créé pour un client" loading="lazy" />
-                                <img src="./src/img/10.webp" alt="Logo créé pour un client" loading="lazy" />
-                                <img src="./src/img/11.webp" alt="Logo créé pour un client" loading="lazy" />
-                            </div>
-                        </div>
-                        <div class="social-proof__column stats-column">
-                            <h3>Reconnu à l’international</h3>
-                            <div class="stats-column__item">
-                                <strong class="stat-number" data-target="+25">0</strong>
-                                <span>clients satisfaits</span>
-                            </div>
-                            <div class="stats-column__item">
-                                <strong class="stat-number" data-target="4">0</strong>
-                                <span>pays desservis</span>
-                            </div>
-                            <div class="stats-column__item">
-                                <strong class="stat-number" data-target="4.8" data-decimal="true">0</strong>
-                                <span>/5 note moyenne</span>
-                            </div>
-                        </div>
-                        <div class="social-proof__column testimonial-column">
-                            <h3>Ils nous font confiance</h3>
-                            <figure>
-                                <blockquote>
-                                    "Travailler avec Adasoft a changé la donne. Leur équipe n'a pas
-                                    seulement livré un logo, elle a créé une identité de marque
-                                    complète qui reflète parfaitement notre vision. Le processus
-                                    était fluide, rapide, et le résultat a dépassé toutes nos
-                                    attentes."
-                                </blockquote>
-                                <figcaption>
-                                    — Rama Bonheur, CEO d'Imani Corp<br />
-                                    <small>RDCongo</small>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="container container--narrow">
-                        <p class="section-emphasis">
-                            Attirez des prospects et gagnez une
-                            <strong>crédibilité incontestable</strong> dans votre secteur
-                        </p>
-                    </div>
-                </section>
-                <section>
-                    <div class="container_why">
-                        <div class="section-header_why">
-                            <h2 class="animate-on-scroll_why section-title_why">
-                                Pourquoi investir dans un design professionnel&nbsp;?
-                            </h2>
-                        </div>
-                        <div class="cards-grid_why">
-                            <div class="animate-on-scroll_why delay-1_why card-item_why">
-                                <img loading="lazy"
-                                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg"
-                                    alt="Fond dégradé" class="card-background_why">
-                                <div class="card-content_why">
-                                    <h3 class="card-title_why">Si vous utilisez l’IA ou des générateurs automatiques
-                                    </h3>
-                                    <div class="features-list_why">
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
-                                                alt="Icône X">
-                                            <span>Votre logo n’est pas protégé légalement : vous n’avez donc aucune
-                                                vraie marque</span>
-                                        </div>
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
-                                                alt="Icône X">
-                                            <span>La qualité est médiocre, vos clients perçoivent un manque de sérieux
-                                                et vos concurrents prennent
-                                                l’avantage.</span>
-                                        </div>
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
-                                                alt="Icône X">
-                                            <span>vous gaspillez du temps précieux au lieu de le consacrer à la
-                                                croissance de votre
-                                                business.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="animate-on-scroll_why delay-2_why card-item_why">
-                                <img loading="lazy"
-                                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8021_gradient%20bg.svg"
-                                    alt="Fond dégradé" class="card-background_why">
-                                <div class="card-content_why">
-                                    <h3 class="card-title_why">Si vous passez par d’autres freelances ou agences</h3>
-                                    <div class="features-list_why">
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
-                                                alt="Icône X">
-                                            <span>Les agences sont souvent trop chères et peu transparentes</span>
-                                        </div>
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
-                                                alt="Icône X">
-                                            <span>Les freelances manquent parfois de fiabilité et la communication
-                                                devient compliquée</span>
-                                        </div>
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e801f_close%20icon.svg"
-                                                alt="Icône X">
-                                            <span>Les délais s’éternisent : des semaines pour un résultat souvent
-                                                décevant</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="animate-on-scroll_why delay-3_why card-item_why highlighted_why">
-                                <img loading="lazy"
-                                    src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8020_blue%20gradient%20bg.svg"
-                                    alt="Fond dégradé bleu" class="card-background_why">
-                                <div class="card-content_why">
-                                    <h3 class="card-title_why">Avec Adasoft</h3>
-                                    <div class="features-list_why">
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg"
-                                                alt="Icône coche">
-                                            <span>Une identité visuelle forte et moderne, conçue pour le monde
-                                                numérique</span>
-                                        </div>
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg"
-                                                alt="Icône coche">
-                                            <span>Un processus collaboratif et transparent, pour un résultat livré en
-                                                48h.</span>
-                                        </div>
-                                        <div class="feature-item_why">
-                                            <img loading="lazy"
-                                                src="https://cdn.prod.website-files.com/66f8845b6f7911f99d856648/67d7cb9d2488f97a762e8022_blue%20checkmark.svg"
-                                                alt="Icône coche">
-                                            <span>Un investissement stratégique pour une croissance durable et une
-                                                reconnaissance accrue.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="animate-on-scroll_why delay-4_why button-wrapper_why">
-                            <a href="#pricing" class="cta-button_why">
-                                <span>Consultez nos forfaits</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 10"
-                                    fill="none" class="arrow-icon_why">
-                                    <path
-                                        d="M13.7266 5.37891L10.2266 8.87891C9.89844 9.23438 9.32422 9.23438 8.99609 8.87891C8.64062 8.55078 8.64062 7.97656 8.99609 7.64844L10.9922 5.625H0.875C0.382812 5.625 0 5.24219 0 4.75C0 4.23047 0.382812 3.875 0.875 3.875H10.9922L8.99609 1.87891C8.64062 1.55078 8.64062 0.976562 8.99609 0.648438C9.32422 0.292969 9.89844 0.292969 10.2266 0.648438L13.7266 4.14844C14.082 4.47656 14.082 5.05078 13.7266 5.37891Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-                <section class="portfolio" id="portfolio" aria-labelledby="portfolio-title">
-                    <div class="container">
-                        <div class="section-header">
-                            <h2 id="portfolio-title">Notre Portfolio</h2>
-                            <div>Découvrez quelques-uns de nos derniers projets...</div>
-                        </div>
-                        <div class="portfolio__filters" role="tablist" aria-label="Filtrer le portfolio par catégorie">
-                            <button role="tab" aria-selected="true" data-filter="all">
-                                À la une
-                            </button>
-                            <button role="tab" aria-selected="false" data-filter="ecommerce">
-                                E-commerce
-                            </button>
-                            <button role="tab" aria-selected="false" data-filter="agency">
-                                Agence
-                            </button>
-                            <button role="tab" aria-selected="false" data-filter="ai">
-                                Startup IA
-                            </button>
-                            <button role="tab" aria-selected="false" data-filter="saas">
-                                SAAS
-                            </button>
-                            <button role="tab" aria-selected="false" data-filter="consulting">
-                                Conseil
-                            </button>
-                            <button role="tab" aria-selected="false" data-filter="beauty">
-                                Beauté
-                            </button>
-                        </div>
-                        <div class="portfolio__grid">
-                            <figure class="portfolio-item" data-category="ai">
-                                <img src="./src/img/New year.webp" alt="Projet de branding pour une startup IA"
-                                    loading="lazy" />
-                                <figcaption>
-                                    <h3>New year poster</h3>
-                                    <p>Simple affiche pour une nouvelle années</p>
-                                </figcaption>
-                            </figure>
-                            <figure class="portfolio-item" data-category="agency">
-                                <img src="./src/img/Mars 2025.webp" alt="Projet de branding pour une startup IA"
-                                    loading="lazy" />
-                                <figcaption>
-                                    <h3>Mars 2025</h3>
-                                    <p>Poster pour mars 2025</p>
-                                </figcaption>
-                            </figure>
-                            <figure class="portfolio-item" data-category="saas">
-                                <img src="./src/img/3.webp" alt="Projet de branding pour une startup IA"
-                                    loading="lazy" />
-                                <figcaption>
-                                    <h3>Kev T</h3>
-                                    <p>Technologie</p>
-                                </figcaption>
-                            </figure>
-                            <figure class="portfolio-item" data-category="agency">
-                                <img src="./src/img/4.webp" alt="Projet de branding pour une startup IA"
-                                    loading="lazy" />
-                                <figcaption>
-                                    <h3>Agence Créative</h3>
-                                    <p>Agence</p>
-                                </figcaption>
-                            </figure>
-                            <figure class="portfolio-item" data-category="agency">
-                                <img src="./src/img/Bon week end.webp" alt="Projet de branding pour une startup IA"
-                                    loading="lazy" />
-                                <figcaption>
-                                    <h3>Agence Créative</h3>
-                                    <p>Agence</p>
-                                </figcaption>
-                            </figure>
-                            <figure class="portfolio-item" data-category="beauty">
-                                <img src="./src/img/7.webp" alt="Projet de branding pour une startup IA"
-                                    loading="lazy" />
-                                <figcaption>
-                                    <h3>Luxe Beauté</h3>
-                                    <p>Beauté</p>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                </section>
-                <section class="pricing" id="pricing" aria-labelledby="pricing-title">
-                    <div class="container">
-                        <div class="section-header">
-                            <h2 id="pricing-title">
-                                Un tarif simple, sans surprise.
-                            </h2>
-                            <div>
-                                Choisissez le volume dont vous avez besoin. Annulez à tout moment.
-                            </div>
-                        </div>
-                        <div class="toggle-wrapper">
-                            <div class="toggle-container">
-                                <button id="btn-abos" class="btn-active">Abonnements</button>
-                                <button id="btn-carte">Prix par service</button>
-                            </div>
-                        </div>
-                        <div id="pricing-abos" class="pricing__grid">
-                            <div class="pricing-card">
-                                <h3>Basique</h3>
-                                <div class="price"><sup>$</sup>42<span class="abonnement">/mois</span></div>
-                                <ul>
-                                    <li><strong>15 affiches</strong> / mois</li>
-                                    <li>Livraison continue (3-4 / sem.)</li>
-                                    <li>1 révision par affiche</li>
-                                    <li><s>Animations</s></li>
-                                </ul>
-                                <a href="#" class="cta-btn btn btn--primary open-modal-abo" data-offer="Basique">Commander maintenant</a>
-                                <p class="pricing-card__guarantee">
-                                    Garantie satisfait ou remboursé à 100%
-                                </p>
-                            </div>
-                            <div class="pricing-card popular">
-                                <h3>Intermédiaire</h3>
-                                <div class="price"><sup>$</sup>72<span class="abonnement">/mois</span></div>
-                                <ul>
-                                    <li><strong>30 affiches</strong> / mois</li>
-                                    <li>Livraison continue (6-8 / sem.)</li>
-                                    <li><strong>2 révisions</strong> par affiche</li>
-                                    <li>Animations légères incluses</li>
-                                    <li>Livraison express 24h</li>
-                                </ul>
-                                <a href="#" class="cta-btn btn--primary btn open-modal-abo" data-offer="Intermédiaire">Commander maintenant</a>
-                                <p class="pricing-card__guarantee">
-                                    Garantie satisfait ou remboursé à 100%
-                                </p>
-                            </div>
-                            <div class="pricing-card">
-                                <h3>Premium</h3>
-                                <div class="price"><sup>$</sup>102<span class="abonnement">/mois</span></div>
-                                <ul>
-                                    <li><strong>60 affiches</strong> / mois (<strong
-                                            style="color: var(--c-indigo);">~1,67$/affiche</strong>)</li>
-                                    <li>Livraison chaque semaine (12-15 / sem.)</li>
-                                    <li><strong>Modifications illimitées</strong></li>
-                                    <li>Animations professionnelles incluses</li>
-                                    <li>Suivi et conseils personnalisés d’un directeur artistique</li>
-                                </ul>
-                                <a href="#" class="cta-btn btn btn--primary open-modal-abo" data-offer="Premium">Commander maintenant</a>
-                                <p class="pricing-card__guarantee">
-                                    Garantie satisfait ou remboursé à 100%
-                                </p>
-                            </div>
-                        </div>
-                        <div id="pricing-carte" class="pricing__grid pricing__grid--fiverr hidden">
-                            <!-- Service 1: Logotype (Fiverr Style) -->
-                            <div class="fiverr-gig" id="fiverr-gig">
-                                <img src="/src/img/Creation logo.png" alt="Service de création de logo">
-                                <div class="fiverr-gig-content">
-                                    <h4>Logo seulement</h4>
-                                    <p class="description">
-                                        Un logo unique et professionnel pour 20$. Fichiers sources inclus. Idéal pour
-                                        les petites
-                                        entreprises.
-                                    </p>
-                                    <div class="fiverr-gig-footer">
-                                        <p class="fiverr-gig-price">
-                                            <span class="label">À PARTIR DE</span>
-                                            <span class="amount">$21</span>
-                                        </p>
-                                        <a href="#" class="btn btn-primary open-modal-carte" data-service="Logo Seulement">
-                                    Commander
-                                </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="fiverr-gig">
-                                <img src="/src/img/Logo identite.png" alt="Service de création de logo">
-                                <div class="fiverr-gig-content">
-                                    <h4>Logo + mini identité visuelle</h4>
-                                    <p class="description">
-                                        Un logo unique + mini-identité visuelle : palette de couleurs, typographies et
-                                        déclinaisons (monochrome, favicon) accompagnés d'un mini-guide d'utilisation.
-                                        Fichiers livrés (SVG, PNG, PDF), révisions incluses, livraison rapide et
-                                        transfert complet des droits à la réception.
-                                    </p>
-                                    <div class="fiverr-gig-footer">
-                                        <p class="fiverr-gig-price">
-                                            <span class="label">À PARTIR DE</span>
-                                            <span class="amount">$25</span>
-                                        </p>
-                                       <a href="#" class="btn btn-primary open-modal-carte" data-service="Logo + Mini Identité">
-                                    Commander
-                                </a>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu">
+            <a href="#solutions" onclick="toggleMobileMenu()">Solutions</a>
+            <a href="#portfolio" onclick="toggleMobileMenu()">Réalisations</a>
+            <a href="#pricing" onclick="toggleMobileMenu()">Tarifs</a>
+            <a href="#faq" onclick="toggleMobileMenu()">Questions</a>
+            <a href="https://wa.me/243995342102" class="btn btn-primary">Discuter sur WhatsApp</a>
+        </div>
+    </nav>
 
-                            <!-- Service 2: Flyer Design (Fiverr Style) -->
-                            <div class="fiverr-gig">
-                                <img src="src/img/Flyer.png" alt="Service de design de flyer">
-                                <div class="fiverr-gig-content">
-                                    <h4>Flyer pro pour votre événement(Affiche)</h4>
-                                    <p class="description">
-                                        Flyer professionnel à partir de 10$. Design sur‑mesure adapté à votre événement
-                                        ou promotion, livré en fichiers prêts à l'impression (PNG/PDF). Une révision
-                                        incluse et délai de livraison rapide. Offre spéciale : 1 flyer supplémentaire
-                                        offert pour chaque pack de 5 commandés.
-                                    </p>
-                                    <div class="fiverr-gig-footer">
-                                        <p class="fiverr-gig-price">
-                                            <span class="label">À PARTIR DE</span>
-                                            <span class="amount">$11</span>
-                                        </p>
-                                        <a href="#" class="btn btn-primary open-modal-carte" data-service="Flyer Design">
-                                    Commander
-                                </a>
-                                    </div>
-                                </div>
-                            </div>
+    <!-- 1. HERO SECTION -->
+    <section class="hero">
+        <div class="hero-bg-blob blob-1 animate-float"></div>
+        <div class="hero-bg-blob blob-2 animate-float-delayed"></div>
 
-                            <!-- Service 3: Carte de Visite (Fiverr Style) -->
-                            <div class="fiverr-gig">
-                                <img src="src/img/Carte de visite.png" alt="Service de carte de visite">
-                                <div class="fiverr-gig-content">
-                                    <h4>Carte de visite unique</h4>
-                                    <p class="description">
-                                        Carte de visite professionnelle recto/verso, conçue sur‑mesure pour refléter
-                                        votre identité de marque. Fichiers prêts à l'impression (PDF CMJN) et versions
-                                        numériques (PNG, SVG) fournis. Jusqu'à 2 révisions incluses, livraison rapide et
-                                        cession complète des droits d'utilisation.
-                                    </p>
-                                    <div class="fiverr-gig-footer">
-                                        <p class="fiverr-gig-price">
-                                            <span class="label">PRIX FIXE</span>
-                                            <span class="amount">$11</span>
-                                        </p>
-                                        <a href="#" class="btn btn-primary open-modal-carte" data-service="Carte de Visite">
-                                    Commander
-                                </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Service 4: Pack Album (Fiverr Style) -->
-                            <div class="fiverr-gig">
-                                <img src="src/img/cover album.png" alt="Service de cover d'album">
-                                <div class="fiverr-gig-content">
-                                    <h4>Cover de votre album/single + miniature YouTube animée</h4>
-                                    <p class="description">
-                                        Cover d'album professionnelle à partir de 15 $. Pochette unique + miniature
-                                        YouTube optimisée (statique ou animation courte). Livrables : PNG/JPEG haute
-                                        résolution, PDF prêt à l'impression et fichier source (PSD/AI). 1 révision
-                                        incluse, cession complète des droits.
-                                    </p>
-                                    <div class="fiverr-gig-footer">
-                                        <p class="fiverr-gig-price">
-                                            <span class="label">À PARTIR DE</span>
-                                            <span class="amount">$15</span>
-                                        </p>
-                                        <a href="#" class="btn btn-primary open-modal-carte" data-service="Pack Album">
-                                    Commander
-                                </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section-cta">
-                        Votre réussite est notre priorité. Notre politique de remboursement
-                        est simple : si vous n'êtes pas satisfait, nous travaillons jusqu'à
-                        ce que vous le soyez, ou nous vous remboursons.
-                    </div>
-
-                </section>
-                <section id="quote-configurator">
-                    <div class="container">
-                        <div class="section-header">
-                            <h2>Configurez votre offre et obtenez un devis</h2>
-                            <div>Choisissez les services dont vous avez besoin pour voir une estimation en temps réel.</div>
-                        </div>
-                        <div class="quote-configurator__grid">
-                            <div id="configurator-form" class="configurator-form">
-                                <h3>1. Choisissez vos services</h3>
-                                <div>
-                                    <div class="service-option">
-                                        <input type="checkbox" name="service" value="25"
-                                            data-name="Logo & Identité Visuelle" id="service1">
-                                        <label for="service1"
-                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                            <span class="name">Logo & Identité Visuelle</span>
-                                            <span class="price">25 $</span>
-                                        </label>
-                                    </div>
-                                    <div class="service-option">
-                                        <input type="checkbox" name="service" value="42" data-name="5 Affiches"
-                                            id="service2">
-                                        <label for="service2"
-                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                            <span class="name">Affiches publicitaires (5 Affiches)</span>
-                                            <span class="price">42 $</span>
-                                        </label>
-                                    </div>
-                                    <div class="service-option">
-                                        <input type="checkbox" name="service" value="500" data-name="Site vitrine"
-                                            id="service3">
-                                        <label for="service3"
-                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                            <span class="name">Site vitrine</span>
-                                            <span class="price">500 $</span>
-                                        </label>
-                                    </div>
-                                    <div class="service-option">
-                                        <input type="checkbox" name="service" value="102"
-                                            data-name="Kit Réseaux Sociaux" id="service4">
-                                        <label for="service4"
-                                            style="display: flex; align-items: center; width: 100%; cursor: pointer;">
-                                            <span class="name">Premium Com</span>
-                                            <span class="price">102 $</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="quote-summary-card">
-                                <h3>Votre devis estimatif</h3>
-                                <div id="quote-summary">
-                                </div>
-                                <div style="border-top: 1px solid var(--color-accent); padding-top: 1rem;">
-                                    <div
-                                        style="display: flex; justify-content: space-between; align-items: center; font-size: 1.5rem; font-weight: 700;">
-                                        <span>Total:</span>
-                                        <span id="quote-total">0 $</span>
-                                    </div>
-                                </div>
-
-                                <button id="generate-description" class="btn">
-                                    Obtenir une description de projet
-                                </button>
-                                <div id="ai-description-output" class="hidden"></div>
-                                <button id="proceed-to-checkout" class="btn btn--primary" disabled>
-                                    Procéder au paiement
-                                </button>
-                            </div>
-                            <a href="#booking" class="btn btn--secondary">Planifier un appel pour une offre
-                                personnalisée</a>
-                        </div>
-                    </div>
-                </section>
-                <div id="paymentModal" class="modal-overlay" role="dialog" aria-modal="true"
-                    aria-labelledby="modal-title" hidden>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 id="modal-title" class="modal-title">Finaliser la commande</h2>
-                            <button id="closeModalBtn" class="modal-close-btn" aria-label="Fermer la fenêtre modale">
-                                &times;
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="modal-payment-content">
-                                <div id="modal-summary" class="order-summary"></div>
-
-                                <!-- FORMULAIRE DE PAIEMENT CLASSIQUE -->
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-neutre">
-                    <section class="testimonials" id="testimonials" aria-labelledby="testimonials-title">
-                        <div class="container">
-                            <div class="section-header">
-                                <h2 id="testimonials-title">Ce que disent nos clients</h2>
-                            </div>
-                            <div class="carousel" aria-roledescription="carousel" aria-label="Témoignages de clients">
-                                <div class="carousel__track-container">
-                                    <ul class="carousel__track">
-                                        <li class="carousel__slide" role="group" aria-roledescription="slide">
-                                            <figure>
-                                                <blockquote>
-                                                    "Créativité et professionnalisme exceptionnels. Adasoft a
-                                                    transformé notre marque."
-                                                </blockquote>
-                                                <figcaption>— Kevin T., Fondateur de Kev T</figcaption>
-                                            </figure>
-                                        </li>
-                                        <li class="carousel__slide" role="group" aria-roledescription="slide">
-                                            <figure>
-                                                <blockquote>
-                                                    "Le délai le plus rapide que j'ai vu pour une telle
-                                                    qualité. Je recommande vivement."
-                                                </blockquote>
-                                                <figcaption>
-                                                    — Alex ., PDG de Parts Cars Business
-                                                </figcaption>
-                                            </figure>
-                                        </li>
-                                        <li class="carousel__slide" role="group" aria-roledescription="slide">
-                                            <figure>
-                                                <blockquote>
-                                                    "Un vrai partenaire collaboratif. Ils ont écouté et livré
-                                                    au-delà de nos attentes."
-                                                </blockquote>
-                                                <figcaption>— HMN., Propriétaire de HMN Record</figcaption>
-                                            </figure>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="carousel__nav">
-                                    <button class="carousel__button carousel__button--prev"
-                                        aria-label="Témoignage précédent">
-                                        &lt;
-                                    </button>
-                                    <button class="carousel__button carousel__button--next"
-                                        aria-label="Témoignage suivant">
-                                        &gt;
-                                    </button>
-                                </div>
-                                <div class="carousel__indicators"></div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="container_center">
-                        <div class="section-header_why">
-                            <h2 class="animate-on-scroll_why section-title_why">
-                                Économiser sur ton image de marque, c’est ruiner ta crédibilité.
-                            </h2>
-                        </div>
-                        <div id="video-player">
-                            <!-- L'attribut 'muted' est important pour que l'autoplay fonctionne plus souvent -->
-                            <!-- L'attribut 'playsinline' est utile pour les navigateurs mobiles -->
-                            <video id="main-video" src="./src/Logocheap.mp4" muted playsinline></video>
-
-                            <div class="controls-container">
-                                <!-- Barre de progression -->
-                                <input type="range" id="progress-bar" value="0" min="0" max="100" step="0.1">
-
-                                <div class="main-controls">
-                                    <div class="controls-left">
-                                        <!-- Bouton Play/Pause -->
-                                        <button class="control-btn" id="play-pause-btn" aria-label="Play/Pause">
-                                            <svg id="play-icon" viewBox="0 0 24 24">
-                                                <path d="M8 5v14l11-7z"></path>
-                                            </svg>
-                                            <svg id="pause-icon" class="hidden" viewBox="0 0 24 24">
-                                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
-                                            </svg>
-                                        </button>
-
-                                        <!-- Conteneur du Volume -->
-                                        <div class="volume-container">
-                                            <button class="control-btn" id="volume-btn" aria-label="Mute/Unmute">
-                                                <svg id="volume-high-icon" viewBox="0 0 24 24">
-                                                    <path
-                                                        d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z">
-                                                    </path>
-                                                </svg>
-                                                <svg id="volume-muted-icon" class="hidden" viewBox="0 0 24 24">
-                                                    <path
-                                                        d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                            <input type="range" id="volume-slider" value="1" min="0" max="1"
-                                                step="0.01">
-                                        </div>
-
-                                        <!-- Affichage du temps -->
-                                        <div class="time-display">
-                                            <span id="current-time">00:00</span> / <span
-                                                id="total-duration">00:00</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="controls-right">
-                                        <!-- Bouton Retour Rapide -->
-                                        <button class="control-btn" id="rewind-btn" aria-label="Rewind 10 seconds">
-                                            <svg viewBox="0 0 24 24">
-                                                <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"></path>
-                                            </svg>
-                                        </button>
-                                        <!-- Bouton Avance Rapide -->
-                                        <button class="control-btn" id="forward-btn" aria-label="Forward 10 seconds">
-                                            <svg viewBox="0 0 24 24">
-                                                <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"></path>
-                                            </svg>
-                                        </button>
-                                        <!-- Bouton Plein Écran -->
-                                        <button class="control-btn" id="fullscreen-btn" aria-label="Toggle Fullscreen">
-                                            <svg id="fullscreen-open-icon" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z">
-                                                </path>
-                                            </svg>
-                                            <svg id="fullscreen-close-icon" class="hidden" viewBox="0 0 24 24">
-                                                <path
-                                                    d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z">
-                                                </path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="animate-on-scroll_why delay-4_why button-wrapper_why">
-                    <a href="#pricing" class="cta-button_why">
-                        <span>Consultez nos forfaits</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 10" fill="none"
-                            class="arrow-icon_why">
-                            <path
-                                d="M13.7266 5.37891L10.2266 8.87891C9.89844 9.23438 9.32422 9.23438 8.99609 8.87891C8.64062 8.55078 8.64062 7.97656 8.99609 7.64844L10.9922 5.625H0.875C0.382812 5.625 0 5.24219 0 4.75C0 4.23047 0.382812 3.875 0.875 3.875H10.9922L8.99609 1.87891C8.64062 1.55078 8.64062 0.976562 8.99609 0.648438C9.32422 0.292969 9.89844 0.292969 10.2266 0.648438L13.7266 4.14844C14.082 4.47656 14.082 5.05078 13.7266 5.37891Z"
-                                fill="currentColor"></path>
-                        </svg>
+        <div class="container hero-grid">
+            <!-- Text Content -->
+            <div class="hero-text reveal">
+                <h1>Vos affiches pros, <br><span class="text-gradient">sur mesure,dès 1,67$</span></h1>
+                <p>
+                    Valable uniquement avec l'offre Premium,
+                            Nous gérons 100% de votre production de contenu (images et vidéos) afin
+                            que vous puissiez enfin vous concentrer sur ce qui rapporte vraiment..
+                </p>
+                
+                <div class="flex flex-col md-row gap-2">
+                    <a href="https://wa.me/243995342102" class="btn btn-primary">
+                        Commencer le projet <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                    </a>
+                    <a href="#portfolio" class="btn btn-outline">
+                        <i class="fas fa-play" style="margin-right: 8px; font-size: 0.8rem;"></i> Voir nos travaux
                     </a>
                 </div>
-        </section>
-        <section class="process" id="process" aria-labelledby="process-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="process-title">Notre méthode de design</h2>
-                </div>
-                <div class="process__timeline">
-                    <div class="process-step">
-                        <div class="process-step__number">1</div>
-                        <h3>Découverte</h3>
-                        <p>
-                            Nous commençons par explorer votre vision, votre audience et vos
-                            objectifs.
-                        </p>
-                    </div>
-                    <div class="process-step">
-                        <div class="process-step__number">2</div>
-                        <h3>Recherche</h3>
-                        <p>
-                            Nous analysons votre marché et vos concurrents pour trouver
-                            votre position unique.
-                        </p>
-                    </div>
-                    <div class="process-step">
-                        <div class="process-step__number">3</div>
-                        <h3>Design</h3>
-                        <p>
-                            Nos créatifs élaborent des concepts initiaux et les affinent
-                            selon vos retours.
-                        </p>
-                    </div>
-                    <div class="process-step">
-                        <div class="process-step__number">4</div>
-                        <h3>Livraison</h3>
-                        <p>
-                            Vous recevez un pack de marque complet, prêt à être lancé et à
-                            impressionner.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="booking" class="booking">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Prêt à discuter de votre projet ?</h2>
-                    <div>Planifiez un appel stratégique gratuit de 30 minutes directement dans notre agenda.</div>
-                </div>
-                <div class="booking-container">
-                    <!-- Début de widget en ligne Calendly -->
-                    <div class="calendly-inline-widget"
-                        data-url="https://calendly.com/adasoftdesign/appel-strategique-de"
-                        style="min-width:320px;height:700px;"></div>
-                    <section class="contact-whatsapp">
-                        <h3 class="contact-whatsapp_head">Contactez-nous sur WhatsApp</h3>
-                        <a href="https://wa.me/243995342102" target="_blank" rel="noopener" class="btn btn--whatsapp"
-                            style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: #25D366; color: #fff; border-radius: 4px; padding: 0.75rem 1.5rem; font-weight: 600; text-decoration: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.029-.967-.272-.099-.471-.148-.67.15-.198.297-.767.967-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.205-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.075-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.205 5.077 4.384.711.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.075-.124-.272-.198-.57-.347zm-5.421 7.617h-.001a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982 1-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.455 4.437-9.891 9.893-9.891 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.991c-.002 5.455-4.438 9.891-9.893 9.891zm8.413-18.306A11.815 11.815 0 0012.05 0C5.495 0 .05 5.445.048 12c0 2.118.553 4.199 1.602 6.032L0 24l6.118-1.637A11.93 11.93 0 0012.051 24c6.554 0 11.999-5.445 12-12 .001-3.197-1.247-6.207-3.536-8.589z" />
-                            </svg>
-                            WhatsApp
-                        </a>
 
-                        <h3>Scannez-moi</h3>
-                        <img src="/src/assets/WhatsApp contact.svg" alt="contactez-nous sur WhatsApp"
-                            class="contact-whatsapp_image">
-                    </section>
-                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
-                        async></script>
-                    <!-- Fin de widget en ligne Calendly -->
+                <div class="social-proof">
+                    <div class="avatars">
+                        <img src="src/img/8.webp" alt="User">
+                        <img src="src/img/11.webp" alt="User">
+                        <img src="src/img/10.webp" alt="User">
+                    </div>
+                    <p style="margin: 0; font-size: 0.9rem; font-weight: 500;">Approuvé par +25 entreprises</p>
                 </div>
             </div>
-        </section>
-        <section class="ai-workshop" id="ai-branding-workshop">
-            <div class="container ai-workshop__container">
-                <div class="section-header">
-                    <h2>Mercia IA</h2>
-                    <div>Utilises mes outils intelligents pour affiner ta stratégie de marque.</div>
+
+            <!-- Visual 3D (Rotating Card Deck) -->
+            <div class="hero-visual reveal" id="hero-visual">
+                
+                <!-- 3D Card Stack Container -->
+                <div class="hero-deck" id="hero-deck">
+                    <div class="card-3d card-pos-0">
+                        <img src="src/img/Marketing.webp" alt="Marketing">
+                    </div>
+                    <div class="card-3d card-pos-1">
+                        <img src="src/img/Poster.webp" alt="Design">
+                    </div>
+                    <div class="card-3d card-pos-2">
+                        <img src="src/img/Cover Promo.webp" alt="Promo">
+                    </div>
                 </div>
+                
+                <!-- Floating Element 1: Clients -->
+                <div class="float-card pos-1 animate-float">
+                    <div class="icon-box"><i class="fas fa-users"></i></div>
+                    <div>
+                        <div class="float-label">Clients</div>
+                        <div class="float-val">+124%</div>
+                    </div>
+                </div>
+
+                <!-- Floating Element 2: Ventes -->
+                <div class="float-card pos-2 animate-float-delayed">
+                    <div class="icon-box blue"><i class="fas fa-arrow-trend-up"></i></div>
+                    <div>
+                        <div class="float-label">Ventes</div>
+                        <div class="float-val">+85%</div>
+                    </div>
+                </div>
+
+                <!-- Floating Element 3: Visibilité -->
+                <div class="float-card pos-3 animate-float-slow">
+                    <div class="icon-box purple"><i class="fas fa-eye"></i></div>
+                    <div>
+                        <div class="float-label">Visibilité</div>
+                        <div class="float-val">x3.5</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. AGITATION (Problem) -->
+    <section class="section-problem">
+        <div class="container reveal">
+            <span style="color: var(--secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;">Le constat</span>
+            <h2 style="margin: 1rem 0 1.5rem; font-size: 3rem;">Votre image actuelle vous coûte-t-elle des clients ?</h2>
+            <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: var(--text-light);">
+                Dans un monde saturé, être "juste bon" ne suffit plus. Si votre site est lent ou votre logo daté, <strong style="color: var(--primary);">vous perdez de l'argent</strong> chaque jour.
+            </p>
+
+            <div class="problem-logos">
+                <img src="src/img/airtel.webp" alt="Airtel">
+                <img src="src/img/orange.webp" alt="Orange">
+                <img src="src/img/mpesa.webp" alt="M-Pesa">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SOLUTION (Bento Grid) -->
+    <section id="solutions" class="section-bento">
+        <div class="container">
+            <div class="text-center reveal" style="margin-bottom: 2.5rem;">
+                <h2 style="font-size: 3rem;">Tout ce dont vous avez besoin <br>pour <span style="color: var(--primary);">dominer votre marché</span>.</h2>
+            </div>
+
+            <div class="bento-grid">
+                <!-- Large Item: Branding -->
+                <div class="clay-card bento-item col-span-2 reveal">
+                    <div style="position: relative; z-index: 10;">
+                        <div class="bento-icon"><i class="fas fa-paint-brush"></i></div>
+                        <h3>Identité Visuelle & Branding</h3>
+                        <p style="margin-top: 0.5rem; max-width: 300px; color: var(--text-light);">De la création de logo à la charte graphique complète.</p>
+                    </div>
+                </div>
+
+                <!-- Tall Item: Marketing -->
+                <div class="clay-card bento-item row-span-2 reveal" style="background: var(--white);">
+                    <div style="position: relative; z-index: 10;">
+                        <div class="bento-icon" style="background: var(--primary); color: white;"><i class="fas fa-bullhorn"></i></div>
+                        <h3>Marketing Digital</h3>
+                        <p style="margin-top: 0.5rem; margin-bottom: 2rem; color: var(--text-light);">Campagnes publicitaires qui convertissent.</p>
+                    </div>
+                </div>
+                <div class="clay-card bento-item reveal" style="background: var(--white);">
+                    <div style="position: relative; z-index: 10;">
+                        <div class="bento-icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-search"></i></div>
+                        <h3>SEO & Visibilité</h3>
+                        <p style="margin-top: 0.5rem; margin-bottom: 2rem; color: var(--text-light);">Soyez n°1 sur Google.</p>
+                    </div>
+                </div>
+
+                <!-- Small Item: Visibilité -->
+
+                <!-- Small Item: Chiffres -->
+                <div class="clay-card bento-item text-center items-center justify-center reveal" style="background: var(--primary); color: white;">
+                    <h3 style="font-size: 2.5rem; color: white;">+124%</h3>
+                    <p style="color: #c7d2fe;">de nouveaux clients</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PORTFOLIO -->
+    <section id="portfolio" class="section-portfolio">
+        <div class="container">
+            <h2 class="text-center" style="margin-bottom: 2.5rem; font-size: 3rem;">Nos dernières créations</h2>
+            
+            <div class="scroll-container">
+                <!-- Card 1 -->
+                <div class="glass-panel project-card">
+                    <img src="src/img/Poster.webp" class="project-img" alt="Projet 1">
+                    <h3>Campagne Publicitaire</h3>
+                    <p>Design Graphique</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass-panel project-card">
+                    <img src="src/img/Cover Promo.webp" class="project-img" alt="Projet 2">
+                    <h3>Lancement Produit</h3>
+                    <p>Branding & Social Media</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass-panel project-card">
+                    <img src="src/img/Carte de visite.png" class="project-img" alt="Projet 3">
+                    <h3>Papeterie d'Entreprise</h3>
+                    <p>Print Design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 id="pricing-title" style="font-size: 3rem;">
+                    Un tarif simple, <span style="color: var(--primary);">sans surprise.</span>
+                </h2>
                 <div>
-                    <div class="ai-workshop__tabs">
-                        <button data-tab="copywriting" class="ai-tab">Copywriting</button>
-                        <button data-tab="voice" class="ai-tab">Voix</button>
-                        <button data-tab="palette" class="ai-tab">Palette</button>
-                        <button data-tab="logo" class="ai-tab">Visualisation Logo</button>
-                        <button data-tab="social" class="ai-tab">Post Média Social</button>
-                        <button data-tab="slogan" class="ai-tab active">Slogans</button>
-                    </div>
-                    <div class="ai-content">
-                        <div id="tab-copywriting" class="ai-tab-content hidden">
-                            <p>Générez des textes percutants pour vos ventes ou vos événements.</p>
-                            <div
-                                style="max-width: 42rem; margin: auto; display: grid; grid-template-columns: 1fr; gap: 1rem;">
-                                <div>
-                                    <label for="copy-objective-select">Objectif du texte :</label>
-                                    <select id="copy-objective-select">
-                                        <option value="Vente">Générer un texte de vente</option>
-                                        <option value="Événement">Promouvoir un événement</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="copy-product-input" id="copy-product-label">Produit/Service :</label>
-                                    <input id="copy-product-input" type="text" placeholder="Ex: coaching en nutrition">
-                                </div>
-                                <div>
-                                    <label for="copy-target-input">Cible :</label>
-                                    <input id="copy-target-input" type="text"
-                                        placeholder="Ex: femmes 25-40 ans actives">
-                                </div>
-                                <div>
-                                    <label for="copy-benefit-input" id="copy-benefit-label">Bénéfice principal :</label>
-                                    <input id="copy-benefit-input" type="text" placeholder="Ex: perdre 5kg en 2 mois">
-                                </div>
-                                <div>
-                                    <label for="copy-tone-select">Ton souhaité :</label>
-                                    <select id="copy-tone-select">
-                                        <option value="Professionnel">Professionnel</option>
-                                        <option value="Amical">Amical & Fun</option>
-                                        <option value="Inspirant">Inspirant</option>
-                                        <option value="Rassurant">Rassurant</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="copy-format-select">Format de sortie :</label>
-                                    <select id="copy-format-select">
-                                        <option value="Page d'accueil">Page d'accueil</option>
-                                        <option value="Publicité Facebook">Publicité Facebook</option>
-                                        <option value="Post Instagram">Post Instagram</option>
-                                        <option value="Flyer">Flyer</option>
-                                    </select>
-                                </div>
-                                <button id="copywriting-btn" class="btn btn--primary" style="width: 100%;">Générer les
-                                    textes</button>
-                                <div id="copywriting-output" class="ai-workshop__output">
-                                    <p style="color: #888;">Vos textes apparaîtront ici...</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div id="tab-voice" class="ai-tab-content hidden">
-                            <p>Collez un texte pour que Mercia IA analyse votre "ton de voix" actuel.</p>
-                            <div style="max-width: 32rem; margin: auto;">
-                                <textarea id="voice-input" rows="4" placeholder="Collez votre texte ici..."
-                                    style="margin-bottom: 1rem;"></textarea>
-                                <button id="voice-btn" class="btn btn--primary" style="width: 100%;">Analyser ma
-                                    voix</button>
-                                <div id="voice-output" class="ai-workshop__output">
-                                    <p style="color: #888;">Votre analyse apparaîtra ici...</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-palette" class="ai-tab-content hidden">
-                            <p>Décrivez l'ambiance de votre marque pour générer une identité visuelle.</p>
-                            <div style="max-width: 32rem; margin: auto;">
-                                <textarea id="palette-input" rows="4"
-                                    placeholder="Ex: cosmétiques naturels, luxueux, minimaliste..."
-                                    style="margin-bottom: 1rem;"></textarea>
-                                <button id="palette-btn" class="btn btn--primary" style="width: 100%;">Générer
-                                    l'identité</button>
-                                <div id="palette-output" class="ai-workshop__output">
-                                    <p style="color: #888;">Votre identité visuelle apparaîtra ici...</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-logo" class="ai-tab-content hidden">
-                            <p>Décrivez votre marque, obtenez des concepts, puis générez des aperçus visuels.</p>
-                            <div style="max-width: 42rem; margin: auto;">
-                                <textarea id="logo-input" rows="4"
-                                    placeholder="Ex: Une marque de vêtements de sport, dynamique, urbaine et technologique..."
-                                    style="margin-bottom: 1rem;"></textarea>
-                                <button id="logo-btn" class="btn btn--primary" style="width: 100%;"> Imaginer les
-                                    concepts</button>
-                                <div id="logo-output" class="ai-workshop__output">
-                                    <p style="color: #888;">Vos concepts de logo apparaîtront ici...</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-social" class="ai-tab-content hidden">
-                            <p>Générez un post complet pour les réseaux sociaux avec texte et image.</p>
-                            <div style="max-width: 42rem; margin: auto;">
-                                <div style="margin-bottom: 1rem;">
-                                    <label for="social-platform">Plateforme :</label>
-                                    <select id="social-platform">
-                                        <option value="LinkedIn">LinkedIn (Professionnel)</option>
-                                        <option value="Instagram">Instagram (Visuel & engageant)</option>
-                                        <option value="Twitter">X / Twitter (Court & percutant)</option>
-                                    </select>
-                                </div>
-                                <textarea id="social-post-input" rows="4"
-                                    placeholder="Sujet du post (ex: Lancement de notre nouvelle collection éco-responsable)"
-                                    style="margin-bottom: 1rem;"></textarea>
-                                <button id="social-post-btn" class="btn btn--primary" style="width: 100%;"> Générer le
-                                    Post</button>
-                                <div id="social-post-output" class="ai-workshop__output">
-                                    <p style="color: #888;">Votre post et sa suggestion d'image apparaîtront ici...</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab-slogan" class="ai-tab-content">
-                            <p>Décrivez votre entreprise et laissez Mercia IA créer des slogans percutants.</p>
-                            <div
-                                style="display:flex; gap: 0.5rem; max-width: 32rem; margin: auto; margin-bottom: 1rem;">
-                                <input id="slogan-input" type="text" placeholder="Ex: café artisanal à Paris">
-                                <button id="slogan-btn" class="btn btn--primary">Générer</button>
-                            </div>
-                            <div id="slogan-output" class="ai-workshop__output" style="max-width: 32rem; margin: auto;">
-                                <p style="color: #888;">Vos slogans apparaîtront ici...</p>
-                            </div>
-                        </div>
-                    </div>
+                    Choisissez le volume dont vous avez besoin. Annulez à tout moment.
                 </div>
             </div>
-        </section>
-        <section class="faq" id="faq" aria-labelledby="faq-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="faq-title">Questions fréquentes</h2>
-                </div>
-                <div class="faq__accordion">
-                    <div class="faq-item">
-                        <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-1">
-                            Que comprend le pack branding ?
-                        </button>
-                        <div class="faq-item__answer" id="faq-answer-1" hidden>
-                            <p>
-                                Vous recevez tout ce qu'il faut pour lancer votre marque :
-                                fichiers logo haute résolution (PNG, SVG, etc.), guide de
-                                style complet (couleurs, typographies), images pour les
-                                réseaux sociaux, et plus selon l'offre choisie.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-2">
-                            Combien de temps dure le processus ?
-                        </button>
-                        <div class="faq-item__answer" id="faq-answer-2" hidden>
-                            <p>
-                                Notre délai standard est de 48h pour les premiers concepts. La
-                                durée totale dépend des retours et révisions, mais nous sommes
-                                réputés pour notre rapidité et efficacité.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-3">
-                            Et si le design ne me plaît pas ?
-                        </button>
-                        <div class="faq-item__answer" id="faq-answer-3" hidden>
-                            <p>
-                                Votre satisfaction est notre priorité. Nous proposons des
-                                révisions selon l'offre. Si vous n'êtes toujours pas
-                                satisfait, nous appliquons notre garantie 100% remboursé.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-4">
-                            Est-ce que je possède les droits sur le design ?
-                        </button>
-                        <div class="faq-item__answer" id="faq-answer-4" hidden>
-                            <p>
-                                Bien sûr. Après paiement final, vous obtenez la pleine
-                                propriété et les droits d'auteur sur tous les éléments créés
-                                pour vous.
-                            </p>
-                        </div>
-                    </div>
+            
+            <div class="toggle-wrapper reveal">
+                <div class="toggle-container">
+                    <button id="btn-abos" class="btn-active" onclick="switchPricing('abos')">Abonnements</button>
+                    <button id="btn-carte" onclick="switchPricing('carte')">Prix par service</button>
                 </div>
             </div>
-        </section>
 
-        </main>
-        <div id="chatbot-container">
-            <button id="chat-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.08-3.239A8.962 8.962 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.416 11.584A6.962 6.962 0 004 10c0-2.667 2.686-5 6-5s6 2.333 6 5-2.686 5-6 5c-1.282 0-2.47-.402-3.416-1.084l-.584-.392L6.382 15l.392-.584-.16-.232z"
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
-            <div id="chat-window" class="hidden">
-                <div class="chat-header">
-                    <h3 class="chat-name">Mercia IA</h3>
-                    <div class="chat-description" style="font-size: 0.75rem;">Je suis là pour éclairer vos choix créatifs.</div>
+            <!-- GRILLE ABONNEMENTS -->
+            <div id="pricing-abos" class="pricing__grid reveal">
+                <div class="pricing-card">
+                    <h3>Basique</h3>
+                    <div class="price"><sup>$</sup>42<span class="abonnement">/mois</span></div>
+                    <ul>
+                        <li><strong>15 affiches</strong> / mois</li>
+                        <li>Livraison continue (3-4 / sem.)</li>
+                        <li>1 révision par affiche</li>
+                        <li><s>Animations</s></li>
+                    </ul>
+                    <button onclick="openModal('Abonnement Basique')" class="btn btn-primary">Commander maintenant</button>
+                    <p class="pricing-card__guarantee">
+                        Garantie satisfait ou remboursé à 100%
+                    </p>
                 </div>
-                <div id="chat-history">
-                    <div class="chat-message ai">
-                        <span class="bubble">Bonjour ! Prêt·e à booster votre image ? Dites-moi ce que je peux faire
-                            pour vous.</span>
+                
+                <div class="pricing-card popular">
+                    <h3>Intermédiaire</h3>
+                    <div class="price"><sup>$</sup>72<span class="abonnement">/mois</span></div>
+                    <ul>
+                        <li><strong>30 affiches</strong> / mois</li>
+                        <li>Livraison continue (6-8 / sem.)</li>
+                        <li><strong>2 révisions</strong> par affiche</li>
+                        <li>Animations légères incluses</li>
+                        <li>Livraison express 24h</li>
+                    </ul>
+                    <button onclick="openModal('Abonnement Intermédiaire')" class="btn btn-primary">Commander maintenant</button>
+                    <p class="pricing-card__guarantee">
+                        Garantie satisfait ou remboursé à 100%
+                    </p>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Premium</h3>
+                    <div class="price"><sup>$</sup>102<span class="abonnement">/mois</span></div>
+                    <ul>
+                        <li><strong>60 affiches</strong> / mois</li>
+                        <li>Livraison chaque semaine (12-15 / sem.)</li>
+                        <li><strong>Modifications illimitées</strong></li>
+                        <li>Animations professionnelles incluses</li>
+                        <li>Suivi et conseils personnalisés</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openModal('Abonnement Premium')">
+                        Commander maintenant
+                    </button>
+                    <p class="pricing-card__guarantee">
+                        Garantie satisfait ou remboursé à 100%
+                    </p>
+                </div>
+            </div>
+
+            <!-- GRILLE SERVICES (CARTE) -->
+            <div id="pricing-carte" class="pricing__grid pricing__grid--fiverr hidden reveal">
+                <!-- Service 1: Logotype -->
+                <div class="fiverr-gig">
+                    <img src="src/img/Creation logo.png" alt="Service de création de logo">
+                    <div class="fiverr-gig-content">
+                        <h4>Logo seulement</h4>
+                        <p class="description">
+                            Un logo unique et professionnel pour 15$. Fichiers sources inclus. Idéal pour les petites entreprises.
+                        </p>
+                        <div class="fiverr-gig-footer">
+                            <p class="fiverr-gig-price">
+                                <span class="label">À PARTIR DE</span>
+                                <span class="amount">$15</span>
+                            </p>
+                            <button onclick="openModal('Création Logo')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                                Commander
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="chat-form-container">
-                    <form id="chat-form">
-                        <input id="chat-input" type="text" placeholder="Tapez votre message..." required>
-                        <button class="chat-bot-submit" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                style="width: 1.25rem; height: 1.25rem;">
-                                <path
-                                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                            </svg>
-                        </button>
-                    </form>
+
+                <!-- Service 2: Logo + Identité -->
+                <div class="fiverr-gig">
+                    <img src="src/img/Logo identite.png" alt="Logo + Identité">
+                    <div class="fiverr-gig-content">
+                        <h4>Logo + mini identité visuelle</h4>
+                        <p class="description">
+                            Logo unique + palette de couleurs, typographies et déclinaisons. Mini-guide inclus. Fichiers SVG/PNG/PDF.
+                        </p>
+                        <div class="fiverr-gig-footer">
+                            <p class="fiverr-gig-price">
+                                <span class="label">À PARTIR DE</span>
+                                <span class="amount">$25</span>
+                            </p>
+                            <button onclick="openModal('Logo + Identité')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                                Commander
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3: Flyer -->
+                <div class="fiverr-gig">
+                    <img src="src/img/Flyer.png" alt="Service de design de flyer">
+                    <div class="fiverr-gig-content">
+                        <h4>Flyer pro pour votre événement</h4>
+                        <p class="description">
+                            Design sur‑mesure livré prêt à l'impression. Offre spéciale : 1 flyer offert pour chaque pack de 5.
+                        </p>
+                        <div class="fiverr-gig-footer">
+                            <p class="fiverr-gig-price">
+                                <span class="label">À PARTIR DE</span>
+                                <span class="amount">$11</span>
+                            </p>
+                            <button onclick="openModal('Flyer Event')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                                Commander
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4: Carte de visite -->
+                <div class="fiverr-gig">
+                    <img src="src/img/Carte de visite.png" alt="Service de carte de visite">
+                    <div class="fiverr-gig-content">
+                        <h4>Carte de visite unique</h4>
+                        <p class="description">
+                            Recto/verso, conçue sur‑mesure. Fichiers prêts à l'impression (PDF CMJN) et numériques.
+                        </p>
+                        <div class="fiverr-gig-footer">
+                            <p class="fiverr-gig-price">
+                                <span class="label">PRIX FIXE</span>
+                                <span class="amount">$11</span>
+                            </p>
+                            <button onclick="openModal('Carte de Visite')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                                Commander
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 5: Pack Album -->
+                <div class="fiverr-gig">
+                    <img src="src/img/cover album.png" alt="Service de cover d'album">
+                    <div class="fiverr-gig-content">
+                        <h4>Cover Album + Miniature YT</h4>
+                        <p class="description">
+                            Pochette unique + miniature YouTube optimisée (statique ou animation courte).
+                        </p>
+                        <div class="fiverr-gig-footer">
+                            <p class="fiverr-gig-price">
+                                <span class="label">À PARTIR DE</span>
+                                <span class="amount">$15</span>
+                            </p>
+                            <button onclick="openModal('Pack Album')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                                Commander
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section-cta">
+                Votre réussite est notre priorité. Notre politique de remboursement
+                est simple : si vous n'êtes pas satisfait, nous travaillons jusqu'à
+                ce que vous le soyez, ou nous vous remboursons.
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FAQ -->
+    <section id="faq" class="section-faq">
+        <div class="container faq-container">
+            <h2 class="text-center" style="margin-bottom: 2.5rem;">Questions Fréquentes</h2>
+            
+            <div class="clay-card faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-summary">
+                    Combien coûte un site web pro ?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-content">
+                    Chaque projet est unique. Nous proposons des landing pages optimisées à partir de 500$, mais une plateforme complète demandera un devis sur mesure. Contactez-nous pour une estimation gratuite.
+                </div>
+            </div>
+
+            <div class="clay-card faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-summary">
+                    Quels sont les délais de livraison ?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-content">
+                    Pour une identité visuelle, comptez 1 semaine. Pour un site vitrine, 2 à 3 semaines. Nous privilégions la qualité et la rapidité.
+                </div>
+            </div>
+
+            <div class="clay-card faq-item reveal" onclick="toggleFaq(this)">
+                <div class="faq-summary">
+                    Fournissez-vous le contenu ?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-content">
+                    Nous pouvons vous assister avec le copywriting (rédaction persuasive) et la création de visuels 3D/photos moyennant un supplément.
                 </div>
             </div>
         </div>
-    </main>
-    <footer class="footer">
-        <div class="container footer__container">
-            <div class="footer__column">
-                <h4>Adasoft</h4>
-                <p>Nous créons des marques inoubliables.</p>
+    </section>
+
+    <!-- 6. FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <h2>Prêt à transformer votre business ?</h2>
+            <p style="font-size: 1.1rem; margin-top: 1rem; color: #cbd5e1;">Ne laissez plus vos concurrents prendre vos parts de marché.</p>
+            
+            <div class="footer-cta">
+                <a href="https://wa.me/243995342102" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                    <i class="fab fa-whatsapp" style="margin-right: 10px; font-size: 1.4rem;"></i> Discuter de mon projet
+                </a>
             </div>
-            <div class="footer__column">
-                <h4>Explorer</h4>
-                <ul>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#pricing">Tarifs</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="footer__column">
-                <h4>Légal</h4>
-                <ul>
-                    <li><a href="#">Conditions d'utilisation</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="container footer__bottom">
-            <p>&copy; 2025 Adasoft. Tous droits réservés.</p>
-            <div class="footer__socials">
-                <a href="#" aria-label="LinkedIn"><svg></svg></a>
-                <a href="#" aria-label="Twitter"><svg></svg></a>
+
+            <div class="footer-bottom">
+                <div class="flex items-center gap-2 justify-center">
+                    <img src="src/assets/Logo-dark.svg" style="height: 24px; opacity: 0.5; filter: invert(1);" alt="Logo">
+                    <span>© 2025 AdaSoft. Tous droits réservés.</span>
+                </div>
+                <div class="flex gap-4 justify-center">
+                    <a href="#">Mentions Légales</a>
+                    <a href="#">Confidentialité</a>
+                </div>
             </div>
         </div>
     </footer>
-<!-- ========== MODALS ========== -->
 
-    <!-- Modal 1: Prise d'Appel -->
-    <div id="modal-appel" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" data-modal-id="modal-appel">&times;</button>
-            <h3>Réserver un appel stratégique</h3>
-            <p>Remplissez ces informations pour que nous puissions préparer notre appel de 15 minutes.</p>
+    <!-- MODAL DE COMMANDE -->
+    <div id="order-modal" class="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3 id="modal-title" style="margin-bottom: 0.5rem;">Commander</h3>
+            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                Remplissez ce formulaire pour finaliser votre demande sur WhatsApp.
+            </p>
             
-            <div class="form-success">
-                <h4>Merci !</h4>
-                <p>Votre demande d'appel a été envoyée. Nous vous contacterons très bientôt pour confirmer la date.</p>
-            </div>
-            
-            <form class="modal-form">
+            <form id="order-form" onsubmit="submitOrder(event)">
+                <input type="hidden" id="offer-name" name="offer-name">
+                
                 <div class="form-group">
-                    <label for="appel-nom" class="form-label">Nom complet</label>
-                    <input type="text" id="appel-nom" class="form-input" placeholder="Ex: Jean Ilunga" required>
+                    <label class="form-label">Nom Complet *</label>
+                    <input type="text" id="client-name" class="form-input" placeholder="Votre nom" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="appel-email" class="form-label">Email professionnel</label>
-                    <input type="email" id="appel-email" class="form-input" placeholder="jeanIlunga@entreprise.com" required>
+                    <label class="form-label">Entreprise / Organisation</label>
+                    <input type="text" id="client-company" class="form-input" placeholder="Nom de votre structure">
                 </div>
+
                 <div class="form-group">
-                    <label for="appel-number" class="form-label">Email professionnel</label>
-                    <input type="number" id="appel-number" class="form-input" placeholder="+243 XXX XXX XXX" required>
+                    <label class="form-label">Description du besoin *</label>
+                    <textarea id="project-desc" class="form-textarea" placeholder="Décrivez brièvement ce que vous souhaitez (couleurs, style, infos à mettre...)" required></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="appel-entreprise" class="form-label">Nom de votre entreprise (ou projet)</label>
-                    <input type="text" id="appel-entreprise" class="form-input" placeholder="Ex: ADASOFT">
-                </div>
-                <div class="form-group">
-                    <label for="appel-defi" class="form-label">Quel est votre principal défi actuel ?</label>
-                    <textarea id="appel-defi" class="form-textarea" placeholder="Ex: Je n'ai pas le temps de créer du contenu, mon feed n'est pas pro..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary form-submit">Réserver l'appel</button>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Confirmer la commande <i class="fab fa-whatsapp" style="margin-left: 8px;"></i>
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Modal 2: Commande Abonnement -->
-    <div id="modal-abo" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" data-modal-id="modal-abo">&times;</button>
-            <h3>Démarrer votre abonnement de <span id="abonnement_prix"></span></h3>
-            <p>Remplissez ces informations pour lancer la production.</p>
-            
-            <div class="form-success">
-                <h4>Commande reçue !</h4>
-                <p>Nous avons bien reçu votre demande pour l'offre <strong id="abo-success-offer"></strong>. Nous vous envoyons un email avec le lien de paiement et les prochaines étapes.</p>
-            </div>
-
-            <form class="modal-form">
-                <input type="hidden" id="abo-offer" name="offer">
-                <div class="form-group">
-                    <label for="abo-nom" class="form-label">Votre Prenom et Nom</label>
-                    <input type="text" id="abo-nom" class="form-input" placeholder="Ex: Jean Ilunga" required>
-                </div>
-                <div class="form-group">
-                    <label for="abo-email" class="form-label">Email professionnel</label>
-                    <input type="email" id="abo-email" class="form-input" placeholder="jeanIlunga@entreprise.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="abo-numero" class="form-label">Numero WhatsApp</label>
-                    <input type="number" id="abo-numero" class="form-input" placeholder="+243 XXX XXX XXX" required>
-                </div>
-                <div class="form-group">
-                    <label for="abo-entreprise" class="form-label">Nom de votre entreprise</label>
-                    <input type="text" id="abo-entreprise" class="form-input" placeholder="Ex: ADASOFT" required>
-                </div>
-                <div class="form-group">
-                    <label for="abo-besoins" class="form-label">Décrivez brièvement vos besoins / votre marque</label>
-                    <textarea id="abo-besoins" class="form-textarea" placeholder="Ex: Nous sommes un coach en fitness, nous ciblons les jeunes pros, ton dynamique..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary form-submit">Confirmer la commande</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal 3: Commande à la Carte -->
-    <div id="modal-carte" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" data-modal-id="modal-carte">&times;</button>
-            <h3>Commander un service à la carte</h3>
-            <p>Parfait ! Fournissez-nous les détails de votre brief créatif.</p>
-
-            <div class="form-success">
-                <h4>Brief reçu !</h4>
-                <p>Merci pour votre demande pour le service <strong id="carte-success-service"></strong>. Nous allons l'examiner et vous revenir avec une facture et une confirmation.</p>
-            </div>
-
-            <form class="modal-form">
-                <input type="hidden" id="carte-service" name="service">
-                <div class="form-group">
-                    <label for="carte-nom" class="form-label">Nom complet</label>
-                    <input type="text" id="carte-nom" class="form-input" placeholder="Ex: Jean Ilunga" required>
-                </div>
-                <div class="form-group">
-                    <label for="carte-email" class="form-label">Email</label>
-                    <input type="email" id="carte-email" class="form-input" placeholder="jeanIlunga@gmail.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="carte-num" class="form-label">Numeros WhatsApp</label>
-                    <input type="number" id="number" class="form-input" placeholder="+243 XXX XXX XXX" required>
-                </div>
-                <div class="form-group">
-                    <label for="carte-brief" class="form-label">Votre brief créatif</label>
-                    <textarea id="carte-brief" class="form-textarea" placeholder="Veuillez décrire votre vision, les textes à inclure, les couleurs, et joindre des exemples si possible (nous vous contacterons par email pour les fichiers)." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary form-submit">Envoyer le brief</button>
-            </form>
-        </div>
-    </div>
-
+    <!-- LOGIC JS -->
     <script>
-        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
-</body>
+        // 1. Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+        }
 
+        // 2. FAQ Accordion
+        function toggleFaq(element) {
+            // Close others
+            const allFaqs = document.querySelectorAll('.faq-item');
+            allFaqs.forEach(item => {
+                if (item !== element) item.classList.remove('open');
+            });
+            element.classList.toggle('open');
+        }
+
+        // 3. PRICING SWITCHER
+        function switchPricing(type) {
+            const btnAbos = document.getElementById('btn-abos');
+            const btnCarte = document.getElementById('btn-carte');
+            const gridAbos = document.getElementById('pricing-abos');
+            const gridCarte = document.getElementById('pricing-carte');
+
+            if(type === 'abos') {
+                btnAbos.classList.add('btn-active');
+                btnCarte.classList.remove('btn-active');
+                
+                gridAbos.classList.remove('hidden');
+                gridCarte.classList.add('hidden');
+            } else {
+                btnCarte.classList.add('btn-active');
+                btnAbos.classList.remove('btn-active');
+
+                gridCarte.classList.remove('hidden');
+                gridAbos.classList.add('hidden');
+            }
+        }
+
+        // 4. Scroll Reveal & Navbar & MODAL LOGIC & 3D CAROUSEL
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            
+            // Navbar Scroll Effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.85)';
+                    navbar.style.boxShadow = 'none';
+                }
+            });
+
+            // Reveal on Scroll
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // --- 5. LOGIQUE CARROUSEL 3D (DECK SWAP) ---
+            const deckCards = document.querySelectorAll('.card-3d');
+            const heroDeck = document.getElementById('hero-deck');
+            
+            if (deckCards.length > 0 && heroDeck) {
+                let cardsArray = Array.from(deckCards);
+                let autoRotateInterval;
+                
+                // Function to Rotate Cards Once
+                function rotateDeck() {
+                    const frontCard = cardsArray[0];
+                    const middleCard = cardsArray[1];
+                    const backCard = cardsArray[2];
+
+                    // Animate Front Card Out
+                    frontCard.classList.remove('card-pos-0');
+                    frontCard.classList.add('card-out');
+
+                    // Shift others up
+                    middleCard.classList.remove('card-pos-1');
+                    middleCard.classList.add('card-pos-0');
+
+                    backCard.classList.remove('card-pos-2');
+                    backCard.classList.add('card-pos-1');
+
+                    // Reset old front card to back
+                    setTimeout(() => {
+                        frontCard.classList.remove('card-out');
+                        frontCard.classList.add('card-pos-2');
+                        // Rotate array logic
+                        cardsArray.push(cardsArray.shift()); 
+                    }, 600);
+                }
+
+                // Start Auto Rotation
+                function startAutoRotate() {
+                    autoRotateInterval = setInterval(rotateDeck, 4000);
+                }
+
+                // Stop Auto Rotation
+                function stopAutoRotate() {
+                    clearInterval(autoRotateInterval);
+                }
+
+                // Initialize
+                startAutoRotate();
+
+                // --- INTERACTIVITY: PAUSE ON HOVER & CLICK TO ROTATE ---
+                heroDeck.addEventListener('mouseenter', stopAutoRotate);
+                heroDeck.addEventListener('mouseleave', startAutoRotate);
+                
+                // Click to manually advance
+                heroDeck.addEventListener('click', () => {
+                    stopAutoRotate(); // Stop temporarily
+                    rotateDeck();     // Force rotate
+                    // Will restart on mouseleave, or we could restart it manually if mouse stays inside?
+                    // Usually mouseleave is safer logic.
+                });
+            }
+
+            // Parallax 3D Effect (Tilt) for the whole container
+            // MODIFICATION : On écoute sur toute la section .hero pour une marge plus large
+            const heroSectionContainer = document.querySelector('.hero');
+            const heroVisual = document.getElementById('hero-visual');
+            const deck = document.getElementById('hero-deck');
+
+            if (heroSectionContainer && heroVisual && deck && window.innerWidth > 992) {
+                heroSectionContainer.addEventListener('mousemove', (e) => {
+                    // On calcule toujours par rapport au centre du VISUEL (#hero-visual)
+                    // même si la souris est loin (sur le texte par exemple)
+                    const rect = heroVisual.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    
+                    const x = e.clientX - centerX;
+                    const y = e.clientY - centerY;
+
+                    // Tilt plus doux (/60 au lieu de /40) car l'amplitude de mouvement X/Y est plus grande
+                    deck.style.transform = `rotateY(${x / 60}deg) rotateX(${-y / 60}deg)`;
+                });
+                
+                heroSectionContainer.addEventListener('mouseleave', () => {
+                    deck.style.transform = `rotateY(0deg) rotateX(0deg)`;
+                });
+            }
+        });
+
+        // --- FONCTIONS GLOBALES MODALES ---
+        const modal = document.getElementById('order-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const offerInput = document.getElementById('offer-name');
+
+        function openModal(offerName) {
+            if(offerInput) offerInput.value = offerName;
+            if(modalTitle) modalTitle.innerText = "Commander : " + offerName;
+            if(modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            if(modal) modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermer si on clique en dehors
+        if(modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            
+            const offer = document.getElementById('offer-name').value;
+            const name = document.getElementById('client-name').value;
+            const company = document.getElementById('client-company').value;
+            const desc = document.getElementById('project-desc').value;
+
+            // Message WhatsApp
+            let message = `Bonjour, je souhaite commander : *${offer}*\n\n`;
+            message += `👤 *Nom:* ${name}\n`;
+            if(company) message += `🏢 *Entreprise:* ${company}\n`;
+            message += `📝 *Description:* ${desc}`;
+
+            const phoneNumber = "243995342102";
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            window.open(url, '_blank');
+            closeModal();
+        }
+    </script>
+</body>
 </html>
