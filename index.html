@@ -6,7 +6,7 @@
     <title>AdaSoft - Solutions Digitales & Créatives</title>
     <meta name="description" content="Expert en identité visuelle et création de logo. J'aide les startups et entrepreneurs à construire une image de marque unique et mémorable pour attirer leurs clients.">
     <meta name="author" content="Jprintemps Matthieu Tshiloko">
-  <link rel="icon" type="image/png" href="src/assets/icon.png">
+    <link rel="icon" type="image/png" href="src/assets/icon.png">
     <!-- Polices Modernes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +15,9 @@
     
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tesseract.js pour l'OCR (Lecture de texte sur image) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
     <style>
         /* --- 1. VARIABLES & RESET --- */
@@ -598,11 +601,49 @@
         }
         .fiverr-gig:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
-        .fiverr-gig img { width: 100%; height: 220px; object-fit: cover; }
+        .fiverr-gig img { width: 100%; height: 100%; object-fit: cover; }
         .fiverr-gig-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
         .fiverr-gig h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; font-family: var(--font-main); }
-        .fiverr-gig .description { font-size: 0.9rem; color: var(--text-light); margin-bottom: 1.5rem; flex-grow: 1; }
+        .fiverr-gig .description { font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem; flex-grow: 1; }
         
+        /* NEW DELIVERY BOX STYLES */
+        .delivery-box {
+            background-color: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .delivery-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .delivery-row i {
+            margin-right: 6px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .delivery-express {
+            color: #e11d48;
+            font-weight: 700;
+            background: #ffe4e6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            width: fit-content;
+        }
+
         .fiverr-gig-footer {
             display: flex; justify-content: space-between; align-items: center;
             border-top: 1px solid #f1f5f9; padding-top: 1rem;
@@ -642,7 +683,7 @@
 
         .modal-container {
             background: var(--bg-color); /* Assurez-vous que cette variable est définie ou remplacez par #f0f4f8 */
-            width: 90%; max-width: 500px;
+            width: 90%; max-width: 600px; /* Wider for more options */
             border-radius: 24px;
             padding: 2rem;
             box-shadow: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff; /* Style Clay */
@@ -661,20 +702,115 @@
         .form-group { margin-bottom: 1.2rem; text-align: left; }
         .form-label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #0F172A; font-size: 0.9rem; }
 
-        .form-input, .form-textarea {
+        .form-input, .form-textarea, .form-select {
             width: 100%; padding: 0.8rem 1rem;
             border-radius: 12px; border: 1px solid #e2e8f0;
             background: #ffffff; font-family: inherit;
             transition: border-color 0.3s, box-shadow 0.3s;
             box-shadow: inset 2px 2px 5px rgba(0,0,0,0.03);
+            font-size: 0.95rem;
         }
 
-        .form-input:focus, .form-textarea:focus {
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none; border-color: #4F46E5; /* Couleur primaire */
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
 
         .form-textarea { resize: vertical; min-height: 100px; }
+
+        /* Radio & Checkbox Styling */
+        .radio-group { display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .radio-label {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .radio-label:hover { border-color: var(--primary); }
+        .radio-label input[type="radio"]:checked + span {
+            color: var(--primary); font-weight: 600;
+        }
+        /* Custom file input */
+        .file-upload {
+            display: block; /* Added fix for click area */
+            width: 100%;    /* Added fix for click area */
+            margin-top: 0.5rem;
+            border: 2px dashed #cbd5e1;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #64748b;
+            transition: border-color 0.2s;
+        }
+        .file-upload:hover { border-color: var(--primary); }
+        .hidden-field { display: none; }
+
+        .order-summary {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; color: #475569; }
+        .summary-total { display: flex; justify-content: space-between; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid #e2e8f0; font-weight: 800; color: var(--dark); font-size: 1.1rem; }
+        
+        .add-service-btn {
+            background: transparent; border: 1px dashed var(--primary); color: var(--primary);
+            padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
+            width: 100%; margin-top: 0.5rem; transition: background 0.2s;
+        }
+        .add-service-btn:hover { background: #eef2ff; }
+        
+        .added-service-item {
+            background: #fff; padding: 0.5rem 0.8rem; border-radius: 8px;
+            margin-top: 0.5rem; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;
+        }
+        .remove-service { color: #ef4444; cursor: pointer; font-size: 0.8rem; }
+
+        /* --- VOICE RECORDER STYLES --- */
+        .voice-recorder-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .voice-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            color: #475569;
+            font-weight: 500;
+        }
+        .voice-btn:hover { background: #e2e8f0; }
+        .voice-btn.recording {
+            background: #fee2e2;
+            color: #ef4444;
+            border-color: #ef4444;
+            animation: pulse 1.5s infinite;
+        }
+        .voice-btn.delete { color: #ef4444; border-color: #ef4444; width: 36px; justify-content: center; padding: 0.5rem; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        #audio-preview { height: 40px; margin-top: 5px; flex-grow: 1; max-width: 250px; }
 
     </style>
 </head>
@@ -909,7 +1045,7 @@
                         <li>1 révision par affiche</li>
                         <li><s>Animations</s></li>
                     </ul>
-                    <button onclick="openModal('Abonnement Basique')" class="btn btn-primary">Commander maintenant</button>
+                    <button onclick="openModal('Abonnement Basique', 42)" class="btn btn-primary">Commander maintenant</button>
                     <p class="pricing-card__guarantee">
                         Garantie satisfait ou remboursé à 100%
                     </p>
@@ -925,7 +1061,7 @@
                         <li>Animations légères incluses</li>
                         <li>Livraison express 24h</li>
                     </ul>
-                    <button onclick="openModal('Abonnement Intermédiaire')" class="btn btn-primary">Commander maintenant</button>
+                    <button onclick="openModal('Abonnement Intermédiaire', 72)" class="btn btn-primary">Commander maintenant</button>
                     <p class="pricing-card__guarantee">
                         Garantie satisfait ou remboursé à 100%
                     </p>
@@ -941,7 +1077,7 @@
                         <li>Animations professionnelles incluses</li>
                         <li>Suivi et conseils personnalisés</li>
                     </ul>
-                    <button class="btn btn-primary" onclick="openModal('Abonnement Premium')">
+                    <button class="btn btn-primary" onclick="openModal('Abonnement Premium', 102)">
                         Commander maintenant
                     </button>
                     <p class="pricing-card__guarantee">
@@ -952,107 +1088,355 @@
 
             <!-- GRILLE SERVICES (CARTE) -->
             <div id="pricing-carte" class="pricing__grid pricing__grid--fiverr hidden reveal">
-                <!-- Service 1: Logotype -->
-                <div class="fiverr-gig">
-                    <img src="src/img/Creation logo.png" alt="Service de création de logo">
-                    <div class="fiverr-gig-content">
-                        <h4>Logo seulement</h4>
-                        <p class="description">
-                            Un logo unique et professionnel pour 15$. Fichiers sources inclus. Idéal pour les petites entreprises.
-                        </p>
-                        <div class="fiverr-gig-footer">
-                            <p class="fiverr-gig-price">
-                                <span class="label">À PARTIR DE</span>
-                                <span class="amount">$15</span>
-                            </p>
-                            <button onclick="openModal('Création Logo')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
-                                Commander
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Service 2: Logo + Identité -->
-                <div class="fiverr-gig">
-                    <img src="src/img/Logo identite.png" alt="Logo + Identité">
-                    <div class="fiverr-gig-content">
-                        <h4>Logo + mini identité visuelle</h4>
-                        <p class="description">
-                            Logo unique + palette de couleurs, typographies et déclinaisons. Mini-guide inclus. Fichiers SVG/PNG/PDF.
-                        </p>
-                        <div class="fiverr-gig-footer">
-                            <p class="fiverr-gig-price">
-                                <span class="label">À PARTIR DE</span>
-                                <span class="amount">$25</span>
-                            </p>
-                            <button onclick="openModal('Logo + Identité')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
-                                Commander
-                            </button>
-                        </div>
-                    </div>
+    <!-- 1. Création de Logo Minimaliste & Moderne -->
+    <div class="fiverr-gig">
+        <img src="src/img/Logo design.webp" alt="Service de création de logo">
+        <div class="fiverr-gig-content">
+            <h4>Conception de Logo Minimaliste & Moderne</h4>
+            <p class="description">
+                Un logo unique et professionnel. Fichiers sources inclus. Idéal pour les petites entreprises.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">48h</span>
                 </div>
-
-                <!-- Service 3: Flyer -->
-                <div class="fiverr-gig">
-                    <img src="src/img/Flyer.png" alt="Service de design de flyer">
-                    <div class="fiverr-gig-content">
-                        <h4>Flyer pro pour votre événement</h4>
-                        <p class="description">
-                            Design sur‑mesure livré prêt à l'impression. Offre spéciale : 1 flyer offert pour chaque pack de 5.
-                        </p>
-                        <div class="fiverr-gig-footer">
-                            <p class="fiverr-gig-price">
-                                <span class="label">À PARTIR DE</span>
-                                <span class="amount">$11</span>
-                            </p>
-                            <button onclick="openModal('Flyer Event')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
-                                Commander
-                            </button>
-                        </div>
-                    </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (24h)</span>
+                    <span class="delivery-express">+10$</span>
                 </div>
-
-                <!-- Service 4: Carte de visite -->
-                <div class="fiverr-gig">
-                    <img src="src/img/Carte de visite.png" alt="Service de carte de visite">
-                    <div class="fiverr-gig-content">
-                        <h4>Carte de visite unique</h4>
-                        <p class="description">
-                            Recto/verso, conçue sur‑mesure. Fichiers prêts à l'impression (PDF CMJN) et numériques.
-                        </p>
-                        <div class="fiverr-gig-footer">
-                            <p class="fiverr-gig-price">
-                                <span class="label">PRIX FIXE</span>
-                                <span class="amount">$11</span>
-                            </p>
-                            <button onclick="openModal('Carte de Visite')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
-                                Commander
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Service 5: Pack Album -->
-                <div class="fiverr-gig">
-                    <img src="src/img/cover album.png" alt="Service de cover d'album">
-                    <div class="fiverr-gig-content">
-                        <h4>Cover Album + Miniature YT</h4>
-                        <p class="description">
-                            Pochette unique + miniature YouTube optimisée (statique ou animation courte).
-                        </p>
-                        <div class="fiverr-gig-footer">
-                            <p class="fiverr-gig-price">
-                                <span class="label">À PARTIR DE</span>
-                                <span class="amount">$15</span>
-                            </p>
-                            <button onclick="openModal('Pack Album')" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
-                                Commander
-                            </button> 
-                        </div>
-                    </div>
-                </div>
-
             </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$20</span>
+                </p>
+                <button onclick="openModal('Conception de Logo', 20, true)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Design d'Identité Visuelle -->
+    <div class="fiverr-gig">
+        <img src="src/img/Identite visuelle.webp" alt="Service Identité Visuelle">
+        <div class="fiverr-gig-content">
+            <h4>Design d'Identité Visuelle</h4>
+            <p class="description">
+                Palette de couleurs, typographies et déclinaisons visuelles. Mini-guide inclus.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">24h</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$20</span>
+                </p>
+                <button onclick="openModal('Identité Visuelle', 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Pack Complet : Logo + Identité Visuelle -->
+    <div class="fiverr-gig">
+        <img src="src/img/Logo + identite visuelle.webp" alt="Service Pack Branding">
+        <div class="fiverr-gig-content">
+            <h4>Pack Complet : Logo + Identité Visuelle</h4>
+            <p class="description">
+                La combinaison parfaite : Logo unique + Identité visuelle complète et fichiers sources.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">48h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (24h)</span>
+                    <span class="delivery-express">40$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$30</span>
+                </p>
+                <button onclick="openModal('Pack Branding', 30, true)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Affiche Événementielle -->
+    <div class="fiverr-gig">
+        <img src="src/img/Affiche evenementtielle.webp" alt="Service Affiche Event">
+        <div class="fiverr-gig-content">
+            <h4>Affiche Événementielle</h4>
+            <p class="description">
+                Design sur-mesure pour vos événements, livré prêt à l'impression en haute définition.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">24h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (<24h)</span>
+                    <span class="delivery-express">15$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$10</span>
+                </p>
+                <button onclick="openModal('Affiche Event', 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Affiche + Kit Réseaux Sociaux -->
+    <div class="fiverr-gig">
+        <img src="src/img/Affiche evenementtielle + social media kit.webp" alt="Service Affiche + Social">
+        <div class="fiverr-gig-content">
+            <h4>Affiche + Kit Réseaux Sociaux</h4>
+            <p class="description">
+                Votre affiche adaptée aux formats Instagram (Story, Post) et Facebook pour une com' 360°.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">24h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (<24h)</span>
+                    <span class="delivery-express">25$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$15</span>
+                </p>
+                <button onclick="openModal('Affiche + Social', 15)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Affiche Animée (Motion Design) -->
+    <div class="fiverr-gig">
+        <img src="src/img/Affiche evenementtielle + social media kit + animation.webp" alt="Service Affiche Animée">
+        <div class="fiverr-gig-content">
+            <h4>Affiche Animée (Motion Design)</h4>
+            <p class="description">
+                Donnez vie à votre événement avec une version animée (Motion Design) de votre flyer.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">48h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (24h)</span>
+                    <span class="delivery-express">40$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$20</span>
+                </p>
+                <button onclick="openModal('Affiche Animée', 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Cover Album (Spotify & Apple Music) -->
+    <div class="fiverr-gig">
+        <img src="src/img/Album cover.webp" alt="Service Cover Album">
+        <div class="fiverr-gig-content">
+            <h4>Cover Album (Spotify & Apple Music)</h4>
+            <p class="description">
+                Pochette artistique unique pour Spotify, Apple Music et toutes les plateformes de streaming.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">24h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (<24h)</span>
+                    <span class="delivery-express">15$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$10</span>
+                </p>
+                <button onclick="openModal('Cover Album', 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Cover Album + Kit Streaming -->
+    <div class="fiverr-gig">
+        <img src="src/img/Album cover + social media kit.webp" alt="Service Cover + Streaming">
+        <div class="fiverr-gig-content">
+            <h4>Cover Album + Kit Streaming</h4>
+            <p class="description">
+                Cover Album + Miniature YouTube + Bannières réseaux sociaux pour un lancement pro.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">24h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (<24h)</span>
+                    <span class="delivery-express">20$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$15</span>
+                </p>
+                <button onclick="openModal('Cover + Kit', 15)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. Cover Animée + Spotify Canvas -->
+    <div class="fiverr-gig">
+        <img src="src/img/Album cover + social media kit + cover animation.webp" alt="Service Cover Animée">
+        <div class="fiverr-gig-content">
+            <h4>Cover Animée + Spotify Canvas</h4>
+            <p class="description">
+                Cover animée et vidéo en boucle (Canvas) pour captiver vos auditeurs sur Spotify.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">48h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (<24h)</span>
+                    <span class="delivery-express">40$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$20</span>
+                </p>
+                <button onclick="openModal('Cover Animée', 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. Carte de Visite Premium -->
+    <div class="fiverr-gig">
+        <img src="src/img/Carte de visiste.webp" alt="Service Carte de Visite">
+        <div class="fiverr-gig-content">
+            <h4>Carte de Visite Premium</h4>
+            <p class="description">
+                Design recto/verso élégant et impactant. Fichiers prêts à l'impression (PDF CMJN).
+            </p>
+            <!-- Pas de délai spécifié dans la demande pour le #10 -->
+            <div class="fiverr-gig-footer" style="margin-top: auto;">
+                <p class="fiverr-gig-price">
+                    <span class="label">PRIX FIXE</span>
+                    <span class="amount">$10</span>
+                </p>
+                <button onclick="openModal('Carte de Visite', 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 11. Charte Graphique Complète (Brand Book) -->
+    <div class="fiverr-gig">
+        <img src="src/img/Branding complet.webp" alt="Service Charte Graphique">
+        <div class="fiverr-gig-content">
+            <h4>Charte Graphique Complète (Brand Book)</h4>
+            <p class="description">
+                Le manuel complet de votre marque : Usage du logo, couleurs, typographies et interdits.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">72h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (48h)</span>
+                    <span class="delivery-express">160$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$120</span>
+                </p>
+                <button onclick="openModal('Charte Graphique', 120, true)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12. Branding Intégral (All-in-One) -->
+    <div class="fiverr-gig">
+        <img src="src/img/Branding Complet (La Totale).webp" alt="Service Branding Complet">
+        <div class="fiverr-gig-content">
+            <h4>Branding Intégral (All-in-One)</h4>
+            <p class="description">
+                La solution ultime : Logo, Charte, Papeterie et Supports Marketing pour lancer votre empire.
+            </p>
+            <div class="delivery-box">
+                <div class="delivery-row">
+                    <span><i class="far fa-clock"></i> Délai Standard</span>
+                    <span class="delivery-standard">72h</span>
+                </div>
+                <div class="delivery-row">
+                    <span class="delivery-express"><i class="fas fa-bolt"></i> Express (48h)</span>
+                    <span class="delivery-express">250$ (Total)</span>
+                </div>
+            </div>
+            <div class="fiverr-gig-footer">
+                <p class="fiverr-gig-price">
+                    <span class="label">À PARTIR DE</span>
+                    <span class="amount">$200</span>
+                </p>
+                <button onclick="openModal('Branding Complet', 200, true)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                    Commander
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
 
             <div class="section-cta">
                 Votre réussite est notre priorité. Notre politique de remboursement
@@ -1110,7 +1494,14 @@
                     <i class="fab fa-whatsapp" style="margin-right: 10px; font-size: 1.4rem;"></i> Discuter de mon projet
                 </a>
             </div>
-
+            <div>
+                <li>Facebook</li>
+                <li>Instagram</li>
+                <li>Linkedin</li>
+                <li>X(Twitter)</li>
+                <li>YouTube</li>
+            
+            </div>
             <div class="footer-bottom">
                 <div class="flex items-center gap-2 justify-center">
                     <img src="src/assets/Logo-dark.svg" style="height: 24px; opacity: 0.5; filter: invert(1);" alt="Logo">
@@ -1124,42 +1515,225 @@
         </div>
     </footer>
 
-    <!-- MODAL DE COMMANDE -->
+    <!-- MODAL DE COMMANDE AVANCE -->
     <div id="order-modal" class="modal-overlay">
         <div class="modal-container">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             <h3 id="modal-title" style="margin-bottom: 0.5rem;">Commander</h3>
             <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">
-                Remplissez ce formulaire pour finaliser votre demande sur WhatsApp.
+                Personnalisez votre commande ci-dessous.
             </p>
             
             <form id="order-form" onsubmit="submitOrder(event)">
                 <input type="hidden" id="offer-name" name="offer-name">
+                <input type="hidden" id="base-price" name="base-price">
+                <input type="hidden" id="is-logo-service" name="is-logo-service">
                 
+                <!-- 1. Informations Client -->
                 <div class="form-group">
                     <label class="form-label">Nom Complet *</label>
                     <input type="text" id="client-name" class="form-input" placeholder="Votre nom" required>
                 </div>
-                
                 <div class="form-group">
-                    <label class="form-label">Entreprise / Organisation</label>
+                    <label class="form-label">Numéro WhatsApp *</label>
+                    <input type="tel" id="client-whatsapp" class="form-input" placeholder="+243..." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Entreprise (Optionnel)</label>
                     <input type="text" id="client-company" class="form-input" placeholder="Nom de votre structure">
                 </div>
 
+                <!-- 2. Style de Design -->
                 <div class="form-group">
-                    <label class="form-label">Description du besoin *</label>
-                    <textarea id="project-desc" class="form-textarea" placeholder="Décrivez brièvement ce que vous souhaitez (couleurs, style, infos à mettre...)" required></textarea>
+                    <label class="form-label">Avez-vous un style de design particulier ?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="design-style" value="yes" onclick="toggleStyleInput(true)">
+                            <span>Oui, j'ai un exemple</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="design-style" value="no" checked onclick="toggleStyleInput(false)">
+                            <span>Non, proposez-moi un style</span>
+                        </label>
+                    </div>
+                    <!-- Upload File Style -->
+                    <div id="style-upload-container" class="hidden-field">
+                        <label for="style-file" class="file-upload">
+                            <i class="fas fa-cloud-arrow-up" style="font-size: 1.5rem; margin-bottom: 5px; display: block;"></i>
+                            Cliquez pour joindre votre exemple (Image)
+                        </label>
+                        <input type="file" id="style-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'style-file-label')">
+                        <div id="style-file-label" style="font-size: 0.8rem; color: var(--primary); margin-top: 5px; text-align: center;"></div>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-                    Confirmer la commande <i class="fab fa-whatsapp" style="margin-left: 8px;"></i>
+                <!-- 3. Question Logo (Conditionnelle) -->
+                <div id="logo-section" class="form-group">
+                    <label class="form-label">Avez-vous déjà votre logo ?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="has-logo" value="yes" checked onclick="toggleLogoInput(true)">
+                            <span>Oui</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="has-logo" value="no" onclick="toggleLogoInput(false)">
+                            <span>Non (Création +15$ / +48h)</span>
+                        </label>
+                    </div>
+                     <!-- Upload Logo -->
+                     <div id="logo-upload-container">
+                        <label for="logo-file" class="file-upload">
+                            <i class="fas fa-cloud-arrow-up" style="font-size: 1.5rem; margin-bottom: 5px; display: block;"></i>
+                            Joindre votre logo (PNG/AI/PDF)
+                        </label>
+                        <input type="file" id="logo-file" accept="image/*,.pdf,.ai" class="hidden-field" onchange="handleFileSelect(event, 'logo-file-label')">
+                        <div id="logo-file-label" style="font-size: 0.8rem; color: var(--primary); margin-top: 5px; text-align: center;"></div>
+                    </div>
+                </div>
+
+                <!-- 4. Options Supplémentaires & Services -->
+                <div class="form-group">
+                    <label class="form-label">Options & Services Additionnels</label>
+                    
+                    <label class="radio-label" style="width: 100%; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="express-option" onchange="updateTotal()">
+                            <span>Livraison Express (+10$)</span>
+                        </div>
+                        <i class="fas fa-bolt" style="color: #fbbf24;"></i>
+                    </label>
+
+                    <!-- Dynamic Service List -->
+                    <div id="added-services-list"></div>
+
+                    <button type="button" class="add-service-btn" onclick="showServiceDropdown()">
+                        <i class="fas fa-plus"></i> Ajouter un autre service
+                    </button>
+                    
+                    <div id="service-dropdown-container" class="hidden-field" style="margin-top: 0.5rem;">
+                        <select id="extra-service-select" class="form-select" onchange="addService(this)">
+                            <option value="">-- Choisir un service --</option>
+                            <option value="Logo Design|20">Logo Design (20$)</option>
+                            <option value="Identité Visuelle|20">Identité Visuelle (20$)</option>
+                            <option value="Affiche Event|10">Affiche Event (10$)</option>
+                            <option value="Cover Album|10">Cover Album (10$)</option>
+                            <option value="Carte Visite|10">Carte de Visite (10$)</option>
+                            <option value="Autre|0">Autre (Sur devis)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description détaillée du besoin *</label>
+                    <textarea id="project-desc" class="form-textarea" placeholder="Détails, couleurs préférées, texte à inclure..." required></textarea>
+                    
+                    <!-- Voice Recorder UI -->
+                    <div class="voice-recorder-container">
+                        <button type="button" id="record-btn" class="voice-btn" onclick="toggleRecording()">
+                            <i class="fas fa-microphone"></i> <span id="record-text">Ajouter une note vocale</span>
+                        </button>
+                        <span id="recording-timer" class="hidden" style="font-size: 0.9rem; color: #ef4444; font-weight: bold;">00:00</span>
+                        <audio id="audio-preview" controls class="hidden"></audio>
+                        <button type="button" id="delete-audio-btn" class="voice-btn delete hidden" onclick="deleteAudio()" title="Supprimer l'audio">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Résumé -->
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Service Principal</span>
+                        <span id="summary-base-price">0$</span>
+                    </div>
+                    <div class="summary-row" id="summary-logo-creation" style="display: none; color: var(--primary);">
+                        <span>+ Création Logo (48h)</span>
+                        <span>15$</span>
+                    </div>
+                    <div class="summary-row" id="summary-express" style="display: none; color: #e11d48;">
+                        <span>+ Express (24h)</span>
+                        <span>10$</span>
+                    </div>
+                    <div id="summary-extras"></div>
+                    
+                    <div class="summary-total">
+                        <span>Total à Payer</span>
+                        <span id="summary-total-price">0$</span>
+                    </div>
+                </div>
+
+                <!-- 5. Section Paiement (Bloquante) -->
+                <div class="form-group" style="background: #f0fdf4; padding: 1rem; border-radius: 12px; border: 1px solid #bbf7d0;">
+                    <label class="form-label" style="color: #15803d;">Avez-vous déjà effectué le paiement ?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="payment-status" value="yes" onclick="togglePaymentLogic(true)">
+                            <span>Oui</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="payment-status" value="no" checked onclick="togglePaymentLogic(false)">
+                            <span>Non</span>
+                        </label>
+                    </div>
+
+                    <!-- Si NON : Instructions Paiement -->
+                    <div id="payment-info-container" style="margin-top: 1rem;">
+                        <p style="font-size: 0.9rem; color: #374151; margin-bottom: 0.5rem;">
+                            Veuillez envoyer le montant total au numéro Mobile Money ci-dessous avant de commander :
+                        </p>
+                        <div style="background: white; padding: 0.8rem; border-radius: 8px; border: 1px dashed #16a34a; text-align: center;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px;">
+                                <div style="font-weight: 800; font-size: 1.2rem; color: #16a34a;">099 534 2102</div>
+                                <button type="button" onclick="copyToClipboard('0995342102', this)" title="Copier le numéro" style="background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: #4b5563;">Mukembe Prisca</div>
+                        </div>
+                    </div>
+
+                    <!-- Si OUI : Upload Preuve -->
+                    <div id="payment-proof-container" class="hidden-field" style="margin-top: 1rem;">
+                        <label for="payment-proof-file" class="file-upload" style="border-color: #16a34a;">
+                            <i class="fas fa-receipt" style="font-size: 1.5rem; margin-bottom: 5px; display: block; color: #16a34a;"></i>
+                            Joindre la capture d'écran (Preuve) *
+                        </label>
+                        <input type="file" id="payment-proof-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'proof-file-label')">
+                        <div id="proof-file-label" style="font-size: 0.8rem; color: #16a34a; margin-top: 5px; text-align: center; font-weight: 600;"></div>
+                    </div>
+                </div>
+
+                <!-- Bouton Envoyer (Désactivé par défaut) -->
+                <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem; opacity: 0.5; cursor: not-allowed;" disabled>
+                    Envoyer la commande <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
                 </button>
+                <p id="submit-warning" style="text-align: center; font-size: 0.8rem; color: #ef4444; margin-top: 5px;">
+                    * Paiement et preuve requis pour envoyer
+                </p>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE SUCCES -->
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-container" style="text-align: center; max-width: 400px;">
+            <div style="background: #dcfce7; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                <i class="fas fa-check" style="font-size: 2.5rem; color: #16a34a;"></i>
+            </div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Commande Reçue !</h3>
+            <p style="color: #64748b; margin-bottom: 1.5rem;">
+                Merci <span id="success-client-name" style="font-weight: 700; color: #4F46E5;"></span> !<br>
+                Nous avons bien reçu votre demande. Notre équipe vous contactera très bientôt sur WhatsApp.
+            </p>
+            <button onclick="closeSuccessModal()" class="btn btn-primary" style="width: 100%;">
+                Génial !
+            </button>
         </div>
     </div>
 
     <!-- LOGIC JS -->
     <script>
+        // ... existing code (Mobile Menu, FAQ, Pricing Switcher, Scroll Reveal, 3D Deck, Parallax) ...
         // 1. Mobile Menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -1168,7 +1742,6 @@
 
         // 2. FAQ Accordion
         function toggleFaq(element) {
-            // Close others
             const allFaqs = document.querySelectorAll('.faq-item');
             allFaqs.forEach(item => {
                 if (item !== element) item.classList.remove('open');
@@ -1186,23 +1759,19 @@
             if(type === 'abos') {
                 btnAbos.classList.add('btn-active');
                 btnCarte.classList.remove('btn-active');
-                
                 gridAbos.classList.remove('hidden');
                 gridCarte.classList.add('hidden');
             } else {
                 btnCarte.classList.add('btn-active');
                 btnAbos.classList.remove('btn-active');
-
                 gridCarte.classList.remove('hidden');
                 gridAbos.classList.add('hidden');
             }
         }
 
-        // 4. Scroll Reveal & Navbar & MODAL LOGIC & 3D CAROUSEL
+        // 4. Scroll Reveal & Navbar & 3D Effect
         document.addEventListener('DOMContentLoaded', () => {
             const navbar = document.getElementById('navbar');
-            
-            // Navbar Scroll Effect
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 30) {
                     navbar.style.background = 'rgba(255, 255, 255, 0.95)';
@@ -1213,7 +1782,6 @@
                 }
             });
 
-            // Reveal on Scroll
             const revealElements = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1223,104 +1791,111 @@
                     }
                 });
             }, { threshold: 0.1 });
-
             revealElements.forEach(el => revealObserver.observe(el));
 
-            // --- 5. LOGIQUE CARROUSEL 3D (DECK SWAP) ---
+            // 3D Deck Logic
             const deckCards = document.querySelectorAll('.card-3d');
             const heroDeck = document.getElementById('hero-deck');
-            
             if (deckCards.length > 0 && heroDeck) {
                 let cardsArray = Array.from(deckCards);
                 let autoRotateInterval;
-                
-                // Function to Rotate Cards Once
                 function rotateDeck() {
                     const frontCard = cardsArray[0];
                     const middleCard = cardsArray[1];
                     const backCard = cardsArray[2];
-
-                    // Animate Front Card Out
-                    frontCard.classList.remove('card-pos-0');
-                    frontCard.classList.add('card-out');
-
-                    // Shift others up
-                    middleCard.classList.remove('card-pos-1');
-                    middleCard.classList.add('card-pos-0');
-
-                    backCard.classList.remove('card-pos-2');
-                    backCard.classList.add('card-pos-1');
-
-                    // Reset old front card to back
+                    frontCard.classList.remove('card-pos-0'); frontCard.classList.add('card-out');
+                    middleCard.classList.remove('card-pos-1'); middleCard.classList.add('card-pos-0');
+                    backCard.classList.remove('card-pos-2'); backCard.classList.add('card-pos-1');
                     setTimeout(() => {
-                        frontCard.classList.remove('card-out');
-                        frontCard.classList.add('card-pos-2');
-                        // Rotate array logic
+                        frontCard.classList.remove('card-out'); frontCard.classList.add('card-pos-2');
                         cardsArray.push(cardsArray.shift()); 
                     }, 600);
                 }
-
-                // Start Auto Rotation
-                function startAutoRotate() {
-                    autoRotateInterval = setInterval(rotateDeck, 4000);
-                }
-
-                // Stop Auto Rotation
-                function stopAutoRotate() {
-                    clearInterval(autoRotateInterval);
-                }
-
-                // Initialize
+                function startAutoRotate() { autoRotateInterval = setInterval(rotateDeck, 4000); }
+                function stopAutoRotate() { clearInterval(autoRotateInterval); }
                 startAutoRotate();
-
-                // --- INTERACTIVITY: PAUSE ON HOVER & CLICK TO ROTATE ---
                 heroDeck.addEventListener('mouseenter', stopAutoRotate);
                 heroDeck.addEventListener('mouseleave', startAutoRotate);
-                
-                // Click to manually advance
-                heroDeck.addEventListener('click', () => {
-                    stopAutoRotate(); // Stop temporarily
-                    rotateDeck();     // Force rotate
-                    // Will restart on mouseleave, or we could restart it manually if mouse stays inside?
-                    // Usually mouseleave is safer logic.
-                });
+                heroDeck.addEventListener('click', () => { stopAutoRotate(); rotateDeck(); });
             }
 
-            // Parallax 3D Effect (Tilt) for the whole container
-            // MODIFICATION : On écoute sur toute la section .hero pour une marge plus large
+            // Parallax
             const heroSectionContainer = document.querySelector('.hero');
             const heroVisual = document.getElementById('hero-visual');
             const deck = document.getElementById('hero-deck');
-
             if (heroSectionContainer && heroVisual && deck && window.innerWidth > 992) {
                 heroSectionContainer.addEventListener('mousemove', (e) => {
-                    // On calcule toujours par rapport au centre du VISUEL (#hero-visual)
-                    // même si la souris est loin (sur le texte par exemple)
                     const rect = heroVisual.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2;
                     const centerY = rect.top + rect.height / 2;
-                    
                     const x = e.clientX - centerX;
                     const y = e.clientY - centerY;
-
-                    // Tilt plus doux (/60 au lieu de /40) car l'amplitude de mouvement X/Y est plus grande
                     deck.style.transform = `rotateY(${x / 60}deg) rotateX(${-y / 60}deg)`;
                 });
-                
                 heroSectionContainer.addEventListener('mouseleave', () => {
                     deck.style.transform = `rotateY(0deg) rotateX(0deg)`;
                 });
             }
         });
 
-        // --- FONCTIONS GLOBALES MODALES ---
+        // --- NOUVELLE LOGIQUE MODALE & FORMULAIRE INTELLIGENT ---
+        
         const modal = document.getElementById('order-modal');
         const modalTitle = document.getElementById('modal-title');
         const offerInput = document.getElementById('offer-name');
+        const basePriceInput = document.getElementById('base-price');
+        const isLogoServiceInput = document.getElementById('is-logo-service');
+        const summaryBasePrice = document.getElementById('summary-base-price');
+        const summaryTotal = document.getElementById('summary-total-price');
+        
+        let extraServices = []; // Store additional services: {name, price}
+        let filesData = {}; // Store Base64 strings: {styleFile, logoFile, voiceNote, paymentProof}
+        let lastOcrText = ""; // NEW: Store OCR text globally
 
-        function openModal(offerName) {
-            if(offerInput) offerInput.value = offerName;
-            if(modalTitle) modalTitle.innerText = "Commander : " + offerName;
+        // --- VOICE RECORDER VARIABLES ---
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob = null;
+        let recordingTimerInterval;
+        let recordingSeconds = 0;
+
+        function openModal(offerName, price = 0, isLogoService = false) {
+            // Reset Form
+            document.getElementById('order-form').reset();
+            extraServices = [];
+            filesData = {};
+            lastOcrText = ""; // Reset OCR text
+            document.getElementById('added-services-list').innerHTML = '';
+            document.getElementById('style-file-label').innerText = '';
+            document.getElementById('logo-file-label').innerText = '';
+            document.getElementById('proof-file-label').innerText = '';
+            
+            // Reset Payment Logic & UI
+            togglePaymentLogic(false); // Reset to "No Payment" state
+            
+            // Reset Audio
+            deleteAudio();
+
+            // Set Base Data
+            offerInput.value = offerName;
+            basePriceInput.value = price;
+            isLogoServiceInput.value = isLogoService;
+            
+            modalTitle.innerText = "Commander : " + offerName;
+            summaryBasePrice.innerText = price + "$";
+            
+            // Toggle Logo Section Visibility
+            const logoSection = document.getElementById('logo-section');
+            if(isLogoService) {
+                logoSection.classList.add('hidden');
+            } else {
+                logoSection.classList.remove('hidden');
+                toggleLogoInput(true); // Default to "Yes I have a logo"
+            }
+            
+            toggleStyleInput(false);
+            updateTotal();
+
             if(modal) {
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1330,34 +1905,398 @@
         function closeModal() {
             if(modal) modal.classList.remove('active');
             document.body.style.overflow = 'auto';
+            if(mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                deleteAudio();
+            }
         }
 
-        // Fermer si on clique en dehors
         if(modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         }
 
+        // --- SUCCESS MODAL LOGIC ---
+        const successModal = document.getElementById('success-modal');
+
+        function openSuccessModal(name) {
+            document.getElementById('success-client-name').innerText = name;
+            successModal.classList.add('active');
+        }
+
+        function closeSuccessModal() {
+            successModal.classList.remove('active');
+        }
+
+        // --- COPY TO CLIPBOARD ---
+        function copyToClipboard(text, btnElement) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            // Visual Feedback
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = '<i class="fas fa-check"></i>';
+            btnElement.style.color = '#16a34a';
+            btnElement.style.borderColor = '#16a34a';
+            
+            setTimeout(() => {
+                btnElement.innerHTML = originalHTML;
+                btnElement.style.color = '#4338ca';
+                btnElement.style.borderColor = '#c7d2fe';
+            }, 2000);
+        }
+
+        // --- Dynamic Toggles ---
+
+        function toggleStyleInput(show) {
+            const container = document.getElementById('style-upload-container');
+            if(show) container.classList.remove('hidden-field');
+            else container.classList.add('hidden-field');
+        }
+
+        function toggleLogoInput(hasLogo) {
+            const container = document.getElementById('logo-upload-container');
+            const summaryLine = document.getElementById('summary-logo-creation');
+            if(hasLogo) {
+                container.classList.remove('hidden-field');
+                summaryLine.style.display = 'none';
+            } else {
+                container.classList.add('hidden-field');
+                summaryLine.style.display = 'flex'; 
+            }
+            updateTotal();
+        }
+
+        // --- PAYMENT LOGIC & VALIDATION ---
+        function togglePaymentLogic(hasPaid) {
+            const infoContainer = document.getElementById('payment-info-container');
+            const proofContainer = document.getElementById('payment-proof-container');
+            const submitBtn = document.getElementById('submit-btn');
+            const warningText = document.getElementById('submit-warning');
+
+            if (hasPaid) {
+                infoContainer.classList.add('hidden-field');
+                proofContainer.classList.remove('hidden-field');
+            } else {
+                infoContainer.classList.remove('hidden-field');
+                proofContainer.classList.add('hidden-field');
+            }
+            
+            validateSubmitButton();
+        }
+
+        function validateSubmitButton() {
+            const hasPaid = document.querySelector('input[name="payment-status"]:checked')?.value === 'yes';
+            const hasProof = filesData.paymentProof !== undefined;
+            const submitBtn = document.getElementById('submit-btn');
+            const warningText = document.getElementById('submit-warning');
+
+            if (hasPaid && hasProof) {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+                warningText.classList.add('hidden-field');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+                submitBtn.style.cursor = 'not-allowed';
+                warningText.classList.remove('hidden-field');
+            }
+        }
+
+        // --- NEW: VALIDATION PAYMENT CONTENT (Re-usable logic) ---
+        function validatePaymentContent() {
+            if (!lastOcrText) return;
+            
+            const labelEl = document.getElementById('proof-file-label');
+            const cleanText = lastOcrText.toLowerCase();
+            const targetNumRegex = /[0o]?99\s?534\s?21\s?02/;
+            const isNumFound = targetNumRegex.test(cleanText.replace(/[^0-9o]/g, ''));
+
+            const amountRegex = /(\d+(?:[.,]\d+)?)\s*(?:usd|\$)/gi;
+            let detectedAmount = 0;
+            let match;
+            while ((match = amountRegex.exec(cleanText)) !== null) {
+                let val = parseFloat(match[1].replace(',', '.'));
+                if(val > detectedAmount) detectedAmount = val;
+            }
+
+            const expectedTotal = parseFloat(document.getElementById('summary-total-price').innerText.replace('$','')) || 0;
+
+            if (!isNumFound) {
+                labelEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Numéro destinataire introuvable. Vérifiez l'image.`;
+                labelEl.style.color = '#dc2626'; // Red
+            } else if (detectedAmount > 0 && detectedAmount < expectedTotal) {
+                labelEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> Montant insuffisant détecté (${detectedAmount}$ vs ${expectedTotal}$).`;
+                labelEl.style.color = '#dc2626'; // Red
+            } else if (detectedAmount === 0 && isNumFound) {
+                labelEl.innerHTML = `<i class="fas fa-check-circle"></i> Numéro OK. Montant non détecté (Vérification manuelle requise).`;
+                labelEl.style.color = '#d97706'; // Orange
+            } else {
+                labelEl.innerHTML = `<i class="fas fa-check-circle"></i> Preuve validée (Numéro et Montant détectés)`;
+                labelEl.style.color = '#16a34a'; // Green
+            }
+            validateSubmitButton();
+        }
+
+        // --- File Handling (Base64) & OCR ---
+        function handleFileSelect(event, labelId) {
+            const file = event.target.files[0];
+            const labelEl = document.getElementById(labelId);
+
+            if (file) {
+                // Feedback initial
+                labelEl.innerText = "Fichier : " + file.name;
+                labelEl.style.color = ""; // Reset color
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result.split(',')[1];
+                    let key = '';
+                    
+                    if (event.target.id === 'style-file') key = 'styleFile';
+                    else if (event.target.id === 'logo-file') key = 'logoFile';
+                    else if (event.target.id === 'payment-proof-file') key = 'paymentProof';
+
+                    filesData[key] = {
+                        name: file.name,
+                        type: file.type,
+                        data: base64String
+                    };
+
+                    // --- VERIFICATION OCR SPECIFIQUE (Preuve Paiement) ---
+                    if (key === 'paymentProof') {
+                        // Reset stored text
+                        lastOcrText = "";
+                        
+                        // Désactiver le bouton pendant l'analyse
+                        const submitBtn = document.getElementById('submit-btn');
+                        submitBtn.disabled = true;
+                        submitBtn.style.opacity = '0.5';
+                        
+                        labelEl.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Analyse de la preuve en cours...';
+                        labelEl.style.color = '#d97706'; // Orange warning color
+
+                        Tesseract.recognize(
+                            e.target.result,
+                            'eng', 
+                            { logger: m => console.log(m) }
+                        ).then(({ data: { text } }) => {
+                            lastOcrText = text; // Store for later re-validation
+                            validatePaymentContent(); // Run initial validation
+                        }).catch(err => {
+                            console.error(err);
+                            labelEl.innerHTML = "Erreur d'analyse, fichier accepté manuellement.";
+                        }).finally(() => {
+                            validateSubmitButton();
+                        });
+                    } else {
+                        validateSubmitButton();
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // --- VOICE RECORDING LOGIC ---
+        async function toggleRecording() {
+            const btn = document.getElementById('record-btn');
+            const textSpan = document.getElementById('record-text');
+            const timerDisplay = document.getElementById('recording-timer');
+            
+            if (!mediaRecorder || mediaRecorder.state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
+
+                    mediaRecorder.onstop = () => {
+                        audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        const audioPreview = document.getElementById('audio-preview');
+                        audioPreview.src = audioUrl;
+                        
+                        audioPreview.classList.remove('hidden');
+                        document.getElementById('delete-audio-btn').classList.remove('hidden');
+                        btn.classList.remove('recording');
+                        btn.classList.add('hidden');
+                        timerDisplay.classList.add('hidden');
+                        
+                        const reader = new FileReader();
+                        reader.readAsDataURL(audioBlob);
+                        reader.onloadend = function() {
+                            const base64data = reader.result.split(',')[1];
+                            filesData['voiceNote'] = {
+                                name: 'voice_note_' + Date.now() + '.webm',
+                                type: 'audio/webm',
+                                data: base64data
+                            };
+                        }
+                    };
+
+                    mediaRecorder.start();
+                    btn.classList.add('recording');
+                    textSpan.innerText = "Arrêter l'enregistrement";
+                    timerDisplay.classList.remove('hidden');
+                    
+                    recordingSeconds = 0;
+                    timerDisplay.innerText = "00:00";
+                    recordingTimerInterval = setInterval(() => {
+                        recordingSeconds++;
+                        const mins = Math.floor(recordingSeconds / 60).toString().padStart(2, '0');
+                        const secs = (recordingSeconds % 60).toString().padStart(2, '0');
+                        timerDisplay.innerText = `${mins}:${secs}`;
+                    }, 1000);
+
+                } catch (err) {
+                    alert("Impossible d'accéder au microphone.");
+                }
+            } else {
+                mediaRecorder.stop();
+                clearInterval(recordingTimerInterval);
+                textSpan.innerText = "Enregistrer vocal";
+            }
+        }
+
+        function deleteAudio() {
+            const audioPreview = document.getElementById('audio-preview');
+            const recordBtn = document.getElementById('record-btn');
+            const deleteBtn = document.getElementById('delete-audio-btn');
+            
+            audioPreview.src = "";
+            audioPreview.classList.add('hidden');
+            deleteBtn.classList.add('hidden');
+            recordBtn.classList.remove('hidden');
+            
+            audioBlob = null;
+            audioChunks = [];
+            delete filesData['voiceNote'];
+        }
+
+        // --- Extra Services Logic ---
+        function showServiceDropdown() {
+            document.getElementById('service-dropdown-container').classList.remove('hidden-field');
+        }
+
+        function addService(selectElement) {
+            const val = selectElement.value;
+            if(!val) return;
+            const [name, price] = val.split('|');
+            const serviceObj = { name: name, price: parseInt(price) };
+            extraServices.push(serviceObj);
+            
+            const container = document.getElementById('added-services-list');
+            const div = document.createElement('div');
+            div.className = 'added-service-item';
+            div.innerHTML = `<span>${name} (+${price}$)</span><span class="remove-service" onclick="removeService(this, '${name}')"><i class="fas fa-trash"></i></span>`;
+            container.appendChild(div);
+
+            selectElement.value = "";
+            document.getElementById('service-dropdown-container').classList.add('hidden-field');
+            updateTotal();
+        }
+
+        function removeService(el, name) {
+            el.parentElement.remove();
+            extraServices = extraServices.filter(s => s.name !== name);
+            updateTotal();
+        }
+
+        // --- Price Calculation ---
+        function updateTotal() {
+            let total = parseInt(basePriceInput.value) || 0;
+            const isLogoService = isLogoServiceInput.value === 'true';
+            const hasLogo = document.querySelector('input[name="has-logo"]:checked')?.value === 'yes';
+            
+            if(!isLogoService && !hasLogo) total += 15;
+
+            const isExpress = document.getElementById('express-option').checked;
+            document.getElementById('summary-express').style.display = isExpress ? 'flex' : 'none';
+            if(isExpress) total += 10;
+
+            let extrasHtml = '';
+            extraServices.forEach(s => {
+                total += s.price;
+                extrasHtml += `<div class="summary-row"><span>+ ${s.name}</span><span>${s.price}$</span></div>`;
+            });
+            document.getElementById('summary-extras').innerHTML = extrasHtml;
+            summaryTotal.innerText = total + "$";
+            
+            // Re-validate proof amount if already uploaded
+            if (filesData.paymentProof && lastOcrText) {
+                validatePaymentContent();
+            }
+            
+            return total;
+        }
+
+        // --- SUBMIT TO GOOGLE APPS SCRIPT ---
         function submitOrder(e) {
             e.preventDefault();
             
-            const offer = document.getElementById('offer-name').value;
-            const name = document.getElementById('client-name').value;
-            const company = document.getElementById('client-company').value;
-            const desc = document.getElementById('project-desc').value;
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+            btn.disabled = true;
 
-            // Message WhatsApp
-            let message = `Bonjour, je souhaite commander : *${offer}*\n\n`;
-            message += `👤 *Nom:* ${name}\n`;
-            if(company) message += `🏢 *Entreprise:* ${company}\n`;
-            message += `📝 *Description:* ${desc}`;
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzhCIUjK1cZ1bSLc6GwNPkR2kD66hz2rAFyChlj6W2jflwA6yBgvRBCiMg9gOAkysH/exec';
 
-            const phoneNumber = "243995342102";
-            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            // Gather Data
+            const formData = {
+                timestamp: new Date().toISOString(),
+                clientName: document.getElementById('client-name').value,
+                whatsapp: document.getElementById('client-whatsapp').value,
+                company: document.getElementById('client-company').value,
+                service: offerInput.value,
+                basePrice: basePriceInput.value,
+                description: document.getElementById('project-desc').value,
+                
+                hasStylePreference: document.querySelector('input[name="design-style"]:checked').value === 'yes',
+                hasLogo: document.querySelector('input[name="has-logo"]:checked')?.value === 'yes',
+                isExpress: document.getElementById('express-option').checked,
+                
+                extraServices: extraServices,
+                estimatedTotal: document.getElementById('summary-total-price').innerText,
+                
+                files: filesData
+            };
 
-            window.open(url, '_blank');
-            closeModal();
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success'){
+                    // Close old modal and open success modal
+                    closeModal();
+                    openSuccessModal(formData.clientName);
+                    
+                    // Reset Form and States
+                    document.getElementById('order-form').reset();
+                    filesData = {};
+                    extraServices = [];
+                    lastOcrText = ""; // Clear OCR cache
+                    document.getElementById('added-services-list').innerHTML = '';
+                    togglePaymentLogic(false);
+                    deleteAudio();
+                } else {
+                    throw new Error(data.message || 'Erreur inconnue');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert("Une erreur s'est produite lors de l'envoi. Veuillez réessayer ou nous contacter directement.");
+            })
+            .finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
         }
     </script>
 </body>
