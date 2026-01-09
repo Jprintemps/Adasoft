@@ -1497,7 +1497,7 @@
                                 <span style="font-weight: 600;">Cliquez pour joindre l'image *</span>
                             </label>
                             <input type="file" id="style-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'style-file-label')">
-                            <div id="style-file-label" style="text-align: center; font-size: 0.85rem; margin-top: 8px; color: var(--primary);"></div>
+                            <div id="style-file-label" style="text-align: center; font-size: 0.85rem; margin-top: 8px; color: var(--primary); font-weight: 600;"></div>
                         </div>
                     </div>
 
@@ -1522,7 +1522,7 @@
                                 <span style="font-weight: 600;">Uploader votre Logo *</span>
                             </label>
                             <input type="file" id="logo-file" accept="image/*,.pdf,.ai" class="hidden-field" onchange="handleFileSelect(event, 'logo-file-label')">
-                            <div id="logo-file-label" style="text-align: center; font-size: 0.85rem; margin-top: 8px; color: var(--primary);"></div>
+                            <div id="logo-file-label" style="text-align: center; font-size: 0.85rem; margin-top: 8px; color: var(--primary); font-weight: 600;"></div>
                         </div>
                     </div>
 
@@ -1706,7 +1706,7 @@
                 <div class="form-group">
                     <label class="form-label" style="text-align: center;">Votre Numéro WhatsApp</label>
                     <div class="input-wrapper">
-                        <input type="tel" id="track-phone" class="form-input" placeholder="Ex: 099 934 9102" required style="text-align: center; font-size: 1.2rem; letter-spacing: 1px; font-weight: 600;">
+                        <input type="tel" id="track-phone" class="form-input" placeholder="Ex: 099 534 2102" required style="text-align: center; font-size: 1.2rem; letter-spacing: 1px; font-weight: 600;">
                         <i class="fab fa-whatsapp input-icon" style="left: 2rem;"></i>
                     </div>
                 </div>
@@ -1978,7 +1978,6 @@
                 // Style/Inspiration File
                 const styleRadio = document.querySelector('input[name="design-style"]:checked');
                 const styleLabel = document.querySelector('label[for="style-file"]');
-                const styleFile = document.getElementById('style-file');
                 
                 // Reset style first
                 if(styleLabel) {
@@ -2271,35 +2270,68 @@
             if (!mediaRecorder || mediaRecorder.state === "inactive") {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    // Mime Type Detection for Safari/iOS compatibility
+                    let mimeType = 'audio/webm';
+                    if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                        mimeType = 'audio/mp4'; // Safari
+                    } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
+                        mimeType = 'audio/ogg'; // Firefox
+                    }
+
+                    mediaRecorder = new MediaRecorder(stream, { mimeType });
                     audioChunks = [];
                     mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
                     mediaRecorder.onstop = () => {
-                        const blob = new Blob(audioChunks, { type: 'audio/webm' });
+                        // Stop tracks
+                        stream.getTracks().forEach(track => track.stop());
+
+                        const blob = new Blob(audioChunks, { type: mimeType });
                         const url = URL.createObjectURL(blob);
                         const preview = document.getElementById('audio-preview');
                         preview.src = url; preview.classList.remove('hidden-field');
                         document.getElementById('delete-audio-btn').classList.remove('hidden-field');
-                        btn.classList.add('hidden-field'); timer.classList.add('hidden-field');
+                        btn.classList.add('hidden-field'); 
+                        btn.classList.remove('recording');
+                        timer.classList.add('hidden-field');
+                        
+                        // Convert to Base64
                         const reader = new FileReader();
                         reader.readAsDataURL(blob);
-                        reader.onloadend = () => { filesData['voiceNote'] = { name: 'voice.webm', type: 'audio/webm', data: reader.result.split(',')[1] }; };
+                        reader.onloadend = () => { 
+                            const extension = mimeType.split('/')[1];
+                            filesData['voiceNote'] = { 
+                                name: `voice_note_${Date.now()}.${extension}`, 
+                                type: mimeType, 
+                                data: reader.result.split(',')[1] 
+                            }; 
+                        };
                     };
                     mediaRecorder.start();
-                    btn.classList.add('recording'); timer.classList.remove('hidden-field');
+                    
+                    // UI Update
+                    btn.classList.add('recording');
+                    const btnText = document.getElementById('record-text');
+                    if(btnText) btnText.innerText = "Arrêter (Cliquer ici)";
+                    
+                    timer.classList.remove('hidden-field');
                     let secs = 0; timer.innerText = "00:00";
                     const int = setInterval(() => {
                         if(mediaRecorder.state !== "recording") { clearInterval(int); return; }
                         secs++;
                         timer.innerText = `${Math.floor(secs/60).toString().padStart(2,'0')}:${(secs%60).toString().padStart(2,'0')}`;
                     }, 1000);
-                } catch (err) { alert("Microphone introuvable"); }
+                } catch (err) { alert("Microphone introuvable ou non autorisé."); }
             } else mediaRecorder.stop();
         }
         function deleteAudio() {
             document.getElementById('audio-preview').classList.add('hidden-field');
             document.getElementById('delete-audio-btn').classList.add('hidden-field');
-            document.getElementById('record-btn').classList.remove('hidden-field', 'recording');
+            const recordBtn = document.getElementById('record-btn');
+            recordBtn.classList.remove('hidden-field', 'recording');
+            const btnText = document.getElementById('record-text');
+            if(btnText) btnText.innerText = "Ajouter un vocal";
+            
             delete filesData['voiceNote'];
         }
 
