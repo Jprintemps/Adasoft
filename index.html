@@ -42,6 +42,10 @@
             --shadow-clay: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff;
             --shadow-float: 0 10px 30px rgba(0,0,0,0.1);
             --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+            /* AJOUTS POUR LA MODALE WIZARD */
+            --gradient-main: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --success: #10b981;
         }
 
         * {
@@ -431,214 +435,262 @@
         @media(min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; gap: 0; } }
 
         /* ========================================= */
-        /* --- 7. NEW MODAL DESIGN (SENIOR LEVEL) --- */
+        /* --- 7. NEW WIZARD MODAL DESIGN (INTEGRATION) --- */
         /* ========================================= */
 
-        /* Overlay avec effet glassmorphism plus prononcé */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.75); /* Darker backdrop */
-            backdrop-filter: blur(12px); /* Strong blur */
+            background: rgba(15, 23, 42, 0.85); /* Plus sombre */
+            backdrop-filter: blur(16px);
             z-index: 2000; display: none; justify-content: center; align-items: center;
             opacity: 0; transition: opacity 0.3s ease;
             padding: 20px;
         }
         .modal-overlay.active { display: flex; opacity: 1; }
 
-        /* Conteneur Modale : Clean, Moderne, Soft Shadows */
         .modal-container {
             background: #ffffff;
-            width: 100%; max-width: 600px;
-            border-radius: 32px; /* Super rounded */
+            width: 100%; max-width: 700px;
+            border-radius: 32px;
             padding: 2.5rem;
             box-shadow: var(--modal-shadow);
             transform: scale(0.95) translateY(20px); 
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            max-height: 90vh; 
+            max-height: 92vh; 
             overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex; flex-direction: column;
+            overflow-x: hidden;
         }
         .modal-overlay.active .modal-container { transform: scale(1) translateY(0); }
 
-        /* Scrollbar custom invisible mais fonctionnelle */
-        .modal-container::-webkit-scrollbar { width: 6px; }
-        .modal-container::-webkit-scrollbar-track { background: transparent; }
-        .modal-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
+        /* Background Decorations in Modal */
+        .modal-blob {
+            position: absolute; width: 300px; height: 300px; border-radius: 50%;
+            filter: blur(50px); opacity: 0.15; z-index: 0; pointer-events: none;
+        }
+        .modal-blob-1 { background: var(--primary); top: -100px; right: -100px; }
+        .modal-blob-2 { background: var(--secondary); bottom: -100px; left: -100px; }
 
-        /* Bouton Fermer Flottant */
         .modal-close {
-            position: absolute; top: 1.5rem; right: 1.5rem;
+            position: absolute; top: 1.5rem; right: 1.5rem; z-index: 10;
             background: #f1f5f9; border: none; 
             width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; color: #64748b; cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s;
         }
         .modal-close:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
 
-        /* Typography Modale */
-        .modal-title { 
-            font-family: var(--font-display); font-size: 2rem; 
-            font-weight: 600; color: var(--dark); margin-bottom: 0.5rem; 
-            letter-spacing: -0.02em;
+        /* --- WIZARD HEADER & PROGRESS --- */
+        .wizard-header { margin-bottom: 2.5rem; position: relative; z-index: 2; }
+        .wizard-progress-container {
+            display: flex; justify-content: space-between; position: relative; margin-bottom: 1rem;
+            padding: 0 10px; max-width: 400px; margin-left: auto; margin-right: auto;
         }
-        .modal-subtitle { 
-            color: var(--text-light); font-size: 1rem; 
-            margin-bottom: 2.5rem; line-height: 1.5; 
+        .wizard-progress-track {
+            position: absolute; top: 50%; left: 0; width: 100%; height: 6px;
+            background: #f1f5f9; transform: translateY(-50%); z-index: 1; border-radius: 10px;
+        }
+        .wizard-progress-bar {
+            position: absolute; top: 50%; left: 0; height: 6px;
+            background: var(--gradient-main); transform: translateY(-50%); z-index: 2;
+            transition: width 0.4s ease; border-radius: 10px; width: 0%; box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+        }
+        
+        .step-indicator {
+            width: 40px; height: 40px; border-radius: 50%; background: #ffffff;
+            border: 3px solid #f1f5f9; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: #94a3b8; position: relative; z-index: 3;
+            transition: all 0.4s ease; font-size: 0.95rem;
+        }
+        .step-indicator.active {
+            border-color: var(--primary); color: var(--primary); background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); transform: scale(1.1);
+        }
+        .step-indicator.completed {
+            background: var(--success); border-color: var(--success); color: white;
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
         }
 
-        /* --- FORMULAIRES REDESIGNÉS --- */
-        .form-group { margin-bottom: 1.8rem; text-align: left; }
+        /* --- WIZARD ILLUSTRATIONS --- */
+        .illustration-header {
+            text-align: center; margin-bottom: 2rem; position: relative; z-index: 2;
+        }
+        .illustration-icon {
+            width: 80px; height: 80px; margin: 0 auto 1rem;
+            border-radius: 24px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            transform: rotate(-3deg); transition: transform 0.3s ease;
+        }
+        .wizard-step.active .illustration-icon { animation: float-icon 3s ease-in-out infinite; }
+        
+        @keyframes float-icon {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        /* Step Specific Colors */
+        .step-1-color { background: #e0e7ff; color: #4338ca; }
+        .step-2-color { background: #fae8ff; color: #a855f7; }
+        .step-3-color { background: #ffedd5; color: #ea580c; }
+        .step-4-color { background: #d1fae5; color: #059669; }
+
+        .step-title {
+            font-family: var(--font-display); font-size: 2rem; margin-bottom: 0.5rem; color: var(--dark);
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .step-subtitle { color: var(--text-light); font-size: 1rem; max-width: 400px; margin: 0 auto; }
+
+        /* --- FORM ELEMENTS --- */
+        .wizard-step { display: none; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 2; }
+        .wizard-step.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group { margin-bottom: 1.5rem; text-align: left; }
         .form-label { 
-            display: block; margin-bottom: 0.8rem; 
-            font-weight: 700; color: #334155; font-size: 0.8rem; 
-            text-transform: uppercase; letter-spacing: 0.05em;
+            display: block; margin-bottom: 0.6rem; font-weight: 700; 
+            color: #475569; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;
         }
-
-        /* Inputs "Chunky" */
+        
+        .input-wrapper { position: relative; }
+        .input-icon { 
+            position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); 
+            color: #94a3b8; font-size: 1.1rem; transition: color 0.2s;
+        }
         .form-input, .form-textarea, .form-select {
-            width: 100%; padding: 1rem 1.2rem;
+            width: 100%; padding: 1rem 1.2rem 1rem 3rem; /* Padding left for icon */
             border-radius: 16px; border: 2px solid #e2e8f0;
-            background: #f8fafc; font-family: inherit; color: #0f172a;
-            transition: all 0.2s ease;
-            font-size: 1rem; font-weight: 500;
+            background: #f8fafc; font-family: inherit; font-size: 1rem; color: var(--dark);
+            transition: all 0.2s;
         }
-        .form-input::placeholder, .form-textarea::placeholder { color: #94a3b8; font-weight: 400; }
-
-        /* Focus State : Ring effect */
+        .form-textarea { padding-left: 1.2rem; } /* No icon usually */
+        
         .form-input:focus, .form-textarea:focus, .form-select:focus {
-            outline: none; 
-            border-color: var(--primary); 
-            background: #ffffff;
+            outline: none; border-color: var(--primary); background: #ffffff; 
             box-shadow: 0 0 0 4px var(--primary-soft);
-            transform: translateY(-2px);
         }
+        .form-input:focus + .input-icon { color: var(--primary); } /* Requires ordering in HTML */
 
-        .form-textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
-
-        /* Radio Tiles (Cartes de sélection) */
-        .radio-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+        /* Illustrated Radio Cards */
+        .radio-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
         .radio-label {
-            display: flex; align-items: center; justify-content: center; gap: 0.8rem;
-            padding: 1rem 1.5rem;
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            cursor: pointer;
-            font-size: 0.95rem; font-weight: 600; color: #475569;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            flex: 1; min-width: 140px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem;
+            padding: 1.5rem 1rem; background: #ffffff; border: 2px solid #e2e8f0; border-radius: 20px;
+            cursor: pointer; font-weight: 600; color: #475569; transition: all 0.2s;
             position: relative; overflow: hidden;
         }
-        .radio-label:hover { border-color: #cbd5e1; background: #f8fafc; transform: translateY(-2px); }
+        .radio-label:hover { transform: translateY(-3px); border-color: #cbd5e1; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         
-        /* État Sélectionné */
+        .radio-label input { position: absolute; opacity: 0; }
+        
+        /* Selected State */
         .radio-label:has(input:checked) {
-            border-color: var(--primary);
-            background: var(--primary-soft);
-            color: var(--primary);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+            border-color: var(--primary); background: #f5f3ff; color: var(--primary-dark);
         }
-        .radio-label input { accent-color: var(--primary); transform: scale(1.2); }
+        .radio-label:has(input:checked) .radio-icon {
+            background: var(--primary); color: white; transform: scale(1.1) rotate(5deg);
+        }
+        
+        .radio-icon {
+            width: 48px; height: 48px; background: #f1f5f9; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            color: #64748b; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-        /* Upload Zone : Clean & Dashed */
+        /* File Upload - More visual */
         .file-upload {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 100%; margin-top: 1rem;
-            border: 2px dashed #cbd5e1;
-            background: #f8fafc;
-            padding: 2.5rem 1.5rem;
-            border-radius: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #64748b;
+            width: 100%; padding: 2.5rem 1.5rem; border: 2px dashed #cbd5e1; border-radius: 20px;
+            background: #f8fafc; color: #64748b; cursor: pointer; transition: all 0.3s;
+            background-image: repeating-linear-gradient(45deg, #f8fafc 0, #f8fafc 10px, #f1f5f9 10px, #f1f5f9 20px);
         }
-        .file-upload:hover { 
-            border-color: var(--primary); background: #eef2ff; color: var(--primary); 
-            transform: scale(1.01);
-        }
-        .file-upload i { font-size: 2.5rem; margin-bottom: 1rem; color: #94a3b8; transition: color 0.3s; }
-        .file-upload:hover i { color: var(--primary); }
-        
-        .hidden-field { display: none; }
+        .file-upload:hover { border-color: var(--primary); color: var(--primary); background-image: none; background-color: #eef2ff; }
+        .upload-icon-large { font-size: 2.5rem; margin-bottom: 0.8rem; color: #94a3b8; }
+        .file-upload:hover .upload-icon-large { color: var(--primary); transform: translateY(-5px); transition: transform 0.3s; }
 
-        /* Summary Box : Ticket Style */
+        .hidden-field { display: none !important; }
+
+        /* --- WIZARD FOOTER --- */
+        .wizard-footer {
+            margin-top: auto; padding-top: 2rem; border-top: 1px solid #f1f5f9;
+            display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;
+        }
+
+        /* Summary Box */
         .order-summary {
-            background: #f1f5f9;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin: 2.5rem 0;
-            border: 1px solid #e2e8f0;
-            position: relative;
+            background: #ffffff; border-radius: 24px; padding: 1.5rem;
+            margin-bottom: 2rem; border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
         }
-        /* Effet "dents de scie" décoratif en CSS (optionnel, restons simple) */
-        
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1rem; color: #475569; font-weight: 500; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem; }
         .summary-total { 
-            display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.5rem; 
-            border-top: 2px dashed #cbd5e1; 
-            font-family: var(--font-display); font-size: 1.8rem; color: var(--dark); 
-            font-weight: 700;
+            display: flex; justify-content: space-between; margin-top: 1rem; padding-top: 1rem; 
+            border-top: 2px dashed #cbd5e1; font-weight: 800; font-size: 1.5rem; color: var(--primary-dark);
         }
-
-        /* Submit Button Area */
-        #submit-btn {
-            width: 100%; padding: 1.2rem; font-size: 1.1rem; border-radius: 20px;
-            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
-        }
-        #submit-btn:hover { box-shadow: 0 15px 35px -5px rgba(79, 70, 229, 0.5); }
-
-        /* Info Box */
-        .info-box {
-            background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af;
-            padding: 1.2rem; border-radius: 16px; font-size: 0.95rem; margin-top: 1.5rem;
-            display: flex; gap: 12px; align-items: start;
-        }
-
-        /* --- SUCCESS MODAL SPECIFIC --- */
-        .success-icon-container {
-            width: 100px; height: 100px; margin: 0 auto 2rem;
-            background: #dcfce7; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-        }
-        /* Pulse Animation */
-        .success-icon-container::after {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            border-radius: 50%; border: 2px solid #16a34a;
-            animation: ripple 2s infinite; opacity: 0;
-        }
-        @keyframes ripple {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-        
-        .success-icon-container i { font-size: 3rem; color: #16a34a; }
 
         /* Voice Recorder */
-        .voice-recorder-container {
-            display: flex; align-items: center; gap: 12px; margin-top: 12px; flex-wrap: wrap;
-        }
+        .voice-recorder-container { display: flex; align-items: center; gap: 10px; margin-top: 15px; background: #fff; padding: 10px; border-radius: 50px; border: 1px solid #e2e8f0; width: fit-content; }
         .voice-btn {
-            background: #f1f5f9; border: 1px solid #cbd5e1;
-            border-radius: 50px; padding: 0.6rem 1.2rem;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
-            font-size: 0.95rem; transition: all 0.2s; color: #475569; font-weight: 600;
+            background: #f1f5f9; border: none; border-radius: 50px; padding: 0.6rem 1.2rem;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.9rem;
+            color: #475569; transition: all 0.2s;
         }
-        .voice-btn:hover { background: #e2e8f0; transform: translateY(-1px); }
-        .voice-btn.recording {
-            background: #fee2e2; color: #ef4444; border-color: #ef4444;
-            animation: pulse-red 1.5s infinite;
+        .voice-btn:hover { background: #e2e8f0; }
+        .voice-btn.recording { background: #fee2e2; color: #ef4444; animation: pulse-red 1.5s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+
+        /* Success Modal specific */
+        .success-icon-container {
+            width: 100px; height: 100px; margin: 0 auto 1.5rem; background: #dcfce7;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #16a34a; font-size: 3rem;
+            box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.3);
+            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
         }
-        .voice-btn.delete { color: #ef4444; border-color: #fca5a5; width: 40px; justify-content: center; padding: 0.6rem; }
-        #audio-preview { height: 44px; margin-top: 5px; flex-grow: 1; max-width: 300px; border-radius: 22px; }
+
+        /* --- STYLES FOR NEW PROJECT SELECTOR --- */
+        .selector-grid {
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem; height: 100%;
+        }
+        @media (min-width: 768px) { .selector-grid { grid-template-columns: 1fr 1fr; } }
+
+        .selector-card {
+            background: #fff; border: 2px solid #e2e8f0; border-radius: 20px;
+            padding: 2rem; cursor: pointer; transition: all 0.3s ease;
+            text-align: center; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .selector-card:hover {
+            border-color: var(--primary); transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.15);
+        }
+        .selector-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
+        .selector-title { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark); }
+        .selector-desc { color: var(--text-light); font-size: 0.95rem; }
+
+        .offer-list { margin-top: 2rem; animation: slideUp 0.3s ease; }
+        .offer-item {
+            background: #f8fafc; padding: 1rem; border-radius: 12px; margin-bottom: 0.8rem;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid #e2e8f0; transition: all 0.2s;
+        }
+        .offer-item:hover {
+            background: #fff; border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); transform: translateX(5px);
+        }
+        .offer-name { font-weight: 600; color: var(--dark); }
+        .offer-price { font-weight: 700; color: var(--primary); background: #eef2ff; padding: 4px 8px; border-radius: 8px; font-size: 0.9rem; }
 
     </style>
 </head>
@@ -695,9 +747,10 @@
                 </p>
                 
                 <div class="flex flex-col md-row gap-2">
-                    <a href="https://wa.me/243995342102" class="btn btn-primary">
+                    <!-- CHANGEMENT ICI: Nouvelle fonction openProjectSelector() -->
+                    <button onclick="openProjectSelector()" class="btn btn-primary">
                         Commencer le projet <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
-                    </a>
+                    </button>
                     <a href="#portfolio" class="btn btn-outline">
                         <i class="fas fa-play" style="margin-right: 8px; font-size: 0.8rem;"></i> Voir nos travaux
                     </a>
@@ -810,8 +863,6 @@
                     </div>
                 </div>
 
-                <!-- Small Item: Visibilité -->
-
                 <!-- Small Item: Chiffres -->
                 <div class="clay-card bento-item text-center items-center justify-center reveal" style="background: var(--primary); color: white;">
                     <h3 style="font-size: 2.5rem; color: white;">+124%</h3>
@@ -877,7 +928,7 @@
                         <li>1 révision par affiche</li>
                         <li><s>Animations</s></li>
                     </ul>
-                    <button onclick="openModal('Abonnement Basique', 42)" class="btn btn-primary">Commander maintenant</button>
+                    <button onclick="openWizard('Abonnement Basique', 42)" class="btn btn-primary">Commander maintenant</button>
                     <p class="pricing-card__guarantee">
                         Garantie satisfait ou remboursé à 100%
                     </p>
@@ -893,7 +944,7 @@
                         <li>Animations légères incluses</li>
                         <li>Livraison express 24h</li>
                     </ul>
-                    <button onclick="openModal('Abonnement Intermédiaire', 72)" class="btn btn-primary">Commander maintenant</button>
+                    <button onclick="openWizard('Abonnement Intermédiaire', 72)" class="btn btn-primary">Commander maintenant</button>
                     <p class="pricing-card__guarantee">
                         Garantie satisfait ou remboursé à 100%
                     </p>
@@ -909,7 +960,7 @@
                         <li>Animations professionnelles incluses</li>
                         <li>Suivi et conseils personnalisés</li>
                     </ul>
-                    <button class="btn btn-primary" onclick="openModal('Abonnement Premium', 102)">
+                    <button class="btn btn-primary" onclick="openWizard('Abonnement Premium', 102)">
                         Commander maintenant
                     </button>
                     <p class="pricing-card__guarantee">
@@ -944,7 +995,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$20</span>
                 </p>
-                <button onclick="openModal('Conception de Logo', 20, true, 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Conception de Logo', 20, true, 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -970,7 +1021,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$20</span>
                 </p>
-                <button onclick="openModal('Identité Visuelle', 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Identité Visuelle', 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1000,7 +1051,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$30</span>
                 </p>
-                <button onclick="openModal('Pack Branding', 30, true, 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Pack Branding', 30, true, 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1030,7 +1081,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$10</span>
                 </p>
-                <button onclick="openModal('Affiche Event', 10, false, 5)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Affiche Event', 10, false, 5)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1060,7 +1111,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$15</span>
                 </p>
-                <button onclick="openModal('Affiche + Social', 15, false, 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Affiche + Social', 15, false, 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1090,7 +1141,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$20</span>
                 </p>
-                <button onclick="openModal('Affiche Animée', 20, false, 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Affiche Animée', 20, false, 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1120,7 +1171,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$10</span>
                 </p>
-                <button onclick="openModal('Cover Album', 10, false, 5)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Cover Album', 10, false, 5)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1150,7 +1201,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$15</span>
                 </p>
-                <button onclick="openModal('Cover + Kit', 15, false, 5)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Cover + Kit', 15, false, 5)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1180,7 +1231,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$20</span>
                 </p>
-                <button onclick="openModal('Cover Animée', 20, false, 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Cover Animée', 20, false, 20)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1201,7 +1252,7 @@
                     <span class="label">PRIX FIXE</span>
                     <span class="amount">$10</span>
                 </p>
-                <button onclick="openModal('Carte de Visite', 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Carte de Visite', 10)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1231,7 +1282,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$120</span>
                 </p>
-                <button onclick="openModal('Charte Graphique', 120, true, 40)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Charte Graphique', 120, true, 40)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1261,7 +1312,7 @@
                     <span class="label">À PARTIR DE</span>
                     <span class="amount">$200</span>
                 </p>
-                <button onclick="openModal('Branding Complet', 200, true, 50)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                <button onclick="openWizard('Branding Complet', 200, true, 50)" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                     Commander
                 </button>
             </div>
@@ -1347,275 +1398,366 @@
         </div>
     </footer>
 
-    <!-- MODAL DE COMMANDE AVANCE (REDESIGN) -->
-    <div id="order-modal" class="modal-overlay">
+    <!-- ============================================= -->
+    <!-- WIZARD MODAL (TUNNEL DE VENTE) -->
+    <!-- ============================================= -->
+    <div id="order-wizard" class="modal-overlay">
         <div class="modal-container">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <h3 class="modal-title" id="modal-title">Commander</h3>
-            <p class="modal-subtitle">
-                Personnalisez votre commande ci-dessous.
-            </p>
+            <!-- Blobs décoratifs de fond -->
+            <div class="modal-blob modal-blob-1"></div>
+            <div class="modal-blob modal-blob-2"></div>
+
+            <button class="modal-close" onclick="closeWizard()">&times;</button>
             
-            <form id="order-form" onsubmit="submitOrder(event)">
-                <input type="hidden" id="offer-name" name="offer-name">
-                <input type="hidden" id="base-price" name="base-price">
-                <input type="hidden" id="is-logo-service" name="is-logo-service">
+            <!-- HEADER: PROGRESS BAR -->
+            <div class="wizard-header">
+                <div class="wizard-progress-container">
+                    <div class="wizard-progress-track"></div>
+                    <div class="wizard-progress-bar" id="wizard-bar"></div>
+                    
+                    <div class="step-indicator active" id="step-ind-1">1</div>
+                    <div class="step-indicator" id="step-ind-2">2</div>
+                    <div class="step-indicator" id="step-ind-3">3</div>
+                    <div class="step-indicator" id="step-ind-4"><i class="fas fa-flag"></i></div>
+                </div>
+            </div>
+
+            <!-- FORMULAIRE -->
+            <form id="wizard-form" onsubmit="submitOrder(event)">
+                <input type="hidden" id="offer-name">
+                <input type="hidden" id="base-price">
+                <input type="hidden" id="is-logo-service">
+                <input type="hidden" id="express-cost-val">
                 
-                <!-- 1. Informations Client -->
-                <div class="form-group">
-                    <label class="form-label">Nom Complet *</label>
-                    <input type="text" id="client-name" class="form-input" placeholder="Votre nom" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Numéro WhatsApp *</label>
-                    <input type="tel" id="client-whatsapp" class="form-input" placeholder="+243..." required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Entreprise (Optionnel)</label>
-                    <input type="text" id="client-company" class="form-input" placeholder="Nom de votre structure">
-                </div>
-
-                <!-- 2. Style de Design -->
-                <div class="form-group">
-                    <label class="form-label">Avez-vous un style de design particulier ?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="design-style" value="yes" onclick="toggleStyleInput(true)">
-                            <span>Oui, j'ai un exemple</span>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="design-style" value="no" checked onclick="toggleStyleInput(false)">
-                            <span>Non, proposez-moi un style</span>
-                        </label>
+                <!-- STEP 1: IDENTITÉ -->
+                <div class="wizard-step active" data-step="1">
+                    <div class="illustration-header">
+                        <div class="illustration-icon step-1-color"><i class="far fa-id-card"></i></div>
+                        <h3 class="step-title">Qui êtes-vous ?</h3>
+                        <p class="step-subtitle">Ces informations nous permettront de vous contacter.</p>
                     </div>
-                    <!-- Upload File Style -->
-                    <div id="style-upload-container" class="hidden-field">
-                        <label for="style-file" class="file-upload">
-                            <i class="fas fa-cloud-arrow-up"></i>
-                            Cliquez pour joindre votre exemple (Image)
-                        </label>
-                        <input type="file" id="style-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'style-file-label')">
-                        <div id="style-file-label" style="font-size: 0.8rem; color: var(--primary); margin-top: 5px; text-align: center;"></div>
-                    </div>
-                </div>
-
-                <!-- 3. Question Logo (Conditionnelle) -->
-                <div id="logo-section" class="form-group">
-                    <label class="form-label">Avez-vous déjà votre logo ?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="has-logo" value="yes" checked onclick="toggleLogoInput(true)">
-                            <span>Oui</span>
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="has-logo" value="no" onclick="toggleLogoInput(false)">
-                            <span>Non (+15$)</span>
-                        </label>
-                    </div>
-                      <!-- Upload Logo -->
-                      <div id="logo-upload-container">
-                        <label for="logo-file" class="file-upload">
-                            <i class="fas fa-cloud-arrow-up"></i>
-                            Joindre votre logo (PNG/AI/PDF)
-                        </label>
-                        <input type="file" id="logo-file" accept="image/*,.pdf,.ai" class="hidden-field" onchange="handleFileSelect(event, 'logo-file-label')">
-                        <div id="logo-file-label" style="font-size: 0.8rem; color: var(--primary); margin-top: 5px; text-align: center;"></div>
-                    </div>
-                </div>
-
-                <!-- 4. Options Supplémentaires & Services -->
-                <div class="form-group">
-                    <label class="form-label">Options & Services Additionnels</label>
                     
-                    <label class="radio-label" style="width: 100%; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <div class="flex items-center gap-2">
-                            <input type="checkbox" id="express-option" onchange="updateTotal()">
-                            <span>Livraison Express</span>
+                    <div class="form-group">
+                        <label class="form-label">Votre Nom Complet *</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="client-name" class="form-input" placeholder="Ex: Jean Dupont" required>
+                            <i class="fas fa-user input-icon"></i>
                         </div>
-                        <i class="fas fa-bolt" style="color: #fbbf24;"></i>
-                    </label>
-
-                    <!-- Dynamic Service List -->
-                    <div id="added-services-list"></div>
-
-                    <button type="button" class="add-service-btn btn btn-outline" style="width:100%; border-style:dashed; margin-top:10px;" onclick="showServiceDropdown()">
-                        <i class="fas fa-plus"></i> Ajouter un autre service
-                    </button>
-                    
-                    <div id="service-dropdown-container" class="hidden-field" style="margin-top: 0.5rem;">
-                        <select id="extra-service-select" class="form-select" onchange="addService(this)">
-                            <option value="">-- Choisir un service --</option>
-                            <option value="Logo Design|20">Logo Design (20$)</option>
-                            <option value="Identité Visuelle|20">Identité Visuelle (20$)</option>
-                            <option value="Affiche Event|10">Affiche Event (10$)</option>
-                            <option value="Cover Album|10">Cover Album (10$)</option>
-                            <option value="Carte Visite|10">Carte de Visite (10$)</option>
-                            <option value="Autre|0">Autre (Sur devis)</option>
-                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Numéro WhatsApp *</label>
+                        <div class="input-wrapper">
+                            <input type="tel" id="client-whatsapp" class="form-input" placeholder="Ex: +243 81..." required>
+                            <i class="fab fa-whatsapp input-icon"></i>
+                        </div>
+                    </div>
+                    <!-- Ajout Slogan et Entreprise obligatoire -->
+                    <div class="form-group">
+                        <label class="form-label">Entreprise *</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="client-company" class="form-input" placeholder="Ex: Ma Marque Inc." required>
+                            <i class="fas fa-building input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Slogan de la marque *</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="client-slogan" class="form-input" placeholder="Ex: L'excellence au quotidien" required>
+                            <i class="fas fa-bullhorn input-icon"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Description détaillée du besoin *</label>
-                    <textarea id="project-desc" class="form-textarea" placeholder="Détails, couleurs préférées, texte à inclure..." required></textarea>
-                    
-                    <!-- Voice Recorder UI -->
-                    <div class="voice-recorder-container">
-                        <button type="button" id="record-btn" class="voice-btn" onclick="toggleRecording()">
-                            <i class="fas fa-microphone"></i> <span id="record-text">Ajouter une note vocale</span>
-                        </button>
-                        <span id="recording-timer" class="hidden" style="font-size: 0.9rem; color: #ef4444; font-weight: bold;">00:00</span>
-                        <audio id="audio-preview" controls class="hidden"></audio>
-                        <button type="button" id="delete-audio-btn" class="voice-btn delete hidden" onclick="deleteAudio()" title="Supprimer l'audio">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                <!-- STEP 2: LE BESOIN -->
+                <div class="wizard-step" data-step="2">
+                    <div class="illustration-header">
+                        <div class="illustration-icon step-2-color"><i class="fas fa-paint-brush"></i></div>
+                        <h3 class="step-title">Votre Vision</h3>
+                        <p class="step-subtitle">Décrivez le design de vos rêves.</p>
                     </div>
-                </div>
 
-                <!-- Résumé -->
-                <div class="order-summary">
-                    <div class="summary-row">
-                        <span>Service Principal</span>
-                        <span id="summary-base-price">0$</span>
-                    </div>
-                    <div class="summary-row" id="summary-logo-creation" style="display: none; color: var(--primary);">
-                        <span>+ Création Logo (48h)</span>
-                        <span>15$</span>
-                    </div>
-                    <div class="summary-row" id="summary-express" style="display: none; color: #e11d48;">
-                        <span>+ Express (24h)</span>
-                        <span id="summary-express-cost">0$</span>
-                    </div>
-                    <div id="summary-extras"></div>
-                    
-                    <div class="summary-total">
-                        <span>Total à Payer</span>
-                        <span id="summary-total-price">0$</span>
-                    </div>
-                </div>
-
-                <!-- 5. Section Paiement (Bloquante) -->
-                <div class="form-group info-box">
-                    <div>
-                        <label class="form-label" style="color: #0369a1; margin-bottom: 0.5rem;">Avez-vous déjà effectué le paiement ?</label>
+                    <div class="form-group">
+                        <label class="form-label">Avez-vous un modèle d'inspiration ?</label>
                         <div class="radio-group">
                             <label class="radio-label">
-                                <input type="radio" name="payment-status" value="yes" onclick="togglePaymentLogic(true)">
-                                <span>Oui</span>
+                                <input type="radio" name="design-style" value="no" checked onclick="toggleStyleInput(false)">
+                                <div class="radio-icon"><i class="fas fa-magic"></i></div>
+                                <span>Surprenez-moi</span>
                             </label>
                             <label class="radio-label">
-                                <input type="radio" name="payment-status" value="no" checked onclick="togglePaymentLogic(false)">
-                                <span>Non</span>
+                                <input type="radio" name="design-style" value="yes" onclick="toggleStyleInput(true)">
+                                <div class="radio-icon"><i class="fas fa-image"></i></div>
+                                <span>J'ai une image</span>
                             </label>
+                        </div>
+                        
+                        <div id="style-upload-container" class="hidden-field" style="margin-top:1rem; animation: fadeIn 0.3s;">
+                            <label for="style-file" class="file-upload">
+                                <i class="fas fa-cloud-upload-alt upload-icon-large"></i>
+                                <span style="font-weight: 600;">Cliquez pour joindre l'image *</span>
+                            </label>
+                            <input type="file" id="style-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'style-file-label')">
+                            <div id="style-file-label" style="text-align: center; font-size: 0.85rem; margin-top: 8px; color: var(--primary);"></div>
+                        </div>
+                    </div>
+
+                    <!-- Logo (Conditionnel) -->
+                    <div id="logo-section" class="form-group">
+                        <label class="form-label">Avez-vous déjà votre logo ?</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="has-logo" value="yes" checked onclick="toggleLogoInput(true)">
+                                <div class="radio-icon"><i class="fas fa-check-circle"></i></div>
+                                <span>Oui, je l'ai</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="has-logo" value="no" onclick="toggleLogoInput(false)">
+                                <div class="radio-icon"><i class="fas fa-pen-fancy"></i></div>
+                                <span>Non (+15$)</span>
+                            </label>
+                        </div>
+                        <div id="logo-upload-container" style="margin-top:1rem;">
+                            <label for="logo-file" class="file-upload" style="padding: 1.5rem;">
+                                <i class="fas fa-vector-square upload-icon-large" style="font-size: 1.8rem;"></i>
+                                <span style="font-weight: 600;">Uploader votre Logo *</span>
+                            </label>
+                            <input type="file" id="logo-file" accept="image/*,.pdf,.ai" class="hidden-field" onchange="handleFileSelect(event, 'logo-file-label')">
+                            <div id="logo-file-label" style="text-align: center; font-size: 0.85rem; margin-top: 8px; color: var(--primary);"></div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label class="form-label">Description détaillée *</label>
+                        <textarea id="project-desc" class="form-textarea" placeholder="Couleurs, textes, ambiance..." style="min-height: 120px;" required></textarea>
+                        
+                        <!-- Voice Recorder -->
+                        <div class="voice-recorder-container">
+                            <button type="button" id="record-btn" class="voice-btn" onclick="toggleRecording()">
+                                <i class="fas fa-microphone-alt" style="color: var(--primary);"></i> <span id="record-text">Ajouter un vocal</span>
+                            </button>
+                            <span id="recording-timer" class="hidden-field" style="color: #ef4444; font-weight: bold; font-size: 0.9rem;">00:00</span>
+                            <audio id="audio-preview" controls class="hidden-field" style="height: 35px; max-width: 200px;"></audio>
+                            <button type="button" id="delete-audio-btn" class="voice-btn hidden-field" onclick="deleteAudio()" style="padding: 0.6rem; color: #ef4444;">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Si NON : Instructions Paiement -->
-                <div id="payment-info-container" style="margin-top: 1rem;">
-                    <p style="font-size: 0.9rem; color: #475569; margin-bottom: 0.5rem; text-align: center;">
-                        Envoyez le montant total via Mobile Money :
-                    </p>
-                    <div style="background: #ffffff; padding: 1.5rem; border-radius: 16px; border: 2px solid #e2e8f0; text-align: center;">
-                        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px;">
-                            <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--dark);">099 534 2102</div>
-                            <button type="button" onclick="copyToClipboard('0995342102', this)" title="Copier le numéro" style="background: #f1f5f9; border: none; color: #64748b; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                <!-- STEP 3: UPSELL -->
+                <div class="wizard-step" data-step="3">
+                    <div class="illustration-header">
+                        <div class="illustration-icon step-3-color"><i class="fas fa-rocket"></i></div>
+                        <h3 class="step-title">Boost & Options</h3>
+                        <p class="step-subtitle">Passez à la vitesse supérieure.</p>
+                    </div>
+
+                    <div style="background: linear-gradient(to right, #fff1f2, #fff); border: 2px solid #fecdd3; border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; position: relative; overflow: hidden;">
+                        <label class="flex items-center justify-between" style="cursor: pointer; position: relative; z-index: 1;">
+                            <div class="flex items-center gap-2">
+                                <div style="background: #e11d48; color: white; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <span style="font-weight: 800; display: block; color: #881337;">Livraison Express</span>
+                                    <span style="font-size: 0.9rem; color: #9f1239;">Traitement prioritaire</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span style="background: #e11d48; color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 0.9rem;" id="display-express-cost">+10$</span>
+                                <input type="checkbox" id="express-option" onchange="updateTotal()" style="width: 20px; height: 20px; accent-color: #e11d48;">
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Ajouter d'autres services</label>
+                        <div id="added-services-list" style="margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+                        
+                        <div class="flex gap-2">
+                            <div class="input-wrapper" style="flex-grow: 1;">
+                                <select id="extra-service-select" class="form-select">
+                                    <option value="">-- Sélectionner un service --</option>
+                                    <option value="Logo Design|20">Logo Design (20$)</option>
+                                    <option value="Identité Visuelle|20">Identité Visuelle (20$)</option>
+                                    <option value="Affiche Event|10">Affiche Event (10$)</option>
+                                    <option value="Cover Album|10">Cover Album (10$)</option>
+                                    <option value="Carte Visite|10">Carte de Visite (10$)</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-outline" style="width: auto; border-radius: 16px;" onclick="addServiceFromSelect()">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: PAIEMENT -->
+                <div class="wizard-step" data-step="4">
+                    <div class="illustration-header">
+                        <div class="illustration-icon step-4-color"><i class="fas fa-check-double"></i></div>
+                        <h3 class="step-title">Confirmation</h3>
+                        <p class="step-subtitle">Vérifiez les détails et finalisez.</p>
+                    </div>
+
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span style="color: #64748b;">Service Principal</span>
+                            <span id="summary-base-price" style="font-weight: 700; color: var(--dark);">0$</span>
+                        </div>
+                        <div class="summary-row" id="summary-logo-creation" style="display: none; color: var(--primary);">
+                            <span><i class="fas fa-plus"></i> Création Logo</span>
+                            <span style="font-weight: 700;">15$</span>
+                        </div>
+                        <div class="summary-row" id="summary-express" style="display: none; color: #e11d48;">
+                            <span><i class="fas fa-bolt"></i> Express</span>
+                            <span id="summary-express-total" style="font-weight: 700;">10$</span>
+                        </div>
+                        <div id="summary-extras"></div>
+                        <div class="summary-total">
+                            <span>Total à Payer</span>
+                            <span id="summary-total-price">0$</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="background: #eff6ff; padding: 2rem; border-radius: 24px; border: 1px solid #bfdbfe; text-align: center;">
+                        <h4 style="margin-bottom: 0.5rem; font-size: 1.2rem; color: #1e40af;">Paiement Mobile Money</h4>
+                        <div class="flex items-center justify-center gap-2" style="margin-bottom: 1rem;">
+                            <span style="font-size: 1.8rem; font-weight: 800; color: var(--dark); font-family: var(--font-display);">099 534 2102</span>
+                            <button type="button" onclick="copyToClipboard('0995342102', this)" style="border:none; background:#dbeafe; width: 32px; height: 32px; border-radius: 8px; cursor:pointer; color:#1e40af;">
                                 <i class="far fa-copy"></i>
                             </button>
                         </div>
-                        <div style="font-size: 0.95rem; font-weight: 500; color: #64748b;">Mukembe Prisca</div>
+                        <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 1.5rem; font-weight: 500;">Bénéficiaire : Mukembe Prisca</p>
+                        
+                         <div style="border-top: 2px dashed #bfdbfe; padding-top: 1.5rem; text-align: left;">
+                            <label class="form-label" style="color: #1e40af; margin-bottom: 0.8rem;">Joindre la preuve de paiement *</label>
+                            <label for="payment-proof-file" class="btn btn-outline" style="background: white; border: 2px solid #bfdbfe; width: 100%; justify-content: flex-start; text-align: left; padding: 1rem; border-radius: 16px; color: #3b82f6;">
+                                <i class="fas fa-receipt" style="margin-right: 12px; font-size: 1.2rem;"></i>
+                                <span id="proof-label-text" style="font-weight: 600;">Sélectionner la capture d'écran</span>
+                            </label>
+                            <input type="file" id="payment-proof-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'proof-label-text')">
+                            <div id="proof-status-msg" style="font-size: 0.9rem; margin-top: 10px; font-weight: 500;"></div>
+                         </div>
                     </div>
                 </div>
 
-                <!-- Si OUI : Upload Preuve -->
-                <div id="payment-proof-container" class="hidden-field" style="margin-top: 1rem;">
-                    <label for="payment-proof-file" class="file-upload" style="border-color: #10b981; background: #ecfdf5;">
-                        <i class="fas fa-receipt" style="color: #10b981;"></i>
-                        <span style="color: #047857; font-weight: 600;">Joindre la capture d'écran (Preuve) *</span>
-                    </label>
-                    <input type="file" id="payment-proof-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'proof-file-label')">
-                    <div id="proof-file-label" style="font-size: 0.85rem; color: #059669; margin-top: 8px; text-align: center; font-weight: 500;"></div>
+                <!-- FOOTER NAVIGATION -->
+                <div class="wizard-footer">
+                    <button type="button" id="prev-btn" class="btn btn-outline" style="border: none; background: transparent; padding-left: 0; color: #94a3b8;" onclick="prevStep()">
+                        <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Retour
+                    </button>
+                    
+                    <button type="button" id="next-btn" class="btn btn-primary" onclick="nextStep()" style="padding: 0.8rem 2.5rem; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);">
+                        Continuer <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                    </button>
+                    
+                    <button type="submit" id="submit-btn" class="btn btn-primary hidden-field" disabled style="opacity: 0.5; padding: 0.8rem 2.5rem; border-radius: 16px; background: #10b981; box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);">
+                        Confirmer la commande <i class="fas fa-check" style="margin-left: 8px;"></i>
+                    </button>
                 </div>
-
-                <!-- Bouton Envoyer (Désactivé par défaut) -->
-                <button type="submit" id="submit-btn" class="btn btn-primary" style="margin-top: 1.5rem; opacity: 0.5; cursor: not-allowed;" disabled>
-                    Envoyer la commande <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
-                </button>
-                <p id="submit-warning" style="text-align: center; font-size: 0.85rem; color: #ef4444; margin-top: 10px;">
-                    * Paiement et preuve requis pour envoyer
-                </p>
             </form>
         </div>
     </div>
 
-    <!-- MODAL DE SUIVI DE COMMANDE (REDESIGN) -->
-    <div id="tracking-modal" class="modal-overlay">
-        <div class="modal-container" style="max-width: 450px;">
-            <button class="modal-close" onclick="closeTrackingModal()">&times;</button>
-            <h3 class="modal-title" style="text-align: center;">Suivre mon projet</h3>
-            <p class="modal-subtitle" style="text-align: center;">
-                Entrez votre numéro WhatsApp pour voir où en est votre commande.
-            </p>
+    <!-- NOUVEAU MODAL : SELECTEUR DE PROJET -->
+    <div id="project-selector-modal" class="modal-overlay">
+        <div class="modal-container" style="max-width: 800px;">
+            <button class="modal-close" onclick="document.getElementById('project-selector-modal').classList.remove('active')">&times;</button>
+            <h3 class="step-title" style="text-align: center; margin-bottom: 2rem;">Quel type de projet ?</h3>
             
-            <form onsubmit="trackOrder(event)">
-                <div class="form-group">
-                    <input type="tel" id="track-phone" class="form-input" placeholder="Ex: 099..." required style="text-align: center; font-size: 1.2rem; letter-spacing: 2px; padding: 1rem;">
+            <!-- CATEGORY SELECTION -->
+            <div id="selector-categories" class="selector-grid">
+                <div class="selector-card" onclick="selectCategory('abos')">
+                    <div class="selector-icon"><i class="fas fa-infinity"></i></div>
+                    <div class="selector-title">Abonnements</div>
+                    <div class="selector-desc">Flux continu de designs pour une croissance constante.</div>
                 </div>
-                <button type="submit" id="track-btn" class="btn btn-primary" style="width: 100%;">
-                    Vérifier le statut
+                <div class="selector-card" onclick="selectCategory('services')">
+                    <div class="selector-icon"><i class="fas fa-layer-group"></i></div>
+                    <div class="selector-title">À la carte</div>
+                    <div class="selector-desc">Besoins ponctuels : Logo, Site, Affiche...</div>
+                </div>
+            </div>
+
+            <!-- OFFERS LIST (HIDDEN INITIALLY) -->
+            <div id="offers-list-container" class="hidden-field" style="margin-top: 1rem;">
+                <button class="btn btn-outline" style="margin-bottom: 1rem; border:none; padding-left:0;" onclick="resetSelector()">
+                    <i class="fas fa-arrow-left"></i> Retour aux catégories
                 </button>
-            </form>
-
-            <!-- ZONE DE RÉSULTAT -->
-            <div id="track-result" class="hidden-field" style="margin-top: 1.5rem; background: #ffffff; padding: 2rem 1.5rem; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Projet récent</div>
-                <h4 id="res-service" style="color: var(--dark); font-size: 1.3rem; margin-bottom: 1.5rem; font-family: var(--font-display);">Logo Design</h4>
-                
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 8px;">
-                    <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 0 4px #ecfdf5;"></div>
-                    <span style="font-weight: 600; color: #64748b; font-size: 0.9rem;">Statut Actuel</span>
-                </div>
-                
-                <div id="res-step" style="font-size: 1.1rem; font-weight: 700; color: #0f172a; padding: 1rem; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; display: inline-block; width: 100%;">
-                    En cours
-                </div>
-                
-                <!-- ZONE DE TÉLÉCHARGEMENT (Dynamique) -->
-                <div id="download-area" style="margin-top: 1.5rem;"></div>
-
-                <p style="margin-top: 1.5rem; font-size: 0.8rem; color: #cbd5e1;">
-                    Mis à jour en temps réel
-                </p>
+                <div id="offers-list" style="display: grid; gap: 10px;"></div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL DE SUCCES (REDESIGN) -->
-    <div id="success-modal" class="modal-overlay">
-        <div class="modal-container" style="text-align: center; max-width: 420px; padding: 3rem 2rem;">
-            <div class="success-icon-container">
-                <i class="fas fa-check"></i>
+    <!-- TRACKING MODAL IMPROVED -->
+    <div id="tracking-modal" class="modal-overlay">
+        <div class="modal-container" style="max-width: 500px;">
+            <button class="modal-close" onclick="document.getElementById('tracking-modal').classList.remove('active')">&times;</button>
+            
+            <div class="illustration-header">
+                <div class="illustration-icon step-1-color">
+                    <i class="fas fa-search-location"></i>
+                </div>
+                <h3 class="step-title" style="font-size: 1.8rem;">Où en est mon projet ?</h3>
+                <p class="step-subtitle">Entrez le numéro WhatsApp utilisé lors de votre commande pour suivre l'avancement en temps réel.</p>
             </div>
-            <h3 class="modal-title" style="margin-bottom: 0.8rem;">Commande Reçue !</h3>
-            <p style="color: #64748b; margin-bottom: 2rem; line-height: 1.6; font-size: 1rem;">
+            
+            <form onsubmit="trackOrder(event)" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label class="form-label" style="text-align: center;">Votre Numéro WhatsApp</label>
+                    <div class="input-wrapper">
+                        <input type="tel" id="track-phone" class="form-input" placeholder="Ex: 099 534 2102" required style="text-align: center; font-size: 1.2rem; letter-spacing: 1px; font-weight: 600;">
+                        <i class="fab fa-whatsapp input-icon" style="left: 2rem;"></i>
+                    </div>
+                </div>
+                <button type="submit" id="track-btn" class="btn btn-primary" style="width: 100%; padding: 1rem; border-radius: 16px;">
+                    Voir l'avancement <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                </button>
+            </form>
+
+            <!-- RESULTATS -->
+            <div id="track-result" class="hidden-field" style="margin-top: 2rem; border-top: 2px dashed #e2e8f0; padding-top: 2rem;">
+                <div style="background: #f8fafc; border-radius: 20px; padding: 1.5rem; border: 1px solid #e2e8f0; text-align: center;">
+                    <span style="background: #eef2ff; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Dernière commande</span>
+                    
+                    <h4 id="res-service" style="color: var(--dark); font-size: 1.2rem; margin: 1rem 0 0.5rem; font-family: var(--font-display);"></h4>
+                    
+                    <!-- Status Badge -->
+                    <div id="status-container" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 1.5rem;">
+                        <div id="res-step-badge" style="width: 100%; padding: 1rem; border-radius: 12px; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <!-- Content injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Download Area -->
+                    <div id="download-area" style="margin-top: 1.5rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL (CONSERVÉ INTACT) -->
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-container" style="text-align: center; max-width: 450px; align-items: center; padding: 3rem 2rem;">
+            <div class="success-icon-container"><i class="fas fa-check"></i></div>
+            <h3 style="margin-bottom: 0.5rem; font-size: 2.2rem; color: #0f172a;">Reçu 5/5 !</h3>
+            <p style="color: #64748b; margin-bottom: 2.5rem; font-size: 1.1rem;">
                 Merci <span id="success-client-name" style="font-weight: 700; color: var(--primary);"></span> !<br>
-                Nous avons bien reçu votre demande. Notre équipe vous contactera très bientôt sur WhatsApp.
+                Nous vous contactons sur WhatsApp très vite.
             </p>
-            <button onclick="closeSuccessModal()" class="btn btn-primary" style="width: 100%; padding: 1.1rem; border-radius: 16px;">
-                Parfait, merci !
-            </button>
+            <button onclick="document.getElementById('success-modal').classList.remove('active')" class="btn btn-primary" style="width: 100%;">C'est noté !</button>
         </div>
     </div>
 
     <!-- LOGIC JS -->
     <script>
-        // 1. Mobile Menu
+        // 1. Mobile Menu (CODE 2)
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('active');
         }
 
-        // 2. FAQ Accordion
+        // 2. FAQ Accordion (CODE 2)
         function toggleFaq(element) {
             const allFaqs = document.querySelectorAll('.faq-item');
             allFaqs.forEach(item => {
@@ -1624,7 +1766,7 @@
             element.classList.toggle('open');
         }
 
-        // 3. PRICING SWITCHER
+        // 3. PRICING SWITCHER (CODE 2)
         function switchPricing(type) {
             const btnAbos = document.getElementById('btn-abos');
             const btnCarte = document.getElementById('btn-carte');
@@ -1644,7 +1786,7 @@
             }
         }
 
-        // 4. Scroll Reveal & Navbar & 3D Effect
+        // 4. Scroll Reveal & Navbar & 3D Effect (CODE 2)
         document.addEventListener('DOMContentLoaded', () => {
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
@@ -1713,370 +1855,231 @@
             }
         });
 
-        // --- NOUVELLE LOGIQUE MODALE & FORMULAIRE INTELLIGENT ---
-        
-        const modal = document.getElementById('order-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const offerInput = document.getElementById('offer-name');
-        const basePriceInput = document.getElementById('base-price');
-        const isLogoServiceInput = document.getElementById('is-logo-service');
-        const summaryBasePrice = document.getElementById('summary-base-price');
-        const summaryTotal = document.getElementById('summary-total-price');
-        const summaryExpressCost = document.getElementById('summary-express-cost');
-
+        // --- WIZARD LOGIC (INTEGRATED FROM CODE 1) ---
+        let currentStep = 1;
+        const totalSteps = 4;
         let extraServices = [];
         let filesData = {};
-        let lastOcrText = ""; 
-        let currentExpressCost = 10; // Default
+        let currentExpressCost = 10;
 
-        // --- VOICE RECORDER VARIABLES ---
-        let mediaRecorder;
-        let audioChunks = [];
-        let audioBlob = null;
-        let recordingTimerInterval;
-        let recordingSeconds = 0;
+        const wizardBar = document.getElementById('wizard-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
 
-        function openModal(offerName, price = 0, isLogoService = false, expressCost = 10) {
-            // Reset Form
-            document.getElementById('order-form').reset();
+        function openWizard(offerName, price, isLogoService = false, expressCost = 10) {
+            document.getElementById('wizard-form').reset();
+            currentStep = 1;
             extraServices = [];
             filesData = {};
-            lastOcrText = "";
-            document.getElementById('added-services-list').innerHTML = '';
-            document.getElementById('style-file-label').innerText = '';
-            document.getElementById('logo-file-label').innerText = '';
-            document.getElementById('proof-file-label').innerText = '';
-            
-            // Reset Payment Logic & UI
-            togglePaymentLogic(false); 
-            
-            // Reset Audio
             deleteAudio();
-
-            // Set Base Data
-            offerInput.value = offerName;
-            basePriceInput.value = price;
-            isLogoServiceInput.value = isLogoService;
+            document.getElementById('added-services-list').innerHTML = '';
+            document.getElementById('proof-status-msg').innerHTML = '';
+            document.getElementById('proof-label-text').innerText = "Sélectionner la capture d'écran";
+            
+            // Set Hidden Inputs
+            document.getElementById('offer-name').value = offerName;
+            document.getElementById('base-price').value = price;
+            document.getElementById('is-logo-service').value = isLogoService;
+            document.getElementById('express-cost-val').value = expressCost;
             currentExpressCost = expressCost;
-            
-            modalTitle.innerText = "Commander : " + offerName;
-            summaryBasePrice.innerText = price + "$";
-            summaryExpressCost.innerText = expressCost + "$";
-            
-            // Toggle Logo Section Visibility
-            const logoSection = document.getElementById('logo-section');
-            if(isLogoService) {
-                logoSection.classList.add('hidden');
-            } else {
-                logoSection.classList.remove('hidden');
-                toggleLogoInput(true); // Default to "Yes I have a logo"
-            }
-            
+
+            // UI Init
+            document.getElementById('summary-base-price').innerText = price + '$';
+            document.getElementById('display-express-cost').innerText = '+' + expressCost + '$';
+            toggleLogoVisibility(isLogoService);
             toggleStyleInput(false);
-            updateTotal();
-
-            if(modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeModal() {
-            if(modal) modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            if(mediaRecorder && mediaRecorder.state === "recording") {
-                mediaRecorder.stop();
-                deleteAudio();
-            }
-        }
-
-        if(modal) {
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-        }
-
-        // --- SUCCESS MODAL LOGIC ---
-        const successModal = document.getElementById('success-modal');
-
-        function openSuccessModal(name) {
-            document.getElementById('success-client-name').innerText = name;
-            successModal.classList.add('active');
-        }
-
-        function closeSuccessModal() {
-            successModal.classList.remove('active');
-        }
-
-        // --- COPY TO CLIPBOARD ---
-        function copyToClipboard(text, btnElement) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-
-            // Visual Feedback
-            const originalHTML = btnElement.innerHTML;
-            btnElement.innerHTML = '<i class="fas fa-check"></i>';
-            btnElement.style.color = '#16a34a';
-            btnElement.style.borderColor = '#16a34a';
             
-            setTimeout(() => {
-                btnElement.innerHTML = originalHTML;
-                btnElement.style.color = '#4338ca';
-                btnElement.style.borderColor = '#c7d2fe';
-            }, 2000);
+            updateWizardUI();
+            updateTotal();
+            document.getElementById('order-wizard').classList.add('active');
         }
 
-        // --- Dynamic Toggles ---
+        function closeWizard() {
+            document.getElementById('order-wizard').classList.remove('active');
+        }
+
+        function updateWizardUI() {
+            document.querySelectorAll('.wizard-step').forEach(step => {
+                step.classList.remove('active');
+                if(parseInt(step.dataset.step) === currentStep) step.classList.add('active');
+            });
+
+            const percent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            wizardBar.style.width = percent + '%';
+
+            for(let i=1; i<=totalSteps; i++) {
+                const ind = document.getElementById('step-ind-'+i);
+                ind.classList.remove('active', 'completed');
+                if(i === currentStep) ind.classList.add('active');
+                if(i < currentStep) {
+                    ind.classList.add('completed');
+                    ind.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (i === 4) ind.innerHTML = '<i class="fas fa-flag"></i>';
+                else ind.innerText = i;
+            }
+
+            if(currentStep === 1) prevBtn.style.visibility = 'hidden';
+            else prevBtn.style.visibility = 'visible';
+
+            if(currentStep === totalSteps) {
+                nextBtn.classList.add('hidden-field');
+                submitBtn.classList.remove('hidden-field');
+                validateFinalStep();
+            } else {
+                nextBtn.classList.remove('hidden-field');
+                submitBtn.classList.add('hidden-field');
+            }
+        }
+
+        function nextStep() {
+            if(!validateCurrentStep()) return;
+            if(currentStep < totalSteps) { currentStep++; updateWizardUI(); }
+        }
+
+        function prevStep() {
+            if(currentStep > 1) { currentStep--; updateWizardUI(); }
+        }
+
+        function validateCurrentStep() {
+            const stepEl = document.querySelector(`.wizard-step[data-step="${currentStep}"]`);
+            const inputs = stepEl.querySelectorAll('input[required], textarea[required]');
+            let valid = true;
+            
+            inputs.forEach(input => {
+                if(!input.value.trim()) {
+                    valid = false;
+                    input.style.borderColor = '#ef4444';
+                    setTimeout(() => input.style.borderColor = '#e2e8f0', 2000);
+                }
+            });
+
+            // Validation spécifique pour le numéro de téléphone (Etape 1)
+            if (currentStep === 1 && valid) {
+                const phoneInput = document.getElementById('client-whatsapp');
+                const phoneVal = phoneInput.value.replace(/\s/g, ''); 
+                const phoneRegex = /^(0|\+243)\d{8,}$/; 
+
+                if (!phoneRegex.test(phoneVal)) {
+                    valid = false;
+                    phoneInput.style.borderColor = 'red';
+                    phoneInput.classList.add('error-shake');
+                    setTimeout(() => {
+                        phoneInput.style.borderColor = '#e2e8f0';
+                        phoneInput.classList.remove('error-shake');
+                    }, 2000);
+                    alert("Le numéro doit commencer par 0 ou +243 et ne contenir que des chiffres.");
+                }
+            }
+
+            // Validation spécifique pour les fichiers uploadés (Etape 2)
+            if (currentStep === 2 && valid) {
+                
+                // Style/Inspiration File
+                const styleRadio = document.querySelector('input[name="design-style"]:checked');
+                const styleLabel = document.querySelector('label[for="style-file"]');
+                const styleFile = document.getElementById('style-file');
+                
+                // Reset style first
+                if(styleLabel) {
+                    styleLabel.style.borderColor = '#cbd5e1'; 
+                    styleLabel.style.backgroundColor = '#f8fafc';
+                    document.getElementById('style-file-label').innerText = ""; 
+                }
+
+                if (styleRadio && styleRadio.value === 'yes') {
+                    if (!filesData['styleFile']) {
+                         valid = false;
+                         styleLabel.style.borderColor = '#ef4444';
+                         styleLabel.style.backgroundColor = '#fef2f2';
+                         document.getElementById('style-file-label').innerText = "⚠️ Ce fichier est obligatoire";
+                         document.getElementById('style-file-label').style.color = '#ef4444';
+                    }
+                }
+
+                // Logo File
+                const logoRadio = document.querySelector('input[name="has-logo"]:checked');
+                const logoSection = document.getElementById('logo-section');
+                const logoLabel = document.querySelector('label[for="logo-file"]');
+                
+                if(logoLabel) {
+                    logoLabel.style.borderColor = '#cbd5e1';
+                    logoLabel.style.backgroundColor = '#f8fafc';
+                    document.getElementById('logo-file-label').innerText = "";
+                }
+
+                if (logoSection.style.display !== 'none' && logoRadio && logoRadio.value === 'yes') {
+                    if (!filesData['logoFile']) {
+                        valid = false;
+                        logoLabel.style.borderColor = '#ef4444';
+                        logoLabel.style.backgroundColor = '#fef2f2';
+                        document.getElementById('logo-file-label').innerText = "⚠️ Ce fichier est obligatoire";
+                        document.getElementById('logo-file-label').style.color = '#ef4444';
+                    }
+                }
+            }
+
+            return valid;
+        }
+
+        // --- SPECIFIC UI LOGIC ---
+        function toggleLogoVisibility(isLogoService) {
+            const sec = document.getElementById('logo-section');
+            if(isLogoService) {
+                sec.style.display = 'none';
+                toggleLogoInput(false);
+            } else {
+                sec.style.display = 'block';
+                toggleLogoInput(true);
+            }
+        }
 
         function toggleStyleInput(show) {
-            const container = document.getElementById('style-upload-container');
-            if(show) container.classList.remove('hidden-field');
-            else container.classList.add('hidden-field');
+            const el = document.getElementById('style-upload-container');
+            const fileInput = document.getElementById('style-file');
+            
+            if(show) {
+                el.classList.remove('hidden-field');
+                fileInput.required = true;
+            } else {
+                el.classList.add('hidden-field');
+                fileInput.required = false;
+                fileInput.value = ''; // Reset value if hidden
+            }
         }
 
         function toggleLogoInput(hasLogo) {
-            const container = document.getElementById('logo-upload-container');
+            const uploadDiv = document.getElementById('logo-upload-container');
             const summaryLine = document.getElementById('summary-logo-creation');
+            const fileInput = document.getElementById('logo-file');
+
             if(hasLogo) {
-                container.classList.remove('hidden-field');
+                uploadDiv.style.display = 'block';
                 summaryLine.style.display = 'none';
+                fileInput.required = true;
             } else {
-                container.classList.add('hidden-field');
-                summaryLine.style.display = 'flex'; 
+                uploadDiv.style.display = 'none';
+                summaryLine.style.display = 'flex';
+                fileInput.required = false;
+                fileInput.value = ''; // Reset
             }
             updateTotal();
         }
 
-        // --- PAYMENT LOGIC & VALIDATION ---
-        function togglePaymentLogic(hasPaid) {
-            const infoContainer = document.getElementById('payment-info-container');
-            const proofContainer = document.getElementById('payment-proof-container');
-            const submitBtn = document.getElementById('submit-btn');
-            const warningText = document.getElementById('submit-warning');
-
-            if (hasPaid) {
-                infoContainer.classList.add('hidden-field');
-                proofContainer.classList.remove('hidden-field');
-            } else {
-                infoContainer.classList.remove('hidden-field');
-                proofContainer.classList.add('hidden-field');
-            }
-            
-            validateSubmitButton();
-        }
-
-        function validateSubmitButton() {
-            const hasPaid = document.querySelector('input[name="payment-status"]:checked')?.value === 'yes';
-            const hasProof = filesData.paymentProof !== undefined;
-            const submitBtn = document.getElementById('submit-btn');
-            const warningText = document.getElementById('submit-warning');
-
-            if (hasPaid && hasProof) {
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
-                submitBtn.style.cursor = 'pointer';
-                warningText.classList.add('hidden-field');
-            } else {
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = '0.5';
-                submitBtn.style.cursor = 'not-allowed';
-                warningText.classList.remove('hidden-field');
-            }
-        }
-
-        // --- NEW: VALIDATION PAYMENT CONTENT (Re-usable logic) ---
-        function validatePaymentContent() {
-            if (!lastOcrText) return;
-            
-            const labelEl = document.getElementById('proof-file-label');
-            const cleanText = lastOcrText.toLowerCase();
-            const targetNumRegex = /[0o]?99\s?534\s?21\s?02/;
-            const isNumFound = targetNumRegex.test(cleanText.replace(/[^0-9o]/g, ''));
-
-            const amountRegex = /(\d+(?:[.,]\d+)?)\s*(?:usd|\$)/gi;
-            let detectedAmount = 0;
-            let match;
-            while ((match = amountRegex.exec(cleanText)) !== null) {
-                let val = parseFloat(match[1].replace(',', '.'));
-                if(val > detectedAmount) detectedAmount = val;
-            }
-
-            const expectedTotal = parseFloat(document.getElementById('summary-total-price').innerText.replace('$','')) || 0;
-
-            if (!isNumFound) {
-                labelEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Numéro destinataire introuvable. Vérifiez l'image.`;
-                labelEl.style.color = '#dc2626'; // Red
-            } else if (detectedAmount > 0 && detectedAmount < expectedTotal) {
-                labelEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> Montant insuffisant détecté (${detectedAmount}$ vs ${expectedTotal}$).`;
-                labelEl.style.color = '#dc2626'; // Red
-            } else if (detectedAmount === 0 && isNumFound) {
-                labelEl.innerHTML = `<i class="fas fa-check-circle"></i> Numéro OK. Montant non détecté (Vérification manuelle requise).`;
-                labelEl.style.color = '#d97706'; // Orange
-            } else {
-                labelEl.innerHTML = `<i class="fas fa-check-circle"></i> Preuve validée (Numéro et Montant détectés)`;
-                labelEl.style.color = '#16a34a'; // Green
-            }
-            validateSubmitButton();
-        }
-
-        // --- File Handling (Base64) & OCR ---
-        function handleFileSelect(event, labelId) {
-            const file = event.target.files[0];
-            const labelEl = document.getElementById(labelId);
-
-            if (file) {
-                // Feedback initial
-                labelEl.innerText = "Fichier : " + file.name;
-                labelEl.style.color = ""; // Reset color
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const base64String = e.target.result.split(',')[1];
-                    let key = '';
-                    
-                    if (event.target.id === 'style-file') key = 'styleFile';
-                    else if (event.target.id === 'logo-file') key = 'logoFile';
-                    else if (event.target.id === 'payment-proof-file') key = 'paymentProof';
-
-                    filesData[key] = {
-                        name: file.name,
-                        type: file.type,
-                        data: base64String
-                    };
-
-                    // --- VERIFICATION OCR SPECIFIQUE (Preuve Paiement) ---
-                    if (key === 'paymentProof') {
-                        // Reset stored text
-                        lastOcrText = "";
-                        
-                        // Désactiver le bouton pendant l'analyse
-                        const submitBtn = document.getElementById('submit-btn');
-                        submitBtn.disabled = true;
-                        submitBtn.style.opacity = '0.5';
-                        
-                        labelEl.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Analyse de la preuve en cours...';
-                        labelEl.style.color = '#d97706'; // Orange warning color
-
-                        Tesseract.recognize(
-                            e.target.result,
-                            'eng', 
-                            { logger: m => console.log(m) }
-                        ).then(({ data: { text } }) => {
-                            lastOcrText = text; // Store for later re-validation
-                            validatePaymentContent(); // Run initial validation
-                        }).catch(err => {
-                            console.error(err);
-                            labelEl.innerHTML = "Erreur d'analyse, fichier accepté manuellement.";
-                        }).finally(() => {
-                            validateSubmitButton();
-                        });
-                    } else {
-                        validateSubmitButton();
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // --- VOICE RECORDING LOGIC ---
-        async function toggleRecording() {
-            const btn = document.getElementById('record-btn');
-            const textSpan = document.getElementById('record-text');
-            const timerDisplay = document.getElementById('recording-timer');
-            
-            if (!mediaRecorder || mediaRecorder.state === "inactive") {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    mediaRecorder = new MediaRecorder(stream);
-                    audioChunks = [];
-                    
-                    mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
-
-                    mediaRecorder.onstop = () => {
-                        audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        const audioPreview = document.getElementById('audio-preview');
-                        audioPreview.src = audioUrl;
-                        
-                        audioPreview.classList.remove('hidden');
-                        document.getElementById('delete-audio-btn').classList.remove('hidden');
-                        btn.classList.remove('recording');
-                        btn.classList.add('hidden');
-                        timerDisplay.classList.add('hidden');
-                        
-                        const reader = new FileReader();
-                        reader.readAsDataURL(audioBlob);
-                        reader.onloadend = function() {
-                            const base64data = reader.result.split(',')[1];
-                            filesData['voiceNote'] = {
-                                name: 'voice_note_' + Date.now() + '.webm',
-                                type: 'audio/webm',
-                                data: base64data
-                            };
-                        }
-                    };
-
-                    mediaRecorder.start();
-                    btn.classList.add('recording');
-                    textSpan.innerText = "Arrêter l'enregistrement";
-                    timerDisplay.classList.remove('hidden');
-                    
-                    recordingSeconds = 0;
-                    timerDisplay.innerText = "00:00";
-                    recordingTimerInterval = setInterval(() => {
-                        recordingSeconds++;
-                        const mins = Math.floor(recordingSeconds / 60).toString().padStart(2, '0');
-                        const secs = (recordingSeconds % 60).toString().padStart(2, '0');
-                        timerDisplay.innerText = `${mins}:${secs}`;
-                    }, 1000);
-
-                } catch (err) {
-                    alert("Impossible d'accéder au microphone.");
-                }
-            } else {
-                mediaRecorder.stop();
-                clearInterval(recordingTimerInterval);
-                textSpan.innerText = "Enregistrer vocal";
-            }
-        }
-
-        function deleteAudio() {
-            const audioPreview = document.getElementById('audio-preview');
-            const recordBtn = document.getElementById('record-btn');
-            const deleteBtn = document.getElementById('delete-audio-btn');
-            
-            audioPreview.src = "";
-            audioPreview.classList.add('hidden');
-            deleteBtn.classList.add('hidden');
-            recordBtn.classList.remove('hidden');
-            
-            audioBlob = null;
-            audioChunks = [];
-            delete filesData['voiceNote'];
-        }
-
-        // --- Extra Services Logic ---
-        function showServiceDropdown() {
-            document.getElementById('service-dropdown-container').classList.remove('hidden-field');
-        }
-
-        function addService(selectElement) {
-            const val = selectElement.value;
+        function addServiceFromSelect() {
+            const select = document.getElementById('extra-service-select');
+            const val = select.value;
             if(!val) return;
             const [name, price] = val.split('|');
-            const serviceObj = { name: name, price: parseInt(price) };
-            extraServices.push(serviceObj);
+            extraServices.push({ name, price: parseInt(price) });
             
             const container = document.getElementById('added-services-list');
-            const div = document.createElement('div');
-            div.className = 'added-service-item';
-            div.innerHTML = `<span>${name} (+${price}$)</span><span class="remove-service" onclick="removeService(this, '${name}')"><i class="fas fa-trash"></i></span>`;
-            container.appendChild(div);
-
-            selectElement.value = "";
-            document.getElementById('service-dropdown-container').classList.add('hidden-field');
+            const item = document.createElement('div');
+            item.className = 'flex justify-between items-center';
+            item.style.cssText = 'background: #fff; border: 1px solid #e2e8f0; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; min-width: 45%; flex-grow: 1;';
+            item.innerHTML = `<span style="font-weight:600;">${name} <span style="color:#4F46E5;">(+${price}$)</span></span> <span style="cursor:pointer; color:#ef4444;" onclick="removeService(this, '${name}')"><i class="fas fa-times"></i></span>`;
+            container.appendChild(item);
+            select.value = "";
             updateTotal();
         }
 
@@ -2086,176 +2089,395 @@
             updateTotal();
         }
 
-        // --- Price Calculation ---
         function updateTotal() {
-            let total = parseInt(basePriceInput.value) || 0;
-            const isLogoService = isLogoServiceInput.value === 'true';
+            const basePrice = parseInt(document.getElementById('base-price').value) || 0;
+            const isLogoService = document.getElementById('is-logo-service').value === 'true';
+            let total = basePrice;
+
             const hasLogo = document.querySelector('input[name="has-logo"]:checked')?.value === 'yes';
-            
             if(!isLogoService && !hasLogo) total += 15;
 
             const isExpress = document.getElementById('express-option').checked;
             document.getElementById('summary-express').style.display = isExpress ? 'flex' : 'none';
-            
-            // Use the specific express cost passed to openModal, defaulting to 10 if somehow undefined
-            const expressCost = currentExpressCost || 10;
-            document.getElementById('summary-express-cost').innerText = expressCost + "$";
-
-            if(isExpress) total += expressCost;
+            document.getElementById('summary-express-total').innerText = currentExpressCost + '$';
+            if(isExpress) total += currentExpressCost;
 
             let extrasHtml = '';
             extraServices.forEach(s => {
                 total += s.price;
-                extrasHtml += `<div class="summary-row"><span>+ ${s.name}</span><span>${s.price}$</span></div>`;
+                extrasHtml += `<div class="summary-row"><span>+ ${s.name}</span><span style="font-weight:600;">${s.price}$</span></div>`;
             });
             document.getElementById('summary-extras').innerHTML = extrasHtml;
-            summaryTotal.innerText = total + "$";
-            
-            // Re-validate proof amount if already uploaded
-            if (filesData.paymentProof && lastOcrText) {
-                validatePaymentContent();
-            }
-            
-            return total;
+            document.getElementById('summary-total-price').innerText = total + '$';
         }
 
-        // --- SUBMIT TO GOOGLE APPS SCRIPT ---
+        // --- FILE & OCR LOGIC ROBUSTE ---
+        function handleFileSelect(event, labelId) {
+            const file = event.target.files[0];
+            const labelEl = document.getElementById(labelId);
+            const statusMsg = document.getElementById('proof-status-msg');
+
+            // Reset border color on select (Feedback Positif)
+            if(event.target.parentElement) {
+                // Find label wrapper for this input
+                const labelWrapper = document.querySelector(`label[for="${event.target.id}"]`);
+                if(labelWrapper) {
+                    labelWrapper.style.borderColor = '#10b981'; // Green
+                    labelWrapper.style.backgroundColor = '#ecfdf5'; // Light green bg
+                }
+            }
+
+            if(file) {
+                if(labelId === 'proof-label-text') labelEl.innerHTML = `<span style="color:var(--dark);">${file.name}</span>`;
+                else labelEl.innerText = "Fichier : " + file.name;
+                
+                // Reset error text color if it was red
+                labelEl.style.color = '#10b981';
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64 = e.target.result.split(',')[1];
+                    let key = event.target.id; 
+                    if (event.target.id === 'style-file') key = 'styleFile';
+                    else if (event.target.id === 'logo-file') key = 'logoFile';
+                    else if (event.target.id === 'payment-proof-file') key = 'payment-proof-file';
+
+                    filesData[key] = { name: file.name, type: file.type, data: base64 };
+
+                    if(key === 'payment-proof-file') {
+                        statusMsg.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse intelligente en cours...';
+                        statusMsg.style.color = "#d97706";
+                        submitBtn.disabled = true;
+
+                        Tesseract.recognize(e.target.result, 'eng', { 
+                            logger: m => console.log(m) // Optionnel pour debug
+                        })
+                        .then(({ data: { text } }) => {
+                            const expectedTotal = parseFloat(document.getElementById('summary-total-price').innerText.replace('$','')) || 0;
+                            const validation = validateProofContent(text, expectedTotal);
+                            
+                            statusMsg.innerHTML = validation.message;
+                            statusMsg.style.color = validation.color;
+                            
+                            if(validation.isValid) {
+                                submitBtn.disabled = false; 
+                                submitBtn.style.opacity = '1';
+                            } else {
+                                // On permet quand même l'envoi mais avec un avertissement visuel fort
+                                // Pour ne pas bloquer un utilisateur légitime si l'OCR échoue
+                                setTimeout(() => {
+                                    statusMsg.innerHTML += " <br><span style='font-size:0.8em; color:#64748b'>(Envoi manuel autorisé)</span>";
+                                    submitBtn.disabled = false; 
+                                    submitBtn.style.opacity = '1';
+                                }, 1500);
+                            }
+                        }).catch(err => { 
+                            console.error(err);
+                            statusMsg.innerHTML = "Erreur d'analyse. Envoi manuel autorisé.";
+                            statusMsg.style.color = "#64748b";
+                            submitBtn.disabled = false;
+                            submitBtn.style.opacity = '1';
+                        });
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Algorithme de validation amélioré
+        function validateProofContent(ocrText, expectedAmount) {
+            const lowerText = ocrText.toLowerCase().replace(/\s+/g, ' '); // Normalisation des espaces
+            const noSpaceText = lowerText.replace(/\s/g, ''); // Version sans espaces pour le numéro
+
+            let score = 0;
+            let checks = [];
+
+            // 1. Vérification du Numéro (Flexible)
+            // Cherche 0995342102 ou 995342102 avec n'importe quel séparateur ou sans
+            const phoneRegex = /(?:099|99)[\s.-]*534[\s.-]*21[\s.-]*02/;
+            if (phoneRegex.test(lowerText) || noSpaceText.includes('0995342102') || noSpaceText.includes('995342102')) {
+                score += 3;
+                checks.push("Numéro OK");
+            }
+
+            // 2. Mots Clés de Succès (Mobile Money RDC)
+            const successKeywords = ['succès', 'success', 'effectué', 'confirmé', 'transféré', 'envoyé', 'transaction id', 'id transaction', 'réussi'];
+            const foundKeyword = successKeywords.some(kw => lowerText.includes(kw));
+            if (foundKeyword) {
+                score += 2;
+                checks.push("Statut Succès");
+            }
+
+            // 3. Vérification du Montant (Extraction de tous les nombres possibles)
+            // Cherche des nombres comme 10.00, 10,00, 10 $, 10 USD, 10 CDF etc.
+            const amountRegex = /(\d+(?:[.,]\d{1,2})?)\s*(?:usd|\$|cdf|fc)?/g;
+            let maxAmountFound = 0;
+            let match;
+            
+            // Nettoyage spécifique pour les montants (parfois l'OCR lit 1O.00 au lieu de 10.00)
+            const cleanTextForNumbers = lowerText.replace(/o/g, '0').replace(/l/g, '1');
+
+            while ((match = amountRegex.exec(cleanTextForNumbers)) !== null) {
+                let val = parseFloat(match[1].replace(',', '.'));
+                // Filtre les numéros de téléphone ou dates (souvent > 1000 sans décimales ou formats spécifiques)
+                // Ici on assume que si on trouve un montant >= expectedAmount, c'est bon signe.
+                if (!isNaN(val)) {
+                    if (val > maxAmountFound) maxAmountFound = val;
+                }
+            }
+
+            // On accepte une marge d'erreur ou si le montant est en CDF (souvent très grand)
+            if (maxAmountFound >= expectedAmount || maxAmountFound > 2000) { // 2000 seuil arbitraire pour CDF
+                score += 2;
+                checks.push("Montant Cohérent");
+            }
+
+            // DÉCISION FINALE
+            if (score >= 5) {
+                return { 
+                    isValid: true, 
+                    message: `<i class="fas fa-check-circle"></i> Preuve Validée (${checks.join(', ')})`, 
+                    color: "#16a34a" 
+                };
+            } else if (score >= 3) {
+                return { 
+                    isValid: true, 
+                    message: `<i class="fas fa-exclamation-circle"></i> Preuve Acceptable (${checks.join(', ')})`, 
+                    color: "#d97706" // Orange
+                };
+            } else {
+                return { 
+                    isValid: false, 
+                    message: `<i class="fas fa-times-circle"></i> Preuve Illisible ou Incorrecte. Vérifiez l'image.`, 
+                    color: "#dc2626" // Rouge
+                };
+            }
+        }
+
+        function validateFinalStep() {
+            // Cette fonction est appelée si l'OCR échoue ou n'est pas utilisé (fallback)
+            if(filesData['payment-proof-file']) {
+                submitBtn.disabled = false; submitBtn.style.opacity = '1';
+            } else {
+                submitBtn.disabled = true; submitBtn.style.opacity = '0.5';
+            }
+        }
+
+        // --- VOICE RECORDER ---
+        let mediaRecorder; let audioChunks = [];
+        async function toggleRecording() {
+            const btn = document.getElementById('record-btn');
+            const timer = document.getElementById('recording-timer');
+            if (!mediaRecorder || mediaRecorder.state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                    mediaRecorder.onstop = () => {
+                        const blob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const url = URL.createObjectURL(blob);
+                        const preview = document.getElementById('audio-preview');
+                        preview.src = url; preview.classList.remove('hidden-field');
+                        document.getElementById('delete-audio-btn').classList.remove('hidden-field');
+                        btn.classList.add('hidden-field'); timer.classList.add('hidden-field');
+                        const reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = () => { filesData['voiceNote'] = { name: 'voice.webm', type: 'audio/webm', data: reader.result.split(',')[1] }; };
+                    };
+                    mediaRecorder.start();
+                    btn.classList.add('recording'); timer.classList.remove('hidden-field');
+                    let secs = 0; timer.innerText = "00:00";
+                    const int = setInterval(() => {
+                        if(mediaRecorder.state !== "recording") { clearInterval(int); return; }
+                        secs++;
+                        timer.innerText = `${Math.floor(secs/60).toString().padStart(2,'0')}:${(secs%60).toString().padStart(2,'0')}`;
+                    }, 1000);
+                } catch (err) { alert("Microphone introuvable"); }
+            } else mediaRecorder.stop();
+        }
+        function deleteAudio() {
+            document.getElementById('audio-preview').classList.add('hidden-field');
+            document.getElementById('delete-audio-btn').classList.add('hidden-field');
+            document.getElementById('record-btn').classList.remove('hidden-field', 'recording');
+            delete filesData['voiceNote'];
+        }
+
+        // --- SUBMIT LOGIC (GOOGLE SHEETS - ADAPTED FOR WIZARD) ---
         function submitOrder(e) {
             e.preventDefault();
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+            submitBtn.disabled = true;
+
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-VJD0eZjfK-Xmv2Yf9SQU1fxzCFTx4fwBujMZLrw4FroDEHr7i2snByGqPvVph_aQ/exec';
             
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-            btn.disabled = true;
-
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzhCIUjK1cZ1bSLc6GwNPkR2kD66hz2rAFyChlj6W2jflwA6yBgvRBCiMg9gOAkysH/exec';
-
-            // Gather Data
             const formData = {
                 timestamp: new Date().toISOString(),
                 clientName: document.getElementById('client-name').value,
                 whatsapp: document.getElementById('client-whatsapp').value,
                 company: document.getElementById('client-company').value,
-                service: offerInput.value,
-                basePrice: basePriceInput.value,
+                slogan: document.getElementById('client-slogan').value,
+                service: document.getElementById('offer-name').value,
+                basePrice: document.getElementById('base-price').value,
                 description: document.getElementById('project-desc').value,
-                
                 hasStylePreference: document.querySelector('input[name="design-style"]:checked').value === 'yes',
                 hasLogo: document.querySelector('input[name="has-logo"]:checked')?.value === 'yes',
                 isExpress: document.getElementById('express-option').checked,
-                
                 extraServices: extraServices,
                 estimatedTotal: document.getElementById('summary-total-price').innerText,
-                
                 files: filesData
             };
 
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
+            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(formData) })
+            .then(res => res.json())
             .then(data => {
                 if(data.status === 'success'){
-                    // Close old modal and open success modal
-                    closeModal();
-                    openSuccessModal(formData.clientName);
-                    
-                    // Reset Form and States
-                    document.getElementById('order-form').reset();
-                    filesData = {};
-                    extraServices = [];
-                    lastOcrText = ""; // Clear OCR cache
-                    document.getElementById('added-services-list').innerHTML = '';
-                    togglePaymentLogic(false);
-                    deleteAudio();
-                } else {
-                    throw new Error(data.message || 'Erreur inconnue');
-                }
+                    closeWizard();
+                    document.getElementById('success-client-name').innerText = formData.clientName;
+                    document.getElementById('success-modal').classList.add('active');
+                } else throw new Error(data.message);
             })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert("Une erreur s'est produite lors de l'envoi. Veuillez réessayer ou nous contacter directement.");
-            })
-            .finally(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            });
-        }
-    
-        // --- TRACKING LOGIC ---
-        const trackingModal = document.getElementById('tracking-modal');
-        
-        function openTrackingModal() {
-            trackingModal.classList.add('active');
-        }
-        
-        function closeTrackingModal() {
-            trackingModal.classList.remove('active');
-            document.getElementById('track-result').classList.add('hidden-field');
-            document.getElementById('track-phone').value = '';
-            document.getElementById('download-area').innerHTML = ''; // Reset download button
+            .catch(err => { console.error(err); alert("Erreur d'envoi. Contactez-nous sur WhatsApp."); })
+            .finally(() => { submitBtn.innerHTML = originalText; submitBtn.disabled = false; });
         }
 
+        // --- TRACKING LOGIC (AMELIORÉE) ---
+        function openTrackingModal() { document.getElementById('tracking-modal').classList.add('active'); }
         function trackOrder(e) {
             e.preventDefault();
             const phone = document.getElementById('track-phone').value;
             const btn = document.getElementById('track-btn');
             const resultBox = document.getElementById('track-result');
-            const downloadArea = document.getElementById('download-area');
-            
-            // UI Loading
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Recherche...';
-            btn.disabled = true;
-            resultBox.classList.add('hidden-field');
-            downloadArea.innerHTML = '';
-
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzhCIUjK1cZ1bSLc6GwNPkR2kD66hz2rAFyChlj6W2jflwA6yBgvRBCiMg9gOAkysH/exec';
             
+            // Loading
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Recherche en cours...';
+            btn.disabled = true; 
+            resultBox.classList.add('hidden-field');
+
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-VJD0eZjfK-Xmv2Yf9SQU1fxzCFTx4fwBujMZLrw4FroDEHr7i2snByGqPvVph_aQ/exec';
+
             fetch(`${SCRIPT_URL}?action=track&phone=${encodeURIComponent(phone)}`)
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
                 if (data.status === 'found') {
-                    document.getElementById('res-service').innerText = data.client + " - " + data.service;
+                    // Set Info
+                    document.getElementById('res-service').innerText = data.service;
                     
-                    const stepEl = document.getElementById('res-step');
-                    stepEl.innerText = data.step;
+                    // Badge Logic
+                    const badge = document.getElementById('res-step-badge');
+                    const statusText = data.step;
+                    const lowerStatus = statusText.toLowerCase();
                     
-                    if(data.step.toLowerCase().includes('fini') || data.step.toLowerCase().includes('livré')) {
-                        stepEl.style.color = '#16a34a'; 
-                        stepEl.style.borderColor = '#16a34a';
-                    } else {
-                        stepEl.style.color = '#0f172a';
-                        stepEl.style.borderColor = '#cbd5e1';
+                    let bg = '#f1f5f9'; let col = '#64748b'; let icon = 'fa-clock';
+
+                    if(lowerStatus.includes('cours') || lowerStatus.includes('cours')) {
+                        bg = '#eff6ff'; col = '#2563eb'; icon = 'fa-paint-brush';
+                    } else if(lowerStatus.includes('fini') || lowerStatus.includes('livr') || lowerStatus.includes('envoy')) {
+                        bg = '#dcfce7'; col = '#16a34a'; icon = 'fa-check-circle';
+                    } else if(lowerStatus.includes('attente') || lowerStatus.includes('reçu')) {
+                        bg = '#fef3c7'; col = '#d97706'; icon = 'fa-hourglass-half';
                     }
 
-                    // --- AFFICHAGE DU BOUTON DE TÉLÉCHARGEMENT ---
+                    badge.style.background = bg;
+                    badge.style.color = col;
+                    badge.style.border = `1px solid ${col}40`;
+                    badge.innerHTML = `<i class="fas ${icon}"></i> ${statusText}`;
+                    
+                    // Download Logic
+                    const dlArea = document.getElementById('download-area');
                     if (data.downloadUrl) {
-                        downloadArea.innerHTML = `
-                            <a href="${data.downloadUrl}" target="_blank" class="btn btn-primary" style="background: #10b981; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); border: none; width: 100%;">
-                                <i class="fas fa-cloud-download-alt"></i> TÉLÉCHARGER MES FICHIERS
+                        dlArea.innerHTML = `
+                            <a href="${data.downloadUrl}" target="_blank" class="btn btn-primary" style="width:100%; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); background: #10b981;">
+                                <i class="fas fa-cloud-download-alt"></i> Télécharger les fichiers
                             </a>
-                            <p style="font-size: 0.8rem; color: #10b981; margin-top: 5px;">Vos fichiers sont prêts !</p>
+                            <p style="font-size: 0.8rem; color: #10b981; margin-top: 8px;">Vos fichiers sont prêts !</p>
                         `;
-                    } else if (data.step.toLowerCase().includes('fini')) {
-                        downloadArea.innerHTML = `<p style="font-size: 0.85rem; color: #64748b;">Travail terminé. Les fichiers vous seront envoyés sur WhatsApp.</p>`;
+                    } else if (lowerStatus.includes('fini')) {
+                         dlArea.innerHTML = `<p style="font-size: 0.85rem; color: #64748b; background: #f8fafc; padding: 10px; border-radius: 8px;">Projet terminé. Les fichiers ont été envoyés sur votre WhatsApp.</p>`;
+                    } else {
+                        dlArea.innerHTML = '';
                     }
-
+                    
                     resultBox.classList.remove('hidden-field');
                 } else {
                     alert("Aucune commande trouvée pour ce numéro. Vérifiez la saisie.");
                 }
             })
-            .catch(err => {
-                console.error(err);
-                alert("Erreur de connexion au service de suivi.");
-            })
-            .finally(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            });
+            .catch(() => alert("Erreur de connexion."))
+            .finally(() => { btn.innerHTML = originalText; btn.disabled = false; });
         }
+
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text);
+            const original = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check" style="color:#1e40af"></i>';
+            setTimeout(() => btn.innerHTML = original, 2000);
+        }
+
+        // --- NEW PROJECT SELECTOR LOGIC ---
+        function openProjectSelector() {
+            document.getElementById('project-selector-modal').classList.add('active');
+            resetSelector();
+        }
+
+        function resetSelector() {
+            document.getElementById('selector-categories').classList.remove('hidden-field');
+            document.getElementById('offers-list-container').classList.add('hidden-field');
+        }
+
+        function selectCategory(type) {
+            const listContainer = document.getElementById('offers-list');
+            listContainer.innerHTML = ''; // Clear previous
+
+            if(type === 'abos') {
+                const plans = [
+                    {name: 'Abonnement Basique', price: 42, desc: '15 affiches/mois'},
+                    {name: 'Abonnement Intermédiaire', price: 72, desc: '30 affiches + Anim'},
+                    {name: 'Abonnement Premium', price: 102, desc: '60 affiches + Tout'}
+                ];
+                plans.forEach(p => {
+                    listContainer.innerHTML += `
+                        <div class="offer-item" onclick="selectOfferFromSelector('${p.name}', ${p.price})">
+                            <div>
+                                <div class="offer-name">${p.name}</div>
+                                <div style="font-size:0.8rem; color:#64748b;">${p.desc}</div>
+                            </div>
+                            <div class="offer-price">${p.price}$</div>
+                        </div>
+                    `;
+                });
+            } else {
+                const services = [
+                    {name: 'Logo Design', price: 20, isLogo: true},
+                    {name: 'Identité Visuelle', price: 30, isLogo: true},
+                    {name: 'Pack Branding', price: 200, isLogo: true, express: 50},
+                    {name: 'Affiche Event', price: 10},
+                    {name: 'Cover Album', price: 10}
+                ];
+                services.forEach(s => {
+                    listContainer.innerHTML += `
+                        <div class="offer-item" onclick="selectOfferFromSelector('${s.name}', ${s.price}, ${s.isLogo || false}, ${s.express || 10})">
+                            <div class="offer-name">${s.name}</div>
+                            <div class="offer-price">${s.price}$</div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('selector-categories').classList.add('hidden-field');
+            document.getElementById('offers-list-container').classList.remove('hidden-field');
+        }
+
+        function selectOfferFromSelector(name, price, isLogo = false, express = 10) {
+            document.getElementById('project-selector-modal').classList.remove('active');
+            // Slight delay for smooth transition
+            setTimeout(() => {
+                openWizard(name, price, isLogo, express);
+            }, 200);
+        }
+
     </script>
 </body>
 </html>
