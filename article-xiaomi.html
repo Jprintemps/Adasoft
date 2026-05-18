@@ -6,13 +6,16 @@
     <title>Le Rebranding à 300 000 $ de Xiaomi - Blog AdaSoft</title>
     <meta name="description" content="Quand le géant de la tech a payé une fortune pour simplement arrondir son logo, le monde entier s'est moqué. Décryptage d'un coup de génie." />
     
-    <!-- ✨ LES BALISES OPEN GRAPH POUR WHATSAPP/FACEBOOK ✨ -->
+    <!-- ✨ LES BALISES OPEN GRAPH POUR WHATSAPP/FACEBOOK/LINKEDIN ✨ -->
     <meta property="og:title" content="Le Rebranding à 300 000 $ de Xiaomi : Arnaque ou coup de génie ?" />
     <meta property="og:description" content="Quand le géant de la tech a payé une fortune pour simplement arrondir son logo, le monde entier s'est moqué. Décryptage." />
-    <!-- IMPORTANT: Remplacez l'URL par le vrai lien vers votre image en ligne (https://...) -->
-    <meta property="og:image" content="https://votre-site.com/src/img/xiaomi.jpg" />
-    <meta property="og:url" content="https://votre-site.com/article-xiaomi.html" />
+    
+    <!-- ⚠️ TRÈS IMPORTANT POUR WHATSAPP : Remplacez VOTRE-VRAI-SITE.com par votre vrai domaine une fois le site en ligne ⚠️ -->
+    <meta property="og:image" content="https://VOTRE-VRAI-SITE.com/src/img/xiaomi.jpeg" />
+    <meta property="og:url" content="https://VOTRE-VRAI-SITE.com/article-xiaomi.html" />
     <meta property="og:type" content="article" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <link rel="icon" type="image/png" href="./src/img/Logosite.png" />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -45,7 +48,7 @@
           <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
         </a>
         <div class="hidden lg:flex items-center space-x-8">
-          <a href="blog.html" class="font-bold text-sm text-primary">← Retour au Blog</a>
+          <a href="blog.html" class="font-bold text-sm text-primary hover:text-primary-soft transition-colors">← Retour au Blog</a>
         </div>
         <div class="hidden lg:block">
           <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-medium shadow-neon transition-all text-sm">Nous Contacter</button>
@@ -57,7 +60,11 @@
     <main class="w-full bg-dark pt-32 pb-24 min-h-screen">
       <div class="max-w-3xl mx-auto px-4 sm:px-6">
         
-        <div class="flex items-center gap-3 text-sm text-primary-soft mb-6 mt-8">
+        <a href="blog.html" class="text-slate-400 hover:text-white font-medium mb-10 inline-flex items-center transition-colors group">
+          <i class="fas fa-arrow-left mr-2 transform group-hover:-translate-x-1 transition-transform"></i> Tous les articles
+        </a>
+        
+        <div class="flex items-center gap-3 text-sm text-primary-soft mb-6 mt-4">
           <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Actualité Branding</span>
           <span class="text-slate-500">18 Mai 2026 • 8 min de lecture</span>
         </div>
@@ -67,7 +74,7 @@
         </h1>
         
         <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl bg-slate-800">
-          <img src="./src/img/xiaomi.jpg" class="w-full h-full object-cover" alt="Xiaomi Rebranding" />
+          <img src="./src/img/xiaomi.jpeg" class="w-full h-full object-cover" alt="Xiaomi Rebranding" />
         </div>
         
         <div class="article-content">
