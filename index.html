@@ -9,13 +9,13 @@
       content="Expert en identité visuelle et création de logo. J'aide les startups et entrepreneurs à construire une image de marque unique et mémorable pour attirer leurs clients."
     />
     <meta name="author" content="AdaSoft" />
-    <link rel="icon" type="image/png" href="./src/img/Logosite.png">
+    <link rel="icon" type="image/png" href="./src/img/Logosite.png" />
 
     <!-- Polices Modernes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -24,6 +24,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- Calendly Widget -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -57,9 +61,6 @@
       }
     </script>
 
-    <!-- Tesseract.js pour l'OCR -->
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-
     <style>
       /* --- CUSTOM CSS PRESERVED FOR UNIQUE EFFECTS --- */
       :root {
@@ -82,6 +83,15 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+      }
+
+      .title-badge {
+        background: var(--primary);
+        color: white;
+        padding: 0.2em 0.6em;
+        border-radius: 999px;
+        display: inline-block;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
       }
 
       /* Animations */
@@ -129,30 +139,6 @@
       .card-pos-2 { z-index: 1; transform: translateX(100px) scale(0.8) translateZ(-100px); opacity: 0.4; filter: brightness(0.4); }
       .card-out { z-index: 4; transform: translateX(-120%) rotateY(-25deg) scale(1.1); opacity: 0; }
 
-      /* Modals */
-      .modal-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(16px);
-        z-index: 2000; display: none; justify-content: center; align-items: center;
-        opacity: 0; transition: opacity 0.3s ease; padding: 16px; /* Reduced padding for mobile */
-      }
-      .modal-overlay.active { display: flex; opacity: 1; }
-      .modal-container {
-        width: 100%; max-width: 700px;
-        border-radius: 24px; /* Slightly less rounded on mobile */
-        transform: scale(0.95) translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        position: relative; max-height: 92vh; overflow-y: auto; overflow-x: hidden;
-      }
-      @media (min-width: 640px) {
-        .modal-container { border-radius: 32px; }
-      }
-      .modal-overlay.active .modal-container { transform: scale(1) translateY(0); }
-      .hidden-field { display: none !important; }
-
-      .wizard-step { display: none; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-      .wizard-step.active { display: block; }
-      @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
       /* Smooth FAQ Accordion */
       .faq-answer-wrapper {
         display: grid;
@@ -173,25 +159,21 @@
     <!-- FLOATING NAVBAR -->
     <div class="absolute top-0 w-full z-[1000] pt-6 px-4 pointer-events-none">
       <nav id="navbar" class="pointer-events-auto max-w-6xl mx-auto bg-dark/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-3 flex items-center justify-between shadow-xl transition-all duration-300 border border-white/10">
-        <div class="logo cursor-pointer font-display font-bold text-xl flex items-center gap-3 text-white" onclick="window.scrollTo(0, 0)">
+        <div class="logo cursor-pointer font-display font-medium text-xl flex items-center gap-3 text-white" onclick="window.scrollTo(0, 0)">
           <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
         </div>
 
         <div class="hidden lg:flex items-center space-x-8">
-          <a href="#problem" class="font-bold text-sm text-slate-300 hover:text-white transition-colors">Le Problème</a>
-          <a href="#solutions" class="font-bold text-sm text-slate-300 hover:text-white transition-colors">Solutions</a>
-          <a href="#portfolio" class="font-bold text-sm text-slate-300 hover:text-white transition-colors">Projets</a>
-          <a href="#pricing" class="font-bold text-sm text-slate-300 hover:text-white transition-colors">Tarifs</a>
-          
-          <button onclick="openTrackingModal()" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">
-            <i class="fas fa-search"></i>
-          </button>
+          <a href="#problem" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Le Problème</a>
+          <a href="#solutions" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Solutions</a>
+          <a href="#portfolio" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Projets</a>
+          <a href="#pricing" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Tarifs</a>
         </div>
 
         <div class="hidden lg:block">
-          <a href="#pricing" class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-bold shadow-neon transition-all text-sm block">
-            Démarrer le Projet
-          </a>
+          <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-medium shadow-neon transition-all text-sm block">
+            Corriger ça maintenant
+          </button>
         </div>
 
         <div class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 cursor-pointer text-white" onclick="toggleMobileMenu()">
@@ -201,11 +183,10 @@
 
       <!-- Mobile Menu -->
       <div id="mobile-menu" class="hidden pointer-events-auto flex-col gap-4 absolute top-[85px] left-4 right-4 bg-dark/95 backdrop-blur-lg rounded-3xl p-6 border border-white/10 shadow-xl">
-        <a href="#problem" onclick="toggleMobileMenu()" class="font-semibold text-lg text-white hover:text-primary">Le Problème</a>
-        <a href="#solutions" onclick="toggleMobileMenu()" class="font-semibold text-lg text-white hover:text-primary">Solutions</a>
-        <a href="#portfolio" onclick="toggleMobileMenu()" class="font-semibold text-lg text-white hover:text-primary">Projets</a>
-        <a href="#pricing" onclick="toggleMobileMenu()" class="font-semibold text-lg text-white hover:text-primary">Tarifs</a>
-        <a href="#" onclick="toggleMobileMenu(); openTrackingModal();" class="font-semibold text-lg text-primary"><i class="fas fa-search mr-2"></i> Suivi</a>
+        <a href="#problem" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Le Problème</a>
+        <a href="#solutions" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Solutions</a>
+        <a href="#portfolio" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Projets</a>
+        <a href="#pricing" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Tarifs</a>
       </div>
     </div>
 
@@ -216,12 +197,12 @@
       <!-- Decorative Elements -->
       <div class="absolute top-32 left-4 md:left-10 lg:left-20 animate-float z-20 hidden md:block">
         <div class="w-14 h-14 bg-[#001E36] rounded-2xl flex items-center justify-center border-2 border-[#31A8FF] shadow-2xl shadow-[#31A8FF]/20 transform -rotate-12">
-            <span class="text-[#31A8FF] font-black text-2xl tracking-tighter" style="font-family: Arial, sans-serif;">Ps</span>
+            <span class="text-[#31A8FF] font-semibold text-2xl tracking-tighter" style="font-family: Arial, sans-serif;">Ps</span>
         </div>
       </div>
       <div class="absolute bottom-40 right-4 md:right-10 lg:right-20 animate-float-delayed z-20 hidden md:block">
         <div class="w-14 h-14 bg-[#330000] rounded-2xl flex items-center justify-center border-2 border-[#FF9A00] shadow-2xl shadow-[#FF9A00]/20 transform rotate-12">
-            <span class="text-[#FF9A00] font-black text-2xl tracking-tighter" style="font-family: Arial, sans-serif;">Ai</span>
+            <span class="text-[#FF9A00] font-semibold text-2xl tracking-tighter" style="font-family: Arial, sans-serif;">Ai</span>
         </div>
       </div>
       
@@ -233,35 +214,32 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           <!-- Text Content -->
           <div class="text-center lg:text-left mt-8 lg:mt-0">
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-black text-dark mb-4 tracking-tight leading-[1.05]">
-              Votre futur client vous jugera en <span class="text-gradient">7 secondes.</span>
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-semibold text-dark mb-4 tracking-tight leading-[1.05]">
+              Il a vu votre logo.<br>
+              Il a fermé l'onglet.<br>
+              <span class="text-gradient">Il ne reviendra jamais.</span>
             </h1>
             
-            <p class="text-xl md:text-2xl text-dark font-bold mb-6">
-              Est-ce que votre logo mérite sa confiance ?
+            <p class="text-xl md:text-2xl text-dark font-medium mb-6 leading-snug">
+              Pas parce que votre offre est mauvaise.<br>
+              Parce que votre image ne méritait pas sa confiance.
             </p>
             
-            <p class="text-lg text-slate-600 mb-10 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Chaque jour sans une identité visuelle professionnelle, c'est des clients qui partent chez la concurrence — sans jamais vous avoir donné une chance. Nous corrigeons ça en 48h.
-            </p>
+            <div class="bg-primary-soft border-l-4 border-primary p-4 mb-10 inline-block text-left">
+              <p class="text-base text-slate-800 font-normal leading-relaxed">
+                Votre concurrent n'est pas nécessairement meilleur que vous. Il a juste l'air de l'être. C'est la seule différence — et on peut la corriger en 48h.
+              </p>
+            </div>
 
             <div class="flex flex-col items-center lg:items-start justify-center lg:justify-start mb-8">
-              <button onclick="openProjectSelector()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon hover:-translate-y-1 transition-all flex items-center justify-center text-lg w-full sm:w-auto mb-3">
-                Réserver mon appel gratuit <i class="fas fa-arrow-right ml-3"></i>
+              <button onclick="openCalendly()" class="bg-dark hover:bg-slate-800 text-white px-10 py-5 rounded-full font-medium shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center text-lg md:text-xl w-full sm:w-auto mb-3">
+                Corriger ça maintenant <i class="fas fa-arrow-right ml-3"></i>
               </button>
-              <div class="text-sm font-bold text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full inline-flex items-center">
-                <i class="fas fa-fire text-orange-500 mr-2"></i> 3 places disponibles cette semaine
+              <div class="text-sm font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full inline-flex items-center">
+                <i class="fas fa-bolt text-yellow-500 mr-2"></i> 3 projets en cours cette semaine — 2 places restantes
               </div>
             </div>
 
-            <!-- Social Proof -->
-            <div class="inline-flex flex-col items-center lg:items-start gap-2 bg-slate-50 border border-slate-200 px-6 py-4 rounded-2xl shadow-sm">
-              <div class="flex text-yellow-400 text-sm">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-              </div>
-              <p class="text-slate-700 text-sm italic font-medium">"Ils ont refait notre logo. Nos ventes ont augmenté de 40% en 3 mois."</p>
-              <p class="text-xs font-bold text-slate-500">— Karim D., fondateur SaaS</p>
-            </div>
           </div>
 
           <!-- 3D Visual Deck (Above the fold now) -->
@@ -282,23 +260,22 @@
     <!-- ========================================== -->
     <section class="bg-[#0B1120] py-16 relative z-0 -mt-10 border-b border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <!-- Changed to 2x2 grid on mobile without divide-x for cleaner look -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-4 text-center">
           <div class="reveal px-2">
-            <div class="text-4xl md:text-5xl font-display font-black text-white mb-2">+25</div>
-            <div class="text-sm text-slate-400 font-medium">Marques sauvées</div>
+            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">48h</div>
+            <div class="text-sm text-slate-400 font-normal">Livraison garantie — ou remboursé</div>
           </div>
           <div class="reveal px-2" style="transition-delay: 100ms;">
-            <div class="text-4xl md:text-5xl font-display font-black text-white mb-2">x3</div>
-            <div class="text-sm text-slate-400 font-medium">ROI à 6 mois</div>
+            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">x3</div>
+            <div class="text-sm text-slate-400 font-normal">Prix perçu moyen après refonte</div>
           </div>
           <div class="reveal px-2" style="transition-delay: 200ms;">
-            <div class="text-4xl md:text-5xl font-display font-black text-white mb-2">48h</div>
-            <div class="text-sm text-slate-400 font-medium">Temps de livraison</div>
+            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">0 px</div>
+            <div class="text-sm text-slate-400 font-normal">Tous nos logos : 100% vectorisés</div>
           </div>
           <div class="reveal px-2" style="transition-delay: 300ms;">
-            <div class="text-4xl md:text-5xl font-display font-black text-white mb-2">99%</div>
-            <div class="text-sm text-slate-400 font-medium">Taux de fidélité</div>
+            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">100%</div>
+            <div class="text-sm text-slate-400 font-normal">Droits exclusifs — à vie</div>
           </div>
         </div>
       </div>
@@ -310,37 +287,42 @@
     <section id="problem" class="py-24 bg-dark text-white overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- Top Text Row -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 reveal">
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-            Vous perdez des clients <br/><span class="text-primary">sans le savoir.</span>
-          </h2>
-          <div class="text-slate-300 text-lg leading-relaxed max-w-lg space-y-4">
-            <p>Voici ce qui se passe vraiment quand un prospect arrive sur votre page ou voit votre carte de visite :</p>
-            <p><strong class="text-white">En 7 secondes</strong>, il a déjà formé un jugement sur votre sérieux, vos prix et votre fiabilité.</p>
-            <ul class="border-l-2 border-primary pl-4 space-y-3 my-6">
-              <li>Un design amateur lui dit inconsciemment : <br/><em class="text-slate-400 text-sm">"Cette entreprise est peut-être risquée."</em></li>
-              <li>Un design premium lui dit : <br/><em class="text-primary-soft font-bold">"Je peux leur faire confiance. Et ils valent leur prix."</em></li>
-            </ul>
-            <p>Ce n'est pas superficiel. C'est de la psychologie d'achat. Et votre concurrent — celui qui vous prend vos clients — l'a compris avant vous.</p>
+          <div>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight mb-4">
+              Votre meilleur client ne vous a <br class="hidden lg:block"/><span class="text-primary">jamais contacté.</span>
+            </h2>
+            <p class="text-xl text-slate-300 font-medium mb-8">
+              Il a vu votre logo. Il a continué à chercher.
+            </p>
+          </div>
+          
+          <div class="text-slate-300 text-lg leading-relaxed max-w-lg space-y-6">
+            <p>Voici ce qui s'est passé hier, pendant que vous travailliez :</p>
+            <p>Un prospect cherchait exactement ce que vous proposez. Il a trouvé votre page, puis celle de votre concurrent. Les deux offres étaient similaires. Un seul avait l'air sérieux.</p>
+            <div class="bg-slate-800 border-l-4 border-primary p-4 mt-6">
+              <p class="text-base text-white font-normal">
+                Ce n'est pas de la superficialité. C'est de la psychologie d'achat — et votre concurrent, lui, l'a déjà compris.
+              </p>
+            </div>
           </div>
         </div>
 
-        <!-- Split Image Composition -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal">
-          <div class="relative rounded-3xl overflow-hidden aspect-[4/3] group shadow-2xl border border-slate-700">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000" alt="Team working" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter grayscale opacity-70" />
-            <div class="absolute bottom-6 left-6 bg-primary text-white p-6 rounded-2xl shadow-neon backdrop-blur-md">
-              <div class="font-bold text-sm tracking-widest uppercase mb-1 opacity-80">L'Enjeu</div>
-              <div class="font-display font-bold text-xl leading-tight">LA PERCEPTION EST LA RÉALITÉ</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center reveal mt-12">
+          <div class="bg-red-500/10 border border-red-500/30 p-8 rounded-3xl text-center hover:-translate-y-1 transition-transform">
+            <div class="w-16 h-16 bg-dark rounded-full mx-auto mb-4 flex items-center justify-center border-2 border-red-500/50 text-red-400 text-2xl">
+              <i class="fas fa-times"></i>
             </div>
+            <div class="font-medium text-red-400 text-xl mb-3">Design amateur</div>
+            <div class="text-slate-300 italic text-lg">"C'est peut-être risqué…"</div>
           </div>
 
-          <div class="relative rounded-3xl overflow-hidden aspect-[3/4] md:mt-24 group shadow-2xl border border-slate-700">
-            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=800" alt="Creative woman" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter grayscale opacity-70" />
-            <svg class="absolute top-10 left-10 w-20 h-20 text-secondary animate-pulse" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-              <path d="M50 10 L60 30 L80 30 L65 45 L70 70 L50 55 L30 70 L35 45 L20 30 L40 30 Z" stroke-linejoin="round"/>
-            </svg>
+          <div class="bg-green-500/10 border border-green-500/30 p-8 rounded-3xl text-center hover:-translate-y-1 transition-transform">
+            <div class="w-16 h-16 bg-dark rounded-full mx-auto mb-4 flex items-center justify-center border-2 border-green-500/50 text-green-400 text-2xl">
+              <i class="fas fa-check"></i>
+            </div>
+            <div class="font-medium text-green-400 text-xl mb-3">Design premium</div>
+            <div class="text-slate-300 italic text-lg">"Ces gens-là savent ce qu'ils font."</div>
           </div>
         </div>
       </div>
@@ -354,63 +336,58 @@
         
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
-          <!-- Left: Text -->
           <div class="reveal">
-            <span class="block text-primary font-bold text-sm uppercase tracking-widest mb-3">La Transformation</span>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-dark mb-4 leading-tight">
-              Ce que vous obtenez <br/>
-              <span class="text-2xl md:text-3xl text-slate-500 font-medium">— et ce que ça change vraiment pour vous</span>
+            <span class="block text-primary font-medium text-sm uppercase tracking-widest mb-3">La Transformation</span>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-dark mb-4 leading-tight">
+              Pas des fichiers.<br>
+              <span class="text-primary">Des armes de vente.</span>
             </h2>
-            <p class="text-slate-600 text-lg mb-10 max-w-md">
-              Nous ne faisons pas que livrer des fichiers. Nous concevons des actifs stratégiques pour votre croissance.
+            <p class="text-slate-600 text-xl font-medium mb-10 max-w-md">
+              On ne livre pas du beau. On livre du résultat.
             </p>
 
             <div class="space-y-6">
-              <!-- Service 1 -->
               <div class="group bg-white border border-slate-200 rounded-3xl p-6 hover:border-primary hover:shadow-lg transition-all cursor-default">
                 <div class="flex items-center gap-4 mb-3">
-                  <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center font-bold text-xl text-primary"><i class="fas fa-bullseye"></i></div>
-                  <h3 class="font-display font-bold text-dark text-xl">Branding & Logo</h3>
+                  <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center font-medium text-xl text-primary"><i class="fas fa-bullseye"></i></div>
+                  <h3 class="font-display font-medium text-dark text-xl">Branding & Logo</h3>
                 </div>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                  Votre logo, c'est votre poignée de main silencieuse. Nous le concevons pour qu'il inspire confiance avant même que vous ayez dit un mot.
+                  Votre logo travaille avant vous, pendant vous, sans vous. C'est le premier vendeur de votre marque — et on s'assure qu'il soit à la hauteur de ce que vous valez vraiment.
                 </p>
               </div>
               
-              <!-- Service 2 -->
               <div class="group bg-white border border-slate-200 rounded-3xl p-6 hover:border-secondary hover:shadow-lg transition-all cursor-default">
                 <div class="flex items-center gap-4 mb-3">
-                  <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center font-bold text-xl text-secondary"><i class="fas fa-bullhorn"></i></div>
-                  <h3 class="font-display font-bold text-dark text-xl">Design Marketing</h3>
+                  <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center font-medium text-xl text-secondary"><i class="fas fa-bullhorn"></i></div>
+                  <h3 class="font-display font-medium text-dark text-xl">Design Marketing</h3>
                 </div>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                  Des visuels qui arrêtent le scroll, génèrent des clics, et transforment des inconnus en clients. Pas joli pour être joli — joli pour vendre.
+                  Vos concurrents publient. Vous, vous captez l'attention. La différence entre les deux : un design qui sait à qui il parle et exactement pourquoi.
                 </p>
               </div>
 
-              <!-- Service 3 -->
               <div class="group bg-white border border-slate-200 rounded-3xl p-6 hover:border-purple-500 hover:shadow-lg transition-all cursor-default">
                 <div class="flex items-center gap-4 mb-3">
-                  <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center font-bold text-xl text-purple-500"><i class="fas fa-film"></i></div>
-                  <h3 class="font-display font-bold text-dark text-xl">Motion Graphics</h3>
+                  <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center font-medium text-xl text-purple-500"><i class="fas fa-film"></i></div>
+                  <h3 class="font-display font-medium text-dark text-xl">Motion Graphics</h3>
                 </div>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                  En 2026, une marque qui ne bouge pas est une marque qui se noie. L'animation, c'est +3x plus d'engagement sur vos réseaux. On vous en donne.
+                  Le mouvement crée l'attention. L'attention crée la confiance. La confiance crée les ventes. Ce n'est pas une tendance — c'est de la psychologie. Et vous pouvez l'avoir dès demain.
                 </p>
               </div>
             </div>
           </div>
 
-          <!-- Right: Image composition -->
           <div class="relative reveal h-[500px] lg:h-full min-h-[500px]">
             <div class="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl">
               <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover filter brightness-90" alt="Services" />
             </div>
             
             <div class="absolute bottom-10 left-10 bg-dark p-6 rounded-3xl shadow-2xl max-w-[280px] border border-slate-700 animate-float">
-              <div class="text-sm text-slate-300 mb-4">À la recherche d'experts capables de donner vie à votre vision ?</div>
-              <button onclick="openProjectSelector()" class="w-full bg-primary hover:bg-primary-dark text-white rounded-full py-3 font-bold flex justify-between items-center px-4 transition-colors">
-                Rencontrer nos experts <div class="bg-white text-primary w-6 h-6 rounded-full flex items-center justify-center"><i class="fas fa-arrow-right text-xs"></i></div>
+              <div class="text-sm text-slate-300 mb-4">Prêt à transformer votre image en un actif rentable ?</div>
+              <button onclick="openCalendly()" class="w-full bg-primary hover:bg-primary-dark text-white rounded-full py-3 font-medium flex justify-between items-center px-4 transition-colors">
+                Lancer mon projet <div class="bg-white text-primary w-6 h-6 rounded-full flex items-center justify-center"><i class="fas fa-arrow-right text-xs"></i></div>
               </button>
             </div>
           </div>
@@ -423,60 +400,53 @@
     <!-- 5. PROCESSUS (Comment ça marche)           -->
     <!-- ========================================== -->
     <section id="process" class="py-32 bg-[#0B1120] relative overflow-hidden">
-      <!-- Decorative Background Elements -->
       <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary rounded-full filter blur-[120px] opacity-10 pointer-events-none"></div>
       
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center reveal mb-20">
-          <span class="text-secondary font-bold uppercase tracking-widest text-sm mb-4 block">Processus Transparent</span>
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6">
-            Qu'est-ce qui se passe quand vous <br class="hidden md:block"/><span class="text-primary">nous contactez ?</span>
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white mb-4 leading-tight">
+            De "je veux quelque chose de pro" à <br class="hidden md:block"/><span class="text-primary">"voici vos fichiers sources"</span>
           </h2>
-          <p class="text-slate-400 text-lg max-w-2xl mx-auto">De votre idée initiale à la livraison finale, découvrez comment nous donnons vie à votre vision en 4 étapes simples.</p>
+          <p class="text-slate-400 text-lg font-medium">4 étapes. Pas de surprise. Pas de jargon.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative reveal">
-          <!-- Connecting Line (Desktop Only) -->
           <div class="hidden md:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-primary-dark via-secondary to-primary-dark opacity-30 z-0"></div>
 
-          <!-- Step 1 -->
           <div class="relative z-10 flex flex-col items-center text-center group">
             <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-primary group-hover:text-primary group-hover:shadow-neon transition-all duration-300 transform group-hover:-translate-y-2">
               <i class="fas fa-comments"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center shadow-lg">1</div>
+              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white text-sm font-medium flex items-center justify-center shadow-lg">1</div>
             </div>
-            <h4 class="text-xl font-display font-bold text-white mb-3">Le Briefing</h4>
-            <p class="text-slate-400 text-sm">Vous passez commande via notre plateforme. Nous analysons votre vision, vos couleurs et vos objectifs avec précision.</p>
+            <h4 class="text-xl font-display font-medium text-white mb-3">Vous nous parlez.</h4>
+            <p class="text-slate-400 text-sm">Votre vision, vos couleurs, vos clients cibles. On écoute tout. On pose les vraies questions.</p>
           </div>
 
-          <!-- Step 2 -->
           <div class="relative z-10 flex flex-col items-center text-center group mt-8 md:mt-0">
             <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-secondary group-hover:text-secondary group-hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] transition-all duration-300 transform group-hover:-translate-y-2">
               <i class="fas fa-magic"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-secondary text-white text-sm font-bold flex items-center justify-center shadow-lg">2</div>
+              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-secondary text-white text-sm font-medium flex items-center justify-center shadow-lg">2</div>
             </div>
-            <h4 class="text-xl font-display font-bold text-white mb-3">La Création</h4>
-            <p class="text-slate-400 text-sm">Nos experts entrent dans leur bulle créative. Nous concevons des propositions uniques qui reflètent l'ADN de votre marque.</p>
+            <h4 class="text-xl font-display font-medium text-white mb-3">On travaille.</h4>
+            <p class="text-slate-400 text-sm">Pas d'IA. Pas de templates. Des mains expertes sur votre projet, du début à la fin.</p>
           </div>
 
-          <!-- Step 3 -->
           <div class="relative z-10 flex flex-col items-center text-center group mt-8 md:mt-0">
             <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-primary group-hover:text-primary group-hover:shadow-neon transition-all duration-300 transform group-hover:-translate-y-2">
               <i class="fas fa-sync-alt"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center shadow-lg">3</div>
+              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white text-sm font-medium flex items-center justify-center shadow-lg">3</div>
             </div>
-            <h4 class="text-xl font-display font-bold text-white mb-3">Les Ajustements</h4>
-            <p class="text-slate-400 text-sm">Nous vous présentons le travail. Si besoin, nous effectuons les retouches jusqu'à ce que vous soyez 100% satisfait du résultat.</p>
+            <h4 class="text-xl font-display font-medium text-white mb-3">Vous validez.</h4>
+            <p class="text-slate-400 text-sm">On présente. Vous réagissez. On affine. On continue jusqu'à ce que ce soit exactement ça.</p>
           </div>
 
-          <!-- Step 4 -->
           <div class="relative z-10 flex flex-col items-center text-center group mt-8 md:mt-0">
             <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-green-500 group-hover:text-green-500 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all duration-300 transform group-hover:-translate-y-2">
               <i class="fas fa-rocket"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-green-500 text-white text-sm font-bold flex items-center justify-center shadow-lg">4</div>
+              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-green-500 text-white text-sm font-medium flex items-center justify-center shadow-lg">4</div>
             </div>
-            <h4 class="text-xl font-display font-bold text-white mb-3">La Livraison HD</h4>
-            <p class="text-slate-400 text-sm">Félicitations ! Vous recevez vos fichiers sources haute définition, prêts à propulser votre entreprise vers les sommets.</p>
+            <h4 class="text-xl font-display font-medium text-white mb-3">Vous récupérez tout.</h4>
+            <p class="text-slate-400 text-sm">Fichiers sources (AI, SVG, PDF), déclinaisons, formats réseaux. Tous les droits vous appartiennent. À vie.</p>
           </div>
 
         </div>
@@ -497,51 +467,49 @@
             
             <!-- Left Content -->
             <div>
-              <div class="inline-flex items-center gap-2 bg-primary/20 border border-primary/30 text-primary px-4 py-2 rounded-full font-bold text-sm mb-6 uppercase tracking-wider">
-                <i class="fas fa-fingerprint"></i> Authenticité Garantie
-              </div>
-              <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
-                Votre concurrent utilise Canva. <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">C'est une bonne nouvelle pour vous.</span>
+              <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white mb-4 leading-tight">
+                L'IA vient de créer le même logo pour 847 entreprises.<br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-normal italic">Lequel êtes-vous ?</span>
               </h2>
-              <p class="text-slate-300 text-lg mb-6 leading-relaxed">
-                Pendant qu'il génère un logo en 30 secondes avec Midjourney — le même que 847 autres entreprises — vous, vous aurez une identité visuelle pensée pour votre clientèle, votre positionnement, votre secteur.
+              <p class="text-primary-soft text-xl font-display font-medium mb-6">
+                Une identité visuelle ne se génère pas. Elle se construit.
               </p>
-              
-              <div class="bg-dark/50 border-l-4 border-secondary p-4 mb-8">
-                <p class="text-white text-xl font-display font-bold">
-                  L'IA crée de la quantité. Nous créons de la différence.
+              <div class="space-y-4 text-slate-300 text-base leading-relaxed mb-6">
+                <p>
+                  Midjourney vous donnera un logo en 30 secondes. Il l'a déjà donné à 846 autres marques avant vous. Dans 6 mois, vos prospects auront vu ce visuel des dizaines de fois ailleurs — et votre crédibilité en prendra un coup sans que vous compreniez pourquoi.
+                </p>
+                <p>
+                  On ne génère pas. On conçoit. Chaque forme est tracée pour vous. Chaque couleur est choisie pour votre client cible. Chaque choix typographique dit quelque chose sur qui vous êtes — même quand vous n'avez rien dit.
                 </p>
               </div>
               
-              <ul class="space-y-4">
-                <li class="flex items-center gap-4 text-slate-300 font-medium">
-                  <div class="w-10 h-10 rounded-full bg-dark border border-slate-600 flex items-center justify-center text-primary flex-shrink-0 shadow-sm"><i class="fas fa-pen-nib"></i></div>
-                  Chaque courbe est tracée à la main.
-                </li>
-                <li class="flex items-center gap-4 text-slate-300 font-medium">
-                  <div class="w-10 h-10 rounded-full bg-dark border border-slate-600 flex items-center justify-center text-secondary flex-shrink-0 shadow-sm"><i class="fas fa-palette"></i></div>
-                  Chaque couleur choisie stratégiquement.
-                </li>
-                <li class="flex items-center gap-4 text-slate-300 font-medium">
-                  <div class="w-10 h-10 rounded-full bg-dark border border-slate-600 flex items-center justify-center text-primary-soft flex-shrink-0 shadow-sm"><i class="fas fa-font"></i></div>
-                  Chaque police sélectionnée pour ce qu'elle dit de vous — même en silence.
-                </li>
-              </ul>
+              <div class="bg-dark/50 border-l-4 border-secondary p-4 mb-8">
+                <p class="text-white text-lg font-display font-medium">
+                  "Votre logo est unique. Ou il ne l'est pas.<br>Il n'y a pas de milieu."
+                </p>
+              </div>
               
-              <div class="mt-8 p-5 bg-gradient-to-r from-primary/20 to-transparent border border-primary/30 rounded-2xl text-white font-bold text-lg inline-block shadow-neon">
-                Résultat : vous êtes le seul à avoir ce logo. Et ça, ça n'a pas de prix.
+              <div class="flex flex-col gap-3">
+                <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-slate-300">
+                  <strong class="text-white font-medium">Fait pour vous seul.</strong> — Aucun autre client ne recevra ce logo.
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-slate-300">
+                  <strong class="text-white font-medium">Stratégique, pas décoratif.</strong> — Chaque choix visuel parle à votre client cible.
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-slate-300">
+                  <strong class="text-white font-medium">Propriété exclusive.</strong> — Les droits sont entièrement les vôtres. À vie. Sans condition.
+                </div>
               </div>
             </div>
 
             <!-- Right Visual -->
-            <div class="relative h-[500px] rounded-3xl overflow-hidden group border border-slate-700 shadow-2xl">
+            <div class="relative h-[500px] rounded-3xl overflow-hidden group border border-slate-700 shadow-2xl hidden lg:block">
               <img src="src/img/Affiche publicitaire.png" alt="Designer drawing" class="w-full h-full object-cover filter grayscale opacity-70 group-hover:scale-105 transition-transform duration-700" />
               <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-80"></div>
               
               <div class="absolute bottom-10 left-6 bg-dark/90 backdrop-blur-md border border-slate-600 p-5 rounded-2xl flex items-center gap-4 max-w-[250px] transform -rotate-3 shadow-xl">
                 <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white text-xl shadow-neon-strong"><i class="fas fa-heart"></i></div>
-                <div class="text-sm text-white font-bold leading-snug">Fait avec passion pour votre réussite.</div>
+                <div class="text-sm text-white font-medium leading-snug">Fait avec passion pour votre réussite.</div>
               </div>
             </div>
 
@@ -565,7 +533,6 @@
               <img src="src/img/Fichier4.webp" alt="Vector Design" class="w-full h-full object-cover filter brightness-75 group-hover:scale-105 transition-transform duration-700" />
               <div class="absolute inset-0 bg-gradient-to-tr from-dark via-transparent to-transparent opacity-90"></div>
               
-              <!-- Floating Vector Nodes -->
               <div class="absolute top-1/4 left-1/4 w-3 h-3 bg-white border-2 border-primary shadow-neon-strong animate-pulse"></div>
               <div class="absolute top-1/2 right-1/3 w-3 h-3 bg-white border-2 border-primary shadow-neon-strong animate-pulse" style="animation-delay: 1s;"></div>
               <div class="absolute bottom-1/3 left-1/2 w-3 h-3 bg-white border-2 border-primary shadow-neon-strong animate-pulse" style="animation-delay: 0.5s;"></div>
@@ -578,16 +545,16 @@
             <div class="absolute -bottom-6 -right-6 lg:-right-10 bg-slate-800/95 backdrop-blur-md border border-slate-600 p-6 rounded-3xl shadow-2xl animate-float max-w-[260px]">
               <div class="flex items-center gap-4 mb-3">
                 <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center text-xl"><i class="fas fa-expand-arrows-alt"></i></div>
-                <div class="font-bold text-white text-lg">Zoom Infini</div>
+                <div class="font-medium text-white text-lg">Zoom Infini</div>
               </div>
-              <p class="text-sm text-slate-300 font-medium leading-relaxed">Aucune perte de qualité, du favicon au panneau publicitaire géant.</p>
+              <p class="text-sm text-slate-300 font-normal leading-relaxed">Aucune perte de qualité, du favicon au panneau publicitaire géant.</p>
             </div>
           </div>
 
           <!-- Text Right -->
           <div class="reveal order-1 lg:order-2">
-            <span class="block text-primary font-bold text-sm uppercase tracking-widest mb-3">Qualité Studio</span>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
+            <span class="block text-primary font-medium text-sm uppercase tracking-widest mb-3">Qualité Studio</span>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-white mb-6 leading-tight">
               Des Logos <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">100% Vectorisés</span><br/>et Ultra-Professionnels.
             </h2>
             <p class="text-slate-300 text-lg mb-10 leading-relaxed">
@@ -598,14 +565,14 @@
               <li class="flex items-start gap-5">
                 <div class="w-12 h-12 rounded-2xl bg-dark border border-slate-700 text-primary flex items-center justify-center flex-shrink-0 shadow-sm text-xl"><i class="fas fa-file-export"></i></div>
                 <div>
-                  <h5 class="text-white font-bold text-xl mb-2">Formats Sources Inclus</h5>
+                  <h5 class="text-white font-medium text-xl mb-2">Formats Sources Inclus</h5>
                   <p class="text-slate-400 text-sm leading-relaxed">Vous avez le contrôle total sur votre marque avec les fichiers originaux (AI, EPS, SVG, PDF HD).</p>
                 </div>
               </li>
               <li class="flex items-start gap-5">
                 <div class="w-12 h-12 rounded-2xl bg-dark border border-slate-700 text-secondary flex items-center justify-center flex-shrink-0 shadow-sm text-xl"><i class="fas fa-layer-group"></i></div>
                 <div>
-                  <h5 class="text-white font-bold text-xl mb-2">Déclinaisons Complètes</h5>
+                  <h5 class="text-white font-medium text-xl mb-2">Déclinaisons Complètes</h5>
                   <p class="text-slate-400 text-sm leading-relaxed">Fonds transparents (PNG), versions monochromes, et icônes isolées pour les réseaux.</p>
                 </div>
               </li>
@@ -624,229 +591,142 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center reveal mb-10">
-          <span class="block text-primary-soft font-bold uppercase tracking-widest text-sm mb-3">Investissement</span>
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
-            Ce que ça vous coûte <br class="hidden sm:block"/><span class="text-primary">vs. ce que ça vous rapporte</span>
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium mb-4">
+            100€. Un seul client récupéré. <br class="hidden sm:block"/><span class="text-primary">Rentable pour les 10 prochaines années.</span>
           </h2>
         </div>
 
         <!-- Warning Context Box -->
-        <div class="max-w-4xl mx-auto bg-red-500/10 border border-red-500/30 p-8 md:p-10 rounded-[2rem] mb-20 text-left reveal shadow-lg">
-           <h4 class="text-red-400 font-bold text-2xl mb-6 flex items-center"><i class="fas fa-exclamation-triangle mr-3 text-3xl"></i> Calculez ce que vous perdez aujourd'hui :</h4>
-           <p class="text-slate-200 text-lg md:text-xl leading-relaxed mb-6">
-             Si votre design amateur vous fait rater seulement 2 clients par mois à 500$ chacun, c'est <strong class="text-white font-black bg-red-500/20 px-2 rounded">1 000$/mois perdus</strong>. Soit 12 000$/an à cause d'un logo amateur.
-           </p>
-           <p class="text-slate-200 text-lg md:text-xl leading-relaxed mb-6">
-             Notre logo professionnel : <strong class="text-green-400 font-black text-2xl">20$. Une seule fois.</strong>
-           </p>
-           <p class="text-primary-soft italic font-medium text-lg mt-8 border-t border-red-500/20 pt-6 text-center">
-             "Le vrai coût d'un mauvais logo, c'est ce qu'il vous empêche de gagner."
+        <div class="max-w-4xl mx-auto bg-slate-800 border border-slate-700 p-8 md:p-10 rounded-[2rem] mb-20 text-left reveal shadow-lg">
+           <h4 class="text-primary-soft font-medium text-2xl mb-6 flex items-center"><i class="fas fa-calculator mr-3 text-3xl"></i> Faites le calcul :</h4>
+           <div class="text-slate-200 text-lg leading-relaxed mb-6 space-y-2">
+             <p>Combien vaut un nouveau client pour vous ?</p>
+             <p>Combien en perdez-vous par mois à cause de votre image ?</p>
+             <p>Multipliez par 12.</p>
+           </div>
+           <p class="text-slate-200 text-lg md:text-xl leading-relaxed mb-6 border-t border-slate-600 pt-6">
+             Notre offre de départ : <strong class="text-green-400 font-semibold text-2xl">100€. Une seule fois.</strong><br>
+             Votre perte annuelle : <em>vous connaissez déjà la réponse.</em>
            </p>
         </div>
 
-        <!-- SERVICES À LA CARTE -->
-        <div class="mb-32">
+        <!-- NEW PRICING TIERS -->
+        <div class="mb-24">
           <div class="flex flex-col sm:flex-row justify-between items-center sm:items-end mb-10 reveal gap-4">
-            <h3 class="text-4xl font-display font-bold border-l-4 border-primary pl-4">Services à la carte</h3>
-            <span class="text-sm font-bold text-slate-400 bg-slate-800 px-4 py-2 rounded-full"><i class="fas fa-shopping-bag mr-2"></i>Produits digitaux</span>
+            <h3 class="text-4xl font-display font-medium border-l-4 border-primary pl-4">Nos Offres</h3>
           </div>
 
-          <div id="pricing-carte" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
-             
-             <!-- 1. Conception de Logo -->
-             <div class="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-primary hover:shadow-neon transition-all relative">
-               <div class="absolute top-4 left-4 bg-primary text-white text-xs font-black uppercase px-4 py-1.5 rounded-full shadow-lg z-10 tracking-widest backdrop-blur-md">Populaire</div>
-               <div class="relative aspect-[16/9] overflow-hidden bg-slate-800 cursor-pointer" onclick="openWizard('Conception de Logo', 20, true, 10)">
-                 <img src="src/img/Logo design.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" alt="Logo" />
-                 <div class="absolute inset-0 bg-dark/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                     <span class="bg-white text-dark font-bold text-sm px-5 py-2.5 rounded-full shadow-lg"><i class="fas fa-eye mr-2"></i>Aperçu</span>
-                 </div>
-               </div>
-               <div class="p-8 flex flex-col flex-grow">
-                 <h4 class="text-2xl font-display font-bold text-white mb-3 leading-tight cursor-pointer hover:text-primary transition-colors" onclick="openWizard('Conception de Logo', 20, true, 10)">Logo Minimaliste</h4>
-                 <p class="text-slate-300 mb-6 flex-grow">Votre première impression professionnelle. Livré en 48h, fichiers sources inclus.</p>
-                 
-                 <div class="bg-primary/10 border border-primary/20 p-4 rounded-2xl mb-8">
-                    <p class="text-sm text-primary-soft italic font-medium leading-snug">"J'ai récupéré mon investissement dès la première réunion client."</p>
-                 </div>
-
-                 <div class="border-t border-slate-700 pt-6 flex items-center justify-between">
-                     <div class="flex flex-col">
-                         <span class="text-sm text-slate-500 line-through leading-none mb-1">35,00 $</span>
-                         <span class="text-3xl font-black text-white leading-none">20,00 $</span>
-                     </div>
-                     <button onclick="openWizard('Conception de Logo', 20, true, 10)" class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full flex items-center justify-center transition-colors font-bold shadow-neon">
-                         Commander <i class="fas fa-arrow-right ml-2"></i>
-                     </button>
-                 </div>
-               </div>
-             </div>
-
-             <!-- 2. Pack Complet Logo + Identité -->
-             <div class="bg-slate-900 border border-secondary/50 rounded-3xl overflow-hidden group flex flex-col hover:border-secondary hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all relative">
-               <div class="absolute top-4 left-4 bg-secondary text-white text-xs font-black uppercase px-4 py-1.5 rounded-full shadow-lg z-10 tracking-widest backdrop-blur-md">Bestseller</div>
-               <div class="relative aspect-[16/9] overflow-hidden bg-slate-800 cursor-pointer" onclick="openWizard('Pack Branding', 30, true, 10)">
-                 <img src="src/img/Logo identite visuelle.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" alt="Pack" />
-                 <div class="absolute inset-0 bg-dark/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                     <span class="bg-white text-dark font-bold text-sm px-5 py-2.5 rounded-full shadow-lg"><i class="fas fa-eye mr-2"></i>Aperçu</span>
-                 </div>
-               </div>
-               <div class="p-8 flex flex-col flex-grow">
-                 <h4 class="text-2xl font-display font-bold text-white mb-3 leading-tight cursor-pointer hover:text-secondary transition-colors" onclick="openWizard('Pack Branding', 30, true, 10)">Pack Complet</h4>
-                 <p class="text-slate-300 mb-6 flex-grow">Logo + Identité + Guide d'utilisation. Tout ce qu'il faut pour lancer ou relancer votre marque.</p>
-                 
-                 <div class="bg-secondary/10 border border-secondary/20 p-4 rounded-2xl mb-8">
-                    <p class="text-sm text-pink-200 font-medium leading-snug">⚡ L'offre la plus choisie par nos clients qui veulent aller vite et bien.</p>
-                 </div>
-
-                 <div class="border-t border-slate-700 pt-6 flex items-center justify-between">
-                     <div class="flex flex-col">
-                         <span class="text-sm text-slate-500 line-through leading-none mb-1">50,00 $</span>
-                         <span class="text-3xl font-black text-white leading-none">30,00 $</span>
-                     </div>
-                     <button onclick="openWizard('Pack Branding', 30, true, 10)" class="bg-secondary hover:bg-pink-600 text-white px-6 py-3 rounded-full flex items-center justify-center transition-colors font-bold shadow-[0_0_20px_rgba(236,72,153,0.4)]">
-                         Je veux ce pack <i class="fas fa-arrow-right ml-2"></i>
-                     </button>
-                 </div>
-               </div>
-             </div>
-
-             <!-- 3. Branding Intégral -->
-             <div class="bg-slate-900 border border-primary/50 shadow-neon rounded-3xl overflow-hidden group flex flex-col hover:border-primary transition-all relative sm:col-span-2 lg:col-span-1">
-               <div class="absolute top-4 left-4 bg-gradient-to-r from-secondary to-primary text-white text-xs font-black uppercase px-4 py-1.5 rounded-full shadow-lg z-10 tracking-widest backdrop-blur-md">L'Offre Ultime</div>
-               <div class="relative aspect-[16/9] lg:aspect-auto lg:flex-grow overflow-hidden bg-slate-800 cursor-pointer" onclick="openWizard('Branding Complet', 200, true, 50)">
-                 <img src="src/img/Branding Complet (La Totale).webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70 filter grayscale group-hover:grayscale-0" alt="Intégral" />
-                 <div class="absolute inset-0 bg-dark/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                     <span class="bg-white text-dark font-bold text-sm px-5 py-2.5 rounded-full shadow-lg"><i class="fas fa-eye mr-2"></i>Aperçu</span>
-                 </div>
-               </div>
-               <div class="p-8 flex flex-col flex-grow">
-                 <h4 class="text-2xl font-display font-bold text-white mb-3 leading-tight cursor-pointer hover:text-primary transition-colors" onclick="openWizard('Branding Complet', 200, true, 50)">Branding Intégral</h4>
-                 <p class="text-slate-300 mb-6 flex-grow">Logo + Charte + Papeterie + Réseaux. L'équivalent d'une agence à 3 000$, livré par des experts obsédés par votre résultat.</p>
-                 
-                 <div class="bg-primary/10 border border-primary/20 p-4 rounded-2xl mb-8">
-                    <p class="text-sm text-primary-soft font-medium leading-snug">🔒 Droits exclusifs garantis. Votre marque vous appartient totalement.</p>
-                 </div>
-
-                 <div class="border-t border-slate-700 pt-6 flex items-center justify-between">
-                     <div class="flex flex-col">
-                         <span class="text-sm text-slate-500 line-through leading-none mb-1">350,00 $</span>
-                         <span class="text-3xl font-black text-white leading-none">200,00 $</span>
-                     </div>
-                     <button onclick="openWizard('Branding Complet', 200, true, 50)" class="bg-gradient-to-r from-primary to-secondary hover:from-primary-dark hover:to-secondary-dark text-white px-6 py-3 rounded-full flex items-center justify-center transition-colors font-bold shadow-lg shadow-primary/40">
-                         Parlons du projet <i class="fas fa-rocket ml-2"></i>
-                     </button>
-                 </div>
-               </div>
-             </div>
-
-             <!-- SERVICES CACHÉS PAR DÉFAUT -->
-             <!-- 4. Affiche Événementielle -->
-             <div class="hidden additional-service bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-primary hover:shadow-neon transition-all relative">
-               <div class="relative aspect-[16/9] overflow-hidden bg-slate-800 cursor-pointer" onclick="openWizard('Affiche Event', 10, false, 5)">
-                 <img src="src/img/Affiche evenementtielle.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" alt="Event" />
-               </div>
-               <div class="p-6 flex flex-col flex-grow">
-                 <h4 class="text-xl font-bold text-white mb-2 leading-tight">Affiche Événementielle</h4>
-                 <p class="text-sm text-slate-400 mb-6 flex-grow">Design sur-mesure prêt à l'impression HD.</p>
-                 <div class="border-t border-slate-700 pt-4 flex items-center justify-between">
-                     <span class="text-2xl font-black text-white">10,00 $</span>
-                     <button onclick="openWizard('Affiche Event', 10, false, 5)" class="bg-white/10 hover:bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"><i class="fas fa-arrow-right"></i></button>
-                 </div>
-               </div>
-             </div>
-
-             <!-- 5. Cover Album -->
-             <div class="hidden additional-service bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-primary hover:shadow-neon transition-all relative">
-               <div class="relative aspect-[16/9] overflow-hidden bg-slate-800 cursor-pointer" onclick="openWizard('Cover Album', 10, false, 5)">
-                 <img src="src/img/Album cover.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" alt="Cover" />
-               </div>
-               <div class="p-6 flex flex-col flex-grow">
-                 <h4 class="text-xl font-bold text-white mb-2 leading-tight">Cover Art Spotify</h4>
-                 <p class="text-sm text-slate-400 mb-6 flex-grow">Pochette créative pour votre single ou album.</p>
-                 <div class="border-t border-slate-700 pt-4 flex items-center justify-between">
-                     <span class="text-2xl font-black text-white">10,00 $</span>
-                     <button onclick="openWizard('Cover Album', 10, false, 5)" class="bg-white/10 hover:bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"><i class="fas fa-arrow-right"></i></button>
-                 </div>
-               </div>
-             </div>
-
-             <!-- 6. Carte Visite -->
-             <div class="hidden additional-service bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-primary hover:shadow-neon transition-all relative">
-               <div class="relative aspect-[16/9] overflow-hidden bg-slate-800 cursor-pointer" onclick="openWizard('Carte Visite', 10)">
-                 <img src="src/img/Carte de visiste.webp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80" alt="Carte" />
-               </div>
-               <div class="p-6 flex flex-col flex-grow">
-                 <h4 class="text-xl font-bold text-white mb-2 leading-tight">Carte de Visite Luxe</h4>
-                 <p class="text-sm text-slate-400 mb-6 flex-grow">Design recto/verso, PDF CMJN prêt-à-imprimer.</p>
-                 <div class="border-t border-slate-700 pt-4 flex items-center justify-between">
-                     <span class="text-2xl font-black text-white">10,00 $</span>
-                     <button onclick="openWizard('Carte Visite', 10)" class="bg-white/10 hover:bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"><i class="fas fa-arrow-right"></i></button>
-                 </div>
-               </div>
-             </div>
-
-          </div>
-
-          <div class="text-center mt-16 reveal">
-             <button id="show-more-services-btn" onclick="showMoreServices()" class="text-slate-400 hover:text-white font-bold border-b-2 border-dashed border-slate-600 hover:border-white pb-1 transition-colors uppercase tracking-widest text-sm inline-flex items-center">
-                 <i class="fas fa-plus-circle mr-3"></i> Découvrir les autres services (Affiches, Animation...)
-             </button>
-          </div>
-        </div>
-
-        <!-- ABONNEMENTS MENSUELS -->
-        <div class="mt-32 border-t border-slate-800 pt-24">
-          <h3 class="text-4xl md:text-5xl font-display font-bold mb-12 reveal text-center">Abonnements <span class="text-secondary">Mensuels</span></h3>
-          <div id="pricing-abos" class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start reveal">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start reveal">
             
-            <!-- Plan 1 -->
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-primary transition-all duration-300">
-              <h3 class="text-2xl font-bold mb-2 text-white">Basique</h3>
-              <p class="text-slate-400 text-sm mb-6 h-10">Pour les petites entreprises qui ont besoin d'une présence régulière.</p>
-              <div class="text-5xl font-display font-black text-white mb-8">
-                <sup class="text-2xl text-slate-400">$</sup>59<span class="text-lg text-slate-400 font-medium">/mois</span>
+            <!-- Starter -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-primary transition-all duration-300 flex flex-col h-full relative">
+              <h3 class="text-2xl font-medium mb-2 text-white">Starter</h3>
+              <p class="text-slate-400 text-sm mb-6 h-10">L'entrée de gamme idéale pour démarrer professionnellement.</p>
+              
+              <div class="text-5xl font-display font-semibold text-white mb-6">
+                100<span class="text-2xl text-slate-400">€</span>
               </div>
-              <ul class="space-y-4 mb-10">
-                <li class="flex items-center text-slate-300"><i class="fas fa-check text-primary mr-3 text-lg"></i> <strong>15 affiches premium</strong> / mois</li>
-                <li class="flex items-center text-slate-300"><i class="fas fa-check text-primary mr-3 text-lg"></i> Livraison continue</li>
-                <li class="flex items-center text-slate-300"><i class="fas fa-check text-primary mr-3 text-lg"></i> 1 révision par design</li>
+              
+              <div class="text-sm font-medium text-slate-500 mb-6 flex items-center">
+                <i class="far fa-clock mr-2 text-primary"></i> Délai : 5 jours
+              </div>
+
+              <ul class="space-y-4 mb-10 flex-grow">
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Logo principal</span>
+                </li>
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Palette couleurs</span>
+                </li>
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>2 typographies</span>
+                </li>
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Brandboard 1 page</span>
+                </li>
               </ul>
-              <button onclick="openWizard('Abonnement Basique', 59)" class="w-full py-4 rounded-full font-bold bg-slate-800 text-white hover:bg-slate-700 transition-colors">Choisir ce plan</button>
+              
+              <button onclick="openCalendly()" class="w-full py-4 rounded-full font-medium bg-slate-800 text-white hover:bg-slate-700 transition-colors text-center block">
+                Réserver mon appel
+              </button>
             </div>
 
-            <!-- Plan 2 (Populaire) -->
-            <div class="bg-gradient-to-b from-primary-dark to-primary border border-primary rounded-3xl p-8 relative transform md:-translate-y-6 shadow-neon-strong">
-              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-primary px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg">Le plus rentable</div>
-              <h3 class="text-2xl font-bold mb-2 text-white">Croissance</h3>
-              <p class="text-indigo-200 text-sm mb-6 h-10">Pour dominer les réseaux avec un volume et une qualité agressifs.</p>
-              <div class="text-6xl font-display font-black text-white mb-8">
-                <sup class="text-2xl text-indigo-200">$</sup>99<span class="text-lg text-indigo-200 font-medium">/mois</span>
+            <!-- Signature -->
+            <div class="bg-gradient-to-b from-primary-dark to-primary border border-primary rounded-3xl p-8 relative transform md:-translate-y-6 shadow-neon-strong flex flex-col h-full">
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-primary px-6 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest shadow-lg">Offre Principale</div>
+              
+              <h3 class="text-2xl font-medium mb-2 text-white">Signature</h3>
+              <p class="text-indigo-200 text-sm mb-6 h-10">L'identité complète pour se démarquer et convertir.</p>
+              
+              <div class="text-6xl font-display font-semibold text-white mb-6">
+                500<span class="text-2xl text-indigo-200">€</span>
               </div>
-              <ul class="space-y-4 mb-10">
-                <li class="flex items-center text-white"><i class="fas fa-check text-secondary mr-3 text-lg"></i> <strong>30 affiches premium</strong> / mois</li>
-                <li class="flex items-center text-white"><i class="fas fa-check text-secondary mr-3 text-lg"></i> Livraison rapide (6-8/sem)</li>
-                <li class="flex items-center text-white"><i class="fas fa-check text-secondary mr-3 text-lg"></i> <strong>2 révisions</strong> par design</li>
-                <li class="flex items-center text-white"><i class="fas fa-check text-secondary mr-3 text-lg"></i> Animations légères incluses</li>
+              
+              <div class="text-sm font-medium text-indigo-100 mb-6 flex items-center">
+                <i class="far fa-clock mr-2 text-secondary"></i> Délai : 7 jours
+              </div>
+
+              <ul class="space-y-4 mb-10 flex-grow">
+                <li class="flex items-start text-white">
+                  <i class="fas fa-plus text-secondary mr-3 mt-1 text-sm"></i> <span class="font-semibold">Tout le pack Starter</span>
+                </li>
+                <li class="flex items-start text-white">
+                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>Logo secondaire</span>
+                </li>
+                <li class="flex items-start text-white">
+                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>Charte graphique complète</span>
+                </li>
+                <li class="flex items-start text-white">
+                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>5 templates réseaux sociaux</span>
+                </li>
+                <li class="flex items-start text-white">
+                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>Guide d'utilisation</span>
+                </li>
               </ul>
-              <button onclick="openWizard('Abonnement Croissance', 99)" class="w-full py-4 rounded-full font-bold bg-white text-primary hover:bg-slate-100 transition-colors shadow-lg">Réserver ma place</button>
+              
+              <button onclick="openCalendly()" class="w-full py-4 rounded-full font-medium bg-white text-primary hover:bg-slate-100 transition-colors shadow-lg text-center block">
+                Réserver mon appel
+              </button>
             </div>
 
-            <!-- Plan 3 -->
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-primary transition-all duration-300">
-              <h3 class="text-2xl font-bold mb-2 text-white">Élite</h3>
-              <p class="text-slate-400 text-sm mb-6 h-10">Une agence de design complète dédiée à votre marque.</p>
-              <div class="text-5xl font-display font-black text-white mb-8">
-                <sup class="text-2xl text-slate-400">$</sup>179<span class="text-lg text-slate-400 font-medium">/mois</span>
+            <!-- Empire -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-primary transition-all duration-300 flex flex-col h-full relative">
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-secondary to-primary text-white px-4 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-widest shadow-lg">Premium Upsell</div>
+              
+              <h3 class="text-2xl font-medium mb-2 text-white">Empire</h3>
+              <p class="text-slate-400 text-sm mb-6 h-10">La stratégie totale pour dominer votre marché sur le long terme.</p>
+              
+              <div class="text-5xl font-display font-semibold text-white mb-6">
+                1 000<span class="text-2xl text-slate-400">€</span>
               </div>
-              <ul class="space-y-4 mb-10">
-                <li class="flex items-center text-slate-300"><i class="fas fa-check text-primary mr-3 text-lg"></i> <strong>60 créations</strong> / mois</li>
-                <li class="flex items-center text-slate-300"><i class="fas fa-check text-primary mr-3 text-lg"></i> Motion Design avancé</li>
-                <li class="flex items-center text-slate-300"><i class="fas fa-check text-primary mr-3 text-lg"></i> <strong>Révisions illimitées</strong></li>
+              
+              <div class="text-sm font-medium text-slate-500 mb-6 flex items-center">
+                <i class="far fa-clock mr-2 text-primary"></i> Délai : 14 jours
+              </div>
+
+              <ul class="space-y-4 mb-10 flex-grow">
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-plus text-primary mr-3 mt-1 text-sm"></i> <span class="font-semibold text-white">Tout le pack Signature</span>
+                </li>
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Stratégie de marque</span>
+                </li>
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Storytelling de marque</span>
+                </li>
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>10 templates réseaux sociaux</span>
+                </li>
+                <li class="flex items-start text-slate-300">
+                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>1 mois de support</span>
+                </li>
               </ul>
-              <button onclick="openWizard('Abonnement Élite', 179)" class="w-full py-4 rounded-full font-bold bg-slate-800 text-white hover:bg-slate-700 transition-colors">Choisir ce plan</button>
+              
+              <button onclick="openCalendly()" class="w-full py-4 rounded-full font-medium bg-slate-800 text-white hover:bg-slate-700 transition-colors text-center block">
+                Réserver mon appel
+              </button>
             </div>
-            
+
           </div>
         </div>
 
@@ -866,14 +746,14 @@
             <div class="flex text-yellow-400 text-lg mb-6 relative z-10">
               <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-            <p class="text-xl text-white font-medium mb-10 leading-relaxed relative z-10">
-              "J'avais honte de donner ma carte de visite. Maintenant, mes clients me demandent qui a fait mon logo."
+            <p class="text-xl text-white font-normal mb-10 leading-relaxed relative z-10">
+              "Avant, je baissais mes prix pour convaincre. Depuis la refonte, mes clients ne discutent plus le tarif — ils demandent juste quand on commence."
             </p>
             <div class="flex items-center gap-4 relative z-10">
-              <div class="w-14 h-14 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-2xl border border-primary/30">S</div>
+              <div class="w-14 h-14 rounded-full bg-primary/20 text-primary flex items-center justify-center font-medium text-2xl border border-primary/30">S</div>
               <div>
-                <div class="font-bold text-white text-lg">Sarah M.</div>
-                <div class="text-sm text-slate-400 font-medium">Coach business, Paris</div>
+                <div class="font-medium text-white text-lg">Sarah M.</div>
+                <div class="text-sm text-slate-400 font-normal">Coach business, Paris</div>
               </div>
             </div>
           </div>
@@ -884,14 +764,14 @@
             <div class="flex text-yellow-400 text-lg mb-6 relative z-10">
               <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-            <p class="text-xl text-white font-medium mb-10 leading-relaxed relative z-10">
-              "Notre taux de conversion a augmenté de 28% après la refonte. Le ROI a été immédiat."
+            <p class="text-xl text-white font-normal mb-10 leading-relaxed relative z-10">
+              "J'avais envoyé une offre. Le client avait dit non. J'ai refait les visuels avec AdaSoft, je lui ai renvoyé exactement la même proposition. Il a dit oui. La seule chose qui avait changé, c'était l'image."
             </p>
             <div class="flex items-center gap-4 relative z-10">
-              <div class="w-14 h-14 rounded-full bg-secondary/20 text-secondary flex items-center justify-center font-bold text-2xl border border-secondary/30">T</div>
+              <div class="w-14 h-14 rounded-full bg-secondary/20 text-secondary flex items-center justify-center font-medium text-2xl border border-secondary/30">T</div>
               <div>
-                <div class="font-bold text-white text-lg">Thomas R.</div>
-                <div class="text-sm text-slate-400 font-medium">E-commerce Mode</div>
+                <div class="font-medium text-white text-lg">Thomas R.</div>
+                <div class="text-sm text-slate-400 font-normal">E-commerce Mode</div>
               </div>
             </div>
           </div>
@@ -906,48 +786,45 @@
     <section id="faq" class="py-32 bg-dark border-t border-slate-800 relative z-10">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center reveal mb-16">
-          <span class="text-secondary font-bold uppercase tracking-widest text-sm mb-4 block">Des questions ?</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+          <span class="text-secondary font-medium uppercase tracking-widest text-sm mb-4 block">Des questions ?</span>
+          <h2 class="text-4xl md:text-5xl font-display font-medium text-white mb-4">
             Foire Aux <span class="text-primary">Questions</span>
           </h2>
         </div>
 
         <div class="space-y-4 reveal">
-          <!-- FAQ 1 -->
           <div class="bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer group transition-all hover:border-primary hover:bg-slate-800 faq-item" onclick="toggleFaq(this)">
-            <div class="flex justify-between items-center p-6 font-bold text-lg text-white">
-              Combien de temps prend la livraison d'un design ?
+            <div class="flex justify-between items-center p-6 font-medium text-lg text-white">
+              C'est prêt quand ?
               <i class="fas fa-chevron-down text-primary transition-transform duration-300 transform group-[.open]:rotate-180"></i>
             </div>
             <div class="faq-answer-wrapper">
               <div class="faq-answer-inner px-6 pb-6 text-slate-300 text-base leading-relaxed">
-                La majorité de nos designs (affiches, covers) sont livrés en 24h à 48h. Pour un branding complet (Logo + Charte), prévoyez environ 72h pour garantir un travail de recherche approfondi. Une option "Express" est disponible lors de la commande si vous êtes pressé.
+                La plupart de nos créations (affiches, covers) sont livrées en 24 à 48h. Pour un branding complet, comptez de 5 à 14 jours selon le pack choisi — pour qu'on fasse les choses bien.
               </div>
             </div>
           </div>
 
-          <!-- FAQ 2 -->
           <div class="bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer group transition-all hover:border-primary hover:bg-slate-800 faq-item" onclick="toggleFaq(this)">
-            <div class="flex justify-between items-center p-6 font-bold text-lg text-white">
-              Et si je n'aime pas la première proposition ?
+            <div class="flex justify-between items-center p-6 font-medium text-lg text-white">
+              Et si ça ne me convient pas ?
               <i class="fas fa-chevron-down text-primary transition-transform duration-300 transform group-[.open]:rotate-180"></i>
             </div>
             <div class="faq-answer-wrapper">
               <div class="faq-answer-inner px-6 pb-6 text-slate-300 text-base leading-relaxed">
-                Votre satisfaction est notre priorité absolue. Nos abonnements et nos services incluent des révisions. Nous retravaillons le concept selon vos retours jusqu'à ce qu'il corresponde exactement à votre vision.
+                On retravaille. Sans discussion, sans facture supplémentaire. Votre satisfaction n'est pas une option — c'est le contrat de base.
               </div>
             </div>
           </div>
 
-          <!-- FAQ 3 -->
           <div class="bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer group transition-all hover:border-primary hover:bg-slate-800 faq-item" onclick="toggleFaq(this)">
-            <div class="flex justify-between items-center p-6 font-bold text-lg text-white">
-              Quelles sont les modalités de paiement ?
+            <div class="flex justify-between items-center p-6 font-medium text-lg text-white">
+              Vraiment pas d'IA ?
               <i class="fas fa-chevron-down text-primary transition-transform duration-300 transform group-[.open]:rotate-180"></i>
             </div>
             <div class="faq-answer-wrapper">
               <div class="faq-answer-inner px-6 pb-6 text-slate-300 text-base leading-relaxed">
-                Nous acceptons les paiements via Mobile Money pour une validation instantanée. Le paiement est requis au démarrage du projet pour bloquer votre place dans notre planning. L'abonnement est sans engagement, annulable à tout moment.
+                Vraiment. Adobe Illustrator, une tablette graphique, des années d'expérience — et aucune machine. Parce que vous méritez quelque chose qu'aucune IA n'a fait pour quelqu'un d'autre avant vous.
               </div>
             </div>
           </div>
@@ -965,19 +842,22 @@
         <div class="absolute inset-0 bg-dark/20 rounded-[3rem] mix-blend-overlay"></div>
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 rounded-[3rem]"></div>
         
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 leading-tight relative z-10">
-          Votre marque mérite mieux <br/>qu'un logo oublié demain matin.
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white mb-6 leading-tight relative z-10">
+          Dans 48h, votre prochain prospect <br/>ne fermera plus l'onglet.
         </h2>
-        <p class="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-medium relative z-10">
-          Chaque semaine, 3 entreprises décident de prendre leur image au sérieux. La question, c'est : est-ce que vous êtes l'une d'elles cette semaine ?
+        <p class="text-xl text-white/90 mb-4 max-w-2xl mx-auto font-medium relative z-10">
+          Cette semaine, 3 entrepreneurs ont décidé d'arrêter de perdre des clients à cause de leur image.
+        </p>
+        <p class="text-lg text-white/80 mb-12 max-w-2xl mx-auto font-normal relative z-10">
+          La question n'est pas si vous devriez le faire. C'est si c'est votre semaine.
         </p>
         
         <div class="relative z-10">
-          <button onclick="openProjectSelector()" class="bg-white text-dark text-xl font-black px-10 py-6 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center mx-auto mb-6">
-            Réserver mon audit visuel gratuit — 20 min
+          <button onclick="openCalendly()" class="bg-white text-dark text-xl font-semibold px-10 py-6 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center mx-auto mb-6 max-w-max">
+            Je prends ma place cette semaine <i class="fas fa-arrow-right ml-3"></i>
           </button>
-          <p class="text-sm text-white/80 font-medium max-w-md mx-auto">
-            Sans engagement. Sans jargon. Juste une conversation honnête sur votre potentiel de marque.
+          <p class="text-sm text-white/80 font-normal max-w-md mx-auto">
+            Gratuit. 20 minutes. Aucun discours. Juste l'honnêteté sur ce qui freine votre marque en ce moment.
           </p>
         </div>
       </div>
@@ -985,344 +865,26 @@
 
     <footer class="bg-dark border-t border-slate-800/50 py-12 text-slate-500 text-sm">
       <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        <div class="text-2xl font-display font-bold text-white mb-4 md:mb-0 flex items-center gap-2">
+        <div class="text-2xl font-display font-medium text-white mb-4 md:mb-0 flex items-center gap-2">
            <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
         </div>
         <div class="flex gap-6">
-          <a href="#" class="hover:text-primary transition-colors font-bold uppercase tracking-wider">Support</a>
-          <a href="#" class="hover:text-primary transition-colors font-bold uppercase tracking-wider">Portfolio</a>
-          <a href="#" class="hover:text-primary transition-colors font-bold uppercase tracking-wider">Tarifs</a>
+          <a href="#" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Support</a>
+          <a href="#" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Portfolio</a>
+          <a href="#" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Tarifs</a>
         </div>
-        <p class="mt-4 md:mt-0 font-medium">© 2026 AdaSoft. Tous droits réservés.</p>
+        <p class="mt-4 md:mt-0 font-normal">© 2026 AdaSoft. Tous droits réservés.</p>
       </div>
     </footer>
 
-    <!-- ============================================= -->
-    <!-- MODALES                                       -->
-    <!-- ============================================= -->
-    
-    <!-- WIZARD MODAL (TUNNEL DE VENTE) -->
-    <div id="order-wizard" class="modal-overlay">
-      <div class="modal-container bg-dark text-white border border-slate-800 p-6 sm:p-10">
-        <div class="absolute top-[-100px] right-[-100px] w-[300px] h-[300px] rounded-full bg-primary filter blur-[80px] opacity-20 pointer-events-none"></div>
-
-        <button class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 bg-slate-800 rounded-full text-slate-400 hover:bg-red-500 hover:text-white hover:rotate-90 transition-all flex items-center justify-center text-xl z-50" onclick="closeWizard()">&times;</button>
-
-        <!-- HEADER: PROGRESS BAR -->
-        <div class="mb-10 relative z-10 mt-6">
-          <div class="flex justify-between relative max-w-[400px] mx-auto px-2">
-            <div class="absolute top-1/2 left-0 w-full h-2 bg-slate-800 -translate-y-1/2 rounded-full z-0"></div>
-            <div class="absolute top-1/2 left-0 h-2 bg-primary -translate-y-1/2 rounded-full z-10 transition-all duration-400 w-0" id="wizard-bar"></div>
-
-            <div class="w-10 h-10 rounded-full bg-dark border-4 border-slate-700 flex items-center justify-center font-bold text-slate-500 relative z-20 transition-all active:border-primary active:text-primary active:scale-110" id="step-ind-1">1</div>
-            <div class="w-10 h-10 rounded-full bg-dark border-4 border-slate-700 flex items-center justify-center font-bold text-slate-500 relative z-20 transition-all" id="step-ind-2">2</div>
-            <div class="w-10 h-10 rounded-full bg-dark border-4 border-slate-700 flex items-center justify-center font-bold text-slate-500 relative z-20 transition-all" id="step-ind-3">3</div>
-            <div class="w-10 h-10 rounded-full bg-dark border-4 border-slate-700 flex items-center justify-center font-bold text-slate-500 relative z-20 transition-all" id="step-ind-4"><i class="fas fa-flag"></i></div>
-          </div>
-        </div>
-
-        <!-- FORMULAIRE -->
-        <form id="wizard-form" onsubmit="submitOrder(event)">
-          <input type="hidden" id="offer-name" />
-          <input type="hidden" id="base-price" />
-          <input type="hidden" id="is-logo-service" />
-          <input type="hidden" id="express-cost-val" />
-
-          <!-- STEP 1: IDENTITÉ -->
-          <div class="wizard-step active relative z-10" data-step="1">
-            <div class="text-center mb-8">
-              <h3 class="text-3xl font-display font-bold text-white mb-2">Qui êtes-vous ?</h3>
-              <p class="text-slate-400">Ces informations nous permettront de vous contacter.</p>
-            </div>
-
-            <div class="space-y-6 text-left">
-              <div>
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Votre Nom Complet *</label>
-                <div class="relative">
-                  <input type="text" id="client-name" class="w-full bg-dark-soft border border-slate-700 rounded-xl py-3 px-4 pl-12 text-white focus:outline-none focus:border-primary transition-all" placeholder="Ex: Jean Dupont" required />
-                  <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg"></i>
-                </div>
-              </div>
-              <div>
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Numéro WhatsApp *</label>
-                <div class="relative">
-                  <input type="tel" id="client-whatsapp" class="w-full bg-dark-soft border border-slate-700 rounded-xl py-3 px-4 pl-12 text-white focus:outline-none focus:border-primary transition-all" placeholder="Ex: 099 534 2102" required />
-                  <i class="fab fa-whatsapp absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg"></i>
-                </div>
-              </div>
-              <div>
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Entreprise *</label>
-                <div class="relative">
-                  <input type="text" id="client-company" class="w-full bg-dark-soft border border-slate-700 rounded-xl py-3 px-4 pl-12 text-white focus:outline-none focus:border-primary transition-all" placeholder="Ex: Ma Marque Inc." required />
-                  <i class="fas fa-building absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg"></i>
-                </div>
-              </div>
-              <div>
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Slogan de la marque *</label>
-                <div class="relative">
-                  <input type="text" id="client-slogan" class="w-full bg-dark-soft border border-slate-700 rounded-xl py-3 px-4 pl-12 text-white focus:outline-none focus:border-primary transition-all" placeholder="Ex: L'excellence au quotidien" required />
-                  <i class="fas fa-bullhorn absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 2: LE BESOIN -->
-          <div class="wizard-step relative z-10" data-step="2">
-             <div class="text-center mb-8">
-              <h3 class="text-3xl font-display font-bold text-white mb-2">Votre Vision</h3>
-              <p class="text-slate-400">Décrivez le design dont vous avez besoin.</p>
-            </div>
-
-            <div class="space-y-6 text-left">
-              <div>
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Avez-vous un modèle d'inspiration ?</label>
-                <div class="grid grid-cols-2 gap-4">
-                  <label class="bg-dark-soft border-2 border-slate-700 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary/10">
-                    <input type="radio" name="design-style" value="no" checked onclick="toggleStyleInput(false)" class="hidden" />
-                    <div class="w-10 h-10 mx-auto bg-dark rounded-full flex items-center justify-center text-lg text-slate-400 mb-2 transition-all"><i class="fas fa-magic"></i></div>
-                    <span class="font-bold text-sm">Proposez-moi</span>
-                  </label>
-                  <label class="bg-dark-soft border-2 border-slate-700 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary/10">
-                    <input type="radio" name="design-style" value="yes" onclick="toggleStyleInput(true)" class="hidden" />
-                    <div class="w-10 h-10 mx-auto bg-dark rounded-full flex items-center justify-center text-lg text-slate-400 mb-2 transition-all"><i class="fas fa-image"></i></div>
-                    <span class="font-bold text-sm">J'ai une image</span>
-                  </label>
-                </div>
-
-                <div id="style-upload-container" class="hidden-field mt-4">
-                  <label for="style-file" class="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-600 rounded-xl bg-dark-soft text-slate-400 cursor-pointer hover:border-primary hover:text-primary transition-all">
-                    <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
-                    <span class="font-bold text-sm">Joindre l'image *</span>
-                  </label>
-                  <input type="file" id="style-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'style-file-label')" />
-                  <div id="style-file-label" class="text-center text-xs mt-2 font-bold text-primary"></div>
-                </div>
-              </div>
-
-              <div id="logo-section">
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Avez-vous déjà votre logo ?</label>
-                <div class="grid grid-cols-2 gap-4">
-                  <label class="bg-dark-soft border-2 border-slate-700 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary/10">
-                    <input type="radio" name="has-logo" value="yes" checked onclick="toggleLogoInput(true)" class="hidden" />
-                    <div class="w-10 h-10 mx-auto bg-dark rounded-full flex items-center justify-center text-lg text-slate-400 mb-2 transition-all"><i class="fas fa-check-circle"></i></div>
-                    <span class="font-bold text-sm">Oui, je l'ai</span>
-                  </label>
-                  <label class="bg-dark-soft border-2 border-slate-700 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary/10">
-                    <input type="radio" name="has-logo" value="no" onclick="toggleLogoInput(false)" class="hidden" />
-                    <div class="w-10 h-10 mx-auto bg-dark rounded-full flex items-center justify-center text-lg text-slate-400 mb-2 transition-all"><i class="fas fa-pen-fancy"></i></div>
-                    <span class="font-bold text-sm">Non (+15$)</span>
-                  </label>
-                </div>
-                <div id="logo-upload-container" class="mt-4">
-                  <label for="logo-file" class="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-600 rounded-xl bg-dark-soft text-slate-400 cursor-pointer hover:border-primary hover:text-primary transition-all">
-                    <i class="fas fa-vector-square text-2xl mb-2"></i>
-                    <span class="font-bold text-sm">Uploader votre Logo *</span>
-                  </label>
-                  <input type="file" id="logo-file" accept="image/*,.pdf,.ai" class="hidden-field" onchange="handleFileSelect(event, 'logo-file-label')" />
-                  <div id="logo-file-label" class="text-center text-xs mt-2 font-bold text-primary"></div>
-                </div>
-              </div>
-
-              <div>
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Description détaillée *</label>
-                <textarea id="project-desc" class="w-full bg-dark-soft border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary transition-all min-h-[100px]" placeholder="Couleurs, textes, ambiance..." required></textarea>
-                
-                <div class="flex items-center gap-3 mt-3 bg-dark-soft p-2 rounded-full border border-slate-700 w-fit">
-                  <button type="button" id="record-btn" class="bg-dark hover:bg-slate-800 rounded-full px-4 py-2 font-bold text-xs text-slate-300 flex items-center gap-2 transition-all" onclick="toggleRecording()">
-                    <i class="fas fa-microphone-alt text-primary"></i> <span id="record-text">Ajouter un vocal</span>
-                  </button>
-                  <span id="recording-timer" class="hidden-field text-secondary font-bold text-sm">00:00</span>
-                  <audio id="audio-preview" controls class="hidden-field h-[30px] w-[200px]"></audio>
-                  <button type="button" id="delete-audio-btn" class="hidden-field text-secondary p-2 hover:bg-slate-800 rounded-full transition-colors" onclick="deleteAudio()"><i class="fas fa-trash"></i></button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 3: UPSELL -->
-          <div class="wizard-step relative z-10" data-step="3">
-             <div class="text-center mb-8">
-              <h3 class="text-3xl font-display font-bold text-white mb-2">Boost & Options</h3>
-              <p class="text-slate-400">Besoins d'aller plus vite ? D'autres services ?</p>
-            </div>
-
-            <label class="flex items-center justify-between p-5 bg-gradient-to-r from-secondary/20 to-dark-soft border border-secondary/50 rounded-2xl mb-8 cursor-pointer relative overflow-hidden group hover:border-secondary transition-colors text-left">
-              <div class="flex items-center gap-4 relative z-10">
-                <div class="w-10 h-10 bg-secondary text-white rounded-full flex items-center justify-center"><i class="fas fa-bolt"></i></div>
-                <div>
-                  <span class="font-bold text-white block">Livraison Express</span>
-                  <span class="text-xs text-slate-300">Traitement prioritaire (-50% du temps)</span>
-                </div>
-              </div>
-              <div class="flex items-center gap-3 relative z-10">
-                <span id="display-express-cost" class="bg-secondary text-white px-2 py-1 rounded-md font-bold text-xs">+10$</span>
-                <input type="checkbox" id="express-option" onchange="updateTotal()" class="w-5 h-5 accent-secondary rounded" />
-              </div>
-            </label>
-
-            <div class="text-left">
-              <label class="block mb-4 font-bold text-slate-300 text-xs uppercase tracking-wider">Ajouter d'autres services</label>
-              <div id="added-services-list" class="flex flex-wrap gap-2 mb-4"></div>
-              
-              <div class="flex flex-col sm:flex-row gap-2">
-                <select id="extra-service-select" class="w-full bg-dark-soft border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary transition-all flex-grow text-sm">
-                  <option value="">-- Sélectionner un service --</option>
-                  <option value="Logo Design|20">Logo Design (20$)</option>
-                  <option value="Identité Visuelle|20">Identité Visuelle (20$)</option>
-                  <option value="Pack Branding|30">Pack Branding (30$)</option>
-                  <option value="Affiche Event|10">Affiche Event (10$)</option>
-                  <option value="Affiche + Kit RS|15">Affiche + Kit RS (15$)</option>
-                  <option value="Affiche Animée|20">Affiche Animée (20$)</option>
-                  <option value="Cover Album|10">Cover Album (10$)</option>
-                  <option value="Cover + Kit Stream|15">Cover + Kit Stream (15$)</option>
-                  <option value="Cover Animée|20">Cover Animée (20$)</option>
-                  <option value="Carte Visite|10">Carte de Visite (10$)</option>
-                  <option value="Charte Graphique|120">Charte Graphique (120$)</option>
-                  <option value="Branding Intégral|200">Branding Intégral (200$)</option>
-                </select>
-                <button type="button" class="bg-slate-700 text-white hover:bg-slate-600 font-bold px-6 py-3 sm:py-0 rounded-xl transition-colors text-sm" onclick="addServiceFromSelect()">Ajouter</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 4: PAIEMENT -->
-          <div class="wizard-step relative z-10" data-step="4">
-             <div class="text-center mb-6">
-              <h3 class="text-3xl font-display font-bold text-white mb-2">Confirmation</h3>
-              <p class="text-slate-400">Vérifiez les détails et finalisez.</p>
-            </div>
-
-            <div class="bg-dark-soft border border-slate-700 rounded-2xl p-5 mb-6 shadow-sm text-left">
-              <div class="flex justify-between text-sm mb-2 text-slate-300">
-                <span>Service Principal</span>
-                <span id="summary-base-price" class="font-bold text-white">0$</span>
-              </div>
-              <div id="summary-logo-creation" class="flex justify-between text-sm mb-2 text-primary hidden-field">
-                <span><i class="fas fa-plus mr-1"></i> Création Logo</span>
-                <span class="font-bold">15$</span>
-              </div>
-              <div id="summary-express" class="flex justify-between text-sm mb-2 text-secondary hidden-field">
-                <span><i class="fas fa-bolt mr-1"></i> Express</span>
-                <span id="summary-express-total" class="font-bold">10$</span>
-              </div>
-              <div id="summary-extras" class="text-sm text-slate-300 space-y-2 mb-2"></div>
-              
-              <div class="flex justify-between mt-3 pt-3 border-t border-dashed border-slate-600 text-lg font-bold text-primary-soft">
-                <span>Total à Payer</span>
-                <span id="summary-total-price">0$</span>
-              </div>
-            </div>
-
-            <!-- Paiement Mobile Money -->
-            <div class="bg-[#1e293b] border border-slate-700 rounded-2xl p-6 text-center mb-6 relative overflow-hidden">
-              <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent opacity-50"></div>
-              <h4 class="text-white font-bold text-sm mb-3 relative z-10">Paiement Mobile Money</h4>
-              <div class="flex items-center justify-center gap-3 mb-2 relative z-10">
-                <span class="text-2xl font-display font-black text-primary-soft tracking-wide">099 534 2102</span>
-                <button type="button" onclick="copyToClipboard('0995342102', this)" class="w-8 h-8 bg-dark text-slate-400 rounded-lg hover:text-white transition-colors"><i class="far fa-copy text-sm"></i></button>
-              </div>
-              <p class="text-xs font-medium text-slate-400 mb-5 relative z-10">Nom : Mukembe Prisca</p>
-
-              <div class="text-left border-t border-dashed border-slate-600 pt-4 relative z-10">
-                <label class="block mb-2 font-bold text-slate-300 text-xs uppercase tracking-wider">Preuve de paiement *</label>
-                <label for="payment-proof-file" class="flex items-center w-full bg-dark border border-slate-600 p-3 rounded-xl text-slate-400 cursor-pointer hover:border-primary transition-colors">
-                  <i class="fas fa-receipt text-lg mr-3"></i>
-                  <span id="proof-label-text" class="font-bold text-xs">Capture d'écran</span>
-                </label>
-                <input type="file" id="payment-proof-file" accept="image/*" class="hidden-field" onchange="handleFileSelect(event, 'proof-label-text')" />
-                <div id="proof-status-msg" class="text-xs font-medium mt-2"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- FOOTER NAVIGATION -->
-          <div class="mt-6 pt-5 border-t border-slate-800 flex justify-between items-center relative z-10">
-            <button type="button" id="prev-btn" class="text-slate-400 text-sm font-bold hover:text-white transition-colors" onclick="prevStep()">
-              <i class="fas fa-arrow-left mr-2"></i> Retour
-            </button>
-            <button type="button" id="next-btn" class="bg-white text-dark px-6 py-3 rounded-xl text-sm font-bold hover:bg-slate-200 transition-colors" onclick="nextStep()">
-              Continuer <i class="fas fa-arrow-right ml-2"></i>
-            </button>
-            <button type="submit" id="submit-btn" class="bg-primary text-white px-6 py-3 rounded-xl text-sm font-bold shadow-neon hover:bg-primary-dark transition-colors hidden-field disabled:opacity-50 disabled:cursor-not-allowed">
-              Confirmer <i class="fas fa-check ml-2"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- NEW PROJECT SELECTOR MODAL -->
-    <div id="project-selector-modal" class="modal-overlay">
-      <div class="modal-container bg-dark text-white border border-slate-800" style="max-width: 800px;">
-        <button class="absolute top-6 right-6 w-10 h-10 bg-slate-800 rounded-full text-slate-400 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center text-xl z-50" onclick="document.getElementById('project-selector-modal').classList.remove('active')">&times;</button>
-        <h3 class="text-3xl font-display font-bold text-center mb-8">Quel est votre objectif ?</h3>
-
-        <div id="selector-categories" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-dark-soft border border-slate-700 rounded-3xl p-8 text-center cursor-pointer hover:border-primary hover:-translate-y-2 hover:shadow-neon transition-all group" onclick="selectCategory('abos')">
-            <div class="text-5xl text-primary mb-6 group-hover:scale-110 transition-transform"><i class="fas fa-infinity"></i></div>
-            <h4 class="text-2xl font-display font-bold mb-2">Abonnements Mensuels</h4>
-            <p class="text-slate-400 text-sm">Un flux continu de designs premium pour une croissance constante. La solution "Zéro stress".</p>
-          </div>
-          <div class="bg-dark-soft border border-slate-700 rounded-3xl p-8 text-center cursor-pointer hover:border-primary hover:-translate-y-2 hover:shadow-neon transition-all group" onclick="selectCategory('services')">
-            <div class="text-5xl text-primary mb-6 group-hover:scale-110 transition-transform"><i class="fas fa-layer-group"></i></div>
-            <h4 class="text-2xl font-display font-bold mb-2">Services à la carte</h4>
-            <p class="text-slate-400 text-sm">Besoins ponctuels : Refonte de logo, Affiche pour un événement, Charte graphique complète...</p>
-          </div>
-        </div>
-
-        <div id="offers-list-container" class="hidden-field mt-4">
-          <button class="text-slate-400 font-bold mb-6 hover:text-white transition-colors text-sm" onclick="resetSelector()"><i class="fas fa-arrow-left mr-2"></i> Retour aux choix</button>
-          <div id="offers-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TRACKING MODAL -->
-    <div id="tracking-modal" class="modal-overlay">
-      <div class="modal-container bg-dark text-white border border-slate-800" style="max-width: 450px;">
-        <button class="absolute top-6 right-6 w-10 h-10 bg-slate-800 rounded-full text-slate-400 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center text-xl z-50" onclick="document.getElementById('tracking-modal').classList.remove('active')">&times;</button>
-        
-        <div class="text-center mb-8">
-          <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/20 text-primary flex items-center justify-center text-2xl shadow-neon"><i class="fas fa-search-location"></i></div>
-          <h3 class="text-2xl font-display font-bold mb-2">Suivre mon projet</h3>
-          <p class="text-sm text-slate-400">Entrez le numéro WhatsApp utilisé lors de la commande.</p>
-        </div>
-
-        <form onsubmit="trackOrder(event)">
-          <div class="relative mb-6">
-            <input type="tel" id="track-phone" class="w-full bg-dark-soft border border-slate-700 rounded-xl py-4 text-center text-lg font-bold tracking-wider text-white focus:outline-none focus:border-primary transition-all" placeholder="099 534 2102" required />
-            <i class="fab fa-whatsapp absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl"></i>
-          </div>
-          <button type="submit" id="track-btn" class="w-full bg-white text-dark py-4 rounded-xl font-bold hover:bg-slate-200 transition-colors">
-            Vérifier le statut <i class="fas fa-arrow-right ml-2"></i>
-          </button>
-        </form>
-
-        <div id="track-result" class="hidden-field mt-8 pt-8 border-t border-dashed border-slate-700">
-          <div class="bg-dark-soft border border-slate-700 rounded-2xl p-6 text-center">
-            <span class="bg-primary/20 text-primary text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Dernière commande</span>
-            <h4 id="res-service" class="text-xl font-display font-bold mt-4 mb-2"></h4>
-            
-            <div id="res-step-badge" class="w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 mt-4 text-sm"></div>
-            <div id="download-area" class="mt-4"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUCCESS MODAL -->
-    <div id="success-modal" class="modal-overlay">
-      <div class="modal-container bg-dark border border-slate-800 text-white text-center max-w-[400px] p-10">
-        <div class="w-20 h-20 mx-auto bg-primary/20 text-primary rounded-full flex items-center justify-center text-4xl mb-6 shadow-neon"><i class="fas fa-check"></i></div>
-        <h3 class="text-2xl font-display font-bold mb-2">Reçu 5/5 !</h3>
-        <p class="text-slate-400 mb-8 text-sm">Merci <span id="success-client-name" class="font-bold text-white"></span> !<br/>Nous vous contactons sur WhatsApp très vite.</p>
-        <button onclick="document.getElementById('success-modal').classList.remove('active')" class="w-full bg-white text-dark py-3 rounded-xl font-bold hover:bg-slate-200 transition-colors">Super !</button>
-      </div>
-    </div>
-
     <!-- LOGIC JS -->
     <script>
+      // 0. Calendly Widget Init
+      function openCalendly() {
+        Calendly.initPopupWidget({ url: 'https://calendly.com/adasoftdesign/appel-strategique-de' });
+        return false;
+      }
+
       // 1. Mobile Menu
       function toggleMobileMenu() {
         const menu = document.getElementById("mobile-menu");
@@ -1330,16 +892,7 @@
         menu.classList.toggle("flex");
       }
 
-      // 2. Show More Services (No Modal)
-      function showMoreServices() {
-        document.querySelectorAll('.additional-service').forEach(el => {
-            el.classList.remove('hidden');
-            el.style.animation = "slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards";
-        });
-        document.getElementById('show-more-services-btn').classList.add('hidden');
-      }
-
-      // 3. FAQ Accordion
+      // 2. FAQ Accordion
       function toggleFaq(element) {
         const allFaqs = document.querySelectorAll(".faq-item");
         allFaqs.forEach((item) => {
@@ -1348,7 +901,7 @@
         element.classList.toggle("open");
       }
 
-      // 4. Scroll Reveal & Navbar
+      // 3. Scroll Reveal & Navbar
       document.addEventListener("DOMContentLoaded", () => {
         const revealElements = document.querySelectorAll(".reveal");
         const revealObserver = new IntersectionObserver(
@@ -1394,479 +947,6 @@
           heroDeck.addEventListener("click", () => { stopAutoRotate(); rotateDeck(); });
         }
       });
-
-      // --- WIZARD LOGIC ---
-      let currentStep = 1;
-      const totalSteps = 4;
-      let extraServices = [];
-      let filesData = {};
-      let currentExpressCost = 10;
-
-      const wizardBar = document.getElementById("wizard-bar");
-      const prevBtn = document.getElementById("prev-btn");
-      const nextBtn = document.getElementById("next-btn");
-      const submitBtn = document.getElementById("submit-btn");
-
-      function openWizard(offerName, price, isLogoService = false, expressCost = 10) {
-        document.getElementById("wizard-form").reset();
-        currentStep = 1; extraServices = []; filesData = {}; deleteAudio();
-        document.getElementById("added-services-list").innerHTML = "";
-        document.getElementById("proof-status-msg").innerHTML = "";
-        document.getElementById("proof-label-text").innerText = "Capture d'écran";
-
-        document.getElementById("offer-name").value = offerName;
-        document.getElementById("base-price").value = price;
-        document.getElementById("is-logo-service").value = isLogoService;
-        document.getElementById("express-cost-val").value = expressCost;
-        currentExpressCost = expressCost;
-
-        document.getElementById("summary-base-price").innerText = price + "$";
-        document.getElementById("display-express-cost").innerText = "+" + expressCost + "$";
-        
-        toggleLogoVisibility(isLogoService);
-        toggleStyleInput(false);
-        updateWizardUI();
-        updateTotal();
-        document.getElementById("order-wizard").classList.add("active");
-      }
-
-      function closeWizard() { document.getElementById("order-wizard").classList.remove("active"); }
-
-      function updateWizardUI() {
-        document.querySelectorAll(".wizard-step").forEach((step) => {
-          step.classList.remove("active");
-          if (parseInt(step.dataset.step) === currentStep) step.classList.add("active");
-        });
-
-        const percent = ((currentStep - 1) / (totalSteps - 1)) * 100;
-        wizardBar.style.width = percent + "%";
-
-        for (let i = 1; i <= totalSteps; i++) {
-          const ind = document.getElementById("step-ind-" + i);
-          ind.classList.remove("active", "border-primary", "text-primary", "bg-primary", "text-white", "border-primary", "scale-110");
-          ind.classList.add("border-slate-700", "text-slate-500", "bg-dark");
-          
-          if (i === currentStep) {
-            ind.classList.remove("border-slate-700", "text-slate-500");
-            ind.classList.add("active", "border-primary", "text-primary", "scale-110");
-          }
-          if (i < currentStep) {
-            ind.classList.remove("border-slate-700", "text-slate-500", "bg-dark");
-            ind.classList.add("bg-primary", "text-white", "border-primary");
-            ind.innerHTML = '<i class="fas fa-check"></i>';
-          } else if (i === 4) ind.innerHTML = '<i class="fas fa-flag"></i>';
-          else ind.innerText = i;
-        }
-
-        if (currentStep === 1) prevBtn.style.visibility = "hidden";
-        else prevBtn.style.visibility = "visible";
-
-        if (currentStep === totalSteps) {
-          nextBtn.classList.add("hidden-field");
-          submitBtn.classList.remove("hidden-field");
-          validateFinalStep();
-        } else {
-          nextBtn.classList.remove("hidden-field");
-          submitBtn.classList.add("hidden-field");
-        }
-      }
-
-      function nextStep() {
-        if (!validateCurrentStep()) return;
-        if (currentStep < totalSteps) { currentStep++; updateWizardUI(); }
-      }
-      function prevStep() {
-        if (currentStep > 1) { currentStep--; updateWizardUI(); }
-      }
-
-      function validateCurrentStep() {
-        const stepEl = document.querySelector(`.wizard-step[data-step="${currentStep}"]`);
-        const inputs = stepEl.querySelectorAll("input[required], textarea[required]");
-        let valid = true;
-
-        inputs.forEach((input) => {
-          if (!input.value.trim()) {
-            valid = false;
-            input.style.borderColor = "#ef4444";
-            setTimeout(() => (input.style.borderColor = ""), 2000);
-          }
-        });
-
-        if (currentStep === 1 && valid) {
-          const phoneInput = document.getElementById("client-whatsapp");
-          const phoneVal = phoneInput.value.replace(/\s/g, "");
-          const phoneRegex = /^(0|\+243)\d{8,}$/;
-          if (!phoneRegex.test(phoneVal)) {
-            valid = false;
-            phoneInput.style.borderColor = "red";
-            setTimeout(() => phoneInput.style.borderColor = "", 2000);
-            alert("Le numéro doit commencer par 0 ou +243 et ne contenir que des chiffres.");
-          }
-        }
-
-        if (currentStep === 2 && valid) {
-          const styleRadio = document.querySelector('input[name="design-style"]:checked');
-          const styleLabel = document.querySelector('label[for="style-file"]');
-          if (styleLabel) {
-            styleLabel.style.borderColor = "";
-            document.getElementById("style-file-label").innerText = "";
-          }
-          if (styleRadio && styleRadio.value === "yes") {
-            if (!filesData["styleFile"]) {
-              valid = false;
-              styleLabel.style.borderColor = "#ef4444";
-              document.getElementById("style-file-label").innerText = "⚠️ Requis";
-              document.getElementById("style-file-label").style.color = "#ef4444";
-            }
-          }
-
-          const logoRadio = document.querySelector('input[name="has-logo"]:checked');
-          const logoSection = document.getElementById("logo-section");
-          const logoLabel = document.querySelector('label[for="logo-file"]');
-          if (logoLabel) {
-            logoLabel.style.borderColor = "";
-            document.getElementById("logo-file-label").innerText = "";
-          }
-          if (logoSection.style.display !== "none" && logoRadio && logoRadio.value === "yes") {
-            if (!filesData["logoFile"]) {
-              valid = false;
-              logoLabel.style.borderColor = "#ef4444";
-              document.getElementById("logo-file-label").innerText = "⚠️ Requis";
-              document.getElementById("logo-file-label").style.color = "#ef4444";
-            }
-          }
-        }
-        return valid;
-      }
-
-      function toggleLogoVisibility(isLogoService) {
-        const sec = document.getElementById("logo-section");
-        if (isLogoService) { sec.style.display = "none"; toggleLogoInput(false); } 
-        else { sec.style.display = "block"; toggleLogoInput(true); }
-      }
-
-      function toggleStyleInput(show) {
-        const el = document.getElementById("style-upload-container");
-        const fileInput = document.getElementById("style-file");
-        if (show) { el.classList.remove("hidden-field"); fileInput.required = true; } 
-        else { el.classList.add("hidden-field"); fileInput.required = false; fileInput.value = ""; }
-      }
-
-      function toggleLogoInput(hasLogo) {
-        const uploadDiv = document.getElementById("logo-upload-container");
-        const summaryLine = document.getElementById("summary-logo-creation");
-        const fileInput = document.getElementById("logo-file");
-        if (hasLogo) {
-          uploadDiv.style.display = "block"; summaryLine.style.display = "none"; fileInput.required = true;
-        } else {
-          uploadDiv.style.display = "none"; summaryLine.style.display = "flex"; fileInput.required = false; fileInput.value = "";
-        }
-        updateTotal();
-      }
-
-      function addServiceFromSelect() {
-        const select = document.getElementById("extra-service-select");
-        const val = select.value;
-        if (!val) return;
-        const [name, price] = val.split("|");
-        extraServices.push({ name, price: parseInt(price) });
-
-        const container = document.getElementById("added-services-list");
-        const item = document.createElement("div");
-        item.className = "flex justify-between items-center bg-dark border border-slate-700 px-3 py-2 rounded-xl text-xs";
-        item.innerHTML = `<span class="font-bold text-slate-300">${name} <span class="text-primary">(+${price}$)</span></span> <span class="cursor-pointer text-red-500 ml-2" onclick="removeService(this, '${name}')"><i class="fas fa-times"></i></span>`;
-        container.appendChild(item);
-        select.value = ""; updateTotal();
-      }
-
-      function removeService(el, name) {
-        el.parentElement.remove();
-        extraServices = extraServices.filter((s) => s.name !== name);
-        updateTotal();
-      }
-
-      function updateTotal() {
-        const basePrice = parseInt(document.getElementById("base-price").value) || 0;
-        const isLogoService = document.getElementById("is-logo-service").value === "true";
-        let total = basePrice;
-
-        const hasLogo = document.querySelector('input[name="has-logo"]:checked')?.value === "yes";
-        if (!isLogoService && !hasLogo) {
-          total += 15;
-          document.getElementById("summary-logo-creation").classList.remove("hidden-field");
-        } else {
-          document.getElementById("summary-logo-creation").classList.add("hidden-field");
-        }
-
-        const isExpress = document.getElementById("express-option").checked;
-        if (isExpress) {
-          document.getElementById("summary-express").classList.remove("hidden-field");
-          document.getElementById("summary-express").style.display = "flex";
-          total += currentExpressCost;
-        } else {
-          document.getElementById("summary-express").classList.add("hidden-field");
-          document.getElementById("summary-express").style.display = "none";
-        }
-        document.getElementById("summary-express-total").innerText = currentExpressCost + "$";
-
-        let extrasHtml = "";
-        extraServices.forEach((s) => {
-          total += s.price;
-          extrasHtml += `<div class="flex justify-between text-sm mb-2 text-slate-300"><span>+ ${s.name}</span><span class="font-bold">${s.price}$</span></div>`;
-        });
-        document.getElementById("summary-extras").innerHTML = extrasHtml;
-        document.getElementById("summary-total-price").innerText = total + "$";
-      }
-
-      function handleFileSelect(event, labelId) {
-        const file = event.target.files[0];
-        const labelEl = document.getElementById(labelId);
-        const statusMsg = document.getElementById("proof-status-msg");
-
-        if (event.target.parentElement) {
-          const labelWrapper = document.querySelector(`label[for="${event.target.id}"]`);
-          if (labelWrapper) {
-            labelWrapper.style.borderColor = "#10b981"; 
-            labelWrapper.style.color = "#10b981";
-          }
-        }
-
-        if (file) {
-          if (labelId === "proof-label-text") labelEl.innerHTML = `<span class="text-white">${file.name}</span>`;
-          else labelEl.innerText = file.name;
-          labelEl.style.color = "#10b981";
-
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const base64 = e.target.result.split(",")[1];
-            let key = event.target.id === "style-file" ? "styleFile" : event.target.id === "logo-file" ? "logoFile" : event.target.id;
-            filesData[key] = { name: file.name, type: file.type, data: base64 };
-
-            if (key === "payment-proof-file") {
-              statusMsg.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse en cours...';
-              statusMsg.style.color = "#d97706";
-              submitBtn.disabled = true;
-
-              Tesseract.recognize(e.target.result, "eng")
-                .then(({ data: { text } }) => {
-                  const expectedTotal = parseFloat(document.getElementById("summary-total-price").innerText.replace("$", "")) || 0;
-                  const validation = validateProofContent(text, expectedTotal);
-                  statusMsg.innerHTML = validation.message;
-                  statusMsg.style.color = validation.color;
-                  if (validation.isValid) { submitBtn.disabled = false; submitBtn.classList.remove("opacity-50"); } 
-                  else {
-                    setTimeout(() => {
-                      statusMsg.innerHTML += " <span class='text-slate-500'>(OK manuel)</span>";
-                      submitBtn.disabled = false; submitBtn.classList.remove("opacity-50");
-                    }, 1500);
-                  }
-                })
-                .catch((err) => {
-                  statusMsg.innerHTML = "Erreur OCR. OK manuel.";
-                  submitBtn.disabled = false; submitBtn.classList.remove("opacity-50");
-                });
-            }
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-
-      function validateProofContent(ocrText, expectedAmount) {
-        const lowerText = ocrText.toLowerCase().replace(/\s+/g, " ");
-        const noSpaceText = lowerText.replace(/\s/g, "");
-        let score = 0; let checks = [];
-
-        if (/(?:099|99)[\s.-]*534[\s.-]*21[\s.-]*02/.test(lowerText) || noSpaceText.includes("0995342102") || noSpaceText.includes("995342102")) {
-          score += 3; checks.push("Num");
-        }
-        if (["succès", "success", "effectué", "confirmé", "transféré", "envoyé", "transaction id", "réussi"].some(kw => lowerText.includes(kw))) {
-          score += 2; checks.push("Statut");
-        }
-        const amountRegex = /(\d+(?:[.,]\d{1,2})?)\s*(?:usd|$|\$|cdf|fc)?/g;
-        let maxAmountFound = 0; let match;
-        const cleanText = lowerText.replace(/o/g, "0").replace(/l/g, "1");
-        while ((match = amountRegex.exec(cleanText)) !== null) {
-          let val = parseFloat(match[1].replace(",", "."));
-          if (!isNaN(val) && val > maxAmountFound) maxAmountFound = val;
-        }
-        if (maxAmountFound >= expectedAmount || maxAmountFound > 2000) { score += 2; checks.push("Montant"); }
-
-        if (score >= 5) return { isValid: true, message: `<i class="fas fa-check-circle"></i> Validé (${checks.join(", ")})`, color: "#16a34a" };
-        else if (score >= 3) return { isValid: true, message: `<i class="fas fa-exclamation-circle"></i> Acceptable`, color: "#d97706" };
-        else return { isValid: false, message: `<i class="fas fa-times-circle"></i> Illisible.`, color: "#dc2626" };
-      }
-
-      let mediaRecorder; let audioChunks = [];
-      async function toggleRecording() {
-        const btn = document.getElementById("record-btn");
-        const timer = document.getElementById("recording-timer");
-        if (!mediaRecorder || mediaRecorder.state === "inactive") {
-          try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            let mimeType = MediaRecorder.isTypeSupported("audio/mp4") ? "audio/mp4" : MediaRecorder.isTypeSupported("audio/ogg") ? "audio/ogg" : "audio/webm";
-            mediaRecorder = new MediaRecorder(stream, { mimeType });
-            audioChunks = [];
-            mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
-            mediaRecorder.onstop = () => {
-              stream.getTracks().forEach(track => track.stop());
-              const blob = new Blob(audioChunks, { type: mimeType });
-              const url = URL.createObjectURL(blob);
-              const preview = document.getElementById("audio-preview");
-              preview.src = url; preview.classList.remove("hidden-field");
-              document.getElementById("delete-audio-btn").classList.remove("hidden-field");
-              btn.classList.add("hidden-field"); btn.classList.remove("bg-red-500", "text-white");
-              timer.classList.add("hidden-field");
-
-              const reader = new FileReader(); reader.readAsDataURL(blob);
-              reader.onloadend = () => { filesData["voiceNote"] = { name: `voice_note_${Date.now()}.${mimeType.split("/")[1]}`, type: mimeType, data: reader.result.split(",")[1] }; };
-            };
-            mediaRecorder.start();
-            btn.classList.add("bg-red-500", "text-white");
-            document.getElementById("record-text").innerText = "Stop";
-            timer.classList.remove("hidden-field");
-            let secs = 0; timer.innerText = "00:00";
-            const int = setInterval(() => {
-              if (mediaRecorder.state !== "recording") { clearInterval(int); return; }
-              secs++; timer.innerText = `${Math.floor(secs/60).toString().padStart(2,"0")}:${(secs%60).toString().padStart(2,"0")}`;
-            }, 1000);
-          } catch (err) { alert("Microphone introuvable ou non autorisé."); }
-        } else mediaRecorder.stop();
-      }
-      function deleteAudio() {
-        document.getElementById("audio-preview").classList.add("hidden-field");
-        document.getElementById("delete-audio-btn").classList.add("hidden-field");
-        const recordBtn = document.getElementById("record-btn");
-        recordBtn.classList.remove("hidden-field", "bg-red-500", "text-white");
-        document.getElementById("record-text").innerText = "Ajouter un vocal";
-        delete filesData["voiceNote"];
-      }
-
-      function submitOrder(e) {
-        e.preventDefault();
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Envoi...';
-        submitBtn.disabled = true;
-
-        setTimeout(() => {
-            closeWizard();
-            document.getElementById("success-client-name").innerText = document.getElementById("client-name").value;
-            document.getElementById("success-modal").classList.add("active");
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }, 1500);
-      }
-
-      function openTrackingModal() { document.getElementById("tracking-modal").classList.add("active"); }
-      function trackOrder(e) {
-        e.preventDefault();
-        const btn = document.getElementById("track-btn");
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Recherche...';
-        btn.disabled = true;
-        setTimeout(() => {
-          document.getElementById("res-service").innerText = "Branding Complet";
-          const badge = document.getElementById("res-step-badge");
-          badge.style.background = "rgba(79, 70, 229, 0.2)"; badge.style.color = "#818cf8";
-          badge.innerHTML = `<i class="fas fa-paint-brush"></i> En cours de design`;
-          document.getElementById("download-area").innerHTML = "";
-          document.getElementById("track-result").classList.remove("hidden-field");
-          btn.innerHTML = originalText; btn.disabled = false;
-        }, 1000);
-      }
-      function copyToClipboard(text, btn) {
-        navigator.clipboard.writeText(text);
-        const original = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i>';
-        setTimeout(() => (btn.innerHTML = original), 2000);
-      }
-
-      function openProjectSelector() {
-        document.getElementById("project-selector-modal").classList.add("active");
-        resetSelector();
-      }
-      function resetSelector() {
-        document.getElementById("selector-categories").classList.remove("hidden-field");
-        document.getElementById("offers-list-container").classList.add("hidden-field");
-      }
-      function selectCategory(type) {
-        const listContainer = document.getElementById("offers-list");
-        listContainer.innerHTML = ""; 
-        if (type === "abos") {
-          const plans = [
-            { name: "Abonnement Basique", price: 59, desc: "15 affiches/mois" },
-            { name: "Abonnement Croissance", price: 99, desc: "30 affiches + Anim" },
-            { name: "Abonnement Élite", price: 179, desc: "60 affiches + Tout illimité" },
-          ];
-          plans.forEach((p) => {
-            listContainer.innerHTML += `
-              <div class="flex justify-between items-center p-4 bg-dark-soft border border-slate-700 rounded-2xl cursor-pointer hover:border-primary hover:bg-dark hover:shadow-neon transition-all group" onclick="selectOfferFromSelector('${p.name}', ${p.price})">
-                  <div>
-                      <div class="font-bold text-white group-hover:text-primary transition-colors">${p.name}</div>
-                      <div class="text-sm text-slate-400">${p.desc}</div>
-                  </div>
-                  <div class="bg-primary/20 text-primary font-bold px-4 py-1.5 rounded-full">${p.price}$</div>
-              </div>`;
-          });
-        } else {
-          const services = [
-            { name: "Conception de Logo", price: 20, isLogo: true, express: 10 },
-            { name: "Identité Visuelle", price: 20, isLogo: true, express: 10 },
-            { name: "Pack Branding", price: 30, isLogo: true, express: 10 },
-            { name: "Affiche Event", price: 10, express: 5 },
-            { name: "Affiche + Kit RS", price: 15, express: 10 },
-            { name: "Affiche Animée", price: 20, express: 20 },
-            { name: "Cover Album", price: 10, express: 5 },
-            { name: "Cover + Kit Stream", price: 15, express: 5 },
-            { name: "Cover Animée", price: 20, express: 20 },
-            { name: "Carte Visite", price: 10, express: 5 },
-            { name: "Charte Graphique", price: 120, isLogo: true, express: 40 },
-            { name: "Branding Intégral", price: 200, isLogo: true, express: 50 },
-          ];
-          services.forEach((s) => {
-            listContainer.innerHTML += `
-              <div class="flex justify-between items-center p-4 bg-dark-soft border border-slate-700 rounded-2xl cursor-pointer hover:border-primary hover:bg-dark hover:shadow-neon transition-all group" onclick="selectOfferFromSelector('${s.name}', ${s.price}, ${s.isLogo || false}, ${s.express || 10})">
-                  <div class="font-bold text-white group-hover:text-primary transition-colors">${s.name}</div>
-                  <div class="bg-primary/20 text-primary font-bold px-4 py-1.5 rounded-full">${s.price}$</div>
-              </div>`;
-          });
-        }
-        document.getElementById("selector-categories").classList.add("hidden-field");
-        document.getElementById("offers-list-container").classList.remove("hidden-field");
-      }
-      function selectOfferFromSelector(name, price, isLogo = false, express = 10) {
-        document.getElementById("project-selector-modal").classList.remove("active");
-        setTimeout(() => openWizard(name, price, isLogo, express), 200);
-      }
-
-      // Drag to scroll logic for Portfolio Carousel
-      const slider = document.getElementById('portfolio-carousel');
-      let isDown = false;
-      let startX;
-      let scrollLeft;
-
-      if(slider) {
-        slider.addEventListener('mousedown', (e) => {
-          isDown = true;
-          slider.classList.add('active');
-          startX = e.pageX - slider.offsetLeft;
-          scrollLeft = slider.scrollLeft;
-        });
-        slider.addEventListener('mouseleave', () => {
-          isDown = false;
-          slider.classList.remove('active');
-        });
-        slider.addEventListener('mouseup', () => {
-          isDown = false;
-          slider.classList.remove('active');
-        });
-        slider.addEventListener('mousemove', (e) => {
-          if (!isDown) return;
-          e.preventDefault();
-          const x = e.pageX - slider.offsetLeft;
-          const walk = (x - startX) * 2; 
-          slider.scrollLeft = scrollLeft - walk;
-        });
-      }
     </script>
   </body>
 </html>
