@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - AdaSoft | Stratégies & Design Premium</title>
+    <meta
+      name="description"
+      content="Découvrez nos analyses, stratégies de marque et conseils en design premium pour convertir vos prospects et asseoir votre autorité."
+    />
+    <meta name="author" content="AdaSoft" />
+    <link rel="icon" type="image/png" href="./src/img/Logosite.png" />
+
+    <!-- Polices Modernes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Calendly Widget -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#4f46e5', // Indigo
+              'primary-dark': '#4338ca',
+              'primary-soft': '#eef2ff',
+              secondary: '#ec4899', // Pink
+              dark: '#0f172a', // Slate 900
+              'dark-soft': '#1e293b', // Slate 800
+              'text-main': '#334155',
+              'text-light': '#64748b',
+              'bg-color': '#f8fafc',
+            },
+            fontFamily: {
+              main: ['Plus Jakarta Sans', 'sans-serif'],
+              display: ['Outfit', 'sans-serif'],
+            },
+            boxShadow: {
+              clay: '10px 10px 20px rgba(209, 213, 219, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.8)',
+              modal: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              neon: '0 0 20px rgba(79, 70, 229, 0.4)',
+              'neon-strong': '0 0 40px rgba(79, 70, 229, 0.6)',
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --secondary: #ec4899;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        overflow-x: hidden;
+        background-color: #0f172a; 
+      }
+
+      h1, h2, h3, h4, .font-display {
+        font-family: 'Outfit', sans-serif;
+      }
+
+      .text-gradient {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+      }
+
+      /* Transitions pour les vues */
+      .view-transition {
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .hidden-view {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transform: translateY(20px);
+      }
+      .active-view {
+        opacity: 1;
+        pointer-events: auto;
+        position: relative;
+        transform: translateY(0);
+      }
+
+      /* Style SEO du contenu des articles */
+      .article-content { color: #cbd5e1; font-weight: 300; font-size: 1.125rem; line-height: 1.8; }
+      .article-content p { margin-bottom: 1.5rem; }
+      .article-content h2 { font-size: 2rem; font-weight: 700; margin-top: 3.5rem; margin-bottom: 1.5rem; color: #fff; font-family: 'Outfit', sans-serif; line-height: 1.3; }
+      .article-content h3 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; color: #e2e8f0; font-family: 'Outfit', sans-serif; }
+      .article-content ul { margin-bottom: 2rem; padding-left: 1.5rem; list-style-type: none; }
+      .article-content li { margin-bottom: 1rem; position: relative; padding-left: 1.5rem; }
+      .article-content li::before { content: "→"; position: absolute; left: 0; color: var(--primary); font-weight: bold; }
+      .article-content strong { color: #fff; font-weight: 600; }
+      .article-content blockquote { border-left: 4px solid var(--secondary); background: rgba(236,72,153,0.05); padding: 1.5rem; margin: 2.5rem 0; font-style: italic; color: #f8fafc; font-size: 1.25rem; border-radius: 0 1rem 1rem 0; }
+      
+      .article-intro { font-size: 1.25rem; font-weight: 400; color: #f8fafc; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .article-conclusion { background: rgba(79, 70, 229, 0.1); border-left: 4px solid var(--primary); padding: 2rem; border-radius: 0 1rem 1rem 0; margin-top: 4rem; margin-bottom: 3rem; }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-primary selection:text-white text-text-main relative min-h-screen">
+
+    <!-- FLOATING NAVBAR -->
+    <div class="absolute top-0 w-full z-[1000] pt-6 px-4 pointer-events-none">
+      <nav id="navbar" class="pointer-events-auto max-w-6xl mx-auto bg-dark/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-3 flex items-center justify-between shadow-xl transition-all duration-300 border border-white/10">
+        <a href="index.html" class="logo cursor-pointer font-display font-medium text-xl flex items-center gap-3 text-white transition-opacity hover:opacity-80">
+          <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
+        </a>
+
+        <div class="hidden lg:flex items-center space-x-8">
+          <a href="index.html#problem" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Le Problème</a>
+          <a href="index.html#solutions" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Solutions</a>
+          <a href="index.html#portfolio" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Projets</a>
+          <a href="index.html#pricing" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Tarifs</a>
+          <a href="#" onclick="showBlogHome()" class="font-bold text-sm text-primary border-b-2 border-primary pb-1">Blog</a>
+        </div>
+
+        <div class="hidden lg:block">
+          <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-medium shadow-neon transition-all text-sm block">
+            Corriger ça maintenant
+          </button>
+        </div>
+
+        <div class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 cursor-pointer text-white" onclick="toggleMobileMenu()">
+          <i class="fas fa-bars"></i>
+        </div>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden pointer-events-auto flex-col gap-4 absolute top-[85px] left-4 right-4 bg-dark/95 backdrop-blur-lg rounded-3xl p-6 border border-white/10 shadow-xl">
+        <a href="index.html#problem" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Le Problème</a>
+        <a href="index.html#solutions" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Solutions</a>
+        <a href="index.html#portfolio" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Projets</a>
+        <a href="index.html#pricing" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Tarifs</a>
+        <a href="#" onclick="toggleMobileMenu(); showBlogHome();" class="font-bold text-lg text-primary">Blog</a>
+      </div>
+    </div>
+
+    <!-- WRAPPER VUES -->
+    <main class="relative w-full overflow-hidden min-h-screen">
+      
+      <!-- ========================================== -->
+      <!-- VUE 1 : ACCUEIL DU BLOG                    -->
+      <!-- ========================================== -->
+      <div id="view-home" class="view-transition active-view w-full">
+        <!-- BLOG HERO -->
+        <header class="pt-40 pb-20 relative overflow-hidden bg-dark">
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full filter blur-[150px] opacity-60 pointer-events-none"></div>
+          
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+            <span class="inline-block bg-primary/10 border border-primary/30 text-primary-soft font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mb-6">
+              <i class="fas fa-book-open mr-2"></i> Stratégies & Décryptages
+            </span>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-white mb-6 leading-tight">
+              Pensez comme une <br/>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Marque Premium.</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed mb-8">
+              Découvrez pourquoi le design est le levier de conversion le plus sous-estimé. Études de cas, psychologie visuelle et stratégies pour distancer vos concurrents.
+            </p>
+          </div>
+        </header>
+
+        <!-- FEATURED ARTICLE -->
+        <section class="py-12 bg-dark relative z-10">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <article class="bg-slate-900 border border-slate-700 rounded-[2.5rem] overflow-hidden shadow-2xl group flex flex-col lg:flex-row cursor-pointer transition-all hover:border-primary hover:shadow-neon reveal" onclick="readArticle('art-1')">
+              <div class="lg:w-1/2 relative overflow-hidden aspect-[4/3] lg:aspect-auto h-full bg-slate-800">
+                <img src="./src/img/xiaomi.jpg" alt="Xiaomi Logo Rebranding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+                <div class="absolute inset-0 bg-gradient-to-r from-dark/80 via-transparent to-transparent hidden lg:block"></div>
+                <div class="absolute top-6 left-6 bg-primary text-white text-xs font-bold uppercase px-4 py-1.5 rounded-full shadow-lg tracking-widest backdrop-blur-md z-10">
+                  <i class="fas fa-star mr-1"></i> Étude de Cas
+                </div>
+              </div>
+              <div class="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-slate-900 relative">
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+                <div class="flex items-center gap-4 text-sm text-slate-500 mb-6 font-medium relative z-10">
+                  <span class="bg-slate-800 px-3 py-1 rounded-md text-slate-300">Actualité Branding</span>
+                  <span><i class="far fa-clock mr-1"></i> 8 min de lecture</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-display font-medium text-white mb-6 leading-tight group-hover:text-primary-soft transition-colors relative z-10">
+                  Le Rebranding à 300 000 $ de Xiaomi : Arnaque ou coup de génie ?
+                </h2>
+                <p class="text-slate-400 text-lg mb-8 leading-relaxed font-light relative z-10">
+                  Quand le géant de la tech a payé une fortune pour simplement "arrondir" son logo, le monde entier s'est moqué. Pourtant, c'est l'une des stratégies les plus rentables de la décennie. Décryptage.
+                </p>
+                <div class="flex items-center gap-4 relative z-10 mt-auto">
+                  <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-700">
+                    <img src="./src/img/logoicon.webp" alt="AdaSoft Team" class="w-full h-full object-cover bg-dark" />
+                  </div>
+                  <div>
+                    <div class="text-white font-medium">Équipe AdaSoft</div>
+                    <div class="text-sm text-slate-500">Direction Stratégique</div>
+                  </div>
+                  <button class="ml-auto w-12 h-12 bg-white/5 border border-white/10 text-white rounded-full flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                    <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                  </button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- GRILLE D'ARTICLES -->
+        <section class="py-20 bg-dark relative z-10">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12 reveal">
+              <h3 class="text-3xl font-display font-medium text-white border-l-4 border-secondary pl-4">Derniers Articles</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              
+              <!-- Post 2 -->
+              <article class="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-secondary hover:shadow-[0_0_30px_rgba(236,72,153,0.2)] transition-all reveal cursor-pointer" onclick="readArticle('art-2')">
+                <div class="relative aspect-[16/10] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=1000" alt="IA vs Designer" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+                  <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Psychologie & IA</div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow relative">
+                  <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-secondary transition-colors">
+                    L'IA vient de créer le même logo pour 847 entreprises. Lequel êtes-vous ?
+                  </h4>
+                  <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                    Midjourney et Canva promettent des miracles gratuits en 30 secondes. Découvrez pourquoi cette fausse bonne idée clone votre crédibilité.
+                  </p>
+                  <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                    <span><i class="far fa-calendar-alt mr-1"></i> 14 Mai 2026</span>
+                    <span class="text-secondary font-bold group-hover:underline">Lire l'article</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 3 -->
+              <article class="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-primary hover:shadow-neon transition-all reveal cursor-pointer" style="transition-delay: 100ms;" onclick="readArticle('art-3')">
+                <div class="relative aspect-[16/10] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800" alt="Minimalisme" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+                  <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Design Minimaliste</div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow relative">
+                  <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-primary transition-colors">
+                    Faire simple coûte cher. Mais un logo compliqué coûte des clients.
+                  </h4>
+                  <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                    Pourquoi Apple, Nike et Tesla ont-ils des logos si simples ? Analyse de la "charge cognitive" et pourquoi votre cerveau fuit la complexité.
+                  </p>
+                  <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                    <span><i class="far fa-calendar-alt mr-1"></i> 10 Mai 2026</span>
+                    <span class="text-primary font-bold group-hover:underline">Lire l'article</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 4 -->
+              <article class="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] transition-all reveal cursor-pointer" style="transition-delay: 200ms;" onclick="readArticle('art-4')">
+                <div class="relative aspect-[16/10] overflow-hidden">
+                  <img src="./src/img/Fichier7.webp" alt="7 secondes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 filter brightness-90" />
+                  <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Conversion</div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow relative">
+                  <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-purple-400 transition-colors">
+                    Règle des 7 secondes : Ce que voit vraiment votre prospect
+                  </h4>
+                  <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                    Avant de lire votre argumentaire, votre visiteur a déjà décidé s'il vous fait confiance. Décryptage de l'impact immédiat d'une identité premium.
+                  </p>
+                  <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                    <span><i class="far fa-calendar-alt mr-1"></i> 02 Mai 2026</span>
+                    <span class="text-purple-400 font-bold group-hover:underline">Lire l'article</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 5 -->
+              <article class="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-green-500 hover:shadow-[0_0_30px_rgba(34,197,94,0.2)] transition-all reveal cursor-pointer" onclick="readArticle('art-5')">
+                <div class="relative aspect-[16/10] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&q=80&w=800" alt="Couleurs" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70 filter grayscale group-hover:grayscale-0" />
+                  <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Marketing</div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow relative">
+                  <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-green-400 transition-colors">
+                    Psychologie des couleurs : Ne choisissez plus au hasard
+                  </h4>
+                  <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                    Le bleu pour la sécurité, l'orange pour l'action. Saviez-vous que 85% des décisions d'achat sont influencées par la couleur ? Le guide 2026.
+                  </p>
+                  <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                    <span><i class="far fa-calendar-alt mr-1"></i> 24 Avril 2026</span>
+                    <span class="text-green-400 font-bold group-hover:underline">Lire l'article</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 6 -->
+              <article class="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-primary hover:shadow-neon transition-all reveal cursor-pointer" style="transition-delay: 100ms;" onclick="readArticle('art-6')">
+                <div class="relative aspect-[16/10] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" alt="Erreurs branding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+                  <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Stratégie</div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow relative">
+                  <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-primary transition-colors">
+                    Refonte de marque : Les 3 erreurs qui détruisent votre CA
+                  </h4>
+                  <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                    Changer de logo sans stratégie, c'est comme peindre une voiture dont le moteur est en panne. Comment réussir sa transition visuelle.
+                  </p>
+                  <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                    <span><i class="far fa-calendar-alt mr-1"></i> 18 Avril 2026</span>
+                    <span class="text-primary font-bold group-hover:underline">Lire l'article</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Post 7 -->
+              <article class="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-yellow-500 hover:shadow-[0_0_30px_rgba(234,179,8,0.2)] transition-all reveal cursor-pointer" style="transition-delay: 200ms;" onclick="readArticle('art-7')">
+                <div class="relative aspect-[16/10] overflow-hidden bg-slate-800">
+                  <img src="./src/img/Branding complet.webp" alt="Charte Graphique" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+                  <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Outils</div>
+                </div>
+                <div class="p-8 flex flex-col flex-grow relative">
+                  <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-yellow-400 transition-colors">
+                    Pourquoi la "Charte Graphique" n'est pas un luxe
+                  </h4>
+                  <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                    Si vos posts Instagram n'ont pas la même allure que votre site, vous créez de la friction. Le rôle vital du Brandboard expliqué.
+                  </p>
+                  <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                    <span><i class="far fa-calendar-alt mr-1"></i> 10 Avril 2026</span>
+                    <span class="text-yellow-400 font-bold group-hover:underline">Lire l'article</span>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- VUE 2 : LECTURE D'ARTICLE                  -->
+      <!-- ========================================== -->
+      <div id="view-article" class="view-transition hidden-view w-full bg-dark pt-32 pb-24 min-h-screen">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+          
+          <button onclick="showBlogHome()" class="text-slate-400 hover:text-white font-medium mb-10 inline-flex items-center transition-colors group">
+            <i class="fas fa-arrow-left mr-2 transform group-hover:-translate-x-1 transition-transform"></i> Retour au blog
+          </button>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 1 : XIAOMI (Actualité)                            -->
+          <!-- ======================================================= -->
+          <article id="content-art-1" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Actualité Branding</span>
+              <span class="text-slate-500">18 Mai 2026 • 8 min de lecture</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              Le Rebranding à 300 000 $ de Xiaomi : Arnaque de designer ou coup de génie stratégique ?
+            </h1>
+            
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl bg-slate-800">
+              <img src="./src/img/xiaomi.jpg" class="w-full h-full object-cover" alt="Xiaomi Rebranding" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">L'histoire a fait le tour du monde. En 2021, le géant technologique Xiaomi dévoile son tout nouveau logo. Le prix facturé par le designer star Kenya Hara ? Environ 300 000 $. Le changement visuel ? Le carré orange est devenu un carré aux bords arrondis.</p>
+                <p>Immédiatement, la toile s'embrase. Les internautes hurlent à l'arnaque. Les entrepreneurs s'étranglent face au prix pour "un simple coup de ciseaux".</p>
+                <p>Pourtant, avec le recul, cette refonte est considérée par les experts comme l'un des coups de génie les plus rentables de la décennie. Voici pourquoi vous avez tout intérêt à comprendre leur stratégie.</p>
+              </div>
+
+              <h2>Le piège de juger un logo "au visuel"</h2>
+              <p>L'erreur fondamentale du grand public est de juger un logo comme s'il s'agissait d'une œuvre d'art dans un musée. Un logo n'est pas fait pour être "beau" dans l'absolu. C'est un outil mathématique, un contenant conçu pour transporter la valeur et le positionnement d'une marque.</p>
+              <p>Ce que Xiaomi a acheté pour 300 000 $, ce n'est pas un fichier image avec des bords arrondis. Ils ont acheté une <strong>transition de perception</strong>.</p>
+
+              <h2>La philosophie "Alive" : Le vrai produit livré</h2>
+              <p>Le designer Kenya Hara n'a pas juste utilisé l'outil "arrondir" sur Photoshop. Il a mené une étude mathématique complexe (utilisant l'équation de la superellipse) pour trouver l'équilibre visuel parfait entre le carré (stricte, rigide, industriel) et le cercle (fluide, naturel, humain).</p>
+              <p>L'objectif de Xiaomi était de passer d'une image de "fabricant chinois de téléphones low-cost" à celle d'une "marque lifestyle technologique haut de gamme", capable de concurrencer l'écosystème Apple. Ils voulaient que leur technologie paraisse "vivante" (Alive).</p>
+              <blockquote>
+                "Le design premium ne consiste pas à ajouter des éléments pour justifier un prix. Il consiste à retirer tout ce qui n'est pas essentiel à votre message."
+              </blockquote>
+
+              <h2>Le véritable ROI (Retour sur Investissement) de l'opération</h2>
+              <p>Si vous pensez toujours que 300 000 $ était trop cher payé, regardons les retombées concrètes de cette stratégie :</p>
+              <ul>
+                <li><strong>Un buzz mondial gratuit :</strong> En créant un changement si minimaliste pour un prix si élevé, Xiaomi a généré des dizaines de millions de dollars en couverture médiatique gratuite (Earned Media). Le monde entier a parlé d'eux pendant un mois.</li>
+                <li><strong>La montée en gamme immédiate :</strong> En s'associant à Kenya Hara (le directeur artistique de Muji, maître du minimalisme japonais), Xiaomi s'est acheté une crédibilité "premium" instantanée sur le marché international.</li>
+                <li><strong>L'adéquation avec le matériel :</strong> Regardez les produits technologiques récents. Les téléphones, les montres, les icônes d'applications... tout utilise des formes organiques aux coins arrondis (les "squarcles"). Le nouveau logo s'intègre désormais parfaitement sur le dos d'un smartphone moderne.</li>
+              </ul>
+
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">La leçon pour votre entreprise</p>
+                <p>Vous n'avez pas besoin de dépenser 300 000 $ pour votre identité visuelle. Mais vous devez comprendre ceci : <strong>le bon design a un but stratégique, pas seulement esthétique</strong>. Changer votre image, c'est changer la façon dont le marché perçoit vos prix et votre qualité.</p>
+                <p class="mt-4">Si votre logo actuel reflète vos débuts hésitants plutôt que votre ambition future, il est temps d'investir stratégiquement.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <p class="text-lg text-white font-bold mb-6">Faisons le point sur votre image de marque actuelle.</p>
+                <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon transition-all hover:-translate-y-1 inline-flex items-center">
+                  Réserver un audit visuel gratuit <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 2 : IA vs Designer                                -->
+          <!-- ======================================================= -->
+          <article id="content-art-2" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Psychologie & IA</span>
+              <span class="text-slate-500">14 Mai 2026 • 7 min de lecture</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              L'IA vient de créer le même logo pour 847 entreprises. Lequel êtes-vous ?
+            </h1>
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl">
+              <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover" alt="Designer vs IA" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">L'intelligence artificielle est fascinante. En quelques secondes, une requête ("prompt") sur Midjourney ou un clic sur Canva vous génère un logo qui, avouons-le, semble plutôt "joli" de prime abord.</p>
+                <p>La tentation est immense pour un entrepreneur qui lance son projet : pourquoi payer un studio de design quand l'algorithme le fait gratuitement ?</p>
+                <p>La réponse tient en un mot, et il va détruire votre taux de conversion : <strong>l'uniformisation</strong>. Décryptons pourquoi la quantité de l'IA ne remplacera jamais l'intention humaine.</p>
+              </div>
+              
+              <h2>Le mythe de l'originalité algorithmique</h2>
+              <p>Une IA générative ne crée pas de nouveauté à partir de rien. Elle puise dans une base de données gigantesque de designs existants, identifie les motifs récurrents associés à votre mot-clé (par exemple "logo tech moderne"), et recrache une moyenne statistique de ces données.</p>
+              <p>Résultat ? Si vous demandez un logo pour une agence immobilière, vous obtiendrez un toit minimaliste imbriqué dans la première lettre de votre nom. Tout comme les 846 autres agences immobilières qui ont tapé la même requête ce jour-là.</p>
+              <blockquote>
+                "Votre image de marque n'est plus un élément différenciateur. Elle devient un bruit de fond visuel que le cerveau du consommateur a appris à ignorer."
+              </blockquote>
+
+              <h2>Le coût caché du gratuit</h2>
+              <p>En économisant quelques centaines d'euros sur votre création de logo par IA, voici ce que vous sacrifiez réellement, et qui vous coûtera des milliers d'euros à long terme :</p>
+              <ul>
+                <li><strong>La protection juridique :</strong> Les images générées par l'IA ne peuvent (actuellement) pas être protégées par le droit d'auteur de manière exclusive. N'importe qui peut utiliser votre logo légalement.</li>
+                <li><strong>La stratégie émotionnelle :</strong> L'IA ne connaît pas l'anxiété de votre client cible. Elle ne sait pas que votre ton est rassurant plutôt que disruptif. Un humain conçoit avec empathie.</li>
+                <li><strong>L'exploitabilité technique :</strong> Beaucoup de logos générés sont des images matricielles (des pixels). Le jour où vous devrez imprimer une enseigne, l'image sera floue. Un studio professionnel livre des vecteurs exploitables à l'infini.</li>
+              </ul>
+
+              <h2>Pourquoi le premium (humain) gagne toujours</h2>
+              <p>Dans un marché où tout le monde a accès aux mêmes générateurs rapides, la véritable rareté devient <strong>l'intention</strong>. Un design premium est pensé sur-mesure. Chaque courbe, chaque espace négatif, chaque nuance de couleur est choisie pour raconter <em>votre</em> histoire spécifique.</p>
+              <p>Lorsque vos prospects arrivent sur votre site, ils scannent la qualité de votre image en 7 secondes. S'ils reconnaissent inconsciemment le style "template IA", ils associent immédiatement cette facilité à la qualité de vos propres services. S'ils voient une marque forte, assumée, et unique, ils sont prêts à payer le prix fort.</p>
+              
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">En résumé</p>
+                <p>L'IA est un outil fantastique pour faire des brouillons. Mais ce n'est pas un Directeur Artistique. Votre marque mérite une identité qui vous appartient totalement, juridiquement et visuellement.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <p class="text-lg text-white font-bold mb-6">Prêt à créer une marque unique qui ne ressemble qu'à vous ?</p>
+                <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon transition-all hover:-translate-y-1 inline-flex items-center">
+                  Réserver un appel stratégique <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 3 : Minimalisme                                   -->
+          <!-- ======================================================= -->
+          <article id="content-art-3" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Design Minimaliste</span>
+              <span class="text-slate-500">10 Mai 2026 • 5 min de lecture</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              Faire simple coûte cher. Mais un logo compliqué coûte des clients.
+            </h1>
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl">
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover" alt="Minimalisme" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">Regardez autour de vous. Pensez aux marques les plus valorisées au monde. Apple. Nike. Mastercard. Quel est leur point commun le plus frappant ? Une simplicité visuelle absolue.</p>
+                <p>Pourtant, lorsqu'un entrepreneur commande son premier logo, il a souvent le réflexe inverse : il veut "en rajouter pour son argent". Il demande une icône complexe, le nom de l'entreprise, un slogan, trois couleurs différentes, et un dégradé.</p>
+                <p>Le résultat n'est pas un logo, c'est une illustration. Et cela nuit gravement à votre rentabilité. Voici pourquoi le minimalisme est la clé des marques qui dominent.</p>
+              </div>
+
+              <h2>Le piège mortel de la charge cognitive</h2>
+              <p>En design d'expérience utilisateur (UX), on parle de "charge cognitive". C'est l'effort mental requis par le cerveau pour traiter et comprendre une information. Sur internet, vos prospects sont bombardés par des milliers de stimuli visuels par jour.</p>
+              <p>Face à un logo complexe (trop de couleurs, trop de formes), le cerveau fatigué de votre prospect fait un choix d'économie d'énergie : il l'ignore. Face à un symbole minimaliste et épuré (comme la virgule de Nike), le cerveau l'assimile instantanément et le stocke dans la mémoire à long terme.</p>
+              <blockquote>
+                "Le bon design ne se mesure pas au nombre d'éléments que l'on peut ajouter, mais au nombre d'éléments que l'on peut retirer sans perdre le sens de la marque."
+              </blockquote>
+
+              <h2>Le Test fatal de l'Écusson</h2>
+              <p>Un logo professionnel doit réussir le test de la scalabilité absolue. Si vous n'êtes pas sûr de votre logo actuel, posez-vous cette question simple :</p>
+              <p><strong>Votre logo reste-t-il parfaitement lisible s'il est affiché comme un tout petit "Favicon" (l'icône dans l'onglet d'un navigateur internet) ou imprimé sur un stylo ?</strong></p>
+              <p>Si votre logo contient des textes minuscules, des détails d'illustration très fins ou des ombres complexes, il deviendra une tache floue et illisible à petite échelle. C'est l'erreur numéro un des marques amatrices. Les logos minimalistes fonctionnent aussi bien sur un building de 20 mètres que sur un écran d'Apple Watch de 2 centimètres.</p>
+
+              <h2>La simplicité est le signal du luxe</h2>
+              <p>Le minimalisme envoie un message psychologique très puissant à votre client. Il dit : <em>"Nous sommes tellement sûrs de la qualité de notre offre et de notre valeur que nous n'avons pas besoin de crier visuellement pour exister."</em></p>
+              <p>Les marques d'entrée de gamme surchargent leurs visuels d'informations et d'effets clinquants. Les marques premium utilisent l'espace blanc, le silence visuel et la typographie soignée pour imposer le respect immédiat et justifier des tarifs plus élevés.</p>
+              
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">Passez à l'action</p>
+                <p>Regardez votre logo actuel. Que pouvez-vous enlever sans que l'on ne comprenne plus qui vous êtes ? Si la réponse est "beaucoup de choses", il est temps de procéder à une refonte vers le premium.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon transition-all hover:-translate-y-1 inline-flex items-center">
+                  Discuter de la refonte de votre logo <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 4 : 7 secondes                                    -->
+          <!-- ======================================================= -->
+          <article id="content-art-4" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Conversion</span>
+              <span class="text-slate-500">02 Mai 2026 • 6 min de lecture</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              Règle des 7 secondes : Ce que voit vraiment votre prospect
+            </h1>
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl">
+              <img src="./src/img/Fichier7.webp" class="w-full h-full object-cover filter brightness-90" alt="7 secondes" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">Vous avez passé des mois à peaufiner votre offre. Votre produit est excellent, votre service client est irréprochable et vos prix sont parfaitement étudiés au centime près.</p>
+                <p>Vous lancez vos publicités, le trafic arrive enfin sur votre site... et repart aussitôt. Taux de rebond massif. Zéro vente.</p>
+                <p>Le problème ne vient ni de votre produit, ni de votre texte de vente. Le problème, c'est qu'ils n'ont même pas pris le temps d'arriver jusqu'au texte. Ils vous ont jugé en 7 secondes chrono. Voici comment pirater cette première impression.</p>
+              </div>
+
+              <h2>Le "Blink Test" (Test du clignement d'œil)</h2>
+              <p>Des études en psychologie cognitive montrent que l'être humain évalue l'esthétique, l'autorité et la fiabilité d'un site web ou d'un support marketing en une fraction de seconde. Souvent moins de 50 millisecondes pour l'impression purement esthétique, et jusqu'à 7 secondes pour décider de rester ou de fuir.</p>
+              <p>Durant ce très court laps de temps, le cerveau "reptilien" de votre visiteur cherche des marqueurs de sécurité. Si votre design est désaligné, si votre logo est pixellisé, ou si vos couleurs jurent, le cerveau déclenche un signal d'alerte : <em>"Attention, manque de professionnalisme = risque potentiel pour mon argent"</em>.</p>
+
+              <h2>Le design est un réducteur de friction</h2>
+              <p>La "friction", en marketing, est tout ce qui fait hésiter un client à sortir sa carte bleue. Un formulaire trop long est une friction. Un prix caché est une friction. Mais un <strong>mauvais design est la plus grande des frictions</strong>, car il sème le doute sur votre compétence technique globale.</p>
+              <ul>
+                <li><strong>Avec un design amateur :</strong> Le client doit faire un effort mental colossal pour vous faire confiance <em>malgré</em> votre image dégradée.</li>
+                <li><strong>Avec un design premium :</strong> Le client baisse sa garde immédiatement. L'autorité est pré-établie. Votre texte de vente n'a plus qu'à confirmer une impression positive déjà acquise. La vente devient fluide.</li>
+              </ul>
+              <blockquote>
+                "Le bon design ne fait pas qu'embellir une page. Il valide vos prix élevés sans que vous ayez besoin de vous justifier."
+              </blockquote>
+
+              <h2>Comment maîtriser les 7 premières secondes ?</h2>
+              <p>Pour réussir ce test critique, la cohérence est reine. Investissez dans une charte graphique stricte. De votre photo de profil Instagram à la page de paiement de votre site, le client doit ressentir exactement la même "vibe" premium.</p>
+              <p>Utilisez massivement l'espace blanc (l'espace négatif) pour faire respirer l'information et apaiser l'œil. Optez pour des typographies élégantes et hautement lisibles. En résumé : <strong>habillez votre marque pour la valorisation qu'elle vise, pas pour le CA qu'elle fait actuellement.</strong></p>
+              
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">La règle d'or</p>
+                <p>On n'a jamais une deuxième chance de faire une première bonne impression. Si vos taux de conversion sont bas malgré un bon trafic, regardez votre design avant de baisser vos prix.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon transition-all hover:-translate-y-1 inline-flex items-center">
+                  Analyser mon image de marque en direct <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 5 : Couleurs                                      -->
+          <!-- ======================================================= -->
+          <article id="content-art-5" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Marketing</span>
+              <span class="text-slate-500">24 Avril 2026 • 8 min de lecture</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              Psychologie des couleurs : Ne choisissez plus jamais au hasard
+            </h1>
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl">
+              <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover" alt="Couleurs" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">Lorsque nous demandons à un nouveau client pourquoi il a choisi le bleu ou le vert pour son logo actuel, la réponse est presque tragiquement toujours la même : <em>"Parce que j'aime bien cette couleur."</em></p>
+                <p>C'est une erreur stratégique majeure. Vos goûts personnels n'ont absolument aucune importance en branding d'entreprise.</p>
+                <p>La seule chose qui compte, c'est l'impact psychologique de cette couleur sur le subconscient de votre client cible. Bien maîtriser la couleur, c'est maîtriser la décision d'achat.</p>
+              </div>
+
+              <h2>Pourquoi la couleur décide pour nous</h2>
+              <p>La science du neuromarketing a prouvé que jusqu'à 85% de la raison pour laquelle un consommateur achète un produit plutôt qu'un autre (à caractéristiques égales) est strictement liée à la couleur.</p>
+              <p>De plus, la couleur augmente la reconnaissance d'une marque de 80%. Avant même que le cerveau n'ait eu le temps de déchiffrer les lettres qui composent votre nom d'entreprise, la couleur a déjà transmis une émotion et un positionnement.</p>
+
+              <h2>Le dictionnaire de l'inconscient collectif</h2>
+              <p>Voici comment le cerveau humain décode universellement les teintes majeures :</p>
+              <ul>
+                <li><strong>Le Bleu (Confiance, Sécurité, Technologie) :</strong> Ce n'est pas un hasard si les banques, les assurances et les réseaux sociaux (Facebook, LinkedIn) l'utilisent massivement. Le bleu calme les angoisses et rassure le cerveau primitif face au risque.</li>
+                <li><strong>Le Rouge (Urgence, Passion, Métabolisme) :</strong> Très utilisé en restauration rapide (McDonald's, KFC) car il stimule la fréquence cardiaque et l'appétit. C'est la couleur de l'impulsion. Excellent pour un bouton "Acheter", mais dangereux s'il est sur-utilisé pour une marque de luxe.</li>
+                <li><strong>Le Noir / Slate (Luxe, Pouvoir, Élégance) :</strong> L'absence de couleur forte concentre l'attention sur la forme pure et le prestige. Pensez à Apple, Chanel ou Uber (Black). D'ailleurs, le fond sombre de ce site AdaSoft utilise ce principe pour établir un positionnement Premium immédiat.</li>
+                <li><strong>Le Vert (Croissance, Santé, Finance) :</strong> La couleur la plus facile à traiter pour l'œil humain. Elle apaise et indique la prospérité. Idéale pour les produits bio ou les services de gestion de patrimoine.</li>
+              </ul>
+              <blockquote>
+                "Une couleur mal choisie crée une dissonance cognitive. Si votre centre de massage zen utilise du rouge pompier agressif, le client fuira sans même pouvoir vous expliquer consciemment pourquoi."
+              </blockquote>
+
+              <h2>La règle mathématique du 60-30-10</h2>
+              <p>Avoir de bonnes couleurs ne suffit pas, il faut savoir les doser avec rigueur. Un bon design UI (User Interface) et marketing applique presque systématiquement la règle du 60-30-10 pour l'harmonie :</p>
+              <p><strong>60% de couleur dominante</strong> (souvent très neutre : blanc, gris clair, ou noir profond). Elle sert de toile de fond pour faire respirer la page.<br>
+              <strong>30% de couleur secondaire</strong> (une nuance qui soutient la première) pour créer de la structure visuelle.<br>
+              <strong>10% de couleur d'accentuation</strong> (une couleur très vive, contrastante, réservée <em>uniquement</em> pour les éléments vitaux où l'œil doit cliquer, comme les boutons "Ajouter au panier").</p>
+              
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">En résumé</p>
+                <p>La couleur n'est pas de la décoration. C'est de la communication non verbale. Arrêtez de choisir avec vos goûts, commencez à choisir avec les biais cognitifs de vos clients.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon transition-all hover:-translate-y-1 inline-flex items-center">
+                  Trouver la palette parfaite pour votre marque <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 6 : Erreurs Refonte                               -->
+          <!-- ======================================================= -->
+          <article id="content-art-6" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Stratégie</span>
+              <span class="text-slate-500">18 Avril 2026 • 6 min de lecture</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              Refonte de marque : Les 3 erreurs fatales qui détruisent votre CA
+            </h1>
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover filter grayscale" alt="Erreurs branding" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">Vous avez décidé qu'il était enfin temps de professionnaliser votre image. Votre ancien logo fait amateur et freine votre montée en gamme. C'est une excellente décision.</p>
+                <p>Cependant, une refonte de marque (un "rebranding") n'est pas un acte anodin, comme changer de chemise le matin. Mal exécutée, elle peut dérouter vos clients actuels, détruire votre référencement mental et faire chuter vos revenus.</p>
+                <p>Voici les 3 pièges mortels à éviter absolument avant d'engager un designer.</p>
+              </div>
+
+              <h2>Erreur 1 : Changer pour suivre une "tendance" éphémère</h2>
+              <p>Le <em>flat design</em> des années 2010, le <em>neomorphisme</em> de 2020, la folie de la 3D bulle générée par l'IA en 2024... Les tendances visuelles naissent, explosent, et meurent à une vitesse fulgurante sur internet.</p>
+              <p>Si vous refondez votre marque uniquement pour "avoir l'air moderne" selon la mode Dribbble du mois, votre logo paraîtra terriblement daté et ringard dans 18 mois maximum. Vous serez forcé de tout recommencer.</p>
+              <p><strong>La solution :</strong> Visez l'intemporalité. Un branding puissant doit être ancré dans l'ADN fondamental et les valeurs de votre entreprise, pas dans une mode passagère. Préférez toujours la simplicité géométrique à un effet d'ombre complexe.</p>
+
+              <h2>Erreur 2 : L'incohérence post-lancement (Le syndrome Frankenstein)</h2>
+              <p>C'est l'erreur la plus fréquente chez les TPE et PME. L'entreprise investit massivement dans un superbe nouveau logo, le place en haut de son site web... et s'arrête là.</p>
+              <p>Résultat ? Les devis en PDF utilisent toujours l'ancien design flou. Le compte Instagram emploie des filtres couleurs qui ne sont plus dans la nouvelle charte. Le design des véhicules de fonction n'a jamais été mis à jour par manque de budget.</p>
+              <blockquote>
+                "Une marque forte est une marque consistante. Si votre client perçoit trois styles visuels différents sur trois canaux de communication différents, la confiance s'évapore instantanément."
+              </blockquote>
+              <p><strong>La solution :</strong> Une refonte ne s'arrête <em>jamais</em> au logo. C'est exactement pour cela qu'AdaSoft propose systématiquement des offres de "Branding Intégral" ou la remise d'une "Charte Graphique". C'est un système de règles visuelles qui doit s'appliquer religieusement partout, du post Facebook jusqu'à la signature de vos emails.</p>
+
+              <h2>Erreur 3 : Oublier votre ADN et choquer l'audience</h2>
+              <p>Sauf si votre entreprise a subi une crise de relations publiques majeure (auquel cas une rupture totale avec le passé est nécessaire), une bonne refonte est souvent une <strong>évolution respectueuse</strong>, pas une révolution violente.</p>
+              <p>Pensez à l'évolution du logo Starbucks ou de la pomme d'Apple au fil des décennies. Les éléments clés, l'essence même de l'icône, sont restés. Ils ont simplement été épurés et modernisés pour l'ère du digital.</p>
+              <p>Si vos clients actuels vous aiment pour votre approche chaleureuse, humaine et artisanale, ne passez pas soudainement à une identité visuelle ultra-froide, grise et corporative juste pour paraître "plus sérieux". Gardez votre âme. Contentez-vous de nettoyer l'enrobage pour le rendre premium.</p>
+              
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">En conclusion</p>
+                <p>Un rebranding réussi n'est pas un coup de peinture. C'est une ré-alignement stratégique de ce que vous êtes avec ce que vous projetez.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon transition-all hover:-translate-y-1 inline-flex items-center">
+                  Planifier une refonte sans risque <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 7 : Charte Graphique                              -->
+          <!-- ======================================================= -->
+          <article id="content-art-7" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Outils</span>
+              <span class="text-slate-500">10 Avril 2026 • 5 min de lecture</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              Pourquoi la "Charte Graphique" n'est pas un luxe réservé aux multinationales
+            </h1>
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl">
+              <img src="./src/img/Branding complet.webp" class="w-full h-full object-cover" alt="Charte Graphique" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">Le mot "Charte Graphique" effraie très souvent les freelances et les dirigeants de petites entreprises.</p>
+                <p>Dans l'inconscient collectif, c'est un énorme document PDF de 150 pages, rédigé avec des termes compliqués par des agences hors de prix, et qui est réservé aux entreprises du CAC 40.</p>
+                <p>Rien n'est plus faux. Ne pas avoir de règles visuelles strictes est en réalité la raison numéro une pour laquelle les TPE stagnent en ligne.</p>
+              </div>
+
+              <h2>La règle vitale des 7 points de contact</h2>
+              <p>En psychologie du marketing, une donnée fait consensus : un prospect a généralement besoin de 7 "points de contact" (interactions) avec votre marque avant d'être suffisamment en confiance pour passer à l'action et acheter.</p>
+              <p>Il va d'abord voir une publicité sponsorisée sur Instagram. Quelques jours plus tard, il va visiter votre site web. Le mois suivant, il lira un de vos emails, puis il tombera sur un post LinkedIn de votre fondateur.</p>
+              <p>Le problème majeur sans charte graphique ? Si votre pub utilise la police "Arial" sur fond bleu clair, que votre site web est en police à empattement "Times" sur fond rouge bordeaux, et que vos posts réseaux sociaux n'ont jamais les mêmes filtres photos... <strong>le cerveau du prospect enregistre 3 marques différentes</strong>.</p>
+              <blockquote>
+                "Sans cohérence, vous ne cumulez pas la mémorisation des points de contact. Vous repartez de zéro dans l'esprit du client à chaque nouvelle publication. Quel gâchis budgétaire."
+              </blockquote>
+
+              <h2>Qu'est-ce qu'un "Brandboard" (Charte minimaliste) ?</h2>
+              <p>Pour être efficace, vous n'avez absolument pas besoin d'un livre de 150 pages. Vous avez juste besoin d'une boussole visuelle. Chez AdaSoft, pour nos offres Starter, nous livrons ce qu'on appelle un "Brandboard" (une planche de marque synthétique d'une page). Il réunit l'essentiel vital, ni plus ni moins :</p>
+              <ul>
+                <li><strong>Le Logo et ses conditions :</strong> La version principale, la déclinaison claire pour fond sombre, la déclinaison sombre pour fond clair. Surtout, on y inscrit les "interdictions" (ne jamais étirer l'image, ne pas changer la teinte).</li>
+                <li><strong>La Palette de couleurs exactes :</strong> Vos 3 couleurs, avec leurs codes HEX (ex: #4F46E5) et RGB. Fini le "mettez à peu près ce bleu-là". Vous copiez-collez le code informatique parfait sur tous vos outils.</li>
+                <li><strong>La Hiérarchie Typographique :</strong> La police précise pour vos grands titres (H1). La police pour vos longs paragraphes. Et c'est tout. Aucune autre typographie n'est autorisée.</li>
+              </ul>
+
+              <h2>L'outil ultime de productivité</h2>
+              <p>Au-delà de la beauté, la charte graphique est un outil pour gagner un temps massif. Lorsque vous (ou votre alternant, ou une agence externe) devez créer un visuel promo le mardi matin, il n'y a plus aucune question existentielle à se poser devant une page blanche.</p>
+              <p><em>Quelle couleur de fond je mets ? Je prends quelle typo pour le prix ?</em> Tout est déjà tranché en amont. L'exécution devient mécanique, ultra-rapide, et le résultat final a toujours l'air de sortir d'un grand studio parisien.</p>
+
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">La discipline paie</p>
+                <p>La créativité sans règles produit du chaos. La créativité encadrée par une charte produit une marque mémorable.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-bold shadow-neon transition-all hover:-translate-y-1 inline-flex items-center">
+                  Obtenir votre Charte Graphique sur-mesure <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ======================================================= -->
+          <!-- ARTICLE 8 : Motion Design                                 -->
+          <!-- ======================================================= -->
+          <article id="content-art-8" class="hidden article-body">
+            <div class="flex items-center gap-3 text-sm text-primary-soft mb-6">
+              <span class="bg-primary/20 border border-primary/30 px-3 py-1 rounded-full text-primary font-bold uppercase tracking-wider text-xs">Tendances</span>
+              <span class="text-slate-500">05 Avril 2026 • 4 min de lecture</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-8">
+              L'ère du Motion : Comment le mouvement triple l'engagement
+            </h1>
+            <div class="w-full aspect-video rounded-3xl overflow-hidden mb-12 shadow-2xl bg-slate-800">
+              <img src="src/img/Affiche evenementtielle social media kit animation.webp" onerror="this.src='https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?auto=format&fit=crop&q=400'" class="w-full h-full object-cover" alt="Motion" />
+            </div>
+            
+            <div class="article-content">
+              <div class="article-intro">
+                <p class="font-bold text-white text-xl mb-4">Ouvrez Instagram, LinkedIn ou X. Scrollez votre fil d'actualité pendant 10 secondes. Qu'est-ce qui vous fait arrêter la course effrénée de votre pouce instinctif ?</p>
+                <p>Ce n'est pas le texte, aussi brillant soit-il (vous ne l'avez pas encore lu). Ce n'est malheureusement plus l'image fixe non plus, nous y sommes devenus totalement aveugles. C'est le mouvement.</p>
+              </div>
+
+              <h2>Le réflexe reptilien humain</h2>
+              <p>D'un point de vue purement neuro-biologique, l'œil de l'Homo Sapiens est programmé pour détecter le mouvement avant toute autre chose. Dans la nature hostile, un mouvement subtil dans notre vision périphérique signalait un danger mortel ou l'apparition d'une proie.</p>
+              <p>Aujourd'hui, transposé sur un écran plat inoffensif, un mouvement court-circuite tout simplement notre "Scroll Fatigue" (fatigue visuelle) et force littéralement notre tronc cérébral à prêter attention.</p>
+              <blockquote>
+                "Si l'image fixe est une photographie de votre marque, le Motion Design est son langage corporel et son charisme."
+              </blockquote>
+
+              <h2>Le Motion Design Premium : Discret mais fatal</h2>
+              <p>Attention, il ne s'agit surtout pas de faire rebondir votre logo en lettres arc-en-ciel façon Powerpoint des années 90. Le Motion Design haut de gamme repose sur la fluidité, le réalisme physique et la subtilité.</p>
+              <ul>
+                <li><strong>L'animation typographique maitrisée :</strong> Faire apparaître les mots clés de votre affiche un par un permet de dicter le rythme de lecture de votre prospect. Vous contrôlez exactement la manière dont il absorbe l'information, mot après mot.</li>
+                <li><strong>La profondeur (Parallaxe) :</strong> Donner l'illusion d'une perspective 3D à un simple post Instagram (par exemple, le produit qui glisse lentement derrière une typographie qui avance) crée un effet d'arrêt immédiat du scroll.</li>
+                <li><strong>Les Canvas Musicaux :</strong> Pour l'industrie musicale, remplacer une pochette Spotify statique par une boucle vidéo immersive (Canvas) a prouvé augmenter le partage d'un titre de plus de 145%.</li>
+              </ul>
+
+              <h2>La perception d'Hyper-Qualité</h2>
+              <p>Intégrer du Motion Design dans votre stratégie de contenu (ce que nous proposons dans notre <em>Abonnement Croissance</em> ou en tant que <em>Motion Flyer</em> à la carte) envoie un signal fort à votre audience.</p>
+              <p>Cela sous-entend que vous avez du budget, un soin maniaque pour les détails et une avance technologique évidente. C'est le marqueur absolu de différenciation des marques qui dominent le marché en 2026. L'image fixe montre votre produit. Le mouvement, lui, donne vie à l'émotion.</p>
+              
+              <div class="article-conclusion">
+                <p class="font-bold text-white text-xl mb-3">La question qui fâche</p>
+                <p>Regardez vos 10 derniers posts réseaux sociaux. Sont-ils tous statiques ? Si oui, vous laissez une part énorme de l'attention de vos prospects à vos concurrents plus dynamiques.</p>
+              </div>
+
+              <div class="text-center mt-12 mb-8">
+                <button onclick="openCalendly()" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-full font-bold shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all hover:-translate-y-1 inline-flex items-center">
+                  Ajouter du mouvement à votre marque <i class="fas fa-play-circle ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark border-t border-slate-800/50 py-12 text-slate-500 text-sm z-10 relative">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+        <a href="index.html" class="text-2xl font-display font-medium text-white mb-4 md:mb-0 flex items-center gap-2 hover:opacity-80 transition-opacity">
+           <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
+        </a>
+        <div class="flex gap-6">
+          <a href="index.html#solutions" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Support</a>
+          <a href="index.html#portfolio" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Portfolio</a>
+          <a href="index.html#pricing" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Tarifs</a>
+        </div>
+        <p class="mt-4 md:mt-0 font-normal">© 2026 AdaSoft. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <!-- LOGIC JS -->
+    <script>
+      // Calendly Widget Init
+      function openCalendly() {
+        Calendly.initPopupWidget({ url: 'https://calendly.com/adasoftdesign/appel-strategique-de' });
+        return false;
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+        menu.classList.toggle("flex");
+      }
+
+      // View Transitions Logic (SPA Blog)
+      function readArticle(articleId) {
+        // Cache la page d'accueil du blog
+        const homeView = document.getElementById('view-home');
+        homeView.classList.remove('active-view');
+        homeView.classList.add('hidden-view');
+
+        // Cache tous les articles
+        const articles = document.querySelectorAll('.article-body');
+        articles.forEach(art => art.classList.add('hidden'));
+
+        // Affiche la vue article générique
+        const articleView = document.getElementById('view-article');
+        articleView.classList.remove('hidden-view');
+        articleView.classList.add('active-view');
+
+        // Affiche l'article spécifique
+        const targetArticle = document.getElementById('content-' + articleId);
+        if(targetArticle) {
+            targetArticle.classList.remove('hidden');
+        }
+
+        // Remonte en haut de la page doucement
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function showBlogHome() {
+        // Cache la vue article
+        const articleView = document.getElementById('view-article');
+        articleView.classList.remove('active-view');
+        articleView.classList.add('hidden-view');
+
+        // Affiche la vue d'accueil du blog
+        const homeView = document.getElementById('view-home');
+        homeView.classList.remove('hidden-view');
+        homeView.classList.add('active-view');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Scroll Reveal Initialization
+      document.addEventListener("DOMContentLoaded", () => {
+        const revealElements = document.querySelectorAll(".reveal");
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        revealElements.forEach((el) => revealObserver.observe(el));
+      });
+    </script>
+  </body>
+</html>
