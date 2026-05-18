@@ -3,27 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AdaSoft - Transformez votre image en marque premium</title>
+    <title>Blog - AdaSoft | Stratégies & Design Premium</title>
     <meta
       name="description"
-      content="Expert en identité visuelle et création de logo. J'aide les startups et entrepreneurs à construire une image de marque unique et mémorable pour attirer leurs clients."
+      content="Découvrez nos analyses, stratégies de marque et conseils en design premium pour convertir vos prospects et asseoir votre autorité."
     />
+    
+    <!-- Balises Open Graph pour le partage WhatsApp/Réseaux du Blog principal -->
+    <meta property="og:title" content="Blog - AdaSoft | Stratégies & Design Premium" />
+    <meta property="og:description" content="Découvrez nos analyses, stratégies de marque et conseils en design premium pour convertir vos prospects." />
+    <!-- Remplacez "https://votre-domaine.com" par votre vrai nom de domaine -->
+    <meta property="og:image" content="https://votre-domaine.com/src/img/Logosite.png" />
+    <meta property="og:url" content="https://votre-domaine.com/blog.html" />
+    <meta property="og:type" content="website" />
+
     <meta name="author" content="AdaSoft" />
     <link rel="icon" type="image/png" href="./src/img/Logosite.png" />
 
     <!-- Polices Modernes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- FontAwesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <!-- FontAwesome & Calendly -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,23 +37,19 @@
         theme: {
           extend: {
             colors: {
-              primary: '#4f46e5', // Indigo
+              primary: '#4f46e5',
               'primary-dark': '#4338ca',
               'primary-soft': '#eef2ff',
-              secondary: '#ec4899', // Pink
-              dark: '#0f172a', // Slate 900
-              'dark-soft': '#1e293b', // Slate 800
+              secondary: '#ec4899',
+              dark: '#0f172a',
+              'dark-soft': '#1e293b',
               'text-main': '#334155',
-              'text-light': '#64748b',
-              'bg-color': '#f8fafc',
             },
             fontFamily: {
               main: ['Plus Jakarta Sans', 'sans-serif'],
               display: ['Outfit', 'sans-serif'],
             },
             boxShadow: {
-              clay: '10px 10px 20px rgba(209, 213, 219, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.8)',
-              modal: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
               neon: '0 0 20px rgba(79, 70, 229, 0.4)',
               'neon-strong': '0 0 40px rgba(79, 70, 229, 0.6)',
             }
@@ -58,121 +59,34 @@
     </script>
 
     <style>
-      /* --- CUSTOM CSS PRESERVED FOR UNIQUE EFFECTS --- */
-      :root {
-        --primary: #4f46e5;
-        --secondary: #ec4899;
-      }
-
-      body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        overflow-x: hidden;
-        background-color: #0f172a; 
-      }
-
-      h1, h2, h3, h4, .font-display {
-        font-family: 'Outfit', sans-serif;
-      }
-
-      .text-gradient {
-        background: linear-gradient(to right, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-
-      .title-badge {
-        background: var(--primary);
-        color: white;
-        padding: 0.2em 0.6em;
-        border-radius: 999px;
-        display: inline-block;
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
-      }
-
-      /* Animations */
-      @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-15px) rotate(2deg); }
-      }
-      .animate-float { animation: float 6s ease-in-out infinite; }
-      .animate-float-delayed { animation: float 7s ease-in-out 2s infinite; }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(40px);
-        transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* 3D Deck Hero */
-      .hero-deck {
-        perspective: 1200px;
-        transform-style: preserve-3d;
-        position: relative;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-        aspect-ratio: 4/3;
-      }
-      .card-3d {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        border-radius: 32px;
-        background-size: cover;
-        background-position: center;
-        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-      
-      .card-pos-0 {
-        z-index: 3; transform: translateX(0) scale(1) translateZ(0); opacity: 1;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-      }
-      .card-pos-1 { z-index: 2; transform: translateX(50px) scale(0.9) translateZ(-50px); opacity: 0.8; filter: brightness(0.7); }
-      .card-pos-2 { z-index: 1; transform: translateX(100px) scale(0.8) translateZ(-100px); opacity: 0.4; filter: brightness(0.4); }
-      .card-out { z-index: 4; transform: translateX(-120%) rotateY(-25deg) scale(1.1); opacity: 0; }
-
-      /* Smooth FAQ Accordion */
-      .faq-answer-wrapper {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .faq-item.open .faq-answer-wrapper {
-        grid-template-rows: 1fr;
-      }
-      .faq-answer-inner {
-        overflow: hidden;
-      }
-
+      :root { --primary: #4f46e5; --secondary: #ec4899; }
+      body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; background-color: #0f172a; }
+      .text-gradient { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+      .reveal.active { opacity: 1; transform: translateY(0); }
+      .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
   </head>
-  <body class="antialiased selection:bg-primary selection:text-white text-text-main">
+  <body class="antialiased selection:bg-primary selection:text-white text-slate-300 relative min-h-screen">
 
     <!-- FLOATING NAVBAR -->
     <div class="absolute top-0 w-full z-[1000] pt-6 px-4 pointer-events-none">
-      <nav id="navbar" class="pointer-events-auto max-w-6xl mx-auto bg-dark/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-3 flex items-center justify-between shadow-xl transition-all duration-300 border border-white/10">
-        <div class="logo cursor-pointer font-display font-medium text-xl flex items-center gap-3 text-white" onclick="window.scrollTo(0, 0)">
-          <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-4" />
-        </div>
-
+      <nav class="pointer-events-auto max-w-6xl mx-auto bg-dark/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-3 flex items-center justify-between shadow-xl border border-white/10">
+        <a href="index.html" class="logo font-display font-medium text-xl flex items-center gap-3 text-white hover:opacity-80">
+          <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
+        </a>
         <div class="hidden lg:flex items-center space-x-8">
-          <a href="#problem" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Le Problème</a>
-          <a href="#solutions" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Solutions</a>
-          <a href="#portfolio" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Projets</a>
-          <a href="#pricing" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Tarifs</a>
-          <a href="blog.html" class="font-medium text-sm text-secondary hover:text-pink-400 transition-colors">Blog</a>
+          <a href="index.html#problem" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Le Problème</a>
+          <a href="index.html#solutions" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Solutions</a>
+          <a href="index.html#portfolio" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Projets</a>
+          <a href="index.html#pricing" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Tarifs</a>
+          <a href="blog.html" class="font-bold text-sm text-primary border-b-2 border-primary pb-1">Blog</a>
         </div>
-
         <div class="hidden lg:block">
-          <a href="https://calendly.com/adasoftdesign/appel-strategique-de" target="_blank" class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-medium shadow-neon transition-all text-sm block">
+          <button onclick="openCalendly()" class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-medium shadow-neon transition-all text-sm">
             Corriger ça maintenant
-          </a>
+          </button>
         </div>
-
         <div class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 cursor-pointer text-white" onclick="toggleMobileMenu()">
           <i class="fas fa-bars"></i>
         </div>
@@ -180,764 +94,170 @@
 
       <!-- Mobile Menu -->
       <div id="mobile-menu" class="hidden pointer-events-auto flex-col gap-4 absolute top-[85px] left-4 right-4 bg-dark/95 backdrop-blur-lg rounded-3xl p-6 border border-white/10 shadow-xl">
-        <a href="#problem" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Le Problème</a>
-        <a href="#solutions" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Solutions</a>
-        <a href="#portfolio" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Projets</a>
-        <a href="#pricing" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Tarifs</a>
-        <a href="blog.html" class="font-medium text-lg text-secondary hover:text-pink-400">Blog</a>
+        <a href="index.html#problem" class="font-medium text-lg text-white hover:text-primary">Le Problème</a>
+        <a href="index.html#pricing" class="font-medium text-lg text-white hover:text-primary">Tarifs</a>
+        <a href="blog.html" class="font-bold text-lg text-primary">Blog</a>
       </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 1. HERO SECTION                            -->
-    <!-- ========================================== -->
-    <section class="bg-white rounded-b-[3rem] lg:rounded-b-[6rem] pt-32 pb-20 lg:pt-40 lg:pb-24 relative z-10 shadow-[0_30px_60px_rgba(0,0,0,0.05)] overflow-hidden">
-      <!-- Decorative Elements -->
-      <div class="absolute top-32 left-4 md:left-10 lg:left-20 animate-float z-20 hidden md:block">
-        <div class="w-14 h-14 bg-[#001E36] rounded-2xl flex items-center justify-center border-2 border-[#31A8FF] shadow-2xl shadow-[#31A8FF]/20 transform -rotate-12">
-            <span class="text-[#31A8FF] font-semibold text-2xl tracking-tighter" style="font-family: Arial, sans-serif;">Ps</span>
-        </div>
-      </div>
-      <div class="absolute bottom-40 right-4 md:right-10 lg:right-20 animate-float-delayed z-20 hidden md:block">
-        <div class="w-14 h-14 bg-[#330000] rounded-2xl flex items-center justify-center border-2 border-[#FF9A00] shadow-2xl shadow-[#FF9A00]/20 transform rotate-12">
-            <span class="text-[#FF9A00] font-semibold text-2xl tracking-tighter" style="font-family: Arial, sans-serif;">Ai</span>
-        </div>
-      </div>
+    <main class="relative w-full overflow-hidden min-h-screen">
       
-      <!-- Blob bg -->
-      <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-primary-soft rounded-full filter blur-[80px] opacity-60 -z-10"></div>
-
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          <!-- Text Content -->
-          <div class="text-center lg:text-left mt-8 lg:mt-0">
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-semibold text-dark mb-4 tracking-tight leading-[1.05]">
-              Il a vu votre logo.<br>
-              Il a fermé l'onglet.<br>
-              <span class="text-gradient">Il ne reviendra jamais.</span>
-            </h1>
-            
-            <p class="text-xl md:text-2xl text-dark font-medium mb-6 leading-snug">
-              Pas parce que votre offre est mauvaise.<br>
-              Parce que votre image ne méritait pas sa confiance.
-            </p>
-            
-            <div class="bg-primary-soft border-l-4 border-primary p-4 mb-10 inline-block text-left">
-              <p class="text-base text-slate-800 font-normal leading-relaxed">
-                Votre concurrent n'est pas nécessairement meilleur que vous. Il a juste l'air de l'être. C'est la seule différence — et on peut la corriger en 48h.
-              </p>
-            </div>
-
-            <div class="flex flex-col items-center lg:items-start justify-center lg:justify-start mb-8">
-              <a href="https://calendly.com/adasoftdesign/appel-strategique-de" target="_blank" class="bg-dark hover:bg-slate-800 text-white px-10 py-5 rounded-full font-medium shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center text-lg md:text-xl w-full sm:w-auto mb-3">
-                Corriger ça maintenant <i class="fas fa-arrow-right ml-3"></i>
-              </a>
-              <div class="text-sm font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full inline-flex items-center">
-                <i class="fas fa-bolt text-yellow-500 mr-2"></i> 3 projets en cours cette semaine — 2 places restantes
-              </div>
-            </div>
-
-          </div>
-
-          <!-- 3D Visual Deck (Above the fold now) -->
-          <div class="relative w-full perspective-[1200px] z-10 h-[350px] sm:h-[400px] lg:h-[500px]" id="hero-visual">
-            <div class="hero-deck h-full" id="hero-deck">
-              <div class="card-3d card-pos-0" style="background-image: url('./src/img/Mockupapple.png');"></div>
-              <div class="card-3d card-pos-1" style="background-image: url('./src/img/Fichier7.webp');"></div>
-              <div class="card-3d card-pos-2" style="background-image: url('./src/img/Mockupsmartphone.png');"></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 2. STATS (Fond Sombre ultra-épuré)         -->
-    <!-- ========================================== -->
-    <section class="bg-[#0B1120] py-16 relative z-0 -mt-10 border-b border-slate-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-4 text-center">
-          <div class="reveal px-2">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">48h</div>
-            <div class="text-sm text-slate-400 font-normal">Livraison garantie — ou remboursé</div>
-          </div>
-          <div class="reveal px-2" style="transition-delay: 100ms;">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">x3</div>
-            <div class="text-sm text-slate-400 font-normal">Prix perçu moyen après refonte</div>
-          </div>
-          <div class="reveal px-2" style="transition-delay: 200ms;">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">0 px</div>
-            <div class="text-sm text-slate-400 font-normal">Tous nos logos : 100% vectorisés</div>
-          </div>
-          <div class="reveal px-2" style="transition-delay: 300ms;">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-white mb-2">100%</div>
-            <div class="text-sm text-slate-400 font-normal">Droits exclusifs — à vie</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 3. LE PROBLÈME (Le Nœud Émotionnel)        -->
-    <!-- ========================================== -->
-    <section id="problem" class="py-24 bg-dark text-white overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 reveal">
-          <div>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight mb-4">
-              Votre meilleur client ne vous a <br class="hidden lg:block"/><span class="text-primary">jamais contacté.</span>
-            </h2>
-            <p class="text-xl text-slate-300 font-medium mb-8">
-              Il a vu votre logo. Il a continué à chercher.
-            </p>
-          </div>
-          
-          <div class="text-slate-300 text-lg leading-relaxed max-w-lg space-y-6">
-            <p>Voici ce qui s'est passé hier, pendant que vous travailliez :</p>
-            <p>Un prospect cherchait exactement ce que vous proposez. Il a trouvé votre page, puis celle de votre concurrent. Les deux offres étaient similaires. Un seul avait l'air sérieux.</p>
-            <div class="bg-slate-800 border-l-4 border-primary p-4 mt-6">
-              <p class="text-base text-white font-normal">
-                Ce n'est pas de la superficialité. C'est de la psychologie d'achat — et votre concurrent, lui, l'a déjà compris.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center reveal mt-12">
-          <div class="bg-red-500/10 border border-red-500/30 p-8 rounded-3xl text-center hover:-translate-y-1 transition-transform">
-            <div class="w-16 h-16 bg-dark rounded-full mx-auto mb-4 flex items-center justify-center border-2 border-red-500/50 text-red-400 text-2xl">
-              <i class="fas fa-times"></i>
-            </div>
-            <div class="font-medium text-red-400 text-xl mb-3">Design amateur</div>
-            <div class="text-slate-300 italic text-lg">"C'est peut-être risqué…"</div>
-          </div>
-
-          <div class="bg-green-500/10 border border-green-500/30 p-8 rounded-3xl text-center hover:-translate-y-1 transition-transform">
-            <div class="w-16 h-16 bg-dark rounded-full mx-auto mb-4 flex items-center justify-center border-2 border-green-500/50 text-green-400 text-2xl">
-              <i class="fas fa-check"></i>
-            </div>
-            <div class="font-medium text-green-400 text-xl mb-3">Design premium</div>
-            <div class="text-slate-300 italic text-lg">"Ces gens-là savent ce qu'ils font."</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 4. SERVICES (Features -> Bénéfices)        -->
-    <!-- ========================================== -->
-    <section id="solutions" class="bg-slate-50 rounded-[3rem] lg:rounded-[5rem] py-24 relative z-10 -mt-10 shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          <div class="reveal">
-            <span class="block text-primary font-medium text-sm uppercase tracking-widest mb-3">La Transformation</span>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-dark mb-4 leading-tight">
-              Pas des fichiers.<br>
-              <span class="text-primary">Des armes de vente.</span>
-            </h2>
-            <p class="text-slate-600 text-xl font-medium mb-10 max-w-md">
-              On ne livre pas du beau. On livre du résultat.
-            </p>
-
-            <div class="space-y-6">
-              <div class="group bg-white border border-slate-200 rounded-3xl p-6 hover:border-primary hover:shadow-lg transition-all cursor-default">
-                <div class="flex items-center gap-4 mb-3">
-                  <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center font-medium text-xl text-primary"><i class="fas fa-bullseye"></i></div>
-                  <h3 class="font-display font-medium text-dark text-xl">Branding & Logo</h3>
-                </div>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                  Votre logo travaille avant vous, pendant vous, sans vous. C'est le premier vendeur de votre marque — et on s'assure qu'il soit à la hauteur de ce que vous valez vraiment.
-                </p>
-              </div>
-              
-              <div class="group bg-white border border-slate-200 rounded-3xl p-6 hover:border-secondary hover:shadow-lg transition-all cursor-default">
-                <div class="flex items-center gap-4 mb-3">
-                  <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center font-medium text-xl text-secondary"><i class="fas fa-bullhorn"></i></div>
-                  <h3 class="font-display font-medium text-dark text-xl">Design Marketing</h3>
-                </div>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                  Vos concurrents publient. Vous, vous captez l'attention. La différence entre les deux : un design qui sait à qui il parle et exactement pourquoi.
-                </p>
-              </div>
-
-              <div class="group bg-white border border-slate-200 rounded-3xl p-6 hover:border-purple-500 hover:shadow-lg transition-all cursor-default">
-                <div class="flex items-center gap-4 mb-3">
-                  <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center font-medium text-xl text-purple-500"><i class="fas fa-film"></i></div>
-                  <h3 class="font-display font-medium text-dark text-xl">Motion Graphics</h3>
-                </div>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                  Le mouvement crée l'attention. L'attention crée la confiance. La confiance crée les ventes. Ce n'est pas une tendance — c'est de la psychologie. Et vous pouvez l'avoir dès demain.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="relative reveal h-[500px] lg:h-full min-h-[500px]">
-            <div class="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl">
-              <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover filter brightness-90" alt="Services" />
-            </div>
-            
-            <div class="absolute bottom-10 left-10 bg-dark p-6 rounded-3xl shadow-2xl max-w-[280px] border border-slate-700 animate-float">
-              <div class="text-sm text-slate-300 mb-4">Prêt à transformer votre image en un actif rentable ?</div>
-              <a href="https://calendly.com/adasoftdesign/appel-strategique-de" target="_blank" class="w-full bg-primary hover:bg-primary-dark text-white rounded-full py-3 font-medium flex justify-between items-center px-4 transition-colors">
-                Lancer mon projet <div class="bg-white text-primary w-6 h-6 rounded-full flex items-center justify-center"><i class="fas fa-arrow-right text-xs"></i></div>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 5. PROCESSUS (Comment ça marche)           -->
-    <!-- ========================================== -->
-    <section id="process" class="py-32 bg-[#0B1120] relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary rounded-full filter blur-[120px] opacity-10 pointer-events-none"></div>
-      
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center reveal mb-20">
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white mb-4 leading-tight">
-            De "je veux quelque chose de pro" à <br class="hidden md:block"/><span class="text-primary">"voici vos fichiers sources"</span>
-          </h2>
-          <p class="text-slate-400 text-lg font-medium">4 étapes. Pas de surprise. Pas de jargon.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative reveal">
-          <div class="hidden md:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-primary-dark via-secondary to-primary-dark opacity-30 z-0"></div>
-
-          <div class="relative z-10 flex flex-col items-center text-center group">
-            <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-primary group-hover:text-primary group-hover:shadow-neon transition-all duration-300 transform group-hover:-translate-y-2">
-              <i class="fas fa-comments"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white text-sm font-medium flex items-center justify-center shadow-lg">1</div>
-            </div>
-            <h4 class="text-xl font-display font-medium text-white mb-3">Vous nous parlez.</h4>
-            <p class="text-slate-400 text-sm">Votre vision, vos couleurs, vos clients cibles. On écoute tout. On pose les vraies questions.</p>
-          </div>
-
-          <div class="relative z-10 flex flex-col items-center text-center group mt-8 md:mt-0">
-            <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-secondary group-hover:text-secondary group-hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] transition-all duration-300 transform group-hover:-translate-y-2">
-              <i class="fas fa-magic"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-secondary text-white text-sm font-medium flex items-center justify-center shadow-lg">2</div>
-            </div>
-            <h4 class="text-xl font-display font-medium text-white mb-3">On travaille.</h4>
-            <p class="text-slate-400 text-sm">Pas d'IA. Pas de templates. Des mains expertes sur votre projet, du début à la fin.</p>
-          </div>
-
-          <div class="relative z-10 flex flex-col items-center text-center group mt-8 md:mt-0">
-            <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-primary group-hover:text-primary group-hover:shadow-neon transition-all duration-300 transform group-hover:-translate-y-2">
-              <i class="fas fa-sync-alt"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white text-sm font-medium flex items-center justify-center shadow-lg">3</div>
-            </div>
-            <h4 class="text-xl font-display font-medium text-white mb-3">Vous validez.</h4>
-            <p class="text-slate-400 text-sm">On présente. Vous réagissez. On affine. On continue jusqu'à ce que ce soit exactement ça.</p>
-          </div>
-
-          <div class="relative z-10 flex flex-col items-center text-center group mt-8 md:mt-0">
-            <div class="w-24 h-24 rounded-3xl bg-dark border border-slate-700 flex items-center justify-center text-3xl text-slate-400 mb-6 group-hover:border-green-500 group-hover:text-green-500 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all duration-300 transform group-hover:-translate-y-2">
-              <i class="fas fa-rocket"></i>
-              <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-green-500 text-white text-sm font-medium flex items-center justify-center shadow-lg">4</div>
-            </div>
-            <h4 class="text-xl font-display font-medium text-white mb-3">Vous récupérez tout.</h4>
-            <p class="text-slate-400 text-sm">Fichiers sources (AI, SVG, PDF), déclinaisons, formats réseaux. Tous les droits vous appartiennent. À vie.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 6. ANTI-IA (L'angle différenciant)         -->
-    <!-- ========================================== -->
-    <section id="anti-ia" class="py-24 bg-dark border-t border-slate-800 relative overflow-hidden">
-      <div class="absolute left-0 bottom-0 w-96 h-96 bg-secondary rounded-full filter blur-[150px] opacity-10 pointer-events-none"></div>
-
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-slate-900 border border-slate-700 rounded-[3rem] p-8 md:p-16 relative overflow-hidden reveal shadow-2xl">
-          <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent opacity-60 pointer-events-none"></div>
-          
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-            
-            <!-- Left Content -->
-            <div>
-              <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white mb-4 leading-tight">
-                L'IA vient de créer le même logo pour 847 entreprises.<br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-normal italic">Lequel êtes-vous ?</span>
-              </h2>
-              <p class="text-primary-soft text-xl font-display font-medium mb-6">
-                Une identité visuelle ne se génère pas. Elle se construit.
-              </p>
-              <div class="space-y-4 text-slate-300 text-base leading-relaxed mb-6">
-                <p>
-                  Midjourney vous donnera un logo en 30 secondes. Il l'a déjà donné à 846 autres marques avant vous. Dans 6 mois, vos prospects auront vu ce visuel des dizaines de fois ailleurs — et votre crédibilité en prendra un coup sans que vous compreniez pourquoi.
-                </p>
-                <p>
-                  On ne génère pas. On conçoit. Chaque forme est tracée pour vous. Chaque couleur est choisie pour votre client cible. Chaque choix typographique dit quelque chose sur qui vous êtes — même quand vous n'avez rien dit.
-                </p>
-              </div>
-              
-              <div class="bg-dark/50 border-l-4 border-secondary p-4 mb-8">
-                <p class="text-white text-lg font-display font-medium">
-                  "Votre logo est unique. Ou il ne l'est pas.<br>Il n'y a pas de milieu."
-                </p>
-              </div>
-              
-              <div class="flex flex-col gap-3">
-                <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-slate-300">
-                  <strong class="text-white font-medium">Fait pour vous seul.</strong> — Aucun autre client ne recevra ce logo.
-                </div>
-                <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-slate-300">
-                  <strong class="text-white font-medium">Stratégique, pas décoratif.</strong> — Chaque choix visuel parle à votre client cible.
-                </div>
-                <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-slate-300">
-                  <strong class="text-white font-medium">Propriété exclusive.</strong> — Les droits sont entièrement les vôtres. À vie. Sans condition.
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Visual -->
-            <div class="relative h-[500px] rounded-3xl overflow-hidden group border border-slate-700 shadow-2xl hidden lg:block">
-              <img src="src/img/Affiche publicitaire.png" alt="Designer drawing" class="w-full h-full object-cover filter grayscale opacity-70 group-hover:scale-105 transition-transform duration-700" />
-              <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-80"></div>
-              
-              <div class="absolute bottom-10 left-6 bg-dark/90 backdrop-blur-md border border-slate-600 p-5 rounded-2xl flex items-center gap-4 max-w-[250px] transform -rotate-3 shadow-xl">
-                <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-white text-xl shadow-neon-strong"><i class="fas fa-heart"></i></div>
-                <div class="text-sm text-white font-medium leading-snug">Fait avec passion pour votre réussite.</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 7. QUALITÉ VECTORIELLE & MINIMALISME       -->
-    <!-- ========================================== -->
-    <section id="vector-quality" class="py-32 bg-[#0B1120] border-t border-slate-800 relative overflow-hidden">
-      <div class="absolute right-0 top-0 w-96 h-96 bg-primary rounded-full filter blur-[150px] opacity-10 pointer-events-none"></div>
-      
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          <!-- Visual Left -->
-          <div class="relative h-[450px] reveal order-2 lg:order-1">
-            <div class="absolute inset-0 rounded-[3rem] overflow-hidden border border-slate-700 bg-slate-900 group shadow-2xl">
-              <img src="src/img/Fichier4.webp" alt="Vector Design" class="w-full h-full object-cover filter brightness-75 group-hover:scale-105 transition-transform duration-700" />
-              <div class="absolute inset-0 bg-gradient-to-tr from-dark via-transparent to-transparent opacity-90"></div>
-              
-              <div class="absolute top-1/4 left-1/4 w-3 h-3 bg-white border-2 border-primary shadow-neon-strong animate-pulse"></div>
-              <div class="absolute top-1/2 right-1/3 w-3 h-3 bg-white border-2 border-primary shadow-neon-strong animate-pulse" style="animation-delay: 1s;"></div>
-              <div class="absolute bottom-1/3 left-1/2 w-3 h-3 bg-white border-2 border-primary shadow-neon-strong animate-pulse" style="animation-delay: 0.5s;"></div>
-              
-              <svg class="absolute inset-0 w-full h-full opacity-40 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M 25 25 L 66 50 L 50 66" fill="none" stroke="#4f46e5" stroke-width="0.3" stroke-dasharray="2,2" />
-              </svg>
-            </div>
-            
-            <div class="absolute -bottom-6 -right-6 lg:-right-10 bg-slate-800/95 backdrop-blur-md border border-slate-600 p-6 rounded-3xl shadow-2xl animate-float max-w-[260px]">
-              <div class="flex items-center gap-4 mb-3">
-                <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center text-xl"><i class="fas fa-expand-arrows-alt"></i></div>
-                <div class="font-medium text-white text-lg">Zoom Infini</div>
-              </div>
-              <p class="text-sm text-slate-300 font-normal leading-relaxed">Aucune perte de qualité, du favicon au panneau publicitaire géant.</p>
-            </div>
-          </div>
-
-          <!-- Text Right -->
-          <div class="reveal order-1 lg:order-2">
-            <span class="block text-primary font-medium text-sm uppercase tracking-widest mb-3">Qualité Studio</span>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-white mb-6 leading-tight">
-              Des Logos <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">100% Vectorisés</span><br/>et Ultra-Professionnels.
-            </h2>
-            <p class="text-slate-300 text-lg mb-10 leading-relaxed">
-              Un logo pixellisé détruit instantanément votre crédibilité. Nous livrons des fichiers professionnels aux standards de l'industrie, garantissant une netteté absolue sur tous vos supports.
-            </p>
-            
-            <ul class="space-y-8">
-              <li class="flex items-start gap-5">
-                <div class="w-12 h-12 rounded-2xl bg-dark border border-slate-700 text-primary flex items-center justify-center flex-shrink-0 shadow-sm text-xl"><i class="fas fa-file-export"></i></div>
-                <div>
-                  <h5 class="text-white font-medium text-xl mb-2">Formats Sources Inclus</h5>
-                  <p class="text-slate-400 text-sm leading-relaxed">Vous avez le contrôle total sur votre marque avec les fichiers originaux (AI, EPS, SVG, PDF HD).</p>
-                </div>
-              </li>
-              <li class="flex items-start gap-5">
-                <div class="w-12 h-12 rounded-2xl bg-dark border border-slate-700 text-secondary flex items-center justify-center flex-shrink-0 shadow-sm text-xl"><i class="fas fa-layer-group"></i></div>
-                <div>
-                  <h5 class="text-white font-medium text-xl mb-2">Déclinaisons Complètes</h5>
-                  <p class="text-slate-400 text-sm leading-relaxed">Fonds transparents (PNG), versions monochromes, et icônes isolées pour les réseaux.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 8. L'OFFRE ET SA VALEUR (Tarifs)           -->
-    <!-- ========================================== -->
-    <section id="pricing" class="py-24 bg-dark text-white relative border-t border-slate-800">
-      
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="text-center reveal mb-10">
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-medium mb-4">
-            100€. Un seul client récupéré. <br class="hidden sm:block"/><span class="text-primary">Rentable pour les 10 prochaines années.</span>
-          </h2>
-        </div>
-
-        <!-- Warning Context Box -->
-        <div class="max-w-4xl mx-auto bg-slate-800 border border-slate-700 p-8 md:p-10 rounded-[2rem] mb-20 text-left reveal shadow-lg">
-           <h4 class="text-primary-soft font-medium text-2xl mb-6 flex items-center"><i class="fas fa-calculator mr-3 text-3xl"></i> Faites le calcul :</h4>
-           <div class="text-slate-200 text-lg leading-relaxed mb-6 space-y-2">
-             <p>Combien vaut un nouveau client pour vous ?</p>
-             <p>Combien en perdez-vous par mois à cause de votre image ?</p>
-             <p>Multipliez par 12.</p>
-           </div>
-           <p class="text-slate-200 text-lg md:text-xl leading-relaxed mb-6 border-t border-slate-600 pt-6">
-             Notre offre de départ : <strong class="text-green-400 font-semibold text-2xl">100€. Une seule fois.</strong><br>
-             Votre perte annuelle : <em>vous connaissez déjà la réponse.</em>
-           </p>
-        </div>
-
-        <!-- NEW PRICING TIERS -->
-        <div class="mb-24">
-          <div class="flex flex-col sm:flex-row justify-between items-center sm:items-end mb-10 reveal gap-4">
-            <h3 class="text-4xl font-display font-medium border-l-4 border-primary pl-4">Nos Offres</h3>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start reveal">
-            
-            <!-- Starter -->
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-primary transition-all duration-300 flex flex-col h-full relative">
-              <h3 class="text-2xl font-medium mb-2 text-white">Starter</h3>
-              <p class="text-slate-400 text-sm mb-6 h-10">L'entrée de gamme idéale pour démarrer professionnellement.</p>
-              
-              <div class="text-5xl font-display font-semibold text-white mb-6">
-                100<span class="text-2xl text-slate-400">€</span>
-              </div>
-              
-              <div class="text-sm font-medium text-slate-500 mb-6 flex items-center">
-                <i class="far fa-clock mr-2 text-primary"></i> Délai : 5 jours
-              </div>
-
-              <ul class="space-y-4 mb-10 flex-grow">
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Logo principal</span>
-                </li>
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Palette couleurs</span>
-                </li>
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>2 typographies</span>
-                </li>
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Brandboard 1 page</span>
-                </li>
-              </ul>
-              
-              <a href="https://calendly.com/adasoftdesign/appel-strategique-de" target="_blank" class="w-full py-4 rounded-full font-medium bg-slate-800 text-white hover:bg-slate-700 transition-colors text-center block">
-                Réserver mon appel
-              </a>
-            </div>
-
-            <!-- Signature -->
-            <div class="bg-gradient-to-b from-primary-dark to-primary border border-primary rounded-3xl p-8 relative transform md:-translate-y-6 shadow-neon-strong flex flex-col h-full">
-              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-primary px-6 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest shadow-lg">Offre Principale</div>
-              
-              <h3 class="text-2xl font-medium mb-2 text-white">Signature</h3>
-              <p class="text-indigo-200 text-sm mb-6 h-10">L'identité complète pour se démarquer et convertir.</p>
-              
-              <div class="text-6xl font-display font-semibold text-white mb-6">
-                500<span class="text-2xl text-indigo-200">€</span>
-              </div>
-              
-              <div class="text-sm font-medium text-indigo-100 mb-6 flex items-center">
-                <i class="far fa-clock mr-2 text-secondary"></i> Délai : 7 jours
-              </div>
-
-              <ul class="space-y-4 mb-10 flex-grow">
-                <li class="flex items-start text-white">
-                  <i class="fas fa-plus text-secondary mr-3 mt-1 text-sm"></i> <span class="font-semibold">Tout le pack Starter</span>
-                </li>
-                <li class="flex items-start text-white">
-                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>Logo secondaire</span>
-                </li>
-                <li class="flex items-start text-white">
-                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>Charte graphique complète</span>
-                </li>
-                <li class="flex items-start text-white">
-                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>5 templates réseaux sociaux</span>
-                </li>
-                <li class="flex items-start text-white">
-                  <i class="fas fa-check text-secondary mr-3 mt-1 text-lg"></i> <span>Guide d'utilisation</span>
-                </li>
-              </ul>
-              
-              <a href="https://calendly.com/adasoftdesign/appel-strategique-de" target="_blank" class="w-full py-4 rounded-full font-medium bg-white text-primary hover:bg-slate-100 transition-colors shadow-lg text-center block">
-                Réserver mon appel
-              </a>
-            </div>
-
-            <!-- Empire -->
-            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-primary transition-all duration-300 flex flex-col h-full relative">
-              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-secondary to-primary text-white px-4 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-widest shadow-lg">Premium Upsell</div>
-              
-              <h3 class="text-2xl font-medium mb-2 text-white">Empire</h3>
-              <p class="text-slate-400 text-sm mb-6 h-10">La stratégie totale pour dominer votre marché sur le long terme.</p>
-              
-              <div class="text-5xl font-display font-semibold text-white mb-6">
-                1 000<span class="text-2xl text-slate-400">€</span>
-              </div>
-              
-              <div class="text-sm font-medium text-slate-500 mb-6 flex items-center">
-                <i class="far fa-clock mr-2 text-primary"></i> Délai : 14 jours
-              </div>
-
-              <ul class="space-y-4 mb-10 flex-grow">
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-plus text-primary mr-3 mt-1 text-sm"></i> <span class="font-semibold text-white">Tout le pack Signature</span>
-                </li>
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Stratégie de marque</span>
-                </li>
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>Storytelling de marque</span>
-                </li>
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>10 templates réseaux sociaux</span>
-                </li>
-                <li class="flex items-start text-slate-300">
-                  <i class="fas fa-check text-primary mr-3 mt-1 text-lg"></i> <span>1 mois de support</span>
-                </li>
-              </ul>
-              
-              <a href="https://calendly.com/adasoftdesign/appel-strategique-de" target="_blank" class="w-full py-4 rounded-full font-medium bg-slate-800 text-white hover:bg-slate-700 transition-colors text-center block">
-                Réserver mon appel
-              </a>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 9. TESTIMONIALS                            -->
-    <!-- ========================================== -->
-    <section id="testimonials" class="py-24 bg-[#0B1120] border-t border-slate-800 relative z-10">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
-          
-          <!-- Testimonial 1 -->
-          <div class="bg-slate-900 border border-slate-700 rounded-3xl p-10 relative hover:border-primary transition-all shadow-lg hover:shadow-neon">
-            <i class="fas fa-quote-left absolute top-10 right-10 text-6xl text-slate-800"></i>
-            <div class="flex text-yellow-400 text-lg mb-6 relative z-10">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            </div>
-            <p class="text-xl text-white font-normal mb-10 leading-relaxed relative z-10">
-              "Avant, je baissais mes prix pour convaincre. Depuis la refonte, mes clients ne discutent plus le tarif — ils demandent juste quand on commence."
-            </p>
-            <div class="flex items-center gap-4 relative z-10">
-              <div class="w-14 h-14 rounded-full bg-primary/20 text-primary flex items-center justify-center font-medium text-2xl border border-primary/30">S</div>
-              <div>
-                <div class="font-medium text-white text-lg">Sarah M.</div>
-                <div class="text-sm text-slate-400 font-normal">Coach business, Paris</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Testimonial 2 -->
-          <div class="bg-slate-900 border border-slate-700 rounded-3xl p-10 relative hover:border-secondary transition-all shadow-lg hover:shadow-[0_0_30px_rgba(236,72,153,0.2)]">
-            <i class="fas fa-quote-left absolute top-10 right-10 text-6xl text-slate-800"></i>
-            <div class="flex text-yellow-400 text-lg mb-6 relative z-10">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            </div>
-            <p class="text-xl text-white font-normal mb-10 leading-relaxed relative z-10">
-              "J'avais envoyé une offre. Le client avait dit non. J'ai refait les visuels avec AdaSoft, je lui ai renvoyé exactement la même proposition. Il a dit oui. La seule chose qui avait changé, c'était l'image."
-            </p>
-            <div class="flex items-center gap-4 relative z-10">
-              <div class="w-14 h-14 rounded-full bg-secondary/20 text-secondary flex items-center justify-center font-medium text-2xl border border-secondary/30">T</div>
-              <div>
-                <div class="font-medium text-white text-lg">Thomas R.</div>
-                <div class="text-sm text-slate-400 font-normal">E-commerce Mode</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 10. FAQ (Foire Aux Questions)              -->
-    <!-- ========================================== -->
-    <section id="faq" class="py-32 bg-dark border-t border-slate-800 relative z-10">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center reveal mb-16">
-          <span class="text-secondary font-medium uppercase tracking-widest text-sm mb-4 block">Des questions ?</span>
-          <h2 class="text-4xl md:text-5xl font-display font-medium text-white mb-4">
-            Foire Aux <span class="text-primary">Questions</span>
-          </h2>
-        </div>
-
-        <div class="space-y-4 reveal">
-          <div class="bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer group transition-all hover:border-primary hover:bg-slate-800 faq-item" onclick="toggleFaq(this)">
-            <div class="flex justify-between items-center p-6 font-medium text-lg text-white">
-              C'est prêt quand ?
-              <i class="fas fa-chevron-down text-primary transition-transform duration-300 transform group-[.open]:rotate-180"></i>
-            </div>
-            <div class="faq-answer-wrapper">
-              <div class="faq-answer-inner px-6 pb-6 text-slate-300 text-base leading-relaxed">
-                La plupart de nos créations (affiches, covers) sont livrées en 24 à 48h. Pour un branding complet, comptez de 5 à 14 jours selon le pack choisi — pour qu'on fasse les choses bien.
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer group transition-all hover:border-primary hover:bg-slate-800 faq-item" onclick="toggleFaq(this)">
-            <div class="flex justify-between items-center p-6 font-medium text-lg text-white">
-              Et si ça ne me convient pas ?
-              <i class="fas fa-chevron-down text-primary transition-transform duration-300 transform group-[.open]:rotate-180"></i>
-            </div>
-            <div class="faq-answer-wrapper">
-              <div class="faq-answer-inner px-6 pb-6 text-slate-300 text-base leading-relaxed">
-                On retravaille. Sans discussion, sans facture supplémentaire. Votre satisfaction n'est pas une option — c'est le contrat de base.
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-slate-900 border border-slate-700 rounded-2xl cursor-pointer group transition-all hover:border-primary hover:bg-slate-800 faq-item" onclick="toggleFaq(this)">
-            <div class="flex justify-between items-center p-6 font-medium text-lg text-white">
-              Vraiment pas d'IA ?
-              <i class="fas fa-chevron-down text-primary transition-transform duration-300 transform group-[.open]:rotate-180"></i>
-            </div>
-            <div class="faq-answer-wrapper">
-              <div class="faq-answer-inner px-6 pb-6 text-slate-300 text-base leading-relaxed">
-                Vraiment. Adobe Illustrator, une tablette graphique, des années d'expérience — et aucune machine. Parce que vous méritez quelque chose qu'aucune IA n'a fait pour quelqu'un d'autre avant vous.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 11. FOOTER & CTA FINAL                     -->
-    <!-- ========================================== -->
-    <section class="py-32 relative overflow-hidden flex flex-col items-center justify-center text-center bg-dark">
-      
-      <div class="relative z-10 max-w-5xl mx-auto px-4 bg-gradient-to-br from-primary to-secondary p-12 md:p-24 rounded-[3rem] shadow-neon-strong reveal">
-        <!-- Inner Overlay for depth -->
-        <div class="absolute inset-0 bg-dark/20 rounded-[3rem] mix-blend-overlay"></div>
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 rounded-[3rem]"></div>
-        
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white mb-6 leading-tight relative z-10">
-          Dans 48h, votre prochain prospect <br/>ne fermera plus l'onglet.
-        </h2>
-        <p class="text-xl text-white/90 mb-4 max-w-2xl mx-auto font-medium relative z-10">
-          Cette semaine, 3 entrepreneurs ont décidé d'arrêter de perdre des clients à cause de leur image.
-        </p>
-        <p class="text-lg text-white/80 mb-12 max-w-2xl mx-auto font-normal relative z-10">
-          La question n'est pas si vous devriez le faire. C'est si c'est votre semaine.
-        </p>
-        
-        <div class="relative z-10">
-          <a href="https://calendly.com/adasoftdesign/appel-strategique-de" target="_blank" class="bg-white text-dark text-xl font-semibold px-10 py-6 rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center mx-auto mb-6 max-w-max">
-            Je prends ma place cette semaine <i class="fas fa-arrow-right ml-3"></i>
-          </a>
-          <p class="text-sm text-white/80 font-normal max-w-md mx-auto">
-            Gratuit. 20 minutes. Aucun discours. Juste l'honnêteté sur ce qui freine votre marque en ce moment.
+      <!-- BLOG HERO -->
+      <header class="pt-40 pb-20 relative overflow-hidden bg-dark">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full filter blur-[150px] opacity-60 pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+          <span class="inline-block bg-primary/10 border border-primary/30 text-primary-soft font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mb-6">
+            <i class="fas fa-book-open mr-2"></i> Stratégies & Décryptages
+          </span>
+          <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-white mb-6 leading-tight">
+            Pensez comme une <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Marque Premium.</span>
+          </h1>
+          <p class="text-lg text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed mb-8">
+            Découvrez pourquoi le design est le levier de conversion le plus sous-estimé. Études de cas, psychologie visuelle et stratégies pour distancer vos concurrents.
           </p>
         </div>
-      </div>
-    </section>
+      </header>
 
-    <footer class="bg-dark border-t border-slate-800/50 py-12 text-slate-500 text-sm">
-      <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        <div class="text-2xl font-display font-medium text-white mb-4 md:mb-0 flex items-center gap-2">
-           <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
+      <!-- FEATURED ARTICLE -->
+      <section class="py-12 bg-dark relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <a href="article-xiaomi.html" class="block bg-slate-900 border border-slate-700 rounded-[2.5rem] overflow-hidden shadow-2xl group flex flex-col lg:flex-row transition-all hover:border-primary hover:shadow-neon reveal">
+            <div class="lg:w-1/2 relative overflow-hidden aspect-[4/3] lg:aspect-auto h-full bg-slate-800">
+              <img src="./src/img/xiaomi.jpg" alt="Xiaomi Logo Rebranding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+              <div class="absolute inset-0 bg-gradient-to-r from-dark/80 via-transparent to-transparent hidden lg:block"></div>
+              <div class="absolute top-6 left-6 bg-primary text-white text-xs font-bold uppercase px-4 py-1.5 rounded-full shadow-lg tracking-widest backdrop-blur-md z-10">
+                <i class="fas fa-star mr-1"></i> Étude de Cas
+              </div>
+            </div>
+            <div class="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-slate-900 relative">
+              <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+              <div class="flex items-center gap-4 text-sm text-slate-500 mb-6 font-medium relative z-10">
+                <span class="bg-slate-800 px-3 py-1 rounded-md text-slate-300">Actualité Branding</span>
+                <span><i class="far fa-clock mr-1"></i> 8 min de lecture</span>
+              </div>
+              <h2 class="text-3xl md:text-4xl font-display font-medium text-white mb-6 leading-tight group-hover:text-primary-soft transition-colors relative z-10">
+                Le Rebranding à 300 000 $ de Xiaomi : Arnaque ou coup de génie ?
+              </h2>
+              <p class="text-slate-400 text-lg mb-8 leading-relaxed font-light relative z-10">
+                Quand le géant de la tech a payé une fortune pour simplement "arrondir" son logo, le monde entier s'est moqué. Pourtant, c'est l'une des stratégies les plus rentables de la décennie. Décryptage.
+              </p>
+              <div class="flex items-center gap-4 relative z-10 mt-auto">
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-700">
+                  <img src="./src/img/logoicon.webp" alt="AdaSoft Team" class="w-full h-full object-cover bg-dark" />
+                </div>
+                <div>
+                  <div class="text-white font-medium">Équipe AdaSoft</div>
+                  <div class="text-sm text-slate-500">Direction Stratégique</div>
+                </div>
+                <div class="ml-auto w-12 h-12 bg-white/5 border border-white/10 text-white rounded-full flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                  <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
+      </section>
+
+      <!-- GRILLE D'ARTICLES -->
+      <section class="py-20 bg-dark relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-end mb-12 reveal">
+            <h3 class="text-3xl font-display font-medium text-white border-l-4 border-secondary pl-4">Derniers Articles</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Post 2 -->
+            <a href="article-ia.html" class="block bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-secondary hover:shadow-[0_0_30px_rgba(236,72,153,0.2)] transition-all reveal">
+              <div class="relative aspect-[16/10] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=1000" alt="IA vs Designer" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+                <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Psychologie & IA</div>
+              </div>
+              <div class="p-8 flex flex-col flex-grow relative">
+                <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-secondary transition-colors">
+                  L'IA vient de créer le même logo pour 847 entreprises. Lequel êtes-vous ?
+                </h4>
+                <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                  Midjourney et Canva promettent des miracles gratuits. Découvrez pourquoi cette fausse bonne idée clone votre crédibilité.
+                </p>
+                <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                  <span><i class="far fa-calendar-alt mr-1"></i> 14 Mai 2026</span>
+                  <span class="text-secondary font-bold group-hover:underline">Lire l'article</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Post 3 -->
+            <a href="article-minimalisme.html" class="block bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden group flex flex-col hover:border-primary hover:shadow-neon transition-all reveal" style="transition-delay: 100ms;">
+              <div class="relative aspect-[16/10] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800" alt="Minimalisme" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80" />
+                <div class="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full border border-slate-600">Design Minimaliste</div>
+              </div>
+              <div class="p-8 flex flex-col flex-grow relative">
+                <h4 class="text-xl font-display font-medium text-white mb-4 leading-snug group-hover:text-primary transition-colors">
+                  Faire simple coûte cher. Mais un logo compliqué coûte des clients.
+                </h4>
+                <p class="text-sm text-slate-400 line-clamp-3 mb-6 font-light leading-relaxed">
+                  Pourquoi Apple et Nike ont-ils des logos si simples ? Analyse de la "charge cognitive" et pourquoi votre cerveau fuit la complexité.
+                </p>
+                <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-center text-xs font-medium text-slate-500">
+                  <span><i class="far fa-calendar-alt mr-1"></i> 10 Mai 2026</span>
+                  <span class="text-primary font-bold group-hover:underline">Lire l'article</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- Ajoutez les autres cartes d'articles ici en utilisant la balise <a href="article-titre.html"> au lieu de <article> -->
+
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA NEWSLETTER / AUDIT -->
+      <section class="py-24 relative overflow-hidden bg-dark border-t border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 text-center reveal">
+          <div class="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-[3rem] p-12 md:p-20 shadow-2xl relative overflow-hidden">
+            <h2 class="text-3xl md:text-5xl font-display font-medium text-white mb-6 leading-tight relative z-10">
+              Vous avez lu la théorie.<br/>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Passez maintenant à la pratique.</span>
+            </h2>
+            <p class="text-lg text-slate-300 font-light mb-10 max-w-2xl mx-auto relative z-10">
+              On peut analyser les erreurs de vos concurrents pendant des heures. Ou on peut s'asseoir 20 minutes ensemble et corriger les vôtres.
+            </p>
+            <button onclick="openCalendly()" class="bg-white text-dark text-lg font-semibold px-10 py-5 rounded-full shadow-xl hover:scale-105 transition-all duration-300 relative z-10 inline-flex items-center">
+              Je veux mon audit gratuit <i class="fas fa-arrow-right ml-3 text-primary"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark border-t border-slate-800 py-12 text-slate-500 text-sm z-10 relative">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+        <a href="index.html" class="text-2xl font-display font-medium text-white mb-4 md:mb-0 flex items-center gap-2 hover:opacity-80 transition-opacity">
+           <img src="./src/img/logoada.webp" alt="AdaSoft Logo" class="w-auto h-6" />
+        </a>
         <div class="flex gap-6">
-          <a href="#" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Support</a>
-          <a href="#" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Portfolio</a>
-          <a href="#" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Tarifs</a>
+          <a href="index.html#solutions" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Support</a>
+          <a href="index.html#portfolio" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Portfolio</a>
+          <a href="index.html#pricing" class="hover:text-primary transition-colors font-medium uppercase tracking-wider">Tarifs</a>
         </div>
         <p class="mt-4 md:mt-0 font-normal">© 2026 AdaSoft. Tous droits réservés.</p>
       </div>
     </footer>
 
-    <!-- LOGIC JS -->
     <script>
-      // 1. Mobile Menu
-      function toggleMobileMenu() {
-        const menu = document.getElementById("mobile-menu");
-        menu.classList.toggle("hidden");
-        menu.classList.toggle("flex");
-      }
-
-      // 2. FAQ Accordion
-      function toggleFaq(element) {
-        const allFaqs = document.querySelectorAll(".faq-item");
-        allFaqs.forEach((item) => {
-          if (item !== element) item.classList.remove("open");
-        });
-        element.classList.toggle("open");
-      }
-
-      // 3. Scroll Reveal & Navbar
+      function openCalendly() { Calendly.initPopupWidget({ url: 'https://calendly.com/adasoftdesign/appel-strategique-de' }); return false; }
+      function toggleMobileMenu() { document.getElementById("mobile-menu").classList.toggle("hidden"); document.getElementById("mobile-menu").classList.toggle("flex"); }
       document.addEventListener("DOMContentLoaded", () => {
         const revealElements = document.querySelectorAll(".reveal");
-        const revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-                revealObserver.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.1 },
-        );
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("active"); revealObserver.unobserve(entry.target); } });
+          }, { threshold: 0.1 });
         revealElements.forEach((el) => revealObserver.observe(el));
-
-        // 3D Deck Logic
-        const deckCards = document.querySelectorAll(".card-3d");
-        const heroDeck = document.getElementById("hero-deck");
-        if (deckCards.length > 0 && heroDeck) {
-          let cardsArray = Array.from(deckCards);
-          let autoRotateInterval;
-          function rotateDeck() {
-            const frontCard = cardsArray[0];
-            const middleCard = cardsArray[1];
-            const backCard = cardsArray[2];
-            frontCard.classList.remove("card-pos-0");
-            frontCard.classList.add("card-out");
-            middleCard.classList.remove("card-pos-1");
-            middleCard.classList.add("card-pos-0");
-            backCard.classList.remove("card-pos-2");
-            backCard.classList.add("card-pos-1");
-            setTimeout(() => {
-              frontCard.classList.remove("card-out");
-              frontCard.classList.add("card-pos-2");
-              cardsArray.push(cardsArray.shift());
-            }, 600);
-          }
-          function startAutoRotate() { autoRotateInterval = setInterval(rotateDeck, 4000); }
-          function stopAutoRotate() { clearInterval(autoRotateInterval); }
-          startAutoRotate();
-          heroDeck.addEventListener("mouseenter", stopAutoRotate);
-          heroDeck.addEventListener("mouseleave", startAutoRotate);
-          heroDeck.addEventListener("click", () => { stopAutoRotate(); rotateDeck(); });
-        }
       });
     </script>
   </body>
