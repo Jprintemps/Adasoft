@@ -148,6 +148,11 @@
         overflow: hidden;
       }
 
+      /* Forms custom styles to enhance tailwind forms */
+      input[type="checkbox"]:checked, input[type="radio"]:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
     </style>
   </head>
   <body class="antialiased selection:bg-primary selection:text-white text-text-main">
@@ -164,7 +169,7 @@
           <a href="#solutions" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Solutions</a>
           <a href="#portfolio" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Projets</a>
           <a href="#pricing" class="font-medium text-sm text-slate-300 hover:text-white transition-colors">Tarifs</a>
-          <a href="blog.html" class="font-medium text-sm text-secondary hover:text-pink-400 transition-colors">Blog</a>
+          <a href="#onboarding" class="font-medium text-sm text-secondary hover:text-pink-400 transition-colors">Démarrer</a>
         </div>
 
         <div class="hidden lg:block">
@@ -184,7 +189,7 @@
         <a href="#solutions" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Solutions</a>
         <a href="#portfolio" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Projets</a>
         <a href="#pricing" onclick="toggleMobileMenu()" class="font-medium text-lg text-white hover:text-primary">Tarifs</a>
-        <a href="blog.html" class="font-medium text-lg text-secondary hover:text-pink-400">Blog</a>
+        <a href="#onboarding" onclick="toggleMobileMenu()" class="font-medium text-lg text-secondary hover:text-pink-400">Démarrer</a>
       </div>
     </div>
 
@@ -774,6 +779,178 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION FORMULAIRE D'INTÉGRATION CLIENT    -->
+    <!-- ========================================== -->
+    <section id="onboarding" class="py-24 bg-[#0B1120] relative border-t border-slate-800 z-10">
+      <!-- Effet de lueur en arrière-plan -->
+      <div class="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-2xl h-[400px] bg-primary rounded-full filter blur-[150px] opacity-10 pointer-events-none"></div>
+
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center reveal mb-16">
+          <span class="text-secondary font-medium uppercase tracking-widest text-sm mb-4 block">Lancer le projet</span>
+          <h2 class="text-4xl md:text-5xl font-display font-medium text-white mb-4">
+            Parlez-nous de <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">votre marque</span>
+          </h2>
+          <p class="text-slate-400 text-lg">Remplissez ce formulaire pour que notre équipe cerne parfaitement vos besoins.</p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-700 rounded-[2.5rem] p-8 md:p-14 shadow-2xl reveal relative overflow-hidden">
+          <!-- Décoration subtile dans le coin -->
+          <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full filter blur-[80px] pointer-events-none"></div>
+
+          <form action="https://formspree.io/f/xkoerrzk" method="POST" class="space-y-12 relative z-10">
+            
+            <!-- SECTION 1 -->
+            <div>
+              <h3 class="text-2xl font-display font-medium text-white mb-6 flex items-center border-b border-slate-800 pb-4">
+                <span class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center mr-4 text-sm">1</span> 
+                Informations Générales
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2" for="entreprise">Nom de l'entreprise / projet *</label>
+                  <input type="text" id="entreprise" name="Entreprise" required class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2" for="contact">Nom du contact principal *</label>
+                  <input type="text" id="contact" name="Nom_Contact" required class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2" for="email">Adresse e-mail *</label>
+                  <input type="email" id="email" name="Email" required placeholder="ex: contact@adasoft.me" class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2" for="telephone">Numéro de téléphone / WhatsApp</label>
+                  <input type="tel" id="telephone" name="Telephone" class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600">
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div>
+              <h3 class="text-2xl font-display font-medium text-white mb-6 flex items-center border-b border-slate-800 pb-4">
+                <span class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center mr-4 text-sm">2</span> 
+                L'Essence de votre Marque
+              </h3>
+              <div class="space-y-6">
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2" for="pitch">Pitch de votre entreprise (Que faites-vous et pourquoi ?) *</label>
+                  <textarea id="pitch" name="Pitch" rows="3" required class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600 resize-y"></textarea>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2" for="cible">Quelle est votre cible / client idéal ?</label>
+                  <textarea id="cible" name="Cible" rows="2" class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600 resize-y"></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2" for="valeurs">3 à 5 valeurs fondamentales</label>
+                    <input type="text" id="valeurs" name="Valeurs" placeholder="Ex: Innovation, Luxe..." class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2" for="concurrents">Vos principaux concurrents</label>
+                    <input type="text" id="concurrents" name="Concurrents" class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div>
+              <h3 class="text-2xl font-display font-medium text-white mb-6 flex items-center border-b border-slate-800 pb-4">
+                <span class="w-8 h-8 rounded-full bg-secondary/20 text-secondary flex items-center justify-center mr-4 text-sm">3</span> 
+                Besoins en Design
+              </h3>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Checkboxes -->
+                <div>
+                  <p class="block text-sm font-medium text-slate-300 mb-4">Quels sont vos besoins actuels ?</p>
+                  <div class="space-y-3">
+                    <label class="flex items-center space-x-3 cursor-pointer group">
+                      <input type="checkbox" name="Besoins[]" value="Logo" class="w-5 h-5 rounded border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="text-slate-400 group-hover:text-white transition-colors">Création de Logo</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer group">
+                      <input type="checkbox" name="Besoins[]" value="Identite_Visuelle" class="w-5 h-5 rounded border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="text-slate-400 group-hover:text-white transition-colors">Identité Visuelle & Charte</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer group">
+                      <input type="checkbox" name="Besoins[]" value="Print" class="w-5 h-5 rounded border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="text-slate-400 group-hover:text-white transition-colors">Supports Imprimés</span>
+                    </label>
+                    <label class="flex items-center space-x-3 cursor-pointer group">
+                      <input type="checkbox" name="Besoins[]" value="Reseaux_Sociaux" class="w-5 h-5 rounded border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="text-slate-400 group-hover:text-white transition-colors">Assets Réseaux Sociaux</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Radios -->
+                <div>
+                  <p class="block text-sm font-medium text-slate-300 mb-4">État actuel de votre identité :</p>
+                  <div class="space-y-3">
+                    <label class="flex items-start space-x-3 cursor-pointer group">
+                      <input type="radio" name="Etat_Actuel" value="Zero" required class="w-5 h-5 mt-0.5 border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="text-slate-400 group-hover:text-white transition-colors">Nous partons de zéro</span>
+                    </label>
+                    <label class="flex items-start space-x-3 cursor-pointer group">
+                      <input type="radio" name="Etat_Actuel" value="Rebranding" class="w-5 h-5 mt-0.5 border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="text-slate-400 group-hover:text-white transition-colors">Rebranding (Rafraîchissement)</span>
+                    </label>
+                    <label class="flex items-start space-x-3 cursor-pointer group">
+                      <input type="radio" name="Etat_Actuel" value="Charte_Existante" class="w-5 h-5 mt-0.5 border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="text-slate-400 group-hover:text-white transition-colors">Nous avons déjà une charte stricte</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div>
+              <h3 class="text-2xl font-display font-medium text-white mb-6 flex items-center border-b border-slate-800 pb-4">
+                <span class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center mr-4 text-sm">4</span> 
+                Direction Artistique & Logistique
+              </h3>
+              <div class="space-y-6">
+                <div>
+                  <label class="block text-sm font-medium text-slate-300 mb-2" for="adjectifs">Adjectifs décrivant le style visuel recherché :</label>
+                  <input type="text" id="adjectifs" name="Style_Visuel" placeholder="Minimaliste, Audacieux, Corporate..." class="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-slate-600">
+                </div>
+                
+                <div class="bg-dark/50 p-6 rounded-2xl border border-slate-800 mt-6">
+                  <p class="block text-sm font-medium text-slate-300 mb-4">Format d'accompagnement recherché :</p>
+                  <div class="flex flex-col sm:flex-row gap-4">
+                    <label class="flex-1 flex items-center p-4 border border-slate-700 rounded-xl cursor-pointer hover:border-primary transition-colors bg-slate-900 group">
+                      <input type="radio" name="Format" value="Projet_Ponctuel" required class="w-5 h-5 border-slate-700 bg-dark text-primary focus:ring-primary focus:ring-offset-dark">
+                      <span class="ml-3 text-slate-300 group-hover:text-white font-medium">Projet ponctuel</span>
+                    </label>
+                    <label class="flex-1 flex items-center p-4 border border-slate-700 rounded-xl cursor-pointer hover:border-secondary transition-colors bg-slate-900 group">
+                      <input type="radio" name="Format" value="Abonnement" class="w-5 h-5 border-slate-700 bg-dark text-secondary focus:ring-secondary focus:ring-offset-dark">
+                      <span class="ml-3 text-slate-300 group-hover:text-white font-medium">Partenariat mensuel</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOUTON SUBMIT -->
+            <div class="pt-6 border-t border-slate-800">
+              <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white text-lg font-semibold py-5 rounded-full shadow-neon hover:shadow-neon-strong hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                Envoyer ma demande à l'équipe <i class="fas fa-paper-plane ml-3"></i>
+              </button>
+              <p class="text-center text-slate-500 text-sm mt-4">
+                <i class="fas fa-lock mr-1"></i> Vos données sont sécurisées et envoyées directement à notre équipe.
+              </p>
+            </div>
+
+          </form>
         </div>
       </div>
     </section>
