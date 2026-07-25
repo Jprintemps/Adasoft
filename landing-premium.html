@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOREN — Agence de Branding Premium</title>
+  <meta name="description" content="Nous créons des marques impossibles à ignorer. Branding stratégique pour entreprises ambitieuses." />
+  <link rel="icon" type="image/png" href="./src/img/Logosite.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0A0A0A',
+            anthracite: '#111111',
+            offwhite: '#F7F7F5',
+            graylight: '#D8D8D8',
+            emerald: '#00C896',
+            'emerald-dark': '#00A87A',
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Three.js + GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0A;
+      color: #F7F7F5;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    h1, h2, h3, h4, h5, .font-display { font-family: 'Outfit', sans-serif; }
+
+    /* Custom Cursor */
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: #00C896;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      transition: transform 0.1s;
+    }
+    .cursor-ring {
+      width: 40px; height: 40px;
+      border: 2px solid rgba(0, 200, 150, 0.5);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99998;
+      transition: transform 0.3s ease, width 0.3s, height 0.3s, border-color 0.3s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring.hover {
+      width: 60px; height: 60px;
+      border-color: #00C896;
+      background: rgba(0, 200, 150, 0.1);
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #0A0A0A;
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .loader-bar {
+      width: 200px; height: 2px;
+      background: #222;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loader-bar-inner {
+      height: 100%;
+      background: #00C896;
+      width: 0%;
+      animation: load 1.8s ease-in-out forwards;
+    }
+    @keyframes load { to { width: 100%; } }
+
+    /* Glow */
+    .glow-emerald {
+      box-shadow: 0 0 30px rgba(0, 200, 150, 0.3), 0 0 60px rgba(0, 200, 150, 0.1);
+    }
+    .text-glow {
+      text-shadow: 0 0 20px rgba(0, 200, 150, 0.5);
+    }
+
+    /* Glass Card */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(0, 200, 150, 0.3);
+      transform: translateY(-5px) rotateX(2deg) rotateY(-2deg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 200, 150, 0.1);
+    }
+
+    /* Magnetic Button */
+    .btn-magnetic {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 3D Canvas */
+    #hero-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+    }
+
+    /* Navbar */
+    .navbar {
+      transition: all 0.4s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Logo Wall */
+    .logo-scroll {
+      animation: scroll-logos 20s linear infinite;
+    }
+    @keyframes scroll-logos {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Accordion */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-answer.open {
+      max-height: 300px;
+      padding-top: 12px;
+    }
+
+    /* Scroll progress */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00C896, #00E6A8);
+      z-index: 99997;
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* Timeline */
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, #00C896, transparent);
+      transform: translateX(-50%);
+    }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
+      .timeline-line { left: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+  <img src="./src/img/Logosite.png" alt="ZOREN" class="w-12 h-12 opacity-80" />
+  <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+  <p class="text-xs text-graylight tracking-[4px] uppercase">Chargement</p>
+</div>
+
+<!-- Scroll Progress -->
+<div id="scroll-progress"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<!-- ═══════════════════ 01. NAVBAR ═══════════════════ -->
+<nav class="navbar fixed top-0 left-0 w-full z-[9999] px-6 md:px-12 py-4 flex items-center justify-between">
+  <a href="#" class="flex items-center gap-2">
+    <img src="./src/img/Logosite.png" alt="ZOREN" class="w-8 h-8" />
+    <span class="font-display font-bold text-lg text-offwhite">ZOREN</span>
+  </a>
+  <div class="hidden md:flex items-center gap-8 text-sm text-graylight">
+    <a href="#services" class="hover:text-emerald transition-colors">Services</a>
+    <a href="#projets" class="hover:text-emerald transition-colors">Projets</a>
+    <a href="#process" class="hover:text-emerald transition-colors">Process</a>
+    <a href="#about" class="hover:text-emerald transition-colors">À propos</a>
+  </div>
+  <a href="#cta-final" class="btn-magnetic bg-emerald text-obsidian font-semibold text-sm px-5 py-2.5 rounded-full hover:shadow-[0_0_20px_rgba(0,200,150,0.5)] transition-all">
+    Réserver un appel
+  </a>
+</nav>
+
+<!-- ═══════════════════ 02. HERO (100vh) ═══════════════════ -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <canvas id="hero-canvas"></canvas>
+  
+  <!-- Fog overlay -->
+  <div class="absolute inset-0 z-[2] pointer-events-none" style="background: radial-gradient(ellipse at center, transparent 30%, #0A0A0A 80%);"></div>
+  
+  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+    <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-8">
+      <span class="w-2 h-2 bg-emerald rounded-full animate-pulse"></span>
+      <span class="text-xs text-graylight">Plus de 50 entreprises accompagnées</span>
+    </div>
+    
+    <h1 class="font-display font-bold text-4xl md:text-6xl lg:text-7xl leading-tight mb-6">
+      Votre entreprise mérite<br>
+      <span class="text-emerald text-glow">mieux qu'un logo<br>fait à la va-vite.</span>
+    </h1>
+    
+    <p class="text-lg md:text-xl text-graylight max-w-2xl mx-auto mb-10 leading-relaxed">
+      Nous créons des marques qui donnent confiance, attirent plus de clients et vous permettent de vendre avec plus de facilité.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#cta-final" class="btn-magnetic bg-emerald text-obsidian font-bold px-8 py-4 rounded-full text-lg hover:scale-105 glow-emerald transition-all">
+        Construire ma marque
+      </a>
+      <a href="#projets" class="btn-magnetic border border-white/20 text-offwhite font-medium px-8 py-4 rounded-full text-lg hover:border-emerald/50 hover:text-emerald transition-all">
+        Voir nos réalisations →
+      </a>
+    </div>
+  </div>
+  
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
+    <span class="text-xs text-graylight/50">Scroll</span>
+    <div class="w-5 h-8 border border-white/20 rounded-full flex items-start justify-center p-1">
+      <div class="w-1 h-2 bg-emerald rounded-full"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 03. LOGO WALL ═══════════════════ -->
+<section class="py-16 border-t border-b border-white/5 overflow-hidden">
+  <p class="text-center text-sm text-graylight/60 mb-8 tracking-widest uppercase">Ils nous ont fait confiance</p>
+  <div class="relative">
+    <div class="logo-scroll flex items-center gap-16 whitespace-nowrap">
+      <span class="text-2xl font-display font-bold text-white/20">Google</span>
+      <span class="text-2xl font-display font-bold text-white/20">Nike</span>
+      <span class="text-2xl font-display font-bold text-white/20">Adobe</span>
+      <span class="text-2xl font-display font-bold text-white/20">Spotify</span>
+      <span class="text-2xl font-display font-bold text-white/20">Airbnb</span>
+      <span class="text-2xl font-display font-bold text-white/20">Stripe</span>
+      <span class="text-2xl font-display font-bold text-white/20">Slack</span>
+      <span class="text-2xl font-display font-bold text-white/20">Figma</span>
+      <!-- Repeat -->
+      <span class="text-2xl font-display font-bold text-white/20">Google</span>
+      <span class="text-2xl font-display font-bold text-white/20">Nike</span>
+      <span class="text-2xl font-display font-bold text-white/20">Adobe</span>
+      <span class="text-2xl font-display font-bold text-white/20">Spotify</span>
+      <span class="text-2xl font-display font-bold text-white/20">Airbnb</span>
+      <span class="text-2xl font-display font-bold text-white/20">Stripe</span>
+      <span class="text-2xl font-display font-bold text-white/20">Slack</span>
+      <span class="text-2xl font-display font-bold text-white/20">Figma</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 04. LE PROBLÈME ═══════════════════ -->
+<section class="py-24 md:py-32 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">
+        Beaucoup d'entreprises<br>perdent des clients...
+      </h2>
+      <p class="text-xl text-graylight">...non pas parce que leur produit est mauvais.<br><span class="text-emerald font-medium">Mais parce que leur image ne donne pas confiance.</span></p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass-card p-8 reveal">
+        <span class="text-3xl mb-4 block">❌</span>
+        <h3 class="font-display font-bold text-xl mb-2">Logo amateur</h3>
+        <p class="text-graylight text-sm">Vos clients hésitent. Ils ne vous prennent pas au sérieux.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.1s">
+        <span class="text-3xl mb-4 block">❌</span>
+        <h3 class="font-display font-bold text-xl mb-2">Image désordonnée</h3>
+        <p class="text-graylight text-sm">Votre entreprise paraît moins professionnelle qu'elle ne l'est.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.2s">
+        <span class="text-3xl mb-4 block">❌</span>
+        <h3 class="font-display font-bold text-xl mb-2">Aucune différence</h3>
+        <p class="text-graylight text-sm">Vous ressemblez à tous vos concurrents. Impossible de vous choisir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 05. LA SOLUTION (Services) ═══════════════════ -->
+<section id="services" class="py-24 md:py-32 px-6 bg-anthracite/50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Une marque forte<br><span class="text-emerald">change tout.</span></h2>
+      <p class="text-lg text-graylight">Quand votre image inspire confiance, vos clients vous prennent au sérieux<br>avant même de vous parler.</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="glass-card p-8 reveal">
+        <div class="w-12 h-12 bg-emerald/10 border border-emerald/20 rounded-xl flex items-center justify-center mb-5">
+          <span class="text-emerald text-xl">🎯</span>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2">Stratégie claire</h3>
+        <p class="text-graylight text-sm">Votre marque sait où elle va. Chaque décision a un sens.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.05s">
+        <div class="w-12 h-12 bg-emerald/10 border border-emerald/20 rounded-xl flex items-center justify-center mb-5">
+          <span class="text-emerald text-xl">🎨</span>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2">Identité pro</h3>
+        <p class="text-graylight text-sm">Votre entreprise devient immédiatement reconnaissable.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.1s">
+        <div class="w-12 h-12 bg-emerald/10 border border-emerald/20 rounded-xl flex items-center justify-center mb-5">
+          <span class="text-emerald text-xl">🌍</span>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2">Présence cohérente</h3>
+        <p class="text-graylight text-sm">Du logo jusqu'aux réseaux sociaux. Tout est aligné.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.15s">
+        <div class="w-12 h-12 bg-emerald/10 border border-emerald/20 rounded-xl flex items-center justify-center mb-5">
+          <span class="text-emerald text-xl">🚀</span>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2">Site web moderne</h3>
+        <p class="text-graylight text-sm">Simple, rapide et pensé pour convertir vos visiteurs.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.2s">
+        <div class="w-12 h-12 bg-emerald/10 border border-emerald/20 rounded-xl flex items-center justify-center mb-5">
+          <span class="text-emerald text-xl">📦</span>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2">Supports pros</h3>
+        <p class="text-graylight text-sm">Packaging, cartes de visite, brochures... tout est premium.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.25s">
+        <div class="w-12 h-12 bg-emerald/10 border border-emerald/20 rounded-xl flex items-center justify-center mb-5">
+          <span class="text-emerald text-xl">📱</span>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2">Communication</h3>
+        <p class="text-graylight text-sm">Chaque publication renforce votre image de marque.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 06. POURQUOI LE BRANDING ═══════════════════ -->
+<section id="about" class="py-24 md:py-32 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <h2 class="font-display font-bold text-3xl md:text-4xl mb-6">Les gens achètent d'abord<br><span class="text-emerald">avec leurs yeux.</span></h2>
+        <p class="text-graylight text-lg leading-relaxed mb-4">Ensuite seulement, ils découvrent votre produit.</p>
+        <p class="text-graylight leading-relaxed mb-4">Une bonne image donne envie.<br>Une excellente image donne <strong class="text-offwhite">confiance</strong>.</p>
+        <p class="text-emerald font-semibold text-lg">Et la confiance fait vendre.</p>
+      </div>
+      <div class="reveal relative">
+        <div class="aspect-square rounded-2xl bg-gradient-to-br from-emerald/10 to-transparent border border-emerald/20 flex items-center justify-center">
+          <canvas id="about-canvas" class="w-full h-full rounded-2xl"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 07. STATISTIQUES ═══════════════════ -->
+<section class="py-24 md:py-32 px-6 bg-anthracite/50">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="text-center reveal">
+        <p class="font-display font-bold text-4xl md:text-5xl text-emerald counter" data-target="300">0</p>
+        <p class="text-sm text-graylight mt-2">% de visibilité</p>
+      </div>
+      <div class="text-center reveal" style="transition-delay: 0.1s">
+        <p class="font-display font-bold text-4xl md:text-5xl text-emerald counter" data-target="180">0</p>
+        <p class="text-sm text-graylight mt-2">% de demandes</p>
+      </div>
+      <div class="text-center reveal" style="transition-delay: 0.2s">
+        <p class="font-display font-bold text-4xl md:text-5xl text-emerald counter" data-target="95">0</p>
+        <p class="text-sm text-graylight mt-2">% clients satisfaits</p>
+      </div>
+      <div class="text-center reveal" style="transition-delay: 0.3s">
+        <p class="font-display font-bold text-4xl md:text-5xl text-emerald counter" data-target="50">0</p>
+        <p class="text-sm text-graylight mt-2">entreprises accompagnées</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 08. PROCESS ═══════════════════ -->
+<section id="process" class="py-24 md:py-32 px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Nous simplifions<br><span class="text-emerald">tout.</span></h2>
+      <p class="text-lg text-graylight">5 étapes. C'est tout.</p>
+    </div>
+    
+    <div class="relative">
+      <div class="timeline-line hidden md:block"></div>
+      
+      <div class="space-y-12">
+        <div class="relative flex flex-col md:flex-row items-center gap-6 reveal">
+          <div class="w-14 h-14 bg-emerald/10 border border-emerald/30 rounded-full flex items-center justify-center font-display font-bold text-emerald text-lg z-10">01</div>
+          <div class="glass-card p-6 flex-1">
+            <h3 class="font-display font-bold text-lg mb-1">Découverte</h3>
+            <p class="text-graylight text-sm">Nous apprenons à connaître votre entreprise, vos clients et vos objectifs.</p>
+          </div>
+        </div>
+        <div class="relative flex flex-col md:flex-row items-center gap-6 reveal">
+          <div class="w-14 h-14 bg-emerald/10 border border-emerald/30 rounded-full flex items-center justify-center font-display font-bold text-emerald text-lg z-10">02</div>
+          <div class="glass-card p-6 flex-1">
+            <h3 class="font-display font-bold text-lg mb-1">Recherche</h3>
+            <p class="text-graylight text-sm">Nous trouvons ce qui vous rend unique sur votre marché.</p>
+          </div>
+        </div>
+        <div class="relative flex flex-col md:flex-row items-center gap-6 reveal">
+          <div class="w-14 h-14 bg-emerald/10 border border-emerald/30 rounded-full flex items-center justify-center font-display font-bold text-emerald text-lg z-10">03</div>
+          <div class="glass-card p-6 flex-1">
+            <h3 class="font-display font-bold text-lg mb-1">Stratégie</h3>
+            <p class="text-graylight text-sm">Nous définissons votre positionnement, votre message et votre direction.</p>
+          </div>
+        </div>
+        <div class="relative flex flex-col md:flex-row items-center gap-6 reveal">
+          <div class="w-14 h-14 bg-emerald/10 border border-emerald/30 rounded-full flex items-center justify-center font-display font-bold text-emerald text-lg z-10">04</div>
+          <div class="glass-card p-6 flex-1">
+            <h3 class="font-display font-bold text-lg mb-1">Création</h3>
+            <p class="text-graylight text-sm">Nous créons une identité qui vous ressemble et qui attire vos clients idéaux.</p>
+          </div>
+        </div>
+        <div class="relative flex flex-col md:flex-row items-center gap-6 reveal">
+          <div class="w-14 h-14 bg-emerald/10 border border-emerald/30 rounded-full flex items-center justify-center font-display font-bold text-emerald text-lg z-10">05</div>
+          <div class="glass-card p-6 flex-1">
+            <h3 class="font-display font-bold text-lg mb-1">Lancement</h3>
+            <p class="text-graylight text-sm">Vous lancez votre nouvelle marque. On reste disponibles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 09. SHOWCASE ═══════════════════ -->
+<section id="projets" class="py-24 md:py-32 px-6 bg-anthracite/50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Découvrez ce que<br>nous avons <span class="text-emerald">créé.</span></h2>
+      <p class="text-lg text-graylight">Chaque projet est pensé pour répondre à un objectif simple :<br><strong class="text-offwhite">faire grandir une entreprise.</strong></p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="glass-card overflow-hidden group reveal">
+        <div class="aspect-[4/3] bg-gradient-to-br from-emerald/20 to-anthracite relative overflow-hidden">
+          <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <span class="text-emerald font-semibold">Voir le projet →</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-xs text-emerald uppercase tracking-wider mb-1">Branding Complet</p>
+          <h3 class="font-display font-bold text-lg">Restaurant Le Jardin</h3>
+          <p class="text-sm text-graylight mt-1">Identité visuelle • Packaging • Site web</p>
+        </div>
+      </div>
+      <div class="glass-card overflow-hidden group reveal" style="transition-delay: 0.1s">
+        <div class="aspect-[4/3] bg-gradient-to-br from-emerald/10 to-anthracite relative overflow-hidden">
+          <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <span class="text-emerald font-semibold">Voir le projet →</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-xs text-emerald uppercase tracking-wider mb-1">Identité Visuelle</p>
+          <h3 class="font-display font-bold text-lg">TechFlow Startup</h3>
+          <p class="text-sm text-graylight mt-1">Logo • Charte graphique • Réseaux sociaux</p>
+        </div>
+      </div>
+      <div class="glass-card overflow-hidden group reveal">
+        <div class="aspect-[4/3] bg-gradient-to-br from-emerald/5 to-anthracite relative overflow-hidden">
+          <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <span class="text-emerald font-semibold">Voir le projet →</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-xs text-emerald uppercase tracking-wider mb-1">Direction Artistique</p>
+          <h3 class="font-display font-bold text-lg">Clinique Wellness</h3>
+          <p class="text-sm text-graylight mt-1">Branding • Signalétique • Communication</p>
+        </div>
+      </div>
+      <div class="glass-card overflow-hidden group reveal" style="transition-delay: 0.1s">
+        <div class="aspect-[4/3] bg-gradient-to-br from-emerald/15 to-anthracite relative overflow-hidden">
+          <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <span class="text-emerald font-semibold">Voir le projet →</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-xs text-emerald uppercase tracking-wider mb-1">Rebranding</p>
+          <h3 class="font-display font-bold text-lg">Cabinet Avocats & Co</h3>
+          <p class="text-sm text-graylight mt-1">Stratégie • Identité • Site web</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-12 reveal">
+      <a href="#" class="btn-magnetic border border-emerald/30 text-emerald font-medium px-8 py-3 rounded-full hover:bg-emerald/10 transition-all">
+        Voir tous les projets →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 10. POURQUOI NOUS ═══════════════════ -->
+<section class="py-24 md:py-32 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Pourquoi choisir<br><span class="text-emerald">ZOREN ?</span></h2>
+      <p class="text-lg text-graylight">Nous ne dessinons pas simplement un logo.<br>Nous construisons une marque.</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="flex items-start gap-4 reveal">
+        <div class="w-8 h-8 bg-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-emerald text-sm">✔</span>
+        </div>
+        <div>
+          <h4 class="font-display font-semibold mb-1">Nous réfléchissons avant de créer.</h4>
+          <p class="text-sm text-graylight">Chaque choix visuel a une raison stratégique.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 reveal" style="transition-delay: 0.05s">
+        <div class="w-8 h-8 bg-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-emerald text-sm">✔</span>
+        </div>
+        <div>
+          <h4 class="font-display font-semibold mb-1">Votre image est pensée pour durer.</h4>
+          <p class="text-sm text-graylight">Pas de tendances passagères. Du design intemporel.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 reveal" style="transition-delay: 0.1s">
+        <div class="w-8 h-8 bg-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-emerald text-sm">✔</span>
+        </div>
+        <div>
+          <h4 class="font-display font-semibold mb-1">Nous parlons business.</h4>
+          <p class="text-sm text-graylight">Le design est beau, mais surtout il fait vendre.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 reveal" style="transition-delay: 0.15s">
+        <div class="w-8 h-8 bg-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-emerald text-sm">✔</span>
+        </div>
+        <div>
+          <h4 class="font-display font-semibold mb-1">Vous travaillez avec des experts.</h4>
+          <p class="text-sm text-graylight">Pas de stagiaires. Pas de sous-traitance.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 reveal" style="transition-delay: 0.2s">
+        <div class="w-8 h-8 bg-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-emerald text-sm">✔</span>
+        </div>
+        <div>
+          <h4 class="font-display font-semibold mb-1">Suivi personnalisé.</h4>
+          <p class="text-sm text-graylight">Un interlocuteur unique du début à la fin.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 reveal" style="transition-delay: 0.25s">
+        <div class="w-8 h-8 bg-emerald/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-emerald text-sm">✔</span>
+        </div>
+        <div>
+          <h4 class="font-display font-semibold mb-1">Disponibles après le projet.</h4>
+          <p class="text-sm text-graylight">On ne disparaît pas après la livraison.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 11. TÉMOIGNAGES ═══════════════════ -->
+<section class="py-24 md:py-32 px-6 bg-anthracite/50">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Ce que disent<br><span class="text-emerald">nos clients.</span></h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass-card p-8 reveal">
+        <div class="flex gap-1 mb-4">
+          <span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span>
+        </div>
+        <p class="text-graylight italic mb-6">"Aujourd'hui, notre entreprise inspire enfin confiance. Nos clients nous prennent au sérieux."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-emerald/20 rounded-full flex items-center justify-center font-display font-bold text-emerald text-sm">S</div>
+          <div>
+            <p class="font-semibold text-sm">Sarah M.</p>
+            <p class="text-xs text-graylight">Restaurant Le Jardin</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.1s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span>
+        </div>
+        <p class="text-graylight italic mb-6">"Le meilleur investissement que nous ayons fait cette année. Nos ventes ont explosé."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-emerald/20 rounded-full flex items-center justify-center font-display font-bold text-emerald text-sm">K</div>
+          <div>
+            <p class="font-semibold text-sm">Kevin T.</p>
+            <p class="text-xs text-graylight">TechFlow Startup</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.2s">
+        <div class="flex gap-1 mb-4">
+          <span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span><span class="text-emerald">★</span>
+        </div>
+        <p class="text-graylight italic mb-6">"Simple, efficace et professionnel. On recommande les yeux fermés."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-emerald/20 rounded-full flex items-center justify-center font-display font-bold text-emerald text-sm">A</div>
+          <div>
+            <p class="font-semibold text-sm">Amina R.</p>
+            <p class="text-xs text-graylight">Clinique Wellness</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 12. NOS OFFRES ═══════════════════ -->
+<section class="py-24 md:py-32 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Choisissez la formule<br><span class="text-emerald">qui vous correspond.</span></h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass-card p-8 reveal">
+        <h3 class="font-display font-bold text-xl mb-2">Identity</h3>
+        <p class="text-sm text-graylight mb-4">Pour créer une marque professionnelle.</p>
+        <ul class="space-y-2 text-sm text-graylight mb-6">
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Logo professionnel</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Charte graphique</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Cartes de visite</li>
+        </ul>
+        <p class="text-xs text-emerald">👉 Idéal pour les jeunes entreprises.</p>
+      </div>
+      <div class="glass-card p-8 border-emerald/30 relative reveal" style="transition-delay: 0.1s">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald text-obsidian text-xs font-bold px-3 py-1 rounded-full">POPULAIRE</div>
+        <h3 class="font-display font-bold text-xl mb-2">Growth</h3>
+        <p class="text-sm text-graylight mb-4">Pour développer une entreprise.</p>
+        <ul class="space-y-2 text-sm text-graylight mb-6">
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Tout Identity +</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Site web</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Réseaux sociaux</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Packaging</li>
+        </ul>
+        <p class="text-xs text-emerald">👉 Notre formule la plus choisie.</p>
+      </div>
+      <div class="glass-card p-8 reveal" style="transition-delay: 0.2s">
+        <h3 class="font-display font-bold text-xl mb-2">Authority</h3>
+        <p class="text-sm text-graylight mb-4">Pour devenir la référence.</p>
+        <ul class="space-y-2 text-sm text-graylight mb-6">
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Tout Growth +</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Stratégie complète</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Direction artistique</li>
+          <li class="flex items-center gap-2"><span class="text-emerald">✓</span> Suivi 6 mois</li>
+        </ul>
+        <p class="text-xs text-emerald">👉 L'accompagnement le plus complet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 13. FAQ ═══════════════════ -->
+<section class="py-24 md:py-32 px-6 bg-anthracite/50">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Questions<br><span class="text-emerald">fréquentes.</span></h2>
+    </div>
+    
+    <div class="space-y-4">
+      <div class="glass-card overflow-hidden reveal faq-item">
+        <button class="w-full text-left p-6 flex items-center justify-between faq-toggle">
+          <span class="font-display font-semibold">Combien de temps dure un projet ?</span>
+          <span class="text-emerald text-xl transition-transform faq-icon">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-6">
+          <p class="text-graylight text-sm">Entre 2 et 6 semaines selon vos besoins. On va droit au but.</p>
+        </div>
+      </div>
+      <div class="glass-card overflow-hidden reveal faq-item" style="transition-delay: 0.05s">
+        <button class="w-full text-left p-6 flex items-center justify-between faq-toggle">
+          <span class="font-display font-semibold">Travaillez-vous à distance ?</span>
+          <span class="text-emerald text-xl transition-transform faq-icon">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-6">
+          <p class="text-graylight text-sm">Oui. Nous accompagnons des entreprises partout dans le monde. Zoom, WhatsApp, email — comme vous préférez.</p>
+        </div>
+      </div>
+      <div class="glass-card overflow-hidden reveal faq-item" style="transition-delay: 0.1s">
+        <button class="w-full text-left p-6 flex items-center justify-between faq-toggle">
+          <span class="font-display font-semibold">Est-ce que je possède les fichiers ?</span>
+          <span class="text-emerald text-xl transition-transform faq-icon">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-6">
+          <p class="text-graylight text-sm">Oui. À la fin du projet, tout vous appartient. Fichiers sources inclus.</p>
+        </div>
+      </div>
+      <div class="glass-card overflow-hidden reveal faq-item" style="transition-delay: 0.15s">
+        <button class="w-full text-left p-6 flex items-center justify-between faq-toggle">
+          <span class="font-display font-semibold">Puis-je payer en plusieurs fois ?</span>
+          <span class="text-emerald text-xl transition-transform faq-icon">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-6">
+          <p class="text-graylight text-sm">Oui, nous proposons un paiement échelonné. On s'adapte à vous.</p>
+        </div>
+      </div>
+      <div class="glass-card overflow-hidden reveal faq-item" style="transition-delay: 0.2s">
+        <button class="w-full text-left p-6 flex items-center justify-between faq-toggle">
+          <span class="font-display font-semibold">Comment commencer ?</span>
+          <span class="text-emerald text-xl transition-transform faq-icon">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-6">
+          <p class="text-graylight text-sm">Il suffit de réserver un appel découverte. C'est gratuit, sans engagement, et ça dure 15 minutes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 14. CTA FINAL ═══════════════════ -->
+<section id="cta-final" class="py-32 md:py-40 px-6 relative overflow-hidden">
+  <!-- Background glow -->
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald/5 rounded-full blur-[100px]"></div>
+  </div>
+  <canvas id="cta-canvas" class="absolute inset-0 w-full h-full z-[1]"></canvas>
+  
+  <div class="relative z-10 text-center max-w-3xl mx-auto">
+    <h2 class="font-display font-bold text-3xl md:text-5xl lg:text-6xl mb-6 leading-tight">
+      Si votre entreprise grandit...<br>
+      <span class="text-emerald text-glow">votre image doit grandir avec elle.</span>
+    </h2>
+    <p class="text-lg text-graylight mb-10 max-w-xl mx-auto">
+      Ne laissez pas un logo ou un site dépassé freiner votre développement.
+    </p>
+    <a href="#" class="btn-magnetic inline-flex bg-emerald text-obsidian font-bold px-10 py-5 rounded-full text-lg hover:scale-105 glow-emerald transition-all">
+      Réserver mon appel stratégique →
+    </a>
+    <p class="text-xs text-graylight/50 mt-4">Gratuit • 15 minutes • Sans engagement</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ 15. FOOTER ═══════════════════ -->
+<footer class="py-12 px-6 border-t border-white/5">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="flex items-center gap-3">
+        <img src="./src/img/Logosite.png" alt="ZOREN" class="w-8 h-8" />
+        <span class="font-display font-bold text-lg">ZOREN</span>
+      </div>
+      
+      <div class="flex items-center gap-6 text-sm text-graylight">
+        <a href="#services" class="hover:text-emerald transition-colors">Services</a>
+        <a href="#projets" class="hover:text-emerald transition-colors">Projets</a>
+        <a href="#process" class="hover:text-emerald transition-colors">Process</a>
+        <a href="#about" class="hover:text-emerald transition-colors">À propos</a>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:border-emerald/50 hover:text-emerald transition-all">
+          <i class="fab fa-instagram text-sm"></i>
+        </a>
+        <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:border-emerald/50 hover:text-emerald transition-all">
+          <i class="fab fa-linkedin-in text-sm"></i>
+        </a>
+        <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:border-emerald/50 hover:text-emerald transition-all">
+          <i class="fab fa-behance text-sm"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div class="text-center mt-8 pt-8 border-t border-white/5">
+      <p class="text-xs text-graylight/40">© 2025 ZOREN. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+// ─── PRELOADER ───
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const preloader = document.getElementById('preloader');
+    preloader.style.opacity = '0';
+    preloader.style.transition = 'opacity 0.5s';
+    setTimeout(() => preloader.style.display = 'none', 500);
+  }, 1800);
+});
+
+// ─── CUSTOM CURSOR ───
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorRing = document.querySelector('.cursor-ring');
+
+if (window.innerWidth > 768) {
+  document.addEventListener('mousemove', (e) => {
+    cursorDot.style.left = e.clientX - 4 + 'px';
+    cursorDot.style.top = e.clientY - 4 + 'px';
+    cursorRing.style.left = e.clientX + 'px';
+    cursorRing.style.top = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('a, button, .btn-magnetic').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+  });
+}
+
+// ─── MAGNETIC BUTTONS ───
+document.querySelectorAll('.btn-magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = 'translate(0, 0)';
+  });
+});
+
+// ─── NAVBAR SCROLL ───
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── SCROLL PROGRESS ───
+window.addEventListener('scroll', () => {
+  const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('scroll-progress').style.width = scrolled + '%';
+});
+
+// ─── REVEAL ON SCROLL ───
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => revealObserver.observe(el));
+
+// ─── COUNTER ANIMATION ───
+const counters = document.querySelectorAll('.counter');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          el.textContent = '+' + target;
+          clearInterval(timer);
+        } else {
+          el.textContent = '+' + Math.floor(current);
+        }
+      }, 25);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObserver.observe(el));
+
+// ─── FAQ ACCORDION ───
+document.querySelectorAll('.faq-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const icon = item.querySelector('.faq-icon');
+    const isOpen = answer.classList.contains('open');
+    
+    // Close all
+    document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-icon').forEach(i => { i.textContent = '+'; i.style.transform = ''; });
+    
+    if (!isOpen) {
+      answer.classList.add('open');
+      icon.textContent = '−';
+      icon.style.transform = 'rotate(180deg)';
+    }
+  });
+});
+
+// ─── THREE.JS HERO ───
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Sphere geometry with noise
+  const geometry = new THREE.IcosahedronGeometry(2, 20);
+  const material = new THREE.MeshPhongMaterial({
+    color: 0x00C896,
+    emissive: 0x003322,
+    shininess: 100,
+    wireframe: false,
+    transparent: true,
+    opacity: 0.8,
+  });
+  const sphere = new THREE.Mesh(geometry, material);
+  scene.add(sphere);
+
+  // Wireframe overlay
+  const wireMaterial = new THREE.MeshBasicMaterial({ color: 0x00C896, wireframe: true, transparent: true, opacity: 0.1 });
+  const wireframe = new THREE.Mesh(new THREE.IcosahedronGeometry(2.05, 10), wireMaterial);
+  scene.add(wireframe);
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0x111111);
+  scene.add(ambientLight);
+
+  const pointLight = new THREE.PointLight(0x00C896, 2, 100);
+  pointLight.position.set(5, 5, 5);
+  scene.add(pointLight);
+
+  const pointLight2 = new THREE.PointLight(0xffffff, 0.5, 100);
+  pointLight2.position.set(-5, -5, -5);
+  scene.add(pointLight2);
+
+  camera.position.z = 5;
+
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  // Vertex displacement for liquid effect
+  const positions = geometry.attributes.position;
+  const originalPositions = positions.array.slice();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    
+    const time = Date.now() * 0.001;
+    
+    // Animate vertices for liquid effect
+    for (let i = 0; i < positions.count; i++) {
+      const ix = i * 3;
+      const x = originalPositions[ix];
+      const y = originalPositions[ix + 1];
+      const z = originalPositions[ix + 2];
+      
+      const noise = Math.sin(x * 2 + time) * Math.cos(y * 2 + time) * 0.08;
+      positions.array[ix] = x + x * noise;
+      positions.array[ix + 1] = y + y * noise;
+      positions.array[ix + 2] = z + z * noise;
+    }
+    positions.needsUpdate = true;
+    geometry.computeVertexNormals();
+
+    // Mouse follow
+    sphere.rotation.x += (mouseY * 0.3 - sphere.rotation.x) * 0.02;
+    sphere.rotation.y += (mouseX * 0.3 - sphere.rotation.y) * 0.02;
+    wireframe.rotation.x = sphere.rotation.x;
+    wireframe.rotation.y = sphere.rotation.y;
+
+    // Slow auto-rotation
+    sphere.rotation.y += 0.002;
+    wireframe.rotation.y += 0.002;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+
+// ─── THREE.JS CTA SECTION ───
+(function() {
+  const canvas = document.getElementById('cta-canvas');
+  if (!canvas) return;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+  // Particles
+  const particleCount = 200;
+  const particleGeometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 20;
+  }
+  particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMaterial = new THREE.PointsMaterial({ color: 0x00C896, size: 0.05, transparent: true, opacity: 0.6 });
+  const particles = new THREE.Points(particleGeometry, particleMaterial);
+  scene.add(particles);
+
+  camera.position.z = 5;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    particles.rotation.y += 0.001;
+    particles.rotation.x += 0.0005;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+// ─── THREE.JS ABOUT SECTION ───
+(function() {
+  const canvas = document.getElementById('about-canvas');
+  if (!canvas) return;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(rect.width, rect.height);
+
+  // Torus knot
+  const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 100, 16);
+  const material = new THREE.MeshPhongMaterial({ color: 0x00C896, emissive: 0x002211, shininess: 80, transparent: true, opacity: 0.7 });
+  const knot = new THREE.Mesh(geometry, material);
+  scene.add(knot);
+
+  const light = new THREE.PointLight(0x00C896, 2, 50);
+  light.position.set(3, 3, 3);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0x222222));
+
+  camera.position.z = 4;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    knot.rotation.x += 0.005;
+    knot.rotation.y += 0.008;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+// ─── GSAP SCROLL ANIMATIONS ───
+gsap.registerPlugin(ScrollTrigger);
+
+// Parallax hero
+gsap.to('#hero .relative.z-10', {
+  y: 100,
+  opacity: 0.5,
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: true
+  }
+});
+</script>
+
+</body>
+</html>
