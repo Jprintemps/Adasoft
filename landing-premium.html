@@ -53,8 +53,8 @@
       background: #0A0A0A;
       color: #F7F7F5;
       overflow-x: hidden;
-      cursor: none;
     }
+    body.custom-cursor { cursor: none; }
 
     h1, h2, h3, h4, h5, .font-display { font-family: 'Outfit', sans-serif; }
 
@@ -861,6 +861,7 @@ const cursorDot = document.querySelector('.cursor-dot');
 const cursorRing = document.querySelector('.cursor-ring');
 
 if (window.innerWidth > 768) {
+  document.body.classList.add('custom-cursor');
   document.addEventListener('mousemove', (e) => {
     cursorDot.style.left = e.clientX - 4 + 'px';
     cursorDot.style.top = e.clientY - 4 + 'px';
